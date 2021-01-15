@@ -1,14 +1,20 @@
+import { lazy, Suspense } from 'react'
 import useLocation from '../../useLocation'
 import NotFound from '../NotFound'
-import IndexRoute from './routes/IndexRoute'
-// import PostRoute from './routes/PostRoute'
+
+const IndexRoute = lazy(() => import('./routes/IndexRoute'))
 
 const basePath = '/auth'
 export default function StacksIndex() {
     const [location, navigate] = useLocation()
 
-    return false
-        || !location.startsWith(basePath) && <></>
-        || location === basePath && <IndexRoute />
-        || <NotFound />
+    return (
+        <Suspense fallback={<></>}>
+            {
+                !location.startsWith(basePath) && <></>
+                || location === basePath && <IndexRoute />
+                || <NotFound />
+            }
+        </Suspense>
+    )       
 }

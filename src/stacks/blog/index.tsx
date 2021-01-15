@@ -1,14 +1,13 @@
-import { useLayoutEffect } from 'react'
+import React, { lazy, Suspense, useLayoutEffect } from 'react'
 import useLocation from '../../useLocation'
-import IndexRoute from './routes/IndexRoute'
-import PostRoute from './routes/PostRoute'
+
+const IndexRoute = lazy(() => import('./routes/IndexRoute'))
+const PostRoute = lazy(() => import('./routes/PostRoute'))
 
 const basePath = '/blog'
 let stackHistory: [location: string, scroll: number][] = []
 export default function StacksIndex() {
     const [location, navigate] = useLocation()
-
-    let stack = location.split('/')?.[2] ?? '/'
 
     useLayoutEffect(() => {
         let interval: NodeJS.Timeout | null = null
@@ -48,8 +47,13 @@ export default function StacksIndex() {
         }
     }, [location, navigate])
 
-    return false
-        || !location.startsWith(basePath) && <></>
-        || location === basePath && <IndexRoute />
-        || <PostRoute />
+    return (
+        <Suspense fallback={<></>}>
+            {
+                !location.startsWith(basePath) && <></>
+                || location === basePath && <IndexRoute />
+                || <PostRoute />
+            }
+        </Suspense>
+    )
 }
