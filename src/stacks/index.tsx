@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react'
 import useLocation from '../hooks/useLocation'
 import AuthStack from './auth'
 import BlogStack from './blog'
+import Nav from '../components/Nav'
 
 const AboutRoute = lazy(() => import('./About'))
 const NotFound = lazy(() => import('./NotFound'))
@@ -11,13 +12,8 @@ export default function StacksIndex() {
     useEffect(attachLinkHandler, [location, navigate])
 
     return <>
-        <h1>Stack Router Demo</h1>
-        <ul>
-            <li><a href={'/auth'}>Auth</a></li>
-            <li><a href={'/blog' + (location.startsWith('/blog') ? '?stack=reset': '')}>Blog</a></li>
-            <li><a href={'/blog/' + Math.random()} >Random Post</a></li>
-            <li><a href={'/blog?stack=back'}>Go Back</a></li>
-        </ul>
+        <h1><a href='/'>Stack Router Demo</a></h1>
+        <Nav />
         <AuthStack />
         <BlogStack />
         <Suspense fallback={<></>}>

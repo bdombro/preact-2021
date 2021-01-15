@@ -1,8 +1,8 @@
 import { lazy, Suspense } from 'react'
 import useStackHandler from '../../hooks/useStackHandler'
-import NotFound from '../NotFound'
 
 const IndexRoute = lazy(() => import('./routes/IndexRoute'))
+const UserRoute = lazy(() => import('./routes/UserRoute'))
 
 const basePath = '/auth'
 export default function StacksIndex() {
@@ -13,7 +13,7 @@ export default function StacksIndex() {
             {
                 !location.startsWith(basePath) && <></>
                 || location === basePath && <IndexRoute />
-                || <NotFound />
+                || <UserRoute />
             }
         </Suspense>
     )       

@@ -1,0 +1,17 @@
+nav.nav {
+    background: #f2f2f2;
+    display: flex;
+    flex-direction: row;
+}
+nav.nav a {
+    flex-grow: 1;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+nav.nav a:hover {
+    background: #ccc;
+}
+nav.nav a.active {
+    background: #ccc;
+}
