@@ -9,7 +9,6 @@ export default function StacksIndex() {
     const [location, navigate] = useLocation()
 
     let stack = location.split('/')?.[2] ?? '/'
-    if (!['/'].includes(stack)) stack = 'default'
 
     useLayoutEffect(() => {
         let interval: NodeJS.Timeout | null = null
@@ -49,8 +48,8 @@ export default function StacksIndex() {
         }
     }, [location, navigate])
 
-    return <div>
-        <div style={{ display: stack === '/' ? 'block' : 'none' }}><IndexRoute /></div>
-        <div style={{ display: stack === 'default' ? 'block' : 'none' }}><PostRoute /></div>
-    </div>
+    return false
+        || !location.startsWith(basePath) && <></>
+        || location === basePath && <IndexRoute />
+        || <PostRoute />
 }
