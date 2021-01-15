@@ -1,5 +1,6 @@
 {
-  "name": "dombro-stack-router-wouter",
+  "name": "react-stack-router-demo",
+  "description": "A demo of how to make a clean-URL stack router in react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

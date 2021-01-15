@@ -1,12 +1,13 @@
 import { useLayoutEffect } from "react"
-import useLocation from "./useLocation"
+import useLocation, { UseLocationResponse } from "./useLocation"
 
 type StackHistoryEntry = [location: string, scroll: number]
 type StackHistory = StackHistoryEntry[]
 const StackHistories: Record<string, StackHistory> = {}
-export default function useStackHandler(basePath: string) {
+export default function useStackHandler(basePath: string): UseLocationResponse {
     const [location, navigate] = useLocation()
     useLayoutEffect(install, [basePath, location, navigate])
+    return [location, navigate]
 
     function install() {
         let watchScrollInterval: NodeJS.Timeout | null = null

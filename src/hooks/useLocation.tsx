@@ -9,7 +9,7 @@ const eventPushState = "pushState";
 const eventReplaceState = "replaceState";
 export const events = [eventPopstate, eventPushState, eventReplaceState];
 
-type UseLocationResponse = [path: string, navigate: (to: string, options?: { replace?: boolean }) => void]
+export type UseLocationResponse = [path: string, navigate: (to: string, options?: { replace?: boolean }) => void]
 
 export default function useLocation({ base = "" } = {}): UseLocationResponse {
     const [path, update] = useState<string>(() => currentPathname(base)); // @see https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
