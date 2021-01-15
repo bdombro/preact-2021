@@ -1,9 +1,9 @@
 /* eslint-disable no-restricted-globals */
+/**
+ * Adapted from https://github.com/molefrog/wouter's useLocation hook
+ */
 import { useEffect, useRef, useState, useCallback } from "react";
 
-/**
- * History API docs @see https://developer.mozilla.org/en-US/docs/Web/API/History
- */
 const eventPopstate = "popstate";
 const eventPushState = "pushState";
 const eventReplaceState = "replaceState";

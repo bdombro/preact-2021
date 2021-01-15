@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import useLocation from '../useLocation'
+import useLocation from '../hooks/useLocation'
 import AuthStack from './auth'
 import BlogStack from './blog'
 
@@ -11,6 +11,13 @@ export default function StacksIndex() {
     useEffect(attachLinkHandler, [location, navigate])
 
     return <>
+        <h1>Stack Router Demo</h1>
+        <ul>
+            <li><a href={'/auth'}>Auth</a></li>
+            <li><a href={'/blog' + (location.startsWith('/blog') ? '?stack=reset': '')}>Blog</a></li>
+            <li><a href={'/blog/' + Math.random()} >Random Post</a></li>
+            <li><a href={'/blog?stack=back'}>Go Back</a></li>
+        </ul>
         <AuthStack />
         <BlogStack />
         <Suspense fallback={<></>}>
