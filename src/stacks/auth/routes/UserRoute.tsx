@@ -1,8 +1,8 @@
 import useLocation from "../../../hooks/useLocation"
 
 export default function UserRoute() {
-    const [location] = useLocation()
-    const userId = location.split('/')[2]
+    const {pathname} = useLocation()
+    const userId = pathname.split('/')[2]
     return <div>
         <h3>Hello, User:{userId}!</h3>
         <ul>

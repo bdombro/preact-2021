@@ -10,8 +10,8 @@ export default function Nav() {
 }
 
 function NavLink({uri, text}: {uri: string, text: string}) {
-    const [location] = useLocation()
-    const isActive = location.startsWith(uri)
+    const {pathname} = useLocation()
+    const isActive = pathname.startsWith(uri)
     return (
         <a 
             href={uri + (isActive ? '?stack=reset' : '')}

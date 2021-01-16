@@ -6,12 +6,11 @@ const PostRoute = lazy(() => import('./routes/PostRoute'))
 
 const basePath = '/blog'
 export default function BlogStack() {
-    const [location] = useStackHandler(basePath)
-
+    const {pathname} = useStackHandler(basePath)
     return (
         <Suspense fallback={<></>}>{
-            !location.startsWith(basePath) && <></>
-            || location === basePath && <IndexRoute />
+            !pathname.startsWith(basePath) && <></>
+            || pathname === basePath && <IndexRoute />
             || <PostRoute />
         }</Suspense>
     )

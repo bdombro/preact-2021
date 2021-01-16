@@ -1,8 +1,8 @@
 import useLocation from "../../../hooks/useLocation"
 
 export default function PostRoute() {
-    const [location] = useLocation()
-    const postId = location.split('/')[2]
+    const {pathname} = useLocation()
+    const postId = pathname.split('/')[2]
     return <div>
         <h3>Hello, Post:{postId}!</h3>
         <ul>

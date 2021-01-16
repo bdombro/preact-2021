@@ -6,12 +6,12 @@ const UserRoute = lazy(() => import('./routes/UserRoute'))
 
 const basePath = '/auth'
 export default function AuthStack() {
-    const [location] = useStackHandler(basePath)
+    const {pathname} = useStackHandler(basePath)
 
     return (
         <Suspense fallback={<></>}>{
-            !location.startsWith(basePath) && <></>
-            || location === basePath && <IndexRoute />
+            !pathname.startsWith(basePath) && <></>
+            || pathname === basePath && <IndexRoute />
             || <UserRoute />
         }</Suspense>
     )       
