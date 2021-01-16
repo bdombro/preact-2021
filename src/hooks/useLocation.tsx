@@ -12,7 +12,7 @@ export const events = [eventPopstate, eventPushState, eventReplaceState];
 export type UseLocationResponse = [path: string, navigate: (to: string, options?: { replace?: boolean }) => void]
 
 export default function useLocation({ base = "" } = {}): UseLocationResponse {
-    const [path, update] = useState<string>(() => currentPathname(base)); // @see https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
+    const [path, update] = useState<string>(() => currentPath(base)); // @see https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
     const prevPath = useRef(path);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function useLocation({ base = "" } = {}): UseLocationResponse {
         // unfortunately, we can't rely on `path` value here, since it can be stale,
         // that's why we store the last pathname in a ref.
         const checkForUpdates = () => {
-            const pathname = currentPathname(base);
+            const pathname = currentPath(base);
             prevPath.current !== pathname && update((prevPath.current = pathname));
         };
 
@@ -41,13 +41,14 @@ export default function useLocation({ base = "" } = {}): UseLocationResponse {
     // the function reference should stay the same between re-renders, so that
     // it can be passed down as an element prop without any performance concerns.
     const navigate = useCallback(
-        (to: string, { replace = false } = {}) =>
+        (to: string, { replace = false } = {}) => {
             history[replace ? eventReplaceState : eventPushState](
                 null,
                 "",
                 // handle nested routers and absolute paths
                 to[0] === "~" ? to.slice(1) : base + to
-            ),
+            )
+        },
         [base]
     );
 
@@ -74,8 +75,10 @@ if (typeof history !== "undefined") {
     }
 }
 
-const currentPathname = (base: string, path = location.pathname) =>
-    !path.toLowerCase().indexOf(base.toLowerCase())
-        ? path.slice(base.length) || "/"
-        // ? "/"
-        : "~" + path;
+const currentPath = (base: string) => {
+    const {pathname, search} = location
+    const path = !pathname.toLowerCase().indexOf(base.toLowerCase())
+        ? pathname.slice(base.length) || "/"
+        : "~" + pathname;
+    return path + search
+} 

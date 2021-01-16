@@ -11,26 +11,36 @@ export default function StacksIndex() {
     const [location, navigate] = useLocation()
     useEffect(attachLinkHandler, [location, navigate])
 
+    if (location === '/') navigate('/blog')
+
     return <>
         <h1><a href='/'>Stack Router Demo</a></h1>
         <Nav />
         <AuthStack />
         <BlogStack />
-        <Suspense fallback={<></>}>
-            {location === '/about' && <AboutRoute />}
-            {!['auth', 'blog', 'about'].includes(location.split('/')?.[1]) && <NotFound/>}
-        </Suspense>
+        <Suspense fallback={<></>}>{
+            location === '/about' && <AboutRoute />
+            || !isStackRoute() && <NotFound />    
+        }</Suspense>
     </>
 
     function attachLinkHandler() {
-        if (location === '/') navigate('/blog')
         document.body.addEventListener('click', linkHandler);
         return () => { document.body.removeEventListener('click', linkHandler) }
         function linkHandler(event: any) {
-            if (event.target.nodeName === 'A' && event.target.host === window.location.host) {
+            const linkNode = findLinkTagInParents(event.target)
+            if (linkNode && linkNode.host === window.location.host) {
                 event.preventDefault()
-                navigate(event.target.pathname + `${event.target.search}`)
+                navigate(linkNode.pathname + `${linkNode.search}`)
             }
         }
+        function findLinkTagInParents(node: HTMLElement): any {
+            if (node?.nodeName === 'A') return node
+            if (node?.parentNode) return findLinkTagInParents(node.parentElement!)
+        }
+    }
+    function isStackRoute() {
+        const stackRoutes = [AuthStack.basePack, BlogStack.basePath]
+        return stackRoutes.some(r => location.startsWith(r))
     }
 }

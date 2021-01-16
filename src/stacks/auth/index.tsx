@@ -5,16 +5,15 @@ const IndexRoute = lazy(() => import('./routes/IndexRoute'))
 const UserRoute = lazy(() => import('./routes/UserRoute'))
 
 const basePath = '/auth'
-export default function StacksIndex() {
+export default function AuthStack() {
     const [location] = useStackHandler(basePath)
 
     return (
-        <Suspense fallback={<></>}>
-            {
-                !location.startsWith(basePath) && <></>
-                || location === basePath && <IndexRoute />
-                || <UserRoute />
-            }
-        </Suspense>
+        <Suspense fallback={<></>}>{
+            !location.startsWith(basePath) && <></>
+            || location === basePath && <IndexRoute />
+            || <UserRoute />
+        }</Suspense>
     )       
 }
+AuthStack.basePack = basePath

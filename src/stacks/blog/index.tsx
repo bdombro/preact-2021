@@ -5,16 +5,15 @@ const IndexRoute = lazy(() => import('./routes/IndexRoute'))
 const PostRoute = lazy(() => import('./routes/PostRoute'))
 
 const basePath = '/blog'
-export default function StacksIndex() {
+export default function BlogStack() {
     const [location] = useStackHandler(basePath)
 
     return (
-        <Suspense fallback={<></>}>
-            {
-                !location.startsWith(basePath) && <></>
-                || location === basePath && <IndexRoute />
-                || <PostRoute />
-            }
-        </Suspense>
+        <Suspense fallback={<></>}>{
+            !location.startsWith(basePath) && <></>
+            || location === basePath && <IndexRoute />
+            || <PostRoute />
+        }</Suspense>
     )
 }
+BlogStack.basePath = basePath

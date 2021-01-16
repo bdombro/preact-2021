@@ -31,18 +31,18 @@ export default function useStackHandler(basePath: string): UseLocationResponse {
             const topOfStack = Stack.top()
             const arg = new URLSearchParams(window.location.search).get('stack')
             // const uri = location + window.location.search
-            if (location === topOfStack[0]) { // cool, were in the right spot
-                console.log("top")
-                window.scrollTo(0, topOfStack[1])
-                watchScroll()
-            }
-            else if (location === basePath && arg === 'reset') { // reset the stack
+            if (arg === 'reset') { // reset the stack
                 Stack.reset()
                 navigate(basePath, { replace: true })
             }
-            else if (location === basePath && arg === 'back') { // pop the stack
+            if (arg === 'back') { // pop the stack
                 Stack.pop()
                 navigate(Stack.top()[0], { replace: true })
+            }
+            else if (location === topOfStack[0]) { // cool, were in the right spot
+                console.log("top")
+                window.scrollTo(0, topOfStack[1])
+                watchScroll()
             }
             else if (location === basePath) // recall from stack
                 navigate(topOfStack[0], { replace: true })
