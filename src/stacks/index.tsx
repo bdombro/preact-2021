@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react'
+import { h } from 'preact';
+import { lazy, Suspense } from 'preact/compat'
 import { navigate, useLocation } from '../components/routing'
 import AuthStack from './auth'
 import BlogStack from './blog'

@@ -1,9 +1,12 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { h } from 'preact';
+import { render } from '@testing-library/preact';
+import { expect } from 'chai';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/Stack Router Demo/i);
-  expect(linkElement).toBeInTheDocument();
+describe('<App>', () => {
+  it('renders learn react link', () => {
+    const { getByText } = render(<App />);
+    const linkElement = getByText(/learn preact/i);
+    expect(document.body.contains(linkElement));
+  });
 });

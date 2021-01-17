@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react'
+import { h } from 'preact';
+import { lazy, Suspense } from 'preact/compat'
 
 const UserList = lazy(() => import('./routes/UserList'))
 const User = lazy(() => import('./routes/User'))

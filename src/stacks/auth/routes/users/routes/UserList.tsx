@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 export default function AuthIndex() {
     return <div>
         <h3>Hello, auth page!</h3>

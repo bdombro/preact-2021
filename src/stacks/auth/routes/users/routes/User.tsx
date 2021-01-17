@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 export default function UserRoute() {
     const userId = location.pathname.split('/')[3]
     return <div>

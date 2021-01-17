@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react'
+import { h } from 'preact';
+import { lazy, Suspense } from 'preact/compat'
 
 const PostList = lazy(() => import('./routes/PostList'))
 const Post = lazy(() => import('./routes/Post'))

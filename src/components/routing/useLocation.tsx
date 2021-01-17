@@ -1,7 +1,7 @@
 /**
  * Inspired by https://github.com/molefrog/wouter's useLocation hook
  */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "preact/hooks";
 
 import { attachHistoryChangeListener } from './events'
 

@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 export default function PostRoute() {
     const postId = location.pathname.split('/')[3]
     return <div>

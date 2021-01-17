@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react'
+import { h } from 'preact';
+import { lazy, Suspense } from 'preact/compat'
 import { useStackHandler } from '../../components/routing'
 
 import PostRouter from './routes/posts'

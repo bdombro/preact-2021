@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react"
+import { useLayoutEffect } from "preact/hooks"
 import { navigate, useLocation, UseLocationLocation } from "./"
 
 type StackHistoryEntry = {location: UseLocationLocation, scroll: number}

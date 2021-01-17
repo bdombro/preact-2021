@@ -1,4 +1,5 @@
 import './Nav.css'
+import { h } from 'preact';
 import {useLocation} from "./routing"
 
 export default function Nav() {
