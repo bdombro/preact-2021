@@ -1,5 +1,5 @@
 import './Nav.css'
-import useLocation from "../hooks/useLocation"
+import {useLocation} from "./routing"
 
 export default function Nav() {
     return <nav className="nav">

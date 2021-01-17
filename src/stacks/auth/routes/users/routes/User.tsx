@@ -1,12 +1,9 @@
-import useLocation from "../../../hooks/useLocation"
-
 export default function UserRoute() {
-    const {pathname} = useLocation()
-    const userId = pathname.split('/')[2]
+    const userId = location.pathname.split('/')[3]
     return <div>
         <h3>Hello, User:{userId}!</h3>
         <ul>
-            <li><a href={'/auth/' + Math.random()} >Random User</a></li>
+            <li><a href={'/auth/users/' + Math.random()} >Random User</a></li>
             <li><a href={'?stack=back'}>Go Back</a></li>
         </ul>
         <br /><br /><br /><br /><br />1<br /><br /><br /><br /><br />2

@@ -1,12 +1,12 @@
 import { useLayoutEffect } from "react"
-import useLocation, { navigate, UseLocationLocation } from "./useLocation"
+import { navigate, useLocation, UseLocationLocation } from "./"
 
 type StackHistoryEntry = {location: UseLocationLocation, scroll: number}
 type StackHistory = StackHistoryEntry[]
 const StackHistories: Record<string, StackHistory> = {}
-export default function useStackHandler(basePath: string): UseLocationLocation {
+export default function useStackHandler(basePath: string, defaultChildPath: string): UseLocationLocation {
     const location = useLocation()
-    useLayoutEffect(installListeners, [basePath, location])
+    useLayoutEffect(installListeners, [basePath, defaultChildPath, location])
     return location
 
     function installListeners() {
@@ -14,7 +14,7 @@ export default function useStackHandler(basePath: string): UseLocationLocation {
         const {pathname, search} = location
 
         if (pathname.startsWith(basePath)) {
-            const baseHistory = { location: { pathname: basePath, search: '' }, scroll: 0 }
+            const baseHistory = { location: { pathname: basePath + defaultChildPath, search: '' }, scroll: 0 }
             class Stack {
                 static reset = () => { StackHistories[basePath] = [baseHistory]; return StackHistories[basePath][0]}
                 static len = () => StackHistories[basePath]?.length ?? 0
@@ -38,8 +38,9 @@ export default function useStackHandler(basePath: string): UseLocationLocation {
                 window.scrollTo(0, top.scroll)
                 watchScrollInterval = setInterval(updateScrollPos, 300)
             }
-            else if (pathname === basePath) // recall from stack
+            else if (pathname === basePath) {// recall from stack
                 navigate(top.location.pathname + top.location.search, {replace: true})
+            }
             else { // forward navigation -- add to history 
                 console.log('forward')
                 window.scrollTo(0, 0)

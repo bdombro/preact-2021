@@ -1,18 +1,18 @@
 import { lazy, Suspense } from 'react'
-import useStackHandler from '../../hooks/useStackHandler'
+import {useStackHandler} from '../../components/routing'
 
-const IndexRoute = lazy(() => import('./routes/IndexRoute'))
-const UserRoute = lazy(() => import('./routes/UserRoute'))
+import UserRouter from './routes/users'
+
+const NotFound = lazy(() => import('../NotFound'))
 
 const basePath = '/auth'
 export default function AuthStack() {
-    const {pathname} = useStackHandler(basePath)
-
+    const { pathname } = useStackHandler(basePath, '/users')
     return (
         <Suspense fallback={<></>}>{
-            !pathname.startsWith(basePath) && <></>
-            || pathname === basePath && <IndexRoute />
-            || <UserRoute />
+            !pathname.startsWith(basePath + '/') && <></>
+            || pathname.startsWith(basePath + '/users') && <UserRouter />
+            || <NotFound />
         }</Suspense>
     )       
 }

@@ -1,17 +1,19 @@
-import React, { lazy, Suspense } from 'react'
-import useStackHandler from '../../hooks/useStackHandler'
+import { lazy, Suspense } from 'react'
+import { useStackHandler } from '../../components/routing'
 
-const IndexRoute = lazy(() => import('./routes/IndexRoute'))
-const PostRoute = lazy(() => import('./routes/PostRoute'))
+import PostRouter from './routes/posts'
+
+const NotFound = lazy(() => import('../NotFound'))
 
 const basePath = '/blog'
 export default function BlogStack() {
-    const {pathname} = useStackHandler(basePath)
+    const { pathname } = useStackHandler(basePath, '/posts')
     return (
         <Suspense fallback={<></>}>{
-            !pathname.startsWith(basePath) && <></>
-            || pathname === basePath && <IndexRoute />
-            || <PostRoute />
+            !pathname.startsWith(basePath + '/') && <></>
+            || pathname === basePath && <></>
+            || pathname.startsWith(basePath + '/posts') && <PostRouter />
+            || <NotFound />
         }</Suspense>
     )
 }

@@ -1,12 +1,9 @@
-import useLocation from "../../../hooks/useLocation"
-
 export default function PostRoute() {
-    const {pathname} = useLocation()
-    const postId = pathname.split('/')[2]
+    const postId = location.pathname.split('/')[3]
     return <div>
         <h3>Hello, Post:{postId}!</h3>
         <ul>
-            <li><a href={'/blog/' + Math.random()} >Random Post</a></li>
+            <li><a href={'/blog/posts/' + Math.random()} >Random Post</a></li>
             <li><a href={'?stack=back'}>Go Back</a></li>
         </ul>
         <br /><br /><br /><br /><br />1<br /><br /><br /><br /><br />2
