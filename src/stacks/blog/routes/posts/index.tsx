@@ -1,14 +1,11 @@
 import { h } from 'preact';
-import { lazy, Suspense } from 'preact/compat'
+import lazy from '~/components/lazy';
 
 const PostList = lazy(() => import('./routes/PostList'))
 const Post = lazy(() => import('./routes/Post'))
 
 export default function UserRouter() {
-    return (
-        <Suspense fallback={<div/>}>{
-            location.pathname === '/blog/posts' && <PostList />
-            || <Post />
-        }</Suspense>
-    )
+    return false
+    || location.pathname === '/blog/posts' && <PostList />
+    || <Post />
 }

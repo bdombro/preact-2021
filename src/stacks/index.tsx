@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { lazy, Suspense } from 'preact/compat'
+import lazy from '../components/lazy'
 import { navigate, useLocation } from '../components/routing'
 import AuthStack from './auth'
 import BlogStack from './blog'
@@ -8,17 +8,17 @@ const AboutRoute = lazy(() => import('./About'))
 const NotFound = lazy(() => import('./NotFound'))
 
 export default function StacksIndex() {
-    const {pathname} = useLocation()
+    const { pathname } = useLocation()
 
     if (pathname === '/') navigate('/blog')
 
     return <div>
         <AuthStack />
         <BlogStack />
-        <Suspense fallback={<div/>}>{
+        {
             pathname === '/about' && <AboutRoute />
-            || !isStackRoute() && <NotFound />    
-        }</Suspense>
+            || !isStackRoute() && <NotFound />
+        }
     </div>
 
     function isStackRoute() {
