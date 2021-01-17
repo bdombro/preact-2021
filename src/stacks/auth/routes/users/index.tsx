@@ -5,7 +5,7 @@ const User = lazy(() => import('./routes/User'))
 
 export default function UserRouter() {
     return (
-        <Suspense fallback={<></>}>{
+        <Suspense fallback={<div/>}>{
             location.pathname === '/auth/users' && <UserList />
             || <User />
         }</Suspense>

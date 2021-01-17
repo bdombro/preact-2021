@@ -9,8 +9,8 @@ const basePath = '/auth'
 export default function AuthStack() {
     const { pathname } = useStackHandler(basePath, '/users')
     return (
-        <Suspense fallback={<></>}>{
-            !pathname.startsWith(basePath + '/') && <></>
+        <Suspense fallback={<div/>}>{
+            !pathname.startsWith(basePath + '/') && <div/>
             || pathname.startsWith(basePath + '/users') && <UserRouter />
             || <NotFound />
         }</Suspense>

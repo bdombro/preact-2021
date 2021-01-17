@@ -5,7 +5,7 @@ const Post = lazy(() => import('./routes/Post'))
 
 export default function UserRouter() {
     return (
-        <Suspense fallback={<></>}>{
+        <Suspense fallback={<div/>}>{
             location.pathname === '/blog/posts' && <PostList />
             || <Post />
         }</Suspense>

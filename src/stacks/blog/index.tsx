@@ -9,9 +9,9 @@ const basePath = '/blog'
 export default function BlogStack() {
     const { pathname } = useStackHandler(basePath, '/posts')
     return (
-        <Suspense fallback={<></>}>{
-            !pathname.startsWith(basePath + '/') && <></>
-            || pathname === basePath && <></>
+        <Suspense fallback={<div/>}>{
+            !pathname.startsWith(basePath + '/') && <div/>
+            || pathname === basePath && <div/>
             || pathname.startsWith(basePath + '/posts') && <PostRouter />
             || <NotFound />
         }</Suspense>
