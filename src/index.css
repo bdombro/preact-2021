@@ -1,13 +1,48 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --text: black;
+  --body: white;
+  --primary: #D70A00;
+  --primary-darker: #970A00;
+  
+  --nav-background: #f3f2f1;
+  --nav-background-hover: #e6e6e6;
+  --nav-background-active: #f9dddc;
+  --searchbar-background: #b6b6b6;
+  
+  --header-height: 48px;
+  --sidebar-width-full: 200px;
+  --sidebar-width-mini: 54px;
+  --sidebar-width: var(--sidebar-width-full);
+  
+  --searchbar-width-default: 270px;
+  --searchbar-width-focused: 420px;
+  --searchbar-width: var(--searchbar-width-default);
+
+  --bottom-nav-height: 36px;
+
+  --body-height: calc( 100vh - var(--header-height) );
+  --margin-bottom: 0;
+  --margin-left: var(--sidebar-width);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@media (max-width: 600px) {
+  :root {
+    --body-height: calc( 100vh - var(--header-height) - var(--bottom-nav-height) );
+    --margin-bottom: var(--bottom-nav-height);
+    --margin-left: 0;
+  }
+}
+
+body {
+  overflow: hidden;
+  margin-top: var(--header-height);
+  margin-bottom: var(--margin-bottom);
+  margin-left: var(--margin-left)
+}
+
+#root {
+  height: 100vh;
+  height: var(--body-height);
+  overflow-x: hidden;
+  overflow-y: auto;
 }

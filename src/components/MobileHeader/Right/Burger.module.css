@@ -1,0 +1,14 @@
+.avatar {
+    display: inline-block;
+    color: var(--body);
+    padding: 15px 0px;
+    text-align: center;
+    width: var(--sidebar-width-mini);
+    box-sizing: border-box;
+}
+.avatar:hover {
+    background: var(--primary);
+}
+.open, .open:hover {
+    background: var(--primary);
+}

@@ -1,0 +1,40 @@
+.nav {
+    display: block;
+    will-change: scroll-position;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: var(--nav-background);
+    display: flex;
+    flex-direction: row;
+    height: var(--bottom-nav-height);
+    overflow-y: hidden;
+}
+.navlink {
+    color: var(--text);
+    flex-grow: 1;
+    text-align: center;
+    padding: 8px;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #e5e5e5;
+}
+.navlink:hover {
+    background: var(--nav-background-active);
+    border-right: 1px solid var(--nav-background-active);
+    border-top: 1px solid var(--nav-background-active);
+}
+.active, .active:hover {
+    color: var(--body);
+    background: var(--primary);
+    border-right: 1px solid var(--primary);
+    border-top: 1px solid var(--primary);
+}
+.navlink:last-of-type {
+    border-right: none;
+}
+
+@media (min-width: 600px) {
+    .nav {
+        display: none;
+    }
+}

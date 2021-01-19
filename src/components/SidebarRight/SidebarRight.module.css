@@ -1,0 +1,15 @@
+.sidebar {
+    display: none;
+    position: absolute;
+    top: var(--header-height);
+    right: 0;
+    width: var(--sidebar-width);
+    background: var(--nav-background);
+    height: var(--body-height);
+    overflow-x: hidden;
+}
+@media (max-width: 600px) {
+    .active {
+        display: block;
+    }
+}

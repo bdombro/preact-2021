@@ -41,7 +41,14 @@ export function navigate(to: string, { replace = false } = {}) {
     return () => { document.body.removeEventListener('click', linkHandler) }
     function linkHandler(event: any) {
         const linkNode = findLinkTagInParents(event.target)
-        if (linkNode && linkNode.host === window.location.host) {
+        if (
+            linkNode 
+            && linkNode.host === window.location.host
+            && (
+                linkNode.pathname !== window.location.pathname
+                || linkNode.search !== window.location.search
+            )
+        ) {
             event.preventDefault()
             navigate(linkNode.pathname + linkNode.search)
         }

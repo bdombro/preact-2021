@@ -1,12 +1,21 @@
-import { h } from 'preact';
+import { Fragment, h } from 'preact';
 
-import StackRoutes from './stacks'
-import Nav from './components/Nav'
+import StackRoutes from './pages'
+import BottomNav from './components/BottomNav'
+import UnhandledErrorNotification from './components/UnhandledErrorNotification'
+import DesktopHeader from './components/DesktopHeader'
+import MobileHeader from './components/MobileHeader'
+import Sidebar from './components/Sidebar'
+import SidebarRight from './components/SidebarRight'
 
 export default function App() {
-  return <div>
-    <h1><a href='/'>Stack Router Demo</a></h1>
-    <Nav />
+  return <Fragment>
+    <UnhandledErrorNotification />
+    <DesktopHeader />
+    <MobileHeader />
+    <Sidebar />
+    <SidebarRight />
+    <BottomNav />
     <StackRoutes />
-  </div>
+  </Fragment>
 }

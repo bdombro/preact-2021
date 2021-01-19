@@ -1,0 +1,14 @@
+.sidebar {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    width: var(--sidebar-width);
+    background: var(--nav-background);
+    height: var(--body-height);
+    overflow-x: hidden;
+}
+@media (max-width: 600px) {
+    .sidebar {
+        display: none;
+    }
+}
