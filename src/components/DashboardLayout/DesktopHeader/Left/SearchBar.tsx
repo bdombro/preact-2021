@@ -2,9 +2,6 @@ import styles from './SearchBar.module.css'
 import { h } from 'preact';
 import { useRef, useState } from 'preact/hooks';
 
-const defaultWidth = getComputedStyle(document.documentElement).getPropertyValue('--searchbar-width-default')
-const focusedWidth = getComputedStyle(document.documentElement).getPropertyValue('--searchbar-width-focused')
-
 export default function SearchBar() {
     const [value, setValue] = useState('')
     const [isFocused, setIsFocused] = useState(false)
@@ -31,12 +28,16 @@ export default function SearchBar() {
     </div>
 
     function onFocus() {
-        document.documentElement.style.setProperty('--searchbar-width', focusedWidth)
+        const layoutElement = document.getElementById('dashboardLayout')!
+        const focusedWidth = getComputedStyle(layoutElement).getPropertyValue('--searchbar-width-focused')
+        layoutElement.style.setProperty('--searchbar-width', focusedWidth)
         setIsFocused(true)
     }
     function onBlur(e?: any) {
         if (e?.relatedTarget?.pathname === '/search/clear') setValue('')
-        document.documentElement.style.setProperty('--searchbar-width', defaultWidth)
+        const layoutElement = document.getElementById('dashboardLayout')!!
+        const defaultWidth = getComputedStyle(layoutElement).getPropertyValue('--searchbar-width-default')
+        layoutElement.style.setProperty('--searchbar-width', defaultWidth)
         setIsFocused(false)
     }
     // I don't think this is ever actually fired due to blur event preventing it,

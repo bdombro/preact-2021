@@ -1,0 +1,43 @@
+#dashboardLayout {
+  --nav-background: #f3f2f1;
+  --nav-background-hover: #e6e6e6;
+  --nav-background-active: #f9dddc;
+  --searchbar-background: #b6b6b6;
+  
+  --header-height: 48px;
+  --sidebar-width-full: 200px;
+  --sidebar-width-mini: 54px;
+  --sidebar-width: var(--sidebar-width-full);
+  
+  --searchbar-width-default: 270px;
+  --searchbar-width-focused: 420px;
+  --searchbar-width: var(--searchbar-width-default);
+
+  --bottom-nav-height: 36px;
+
+  --body-height: calc( 100vh - var(--header-height) );
+  --margin-bottom: 0;
+  --margin-left: var(--sidebar-width);
+}
+
+@media (max-width: 600px) {
+  #dashboardLayout {
+    --body-height: calc( 100vh - var(--header-height) - var(--bottom-nav-height) );
+    --margin-bottom: var(--bottom-nav-height);
+    --margin-left: 0;
+  }
+}
+
+#dashboardLayout {
+  overflow: hidden;
+  margin-top: var(--header-height);
+  margin-bottom: var(--margin-bottom);
+  margin-left: var(--margin-left);
+}
+
+#dashboardLayoutBody {
+  height: 100vh;
+  height: var(--body-height);
+  overflow-x: hidden;
+  overflow-y: auto;
+}

@@ -1,12 +1,10 @@
 import styles from  './Sidebar.module.css'
 import { h } from 'preact';
-import lazy from '../lazy';
+import lazy from '../../lazy';
 import { useEffect, useState } from 'preact/hooks';
 
 const Nav = lazy(() => import('./Nav'))
 
-const fullWidth = getComputedStyle(document.documentElement).getPropertyValue('--sidebar-width-full')
-const miniWidth = getComputedStyle(document.documentElement).getPropertyValue('--sidebar-width-mini')
 
 export default function Sidebar() {
     useEffect(listenForToggle, [])
@@ -21,8 +19,11 @@ export default function Sidebar() {
     }
     function toggle(e: any) {
         if (e) e.preventDefault()
-        const current = getComputedStyle(document.documentElement).getPropertyValue('--sidebar-width')
-        document.documentElement.style.setProperty(
+        const layoutElement = document.getElementById('dashboardLayout')!
+        const fullWidth = getComputedStyle(layoutElement).getPropertyValue('--sidebar-width-full')
+        const miniWidth = getComputedStyle(layoutElement).getPropertyValue('--sidebar-width-mini')
+        const current = getComputedStyle(layoutElement).getPropertyValue('--sidebar-width')
+        layoutElement.style.setProperty(
             '--sidebar-width', 
             current === miniWidth ? fullWidth : miniWidth,
         )

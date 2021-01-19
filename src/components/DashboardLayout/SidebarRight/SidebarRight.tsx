@@ -1,11 +1,11 @@
 import styles from './SidebarRight.module.css'
 import { h } from 'preact';
-import lazy from '../lazy';
+import lazy from '../../lazy';
 import { useEffect, useState } from 'preact/hooks';
 
 const Nav = lazy(() => import('./Nav'))
 
-export default function Sidebar() {
+export default function SidebarRight() {
     const [isActive, setIsActive] = useState(false)
     useEffect(listenForToggle, [])
 

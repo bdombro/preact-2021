@@ -1,9 +1,8 @@
 import styles from './Nav.module.css'
 import { h } from 'preact';
-import { useLocation } from "../routing"
 
 export default function Nav() {
-    const { pathname } = useLocation()
+    const { pathname } = location
     return <nav className={styles.nav}>
         <NavLink uri='/about' text='About' icon='&#216;' isActive={isActive('/about')} />
         <NavLink uri='/auth' text='Auth' icon='&#214;' isActive={isActive('/auth')} />

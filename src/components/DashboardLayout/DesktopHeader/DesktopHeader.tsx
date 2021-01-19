@@ -1,11 +1,11 @@
-import styles from './MobileHeader.module.css'
+import styles from './DesktopHeader.module.css'
 import { h } from 'preact';
-import lazy from '../lazy';
+import lazy from '~/components/lazy';
 
 const Left = lazy(() => import('./Left'))
 const Right = lazy(() => import('./Right'))
 
-export default function MobileHeader() {
+export default function DesktopHeader() {
     return <div className={styles.header}>
         <Left />
         <Right />

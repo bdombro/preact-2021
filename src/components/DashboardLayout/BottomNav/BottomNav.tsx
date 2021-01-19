@@ -1,9 +1,8 @@
 import styles from './BottomNav.module.css'
 import { h } from 'preact';
-import {useLocation} from "../routing"
 
 export default function Nav() {
-    const { pathname } = useLocation()
+    const { pathname } = location
     return <nav className={styles.nav}>
         <NavLink uri='/about' text='Ø' isActive={isActive('/about')} />
         <NavLink uri='/auth' text='Ó' isActive={isActive('/auth')} />
