@@ -1,6 +1,7 @@
 import { h } from 'preact';
+import { useEffect, useLayoutEffect, useState } from 'preact/hooks';
 import lazy from "~/components/lazy";
-import { navigate, useLocation } from '~/components/routing';
+import { attachHistoryChangeListener, navigate, useLocation } from '~/components/routing';
 import {Stack} from '~/components/routing';
 
 const NotFound = lazy(() => import('./NotFound'))
@@ -11,7 +12,7 @@ export const Routes: {path: string, component: any, layout: any, stack?: any}[] 
     {
         path: '/about',
         component: lazy(() => import('./About')),
-        layout: DashboardLayout,
+        layout: BlankLayout,
     },
     {
         path: '/auth',
@@ -66,10 +67,32 @@ function PassThrough({children}: any) {
     return children
 }
 
-export default function Router() {
+function RouterSwitch() {
     const {pathname} = useLocation()
     if (pathname === '/') navigate('/about')
     const match = Routes.find(r => r.path === pathname)
     const Stack = match?.stack || PassThrough
-    return match ? <match.layout><Stack><match.component /></Stack></match.layout> : <NotFound />
+    return match ? <Stack><match.component/></Stack> : <NotFound />
+}
+
+/**
+ * Wraps the Router Switch in a Layout, and strategically only re-renders
+ * the layout if the layout has changed, preserving state in the layouts
+ * and improving performance
+ */
+export default function Router() {
+    const [Layout, setLayout] = useState<any>(() => PassThrough)
+    useEffect(watchLocation, [])
+    return <Layout><RouterSwitch /></Layout>
+
+    function watchLocation() {
+        const cancel = attachHistoryChangeListener(onLocationChange)
+        onLocationChange()
+        return cancel
+    }
+    function onLocationChange() {
+        const match = Routes.find(r => r.path === location.pathname)
+        if (!match) setLayout(() => BlankLayout)
+        else if (Layout !== match.layout) setLayout(() => match.layout)
+    }
 }

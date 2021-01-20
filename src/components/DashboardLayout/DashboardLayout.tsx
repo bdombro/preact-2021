@@ -1,5 +1,5 @@
 import './DashboardLayout.css'
-import { Fragment, h } from 'preact'
+import { h } from 'preact'
 
 import BottomNav from '~/components/DashboardLayout/BottomNav'
 import DesktopHeader from '~/components/DashboardLayout/DesktopHeader'

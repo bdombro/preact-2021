@@ -40,7 +40,7 @@ export default function Stack(basePath: string) {
                     navigate(back.location.pathname + back.location.search, {replace: true})
                 }
                 else if (pathname === top.location.pathname && search === top.location.search) {
-                    console.log("top")
+                    // console.log("top")
                     scrollTo(top.scroll)
                     setVisibility('visible')
                     watchScrollInterval = setInterval(updateScrollPos, 300)
@@ -49,8 +49,7 @@ export default function Stack(basePath: string) {
                     navigate(top.location.pathname + top.location.search, {replace: true})
                 }
                 else { // forward navigation -- add to history 
-                    console.log('forward')
-                    // contentE.scrollTop = 0
+                    // console.log('forward')
                     scrollTo(0)
                     setVisibility('visible')
                     Stack.push({location, scroll: 0})
