@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import lazy from "~/components/lazy";
-import { attachHistoryChangeListener, navigate, Stack, useLocation } from '~/components/routing';
+import { attachHistoryChangeListener, navigate, Route, Stack, useLocation } from '~/lib/routing';
 
 const NotFound = lazy(() => import('../components/NotFound'))
 const DashboardLayout = lazy(() => import('~/components/DashboardLayout'))
@@ -12,7 +12,7 @@ export const Routes = Object.freeze({
         path: '/about',
         component: lazy(() => import('./about')),
         layout: BlankLayout,
-        stack: PassThrough,
+        stack: Route,
     },
     AuthStack: {
         path: '/auth',

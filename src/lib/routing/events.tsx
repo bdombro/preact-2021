@@ -11,8 +11,9 @@ export function detachHistoryChangeListener(callback: () => any) {
 }
 
 export function navigate(to: string, { replace = false } = {}) {
-    history[replace ? "replaceState" : "pushState"](null, "", to)
+    history[replace ? "replaceState" : "pushState"](Date.now(), "", to)
 }
+if (!history.state) navigate(location.pathname + location.search, { replace: true})
 
 // While History API does have `popstate` event, the only
 // proper way to listen to changes via `push/replaceState`

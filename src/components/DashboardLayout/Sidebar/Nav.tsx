@@ -1,6 +1,6 @@
 import styles from  './Nav.module.css'
 import { h } from 'preact';
-import { useLocation } from '~/components/routing';
+import { useLocation } from '~/lib/routing';
 import { Paths } from '~/routes/router';
 
 export default function Nav() {

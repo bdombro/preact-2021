@@ -1,2 +1,14 @@
-.blank-layout {
+#blankLayout {
+  --body-height: 100vh;
+}
+
+#blankLayout {
+  overflow: hidden;
+}
+
+#content {
+  height: 100vh;
+  height: var(--body-height);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
