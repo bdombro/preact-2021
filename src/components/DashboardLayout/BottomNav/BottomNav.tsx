@@ -2,13 +2,16 @@ import styles from './BottomNav.module.css'
 import { h } from 'preact';
 import { useLocation } from '~/lib/routing';
 import { Paths } from '~/routes/router';
+import { useState } from 'preact/hooks';
 
 export default function Nav() {
     const { pathname } = useLocation()
+    const [isMenuOpen, setMenuIsOpen] = useState(false)
+
     return <nav className={styles.nav}>
-        <NavLink uri={Paths.About} icon='Ø' isActive={isActive(Paths.About)} />
-        <NavLink uri={Paths.AuthStack} icon='Ó' isActive={isActive(Paths.AuthStack)} />
-        <NavLink uri={Paths.BlogStack} icon='Ö' isActive={isActive(Paths.BlogStack)} />
+        <NavLink uri={Paths.BlogStack} icon='Ö' isActive={isActive(Paths.BlogStack) && !isMenuOpen} />
+        <NavLink uri={Paths.AuthStack} icon='Ó' isActive={isActive(Paths.AuthStack) && !isMenuOpen} />
+        <NavLinkMenu isOpen={isMenuOpen} setIsOpen={setMenuIsOpen} />
     </nav>
 
     function isActive(uri: string) {
@@ -18,11 +21,28 @@ export default function Nav() {
 
 function NavLink({ uri, icon, isActive }: { uri: string, icon: string, isActive: boolean }) {
     return (
-        <a
+        <a  className={`${styles.navlink} ${isActive && styles.active}`}
             href={uri + (isActive ? '?stack=reset' : '')}
-            className={`${styles.navlink} ${isActive && styles.active}`}
         >
             <div>{icon}</div>
         </a>
     )
+}
+
+type SetIsOpenCallback = (prev: boolean) => boolean
+function NavLinkMenu({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (prev: SetIsOpenCallback) => any}) {
+    return (
+        <a className={`${styles.navlink} ${isOpen && styles.active}`}
+           href="#open-sidebar"
+           onClick={onClick}
+        >
+            <div>{isOpen ? "X" : "Ξ"}</div>
+        </a>
+    )
+
+    function onClick(e: any) {
+        e.preventDefault()
+        window.dispatchEvent(new Event('toggle-sidebar-right'))
+        setIsOpen(isOpen => !isOpen)
+    }
 }
