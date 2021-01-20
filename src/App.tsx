@@ -1,12 +1,11 @@
 import { Fragment, h } from 'preact';
 
-import StackRoutes from './pages'
+import Router from './routes/router'
 import UnhandledErrorNotification from './components/UnhandledErrorNotification'
-import DashboardLayout from './components/DashboardLayout';
 
 export default function App() {
-  return <DashboardLayout>
+  return <Fragment>
     <UnhandledErrorNotification />
-    <StackRoutes />
-  </DashboardLayout>
+    <Router />
+  </Fragment>
 }

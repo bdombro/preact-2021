@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }: { children: any }) {
     <Sidebar />
     <SidebarRight />
     <BottomNav />
-    <div id="dashboardLayoutBody">
+    <div id="content">
       {children}
     </div>
   </div>
