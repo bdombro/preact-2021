@@ -1,13 +1,14 @@
 import styles from './Nav.module.css'
 import { h } from 'preact';
 import { useLocation } from '~/components/routing';
+import { Paths } from '~/routes/router';
 
 export default function Nav() {
     const { pathname } = useLocation()
     return <nav className={styles.nav}>
-        <NavLink uri='/about' text='About' icon='&#216;' isActive={isActive('/about')} />
-        <NavLink uri='/auth' text='Auth' icon='&#214;' isActive={isActive('/auth')} />
-        <NavLink uri='/blog' text='Blog' icon='&#211;' isActive={isActive('/blog')} />
+        <NavLink uri={Paths.About} text='About' icon='Ø' isActive={isActive(Paths.About)} />
+        <NavLink uri={Paths.AuthStack} text='Auth' icon='Ó' isActive={isActive(Paths.AuthStack)} />
+        <NavLink uri={Paths.BlogStack} text='Blog' icon='Ö' isActive={isActive(Paths.BlogStack)} />
     </nav>
 
     function isActive(uri: string) {

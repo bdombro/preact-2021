@@ -1,11 +1,12 @@
 import { h } from 'preact';
+import { Paths } from '../router';
 
 export default function UserRoute() {
     const userId = new URLSearchParams(location.search).get('id')
     return <div>
         <h1>Hello, User:{userId}!</h1>
         <ul>
-            <li><a href={'/auth/user?id=' + Math.random()} >Random User</a></li>
+            <li><a href={Paths.AuthUser +'?id=' + Math.random()} >Random User</a></li>
             <li><a href={'?stack=back'}>Go Back</a></li>
         </ul>
         <br /><br /><br /><br /><br />1<br /><br /><br /><br /><br />2

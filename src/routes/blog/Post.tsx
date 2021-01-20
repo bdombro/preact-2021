@@ -1,11 +1,12 @@
 import { h } from 'preact';
+import { Paths } from '../router';
 
 export default function PostRoute() {
     const postId = new URLSearchParams(location.search).get('id')
     return <div>
         <h1>Hello, Post:{postId}!</h1>
         <ul>
-            <li><a href={'/blog/post?id=' + Math.random()} >Random Post</a></li>
+            <li><a href={Paths.BlogPost +'?id=' + Math.random()} >Random Post</a></li>
             <li><a href={'?stack=back'}>Go Back</a></li>
         </ul>
         <br /><br /><br /><br /><br />1<br /><br /><br /><br /><br />2

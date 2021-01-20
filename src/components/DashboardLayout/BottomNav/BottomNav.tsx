@@ -1,13 +1,14 @@
 import styles from './BottomNav.module.css'
 import { h } from 'preact';
 import { useLocation } from '~/components/routing';
+import { Paths } from '~/routes/router';
 
 export default function Nav() {
     const { pathname } = useLocation()
     return <nav className={styles.nav}>
-        <NavLink uri='/about' text='Ø' isActive={isActive('/about')} />
-        <NavLink uri='/auth' text='Ó' isActive={isActive('/auth')} />
-        <NavLink uri='/blog' text='Ö' isActive={isActive('/blog')} />
+        <NavLink uri={Paths.About} icon='Ø' isActive={isActive(Paths.About)} />
+        <NavLink uri={Paths.AuthStack} icon='Ó' isActive={isActive(Paths.AuthStack)} />
+        <NavLink uri={Paths.BlogStack} icon='Ö' isActive={isActive(Paths.BlogStack)} />
     </nav>
 
     function isActive(uri: string) {
@@ -15,13 +16,13 @@ export default function Nav() {
     }
 }
 
-function NavLink({ uri, text, isActive }: { uri: string, text: string, isActive: boolean }) {
+function NavLink({ uri, icon, isActive }: { uri: string, icon: string, isActive: boolean }) {
     return (
         <a
             href={uri + (isActive ? '?stack=reset' : '')}
             className={`${styles.navlink} ${isActive && styles.active}`}
         >
-            <div>{text}</div>
+            <div>{icon}</div>
         </a>
     )
 }

@@ -1,67 +1,72 @@
 import { h } from 'preact';
-import { useEffect, useLayoutEffect, useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import lazy from "~/components/lazy";
-import { attachHistoryChangeListener, navigate, useLocation } from '~/components/routing';
-import {Stack} from '~/components/routing';
+import { attachHistoryChangeListener, navigate, Stack, useLocation } from '~/components/routing';
 
-const NotFound = lazy(() => import('./NotFound'))
+const NotFound = lazy(() => import('../components/NotFound'))
 const DashboardLayout = lazy(() => import('~/components/DashboardLayout'))
 const BlankLayout = lazy(() => import('~/components/BlankLayout'))
 
-export const Routes: {path: string, component: any, layout: any, stack?: any}[] = [
-    {
+export const Routes = Object.freeze({
+    About: {
         path: '/about',
-        component: lazy(() => import('./About')),
+        component: lazy(() => import('./about')),
         layout: BlankLayout,
+        stack: PassThrough,
     },
-    {
+    AuthStack: {
         path: '/auth',
-        component: Stack('/auth'),
+        component: PassThrough,
         layout: DashboardLayout,
+        stack: Stack('/auth'),
     },
-    {
+    AuthHome: {
         path: '/auth/home',
         component: lazy(() => import('./auth')),
         layout: DashboardLayout,
         stack: Stack('/auth'),
     },
-    {
+    AuthUser: {
         path: '/auth/user',
         component: lazy(() => import('./auth/User')),
         layout: DashboardLayout,
         stack: Stack('/auth'),
     },
-    {
+    AuthUsers: {
         path: '/auth/users',
         component: lazy(() => import('./auth/UserList')),
         layout: DashboardLayout,
         stack: Stack('/auth'),
     },
-    {
+    BlogStack: {
         path: '/blog',
-        component: Stack('/blog'),
+        component: PassThrough,
         layout: DashboardLayout,
+        stack: Stack('/blog'),
     },
-    {
+    BlogHome: {
         path: '/blog/home',
         component: lazy(() => import('./blog')),
         layout: DashboardLayout,
         stack: Stack('/blog'),
     },
-    {
+    BlogPost: {
         path: '/blog/post',
         component: lazy(() => import('./blog/Post')),
         layout: DashboardLayout,
         stack: Stack('/blog'),
     },
-    {
+    BlogPosts: {
         path: '/blog/posts',
         component: lazy(() => import('./blog/PostList')),
         layout: DashboardLayout,
         stack: Stack('/blog'),
     },
 
-]
+})
+export const RoutesByPath = Object.fromEntries(Object.values(Routes).map(r => [r.path, r]))
+// @ts-ignore: Maybe fix later
+export const Paths: Record<keyof typeof Routes, string> = Object.fromEntries(Object.entries(Routes).map(([name, r]) => [name, r.path]))
 
 function PassThrough({children}: any) {
     return children
@@ -70,7 +75,7 @@ function PassThrough({children}: any) {
 function RouterSwitch() {
     const {pathname} = useLocation()
     if (pathname === '/') navigate('/about')
-    const match = Routes.find(r => r.path === pathname)
+    const match = RoutesByPath[pathname]
     const Stack = match?.stack || PassThrough
     return match ? <Stack><match.component/></Stack> : <NotFound />
 }
@@ -91,7 +96,7 @@ export default function Router() {
         return cancel
     }
     function onLocationChange() {
-        const match = Routes.find(r => r.path === location.pathname)
+        const match = RoutesByPath[location.pathname]
         if (!match) setLayout(() => BlankLayout)
         else if (Layout !== match.layout) setLayout(() => match.layout)
     }
