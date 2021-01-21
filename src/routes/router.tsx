@@ -4,6 +4,7 @@ import lazy from "~/components/lazy"
 import { attachHistoryChangeListener, navigate, Route, Stack, useLocation } from '~/lib/routing'
 
 const NotFound = lazy(() => import('~/components/NotFound'))
+const LoginLayout = lazy(() => import('~/components/LoginLayout'))
 const AdminLayout = lazy(() => import('~/components/AdminLayout'))
 const TenantLayout = lazy(() => import('~/components/TenantLayout'))
 const BlankLayout = lazy(() => import('~/components/BlankLayout'))
@@ -23,19 +24,19 @@ export const Routes = Object.freeze({
     Login: {
         path: '/login',
         component: lazy(() => import('./auth/login')),
-        layout: BlankLayout,
+        layout: LoginLayout,
         stack: Route,
     },
     Register: {
         path: '/register',
         component: lazy(() => import('./auth/register')),
-        layout: BlankLayout,
+        layout: LoginLayout,
         stack: Route,
     },
     ForgotPassword: {
         path: '/forgotPassword',
         component: lazy(() => import('./auth/forgotPassword')),
-        layout: BlankLayout,
+        layout: LoginLayout,
         stack: Route,
     },
     Logout: {

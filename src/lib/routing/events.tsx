@@ -51,7 +51,15 @@ if (!history.state) navigate(location.pathname + location.search, { replace: tru
             )
         ) {
             event.preventDefault()
-            navigate(linkNode.pathname + linkNode.search)
+            const search = new URLSearchParams(linkNode.search)
+            const replace = search.get('replace')
+            if (replace) {
+                search.delete('replace')
+                const searchStr = search.toString() ? '?' + search.toString() : ''
+                navigate(linkNode.pathname + searchStr, {replace: true})
+            }
+            else 
+                navigate(linkNode.pathname + linkNode.search)
         }
     }
     function findLinkTagInParents(node: HTMLElement): any {
