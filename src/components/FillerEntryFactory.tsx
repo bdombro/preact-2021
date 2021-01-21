@@ -3,7 +3,7 @@ import { h } from 'preact';
 export default function FillerEntryFactory(name: string) {
     return () => {
         const id = new URLSearchParams(location.search).get('id')
-        return <div>
+        return <div style={{padding: "0 10px"}}>
             <h1>Hello, {name}:{id}!</h1>
             <ul>
                 <li><a href={location.pathname + '?id=' + Math.random()} >Random Post</a></li>

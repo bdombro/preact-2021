@@ -4,7 +4,8 @@ import lazy from "~/components/lazy"
 import { attachHistoryChangeListener, navigate, Route, Stack, useLocation } from '~/lib/routing'
 
 const NotFound = lazy(() => import('~/components/NotFound'))
-const DashboardLayout = lazy(() => import('~/components/DashboardLayout'))
+const AdminLayout = lazy(() => import('~/components/AdminLayout'))
+const TenantLayout = lazy(() => import('~/components/TenantLayout'))
 const BlankLayout = lazy(() => import('~/components/BlankLayout'))
 const MarketingLayout = lazy(() => import('~/components/MarketingLayout'))
 
@@ -68,70 +69,70 @@ export const Routes = Object.freeze({
     AdminSettingsHome: {
         path: '/admin/settings',
         component: lazy(() => import('./admin/settings/home')),
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Route,
     },
     
     AdminStatsStack: {
         path: '/admin/stats',
         component: PassThrough,
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Stack('/admin/stats'),
     },
     AdminStatsHome: {
         path: '/admin/stats/home',
         component: lazy(() => import('./admin/stats/home')),
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Stack('/admin/stats'),
     },
 
     AdminUserStack: {
         path: '/admin/users',
         component: PassThrough,
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Stack('/admin/users'),
     },
     AdminUserHome: {
         path: '/admin/users/home',
         component: lazy(() => import('./admin/users/home')),
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Stack('/admin/users'),
     },
     AdminUserList: {
         path: '/admin/users/list',
         component: lazy(() => import('./admin/users/list')),
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Stack('/admin/users'),
     },
     AdminUserEntry: {
         path: '/admin/users/entry',
         component: lazy(() => import('./admin/users/entry')),
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Stack('/admin/users'),
     },
     
     AdminBlogStack: {
         path: '/admin/blog',
         component: PassThrough,
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Stack('/admin/blog'),
     },
     AdminBlogHome: {
         path: '/admin/blog/home',
         component: lazy(() => import('./admin/blog/home')),
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Stack('/admin/blog'),
     },
     AdminBlogPostList: {
         path: '/admin/blog/list',
         component: lazy(() => import('./admin/blog/list')),
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Stack('/admin/blog'),
     },
     AdminBlogPostEntry: {
         path: '/admin/blog/entry',
         component: lazy(() => import('./admin/blog/entry')),
-        layout: DashboardLayout,
+        layout: AdminLayout,
         stack: Stack('/admin/blog'),
     },
 
@@ -143,95 +144,95 @@ export const Routes = Object.freeze({
     TenantSettingsHome: {
         path: '/tenant/settings',
         component: lazy(() => import('./tenant/settings/home')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Route,
     },
 
     TenantStatsStack: {
         path: '/tenant/stats',
         component: PassThrough,
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/stats'),
     },
     TenantStatsHome: {
         path: '/tenant/stats/home',
         component: lazy(() => import('./tenant/stats/home')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/stats'),
     },
 
     TenantUserStack: {
         path: '/tenant/users',
         component: PassThrough,
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/users'),
     },
     TenantUserHome: {
         path: '/tenant/users/home',
         component: lazy(() => import('./tenant/users/home')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/users'),
     },
     TenantUserList: {
         path: '/tenant/users/list',
         component: lazy(() => import('./tenant/users/list')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/users'),
     },
     TenantUserEntry: {
         path: '/tenant/users/entry',
         component: lazy(() => import('./tenant/users/entry')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/users'),
     },
 
     TenantPropertiesStack: {
         path: '/tenant/properties',
         component: PassThrough,
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/properties'),
     },
     TenantPropertiesHome: {
         path: '/tenant/properties/home',
         component: lazy(() => import('./tenant/properties/home')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/properties'),
     },
     TenantPropertiesList: {
         path: '/tenant/properties/list',
         component: lazy(() => import('./tenant/properties/list')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/properties'),
     },
     TenantPropertiesEntry: {
         path: '/tenant/properties/entry',
         component: lazy(() => import('./tenant/properties/entry')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/properties'),
     },
 
     TenantTasksStack: {
         path: '/tenant/tasks',
         component: PassThrough,
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/tasks'),
     },
     TenantTasksHome: {
         path: '/tenant/tasks/home',
         component: lazy(() => import('./tenant/tasks/home')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/tasks'),
     },
     TenantTasksList: {
         path: '/tenant/tasks/list',
         component: lazy(() => import('./tenant/tasks/list')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/tasks'),
     },
     TenantTasksEntry: {
         path: '/tenant/tasks/entry',
         component: lazy(() => import('./tenant/tasks/entry')),
-        layout: DashboardLayout,
+        layout: TenantLayout,
         stack: Stack('/tenant/tasks'),
     },
 })

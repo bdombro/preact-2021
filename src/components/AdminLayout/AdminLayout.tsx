@@ -1,4 +1,4 @@
-import './DashboardLayout.css'
+import './AdminLayout.css'
 import { h } from 'preact'
 import lazy from '../lazy'
 
@@ -7,8 +7,8 @@ const Header = lazy(() => import('./Header'))
 const Sidebar = lazy(() => import('./Sidebar'))
 const SidebarRight = lazy(() => import('./SidebarRight'))
 
-export default function DashboardLayout({ children }: { children: any }) {
-  return <div id="dashboardLayout">
+export default function AdminLayout({ children }: { children: any }) {
+  return <div id="adminLayout">
     <Header />
     <Sidebar />
     <SidebarRight />

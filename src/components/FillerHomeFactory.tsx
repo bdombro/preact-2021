@@ -2,9 +2,9 @@ import { h } from 'preact';
 
 export default function FillerEntryFactory(name: string) {
     return () => {
-        const listPath = location.pathname.split('/').slice(-1).join('/list')
-        const entryPath = location.pathname.split('/').slice(-1).join('/entry')
-        return <div>
+        const listPath = location.pathname.split('/').slice(0, -1).join('/') + '/list'
+        const entryPath = location.pathname.split('/').slice(0, -1).join('/') + '/entry'
+        return <div style={{ padding: "0 10px" }}>
             <h1>Hello, {name}!</h1>
             <ul>
                 <li><a href={listPath} >List Route</a></li>

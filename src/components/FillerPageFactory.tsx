@@ -1,7 +1,7 @@
 import { h } from 'preact'
 
 export default function FillerPageFactory(name: string) {
-    return () => <div>
+    return () => <div style={{ padding: "0 10px" }}>
         <h1>Hello, {name}!</h1>
         <br /><br /><br /><br /><br />1<br /><br /><br /><br /><br />2
         <br /><br /><br /><br /><br />3<br /><br /><br /><br /><br />4
