@@ -1,0 +1,26 @@
+#marketingLayout {
+  --nav-background: #f3f2f1;
+  --nav-background-hover: #e6e6e6;
+  --nav-background-active: #f9dddc;
+  
+  --header-height: 48px;
+  --sidebar-width: 200px;
+
+  --body-height: calc( 100vh - var(--header-height) );
+  --margin-bottom: 0;
+  --margin-left: 0;
+}
+
+#marketingLayout {
+  overflow: hidden;
+  margin-top: var(--header-height);
+  margin-bottom: var(--margin-bottom);
+  margin-left: var(--margin-left);
+}
+
+#content {
+  height: 100vh;
+  height: var(--body-height);
+  overflow-x: hidden;
+  overflow-y: auto;
+}

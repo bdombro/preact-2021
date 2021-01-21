@@ -1,72 +1,255 @@
 import { h } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
-import lazy from "~/components/lazy";
-import { attachHistoryChangeListener, navigate, Route, Stack, useLocation } from '~/lib/routing';
+import { useEffect, useState } from 'preact/hooks'
+import lazy from "~/components/lazy"
+import { attachHistoryChangeListener, navigate, Route, Stack, useLocation } from '~/lib/routing'
 
-const NotFound = lazy(() => import('../components/NotFound'))
+const NotFound = lazy(() => import('~/components/NotFound'))
 const DashboardLayout = lazy(() => import('~/components/DashboardLayout'))
 const BlankLayout = lazy(() => import('~/components/BlankLayout'))
+const MarketingLayout = lazy(() => import('~/components/MarketingLayout'))
 
 export const Routes = Object.freeze({
-    About: {
-        path: '/about',
-        component: lazy(() => import('./about')),
+
+
+    // Marketing Routes: home, login, support, about, blog
+
+    Home: {
+        path: '/',
+        component: lazy(() => import('./marketing/home')),
+        layout: MarketingLayout,
+        stack: Route,
+    },
+    Login: {
+        path: '/login',
+        component: lazy(() => import('./auth/login')),
         layout: BlankLayout,
         stack: Route,
     },
-    AuthStack: {
-        path: '/auth',
-        component: PassThrough,
-        layout: DashboardLayout,
-        stack: Stack('/auth'),
+    Register: {
+        path: '/register',
+        component: lazy(() => import('./auth/register')),
+        layout: BlankLayout,
+        stack: Route,
     },
-    AuthHome: {
-        path: '/auth/home',
-        component: lazy(() => import('./auth')),
-        layout: DashboardLayout,
-        stack: Stack('/auth'),
+    ForgotPassword: {
+        path: '/forgotPassword',
+        component: lazy(() => import('./auth/forgotPassword')),
+        layout: BlankLayout,
+        stack: Route,
     },
-    AuthUser: {
-        path: '/auth/user',
-        component: lazy(() => import('./auth/User')),
-        layout: DashboardLayout,
-        stack: Stack('/auth'),
+    Logout: {
+        path: '/logout',
+        component: lazy(() => import('./auth/logout')),
+        layout: BlankLayout,
+        stack: Route,
     },
-    AuthUsers: {
-        path: '/auth/users',
-        component: lazy(() => import('./auth/UserList')),
-        layout: DashboardLayout,
-        stack: Stack('/auth'),
+    Support: {
+        path: '/support',
+        component: lazy(() => import('./marketing/support')),
+        layout: MarketingLayout,
+        stack: Route,
     },
-    BlogStack: {
+    About: {
+        path: '/about',
+        component: lazy(() => import('./marketing/about')),
+        layout: MarketingLayout,
+        stack: Route,
+    },
+    Blog: {
         path: '/blog',
-        component: PassThrough,
-        layout: DashboardLayout,
-        stack: Stack('/blog'),
-    },
-    BlogHome: {
-        path: '/blog/home',
-        component: lazy(() => import('./blog')),
-        layout: DashboardLayout,
-        stack: Stack('/blog'),
-    },
-    BlogPost: {
-        path: '/blog/post',
-        component: lazy(() => import('./blog/Post')),
-        layout: DashboardLayout,
-        stack: Stack('/blog'),
-    },
-    BlogPosts: {
-        path: '/blog/posts',
-        component: lazy(() => import('./blog/PostList')),
-        layout: DashboardLayout,
-        stack: Stack('/blog'),
+        component: lazy(() => import('./marketing/blog')),
+        layout: MarketingLayout,
+        stack: Route,
     },
 
+
+    // Admin Routes: stats, settings, users, posts
+
+    AdminSettingsHome: {
+        path: '/admin/settings',
+        component: lazy(() => import('./admin/settings/home')),
+        layout: DashboardLayout,
+        stack: Route,
+    },
+    
+    AdminStatsStack: {
+        path: '/admin/stats',
+        component: PassThrough,
+        layout: DashboardLayout,
+        stack: Stack('/admin/stats'),
+    },
+    AdminStatsHome: {
+        path: '/admin/stats/home',
+        component: lazy(() => import('./admin/stats/home')),
+        layout: DashboardLayout,
+        stack: Stack('/admin/stats'),
+    },
+
+    AdminUserStack: {
+        path: '/admin/users',
+        component: PassThrough,
+        layout: DashboardLayout,
+        stack: Stack('/admin/users'),
+    },
+    AdminUserHome: {
+        path: '/admin/users/home',
+        component: lazy(() => import('./admin/users/home')),
+        layout: DashboardLayout,
+        stack: Stack('/admin/users'),
+    },
+    AdminUserList: {
+        path: '/admin/users/list',
+        component: lazy(() => import('./admin/users/list')),
+        layout: DashboardLayout,
+        stack: Stack('/admin/users'),
+    },
+    AdminUserEntry: {
+        path: '/admin/users/entry',
+        component: lazy(() => import('./admin/users/entry')),
+        layout: DashboardLayout,
+        stack: Stack('/admin/users'),
+    },
+    
+    AdminBlogStack: {
+        path: '/admin/blog',
+        component: PassThrough,
+        layout: DashboardLayout,
+        stack: Stack('/admin/blog'),
+    },
+    AdminBlogHome: {
+        path: '/admin/blog/home',
+        component: lazy(() => import('./admin/blog/home')),
+        layout: DashboardLayout,
+        stack: Stack('/admin/blog'),
+    },
+    AdminBlogPostList: {
+        path: '/admin/blog/list',
+        component: lazy(() => import('./admin/blog/list')),
+        layout: DashboardLayout,
+        stack: Stack('/admin/blog'),
+    },
+    AdminBlogPostEntry: {
+        path: '/admin/blog/entry',
+        component: lazy(() => import('./admin/blog/entry')),
+        layout: DashboardLayout,
+        stack: Stack('/admin/blog'),
+    },
+
+
+
+
+    // Tenant/Customer Routes: stats, settings, users, properties, tasks
+
+    TenantSettingsHome: {
+        path: '/tenant/settings',
+        component: lazy(() => import('./tenant/settings/home')),
+        layout: DashboardLayout,
+        stack: Route,
+    },
+
+    TenantStatsStack: {
+        path: '/tenant/stats',
+        component: PassThrough,
+        layout: DashboardLayout,
+        stack: Stack('/tenant/stats'),
+    },
+    TenantStatsHome: {
+        path: '/tenant/stats/home',
+        component: lazy(() => import('./tenant/stats/home')),
+        layout: DashboardLayout,
+        stack: Stack('/tenant/stats'),
+    },
+
+    TenantUserStack: {
+        path: '/tenant/users',
+        component: PassThrough,
+        layout: DashboardLayout,
+        stack: Stack('/tenant/users'),
+    },
+    TenantUserHome: {
+        path: '/tenant/users/home',
+        component: lazy(() => import('./tenant/users/home')),
+        layout: DashboardLayout,
+        stack: Stack('/tenant/users'),
+    },
+    TenantUserList: {
+        path: '/tenant/users/list',
+        component: lazy(() => import('./tenant/users/list')),
+        layout: DashboardLayout,
+        stack: Stack('/tenant/users'),
+    },
+    TenantUserEntry: {
+        path: '/tenant/users/entry',
+        component: lazy(() => import('./tenant/users/entry')),
+        layout: DashboardLayout,
+        stack: Stack('/tenant/users'),
+    },
+
+    TenantPropertiesStack: {
+        path: '/tenant/properties',
+        component: PassThrough,
+        layout: DashboardLayout,
+        stack: Stack('/tenant/properties'),
+    },
+    TenantPropertiesHome: {
+        path: '/tenant/properties/home',
+        component: lazy(() => import('./tenant/properties/home')),
+        layout: DashboardLayout,
+        stack: Stack('/tenant/properties'),
+    },
+    TenantPropertiesList: {
+        path: '/tenant/properties/list',
+        component: lazy(() => import('./tenant/properties/list')),
+        layout: DashboardLayout,
+        stack: Stack('/tenant/properties'),
+    },
+    TenantPropertiesEntry: {
+        path: '/tenant/properties/entry',
+        component: lazy(() => import('./tenant/properties/entry')),
+        layout: DashboardLayout,
+        stack: Stack('/tenant/properties'),
+    },
+
+    TenantTasksStack: {
+        path: '/tenant/tasks',
+        component: PassThrough,
+        layout: DashboardLayout,
+        stack: Stack('/tenant/tasks'),
+    },
+    TenantTasksHome: {
+        path: '/tenant/tasks/home',
+        component: lazy(() => import('./tenant/tasks/home')),
+        layout: DashboardLayout,
+        stack: Stack('/tenant/tasks'),
+    },
+    TenantTasksList: {
+        path: '/tenant/tasks/list',
+        component: lazy(() => import('./tenant/tasks/list')),
+        layout: DashboardLayout,
+        stack: Stack('/tenant/tasks'),
+    },
+    TenantTasksEntry: {
+        path: '/tenant/tasks/entry',
+        component: lazy(() => import('./tenant/tasks/entry')),
+        layout: DashboardLayout,
+        stack: Stack('/tenant/tasks'),
+    },
 })
+
+
 export const RoutesByPath = Object.fromEntries(Object.values(Routes).map(r => [r.path, r]))
 // @ts-ignore: Maybe fix later
 export const Paths: Record<keyof typeof Routes, string> = Object.fromEntries(Object.entries(Routes).map(([name, r]) => [name, r.path]))
+
+
+function StackRoute(stackPath: string, relPath: string, layout: any) {
+    return {
+        path: stackPath + relPath,
+        component: lazy(() => import('.' + stackPath + relPath)),
+        layout,
+        stack: Stack(stackPath),
+    }
+}
 
 function PassThrough({children}: any) {
     return children
@@ -74,7 +257,8 @@ function PassThrough({children}: any) {
 
 function RouterSwitch() {
     const {pathname} = useLocation()
-    if (pathname === '/') navigate('/about')
+    if (pathname === '/admin') navigate('/admin/stats')
+    if (pathname === '/tenant') navigate('/tenant/stats')
     const match = RoutesByPath[pathname]
     const Stack = match?.stack || PassThrough
     return match ? <Stack><match.component/></Stack> : <NotFound />

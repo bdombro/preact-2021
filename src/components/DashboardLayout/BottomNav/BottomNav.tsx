@@ -9,8 +9,9 @@ export default function Nav() {
     const [isMenuOpen, setMenuIsOpen] = useState(false)
 
     return <nav className={styles.nav}>
-        <NavLink uri={Paths.BlogStack} icon='Ö' isActive={isActive(Paths.BlogStack) && !isMenuOpen} />
-        <NavLink uri={Paths.AuthStack} icon='Ó' isActive={isActive(Paths.AuthStack) && !isMenuOpen} />
+        <NavLink uri={Paths.AdminStatsStack} icon='Ø' isActive={isActive(Paths.AdminStatsStack) && !isMenuOpen} />
+        <NavLink uri={Paths.AdminUserStack} icon='Ö' isActive={isActive(Paths.AdminUserStack) && !isMenuOpen} />
+        <NavLink uri={Paths.AdminBlogStack} icon='Ó' isActive={isActive(Paths.AdminBlogStack) && !isMenuOpen} />
         <NavLinkMenu isOpen={isMenuOpen} setIsOpen={setMenuIsOpen} />
     </nav>
 

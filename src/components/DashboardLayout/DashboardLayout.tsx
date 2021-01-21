@@ -1,16 +1,15 @@
 import './DashboardLayout.css'
 import { h } from 'preact'
+import lazy from '../lazy'
 
-import BottomNav from '~/components/DashboardLayout/BottomNav'
-import DesktopHeader from '~/components/DashboardLayout/DesktopHeader'
-import MobileHeader from '~/components/DashboardLayout/MobileHeader'
-import Sidebar from '~/components/DashboardLayout/Sidebar'
-import SidebarRight from '~/components/DashboardLayout/SidebarRight'
+const BottomNav = lazy(() => import('./BottomNav'))
+const Header = lazy(() => import('./Header'))
+const Sidebar = lazy(() => import('./Sidebar'))
+const SidebarRight = lazy(() => import('./SidebarRight'))
 
 export default function DashboardLayout({ children }: { children: any }) {
   return <div id="dashboardLayout">
-    <DesktopHeader />
-    <MobileHeader />
+    <Header />
     <Sidebar />
     <SidebarRight />
     <BottomNav />

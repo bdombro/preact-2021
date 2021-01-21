@@ -1,0 +1,26 @@
+.nav {
+    /* width: 180px; */
+    display: flex;
+    flex-direction: row;
+    overflow-y: hidden;
+}
+.navlink {
+    color: white;
+    padding: 15px 12px;
+}
+.navlink:last-of-type {
+    color: white;
+    padding: 15px 22px;
+}
+.navlink:hover {
+    background: var(--primary);
+}
+.active, .active:hover {
+    color: var(--body);
+    background: var(--primary);
+}
+@media (max-width: 600px) {
+    .desktop {
+        display: none;
+    }
+}
