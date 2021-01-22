@@ -1,7 +1,9 @@
 import { Fragment, h } from 'preact';
+import { setPageMeta } from '~/lib/routing/seo';
 import { Paths } from '~/routes/router';
 
 export default function ForgotPassword() {
+    setPageMeta({ title: 'Forgot Password' })
     const search = new URLSearchParams(location.search)
     search.set('replace', 'true')
     const searchStr = '?' + search.toString()

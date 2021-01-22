@@ -1,7 +1,9 @@
 import { h } from 'preact';
+import { setPageMeta } from '~/lib/routing/seo';
 
-export default function FillerEntryFactory(name: string) {
+export default function FillerHomeFactory(name: string) {
     return () => {
+        setPageMeta({ title: name })
         const listPath = location.pathname.split('/').slice(0, -1).join('/') + '/list'
         const entryPath = location.pathname.split('/').slice(0, -1).join('/') + '/entry'
         return <div style={{ padding: "0 10px" }}>
