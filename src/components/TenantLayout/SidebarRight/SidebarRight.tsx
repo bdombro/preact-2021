@@ -1,6 +1,6 @@
 import styles from '~/components/AdminLayout/SidebarRight/SidebarRight.module.css'
 import { h } from 'preact';
-import lazy from '../../lazy';
+import lazy from '../../../lib/lazy';
 import { useEffect, useState } from 'preact/hooks';
 
 const Nav = lazy(() => import('./Nav'))

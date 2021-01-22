@@ -1,6 +1,6 @@
 import './AdminLayout.css'
 import { h } from 'preact'
-import lazy from '../lazy'
+import lazy from '../../lib/lazy'
 
 const BottomNav = lazy(() => import('./BottomNav'))
 const Header = lazy(() => import('./Header'))

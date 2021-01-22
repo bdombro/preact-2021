@@ -1,6 +1,6 @@
 import styles from './Header.module.css'
 import { h } from 'preact';
-import lazy from '~/components/lazy';
+import lazy from '~/lib/lazy';
 
 const Left = lazy(() => import('./Left'))
 const Right = lazy(() => import('./Right'))

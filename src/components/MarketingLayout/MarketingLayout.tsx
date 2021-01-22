@@ -1,6 +1,6 @@
 import './MarketingLayout.css'
 import { h } from 'preact'
-import lazy from '../lazy'
+import lazy from '../../lib/lazy'
 
 const Header = lazy(() => import('./Header'))
 const SidebarRight = lazy(() => import('./SidebarRight'))

@@ -1,5 +1,5 @@
 import { h } from 'preact'
-import setPageMeta from '~/lib/routing/setPageMeta'
+import { setPageMeta } from '~/lib/routing'
 
 export default function FillerPageFactory(name: string) {
     return () => {

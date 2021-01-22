@@ -7,86 +7,85 @@
  * - Variables are shortened to reduce file size
  */
 
-interface UsePageMetaProps {
+export interface SetPageMetaProps {
+    title: string
     siteName?: string
-    title?: string
     author?: string
     description?: string
     image?: string
     locale?: string
 }
 
-export default function setPageMeta(p: UsePageMetaProps = {}) {
-    const t = p.title ? `${p.title} - ${siteName}` : siteName
-    if (t !== document.title) document.title = t
+export default function setPageMeta(p: SetPageMetaProps) {
+    const title = p.title ? `${p.title} - ${siteName}` : siteName
+    if (title !== document.title) document.title = title
 
     if (link.href !== location.href) link.href = location.href
 
-    let m: M // aka metaclass
+    let m: MetaClass
 
-    m = ms.author
-    m.u((p.author || p.title) ? (p.author || p.title!) : m.o)
+    m = metas.author
+    m.upsert((p.author || p.title) ? (p.author || p.title!) : m.orig)
 
-    m = ms.ogTitle
-    m.u(p.title || m.o)
+    m = metas.ogTitle
+    m.upsert(p.title || m.orig)
 
-    m = ms.locale
-    m.u(p.locale || m.o)
+    m = metas.locale
+    m.upsert(p.locale || m.orig)
 
-    m = ms.description
-    m.u(p.description || m.o)
+    m = metas.description
+    m.upsert(p.description || m.orig)
 
-    m = ms.ogDescription
-    m.u(p.description || m.o)
+    m = metas.ogDescription
+    m.upsert(p.description || m.orig)
 
-    m = ms.ogUrl
-    m.u(location.href)
+    m = metas.ogUrl
+    m.upsert(location.href)
 
-    m = ms.ogSiteName
-    m.u(p.siteName || m.o)
+    m = metas.ogSiteName
+    m.upsert(p.siteName || m.orig)
 
-    m = ms.ogImage
-    m.u(p.image || m.o)
-    return null
+    m = metas.ogImage
+    m.upsert(p.image || m.orig)
 }
 
 /**
  * Wrapper class on meta elements to simplify usage and make more DRY
  */
-class M { // aka MetaClass
-    g: () => string // aka get
-    o: string // aka orig
-    s: (val: string) => void // aka set
+class MetaClass { // aka MetaClass
+    get: () => string // aka get
+    orig: string // aka orig
+    set: (val: string) => void // aka set
     constructor(e: Element) {
-        this.g = () => e.getAttribute('content')!
-        this.s = (v: string) => e.setAttribute('content', v)
-        this.o = this.g()
+        this.get = () => e.getAttribute('content')!
+        this.set = (v: string) => e.setAttribute('content', v)
+        this.orig = this.get()
     }
-    u(v: string) { // aka upsert
-        if (this.g() !== v) this.s(v)
+    upsert(val: string) { // aka upsert
+        if (this.get() !== val) this.set(val)
     }
 }
 
-const link = qs('link[rel="canonical"]')! as any
-const siteName = byP('og:site_name').getAttribute('content')!
+const link = find('link[rel="canonical"]')! as any
+const siteName = byProp('og:site_name').getAttribute('content')!
 
-const ms = { // Aka set of meta classes
-    author: new M(byN('author')),
-    ogTitle: new M(byP('og:title')),
-    locale: new M(byP('og:locale')),
-    description: new M(byN('description')),
-    ogDescription: new M(byP('og:description')),
-    ogUrl: new M(byP('og:url')),
-    ogSiteName: new M(byP('og:site_name')),
-    ogImage: new M(byP('og:image')),
+const metas = { // Aka set of meta classes
+    author: new MetaClass(byName('author')),
+    ogTitle: new MetaClass(byProp('og:title')),
+    locale: new MetaClass(byProp('og:locale')),
+    description: new MetaClass(byName('description')),
+    ogDescription: new MetaClass(byProp('og:description')),
+    ogUrl: new MetaClass(byProp('og:url')),
+    ogSiteName: new MetaClass(byProp('og:site_name')),
+    ogImage: new MetaClass(byProp('og:image')),
 }
 
-function byN(name: string) { // aka getMetaByName
-    return qs(`meta[name="${name}"]`)
+function byName(name: string) {
+    return find(`meta[name="${name}"]`)
 }
-function byP(prop: string) { // aka getMetaByProp
-    return qs(`meta[property="${prop}"]`)
+function byProp(prop: string) {
+    return find(`meta[property="${prop}"]`)
 }
-function qs(q: string) { // aka query selector
-    return document.head.querySelector(q)!
+function find(selector: string) {
+    return document.head.querySelector(selector)!
 }
