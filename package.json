@@ -11,7 +11,8 @@
     "lint": "prettier --check \"src/**/*.{js,jsx}\""
   },
   "dependencies": {
-    "preact": "^10.0.0"
+    "preact": "^10.0.0",
+    "snowpack-plugin-hash": "^0.13.0"
   },
   "devDependencies": {
     "@prefresh/snowpack": "^3.0.0",

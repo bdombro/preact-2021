@@ -244,15 +244,6 @@ export const RoutesByPath = Object.fromEntries(Object.values(Routes).map(r => [r
 export const Paths: Record<keyof typeof Routes, string> = Object.fromEntries(Object.entries(Routes).map(([name, r]) => [name, r.path]))
 
 
-function StackRoute(stackPath: string, relPath: string, layout: any) {
-    return {
-        path: stackPath + relPath,
-        component: lazy(() => import('.' + stackPath + relPath)),
-        layout,
-        stack: Stack(stackPath),
-    }
-}
-
 function PassThrough({children}: any) {
     return children
 }

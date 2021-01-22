@@ -10,6 +10,7 @@ module.exports = {
   plugins: [
     '@snowpack/plugin-typescript',
     '@prefresh/snowpack',
+    ['snowpack-plugin-hash',{ hashLength: 4,logLevel: 'error'}]
   ],
   routes: [
     /* Enable an SPA Fallback in development: */
@@ -19,7 +20,12 @@ module.exports = {
   ],
   optimize: {
     /* Example: Bundle your final build: */
-    // "bundle": true,
+    // bundle: true,
+    // minify: true,
+    target: 'es2020',
+    // splitting: true,
+    // treeshake: true,
+    // manifest: true,
   },
   packageOptions: {
     /* ... */
