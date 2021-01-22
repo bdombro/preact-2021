@@ -1,10 +1,9 @@
 /**
- * Allows sting common page attrs. 
- * - Intelligently us the attrs, only sting if changed
- * - Ress back to initial if omitted, based on initial introspection
+ * Allows setting common page attrs. 
+ * - Intelligently us the attrs, only setting if changed
+ * - Resets back to initial if omitted, based on initial introspection
  * - Stores element handles in memory to remove need to query the dom
  *   on every update
- * - Variables are shortened to reduce file size
  */
 
 export interface SetPageMetaProps {
@@ -22,63 +21,44 @@ export default function setPageMeta(p: SetPageMetaProps) {
 
     if (link.href !== location.href) link.href = location.href
 
-    let m: MetaClass
-
-    m = metas.author
-    m.upsert((p.author || p.title) ? (p.author || p.title!) : m.orig)
-
-    m = metas.ogTitle
-    m.upsert(p.title || m.orig)
-
-    m = metas.locale
-    m.upsert(p.locale || m.orig)
-
-    m = metas.description
-    m.upsert(p.description || m.orig)
-
-    m = metas.ogDescription
-    m.upsert(p.description || m.orig)
-
-    m = metas.ogUrl
-    m.upsert(location.href)
-
-    m = metas.ogSiteName
-    m.upsert(p.siteName || m.orig)
-
-    m = metas.ogImage
-    m.upsert(p.image || m.orig)
+    author.upsert(p.author || p.title)
+    ogTitle.upsert(p.title)
+    locale.upsert(p.locale)
+    description.upsert(p.description)
+    ogDescription.upsert(p.description)
+    ogUrl.upsert(location.href)
+    ogSiteName.upsert(p.siteName)
+    ogImage.upsert(p.image)
 }
 
 /**
  * Wrapper class on meta elements to simplify usage and make more DRY
  */
-class MetaClass { // aka MetaClass
-    get: () => string // aka get
-    orig: string // aka orig
-    set: (val: string) => void // aka set
+class MetaClass {
+    get: () => string
+    orig: string
+    set: (val: string) => void
     constructor(e: Element) {
         this.get = () => e.getAttribute('content')!
         this.set = (v: string) => e.setAttribute('content', v)
         this.orig = this.get()
     }
-    upsert(val: string) { // aka upsert
+    upsert(val?: string) {
+        if (!val) val = this.orig
         if (this.get() !== val) this.set(val)
     }
 }
 
 const link = find('link[rel="canonical"]')! as any
 const siteName = byProp('og:site_name').getAttribute('content')!
-
-const metas = { // Aka set of meta classes
-    author: new MetaClass(byName('author')),
-    ogTitle: new MetaClass(byProp('og:title')),
-    locale: new MetaClass(byProp('og:locale')),
-    description: new MetaClass(byName('description')),
-    ogDescription: new MetaClass(byProp('og:description')),
-    ogUrl: new MetaClass(byProp('og:url')),
-    ogSiteName: new MetaClass(byProp('og:site_name')),
-    ogImage: new MetaClass(byProp('og:image')),
-}
+const author = new MetaClass(byName('author'))
+const ogTitle = new MetaClass(byProp('og:title'))
+const locale = new MetaClass(byProp('og:locale'))
+const description = new MetaClass(byName('description'))
+const ogDescription = new MetaClass(byProp('og:description'))
+const ogUrl = new MetaClass(byProp('og:url'))
+const ogSiteName = new MetaClass(byProp('og:site_name'))
+const ogImage = new MetaClass(byProp('og:image'))
 
 function byName(name: string) {
     return find(`meta[name="${name}"]`)
