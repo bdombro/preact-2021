@@ -1,5 +1,5 @@
 import { Fragment, h } from 'preact';
-import { setPageMeta } from '~/lib/routing/seo';
+import setPageMeta from '~/lib/routing/setPageMeta';
 import { Paths } from '~/routes/router';
 
 export default function Register() {

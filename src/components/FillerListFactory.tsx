@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { setPageMeta } from '~/lib/routing/seo';
+import setPageMeta from '~/lib/routing/setPageMeta';
 
 export default function FillerEntryFactory(name: string) {
     return () => {
