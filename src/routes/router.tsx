@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks'
 import lazy from "~/components/lazy"
-import { attachHistoryChangeListener, navigate, Route, Stack, useLocation } from '~/lib/routing'
+import { navListen, nav, Route, Stack, useLocation } from '~/lib/routing'
 
 const NotFound = lazy(() => import('~/components/NotFound'))
 const LoginLayout = lazy(() => import('~/components/LoginLayout'))
@@ -259,8 +259,8 @@ function PassThrough({children}: any) {
 
 function RouterSwitch() {
     const {pathname} = useLocation()
-    if (pathname === '/admin') navigate('/admin/stats')
-    if (pathname === '/tenant') navigate('/tenant/stats')
+    if (pathname === '/admin') nav('/admin/stats')
+    if (pathname === '/tenant') nav('/tenant/stats')
     const match = RoutesByPath[pathname]
     const Stack = match?.stack || PassThrough
     return match ? <Stack><match.component/></Stack> : <NotFound />
@@ -277,7 +277,7 @@ export default function Router() {
     return <Layout><RouterSwitch /></Layout>
 
     function watchLocation() {
-        const cancel = attachHistoryChangeListener(onLocationChange)
+        const cancel = navListen(onLocationChange)
         onLocationChange()
         return cancel
     }

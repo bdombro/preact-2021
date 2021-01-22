@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from "preact/hooks"
-import { navigate, useLocation, UseLocationLocation } from "./index"
+import { nav, useLocation, UseLocationLocation } from "./index"
 
 type StackHistoryEntry = {location: UseLocationLocation, scroll: number}
 type StackHistory = StackHistoryEntry[]
@@ -30,12 +30,12 @@ export default function StackFactory(basePath: string) {
             const arg = new URLSearchParams(search).get('stack')
             if (arg === 'reset') {
                 Stack.reset()
-                navigate(basePath, {replace: true})
+                nav(basePath, {replace: true})
             }
             else if (arg === 'back') {
                 Stack.pop()
                 const back = Stack.top()
-                navigate(back.location.pathname + back.location.search, {replace: true})
+                nav(back.location.pathname + back.location.search, {replace: true})
             }
             else if (pathname === top.location.pathname && search === top.location.search) {
                 // console.log("top")
@@ -44,7 +44,7 @@ export default function StackFactory(basePath: string) {
                 watchScrollInterval = setInterval(updateScrollPos, 300)
             }
             else if (pathname === basePath) {// recall from stack
-                navigate(top.location.pathname + top.location.search, {replace: true})
+                nav(top.location.pathname + top.location.search, {replace: true})
             }
             else { // forward navigation -- add to history 
                 // console.log('forward')

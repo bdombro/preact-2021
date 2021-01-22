@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from "preact/hooks"
-import { navigate, useLocation, UseLocationLocation } from "./index"
+import { nav, useLocation, UseLocationLocation } from "./index"
 
 const RouteHistory: Record<string, number> = {}
 export default function Route({ children }: any) {

@@ -3,19 +3,19 @@
  */
 import { useEffect, useRef, useState } from "preact/hooks";
 
-import { attachHistoryChangeListener } from './events'
+import { navListen } from './events'
 
 export interface UseLocationLocation { pathname: string, search: string }
 
 export default function useLocation(): UseLocationLocation {
     const [location, setLocation] = useState<UseLocationLocation>(currentLocation)
-    const prevPath = useRef(location);
+    const prev = useRef(location);
     useEffect(_attachListeners, []);
 
     return location
 
     function _attachListeners() {
-        const detachListener = attachHistoryChangeListener(checkForUpdates)
+        const detachListener = navListen(checkForUpdates)
 
         // it's possible that an update has occurred between render and the effect handler,
         // so we run additional check on mount to catch these updates. Based on:
@@ -31,8 +31,8 @@ export default function useLocation(): UseLocationLocation {
     // that's why we store the last pathname in a ref.
     function checkForUpdates() {
         const next = currentLocation();
-        if (prevPath.current.pathname !== next.pathname || prevPath.current.search !== next.search) {
-            prevPath.current = next
+        if (prev.current.pathname !== next.pathname || prev.current.search !== next.search) {
+            prev.current = next
             setLocation(next)
         }
     }
