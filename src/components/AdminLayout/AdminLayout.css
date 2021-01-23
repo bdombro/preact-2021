@@ -29,6 +29,7 @@
 }
 
 #adminLayout {
+  background: var(--body);
   overflow: hidden;
   margin-top: var(--header-height);
   margin-bottom: var(--margin-bottom);

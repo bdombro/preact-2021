@@ -3,6 +3,7 @@
 }
 
 #blankLayout {
+  background: var(--body);
   overflow: hidden;
 }
 
