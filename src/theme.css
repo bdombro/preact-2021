@@ -1,0 +1,30 @@
+:root {
+  --text: black;
+  --body: white;
+
+  --primary-h: 4;
+  --primary-s: 100%;
+  --primary-l: 43%;
+  --primary: hsl(
+    var(--primary-h),
+    var(--primary-s),
+    var(--primary-l)
+  );
+  --primary-darker: hsl(
+    var(--primary-h),
+    var(--primary-s),
+    calc( var(--primary-l) - 10% )
+  );
+
+  /* --nav-background: #f3f2f1; */
+  --nav-background: hsl(0, 0%, 96%);
+  /* --nav-background-hover: #e6e6e6; */
+  --nav-background-hover: hsl(0, 0%, 86%);
+  --nav-background-active: hsl(
+    var(--primary-h),
+    var(--primary-s),
+    94%
+  );
+  --searchbar-background: hsl(0, 0%, 80%);
+  --searchbar-background-active: hsl(0, 0%, 90%);
+}

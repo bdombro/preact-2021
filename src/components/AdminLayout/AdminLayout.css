@@ -1,8 +1,4 @@
 .adminLayout {
-  --nav-background: #f3f2f1;
-  --nav-background-hover: #e6e6e6;
-  --nav-background-active: #f9dddc;
-  --searchbar-background: #b6b6b6;
   
   --header-height: 48px;
   --sidebar-width-full: 200px;
