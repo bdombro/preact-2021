@@ -5,8 +5,9 @@ import { useRef, useState } from 'preact/hooks';
 export default function SearchBar() {
     const [value, setValue] = useState('')
     const [isFocused, setIsFocused] = useState(false)
+    const sidebarRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef(null);
-    return <div class={styles.searchbar}>
+    return <div class={styles.searchbar} ref={sidebarRef}>
         <form action='search' onSubmit={onSubmit}>
             <div class={styles.magglass}>&#934;</div>
             <input
@@ -28,16 +29,14 @@ export default function SearchBar() {
     </div>
 
     function onFocus() {
-        const layoutElement = document.getElementById('layout')!
-        const focusedWidth = getComputedStyle(layoutElement).getPropertyValue('--searchbar-width-focused')
-        layoutElement.style.setProperty('--searchbar-width', focusedWidth)
+        const focusedWidth = getComputedStyle(sidebarRef.current).getPropertyValue('--searchbar-width-focused')
+        sidebarRef.current.style.setProperty('--searchbar-width', focusedWidth)
         setIsFocused(true)
     }
     function onBlur(e?: any) {
         if (e?.relatedTarget?.pathname === '/search/clear') setValue('')
-        const layoutElement = document.getElementById('layout')!!
-        const defaultWidth = getComputedStyle(layoutElement).getPropertyValue('--searchbar-width-default')
-        layoutElement.style.setProperty('--searchbar-width', defaultWidth)
+        const defaultWidth = getComputedStyle(sidebarRef.current).getPropertyValue('--searchbar-width-default')
+        sidebarRef.current.style.setProperty('--searchbar-width', defaultWidth)
         setIsFocused(false)
     }
     // I don't think this is ever actually fired due to blur event preventing it,

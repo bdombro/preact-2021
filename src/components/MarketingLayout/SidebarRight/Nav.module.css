@@ -20,5 +20,5 @@
 }
 .active, .active:hover {
     background: var(--nav-background-active);
-    color: var(--primary)
+    color: var(--nav-text-active);
 }

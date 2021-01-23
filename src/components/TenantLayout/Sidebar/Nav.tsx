@@ -1,4 +1,4 @@
-import styles from '~/components/AdminLayout/Sidebar/Nav.module.css'
+import styles from '~/components/MarketingLayout/SidebarRight/Nav.module.css'
 import { h } from 'preact';
 import { useLocation } from '~/lib/routing';
 import { Paths } from '~/routes/router';

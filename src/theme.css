@@ -1,10 +1,10 @@
-:root {
+body {
   --text: black;
   --body: white;
 
-  --primary-h: 4;
+  --primary-h: 270;
   --primary-s: 100%;
-  --primary-l: 43%;
+  --primary-l: 33%;
   --primary: hsl(
     var(--primary-h),
     var(--primary-s),
@@ -16,15 +16,46 @@
     calc( var(--primary-l) - 10% )
   );
 
-  /* --nav-background: #f3f2f1; */
+  --header-background: hsl(0, 0%, 0%);
   --nav-background: hsl(0, 0%, 96%);
-  /* --nav-background-hover: #e6e6e6; */
   --nav-background-hover: hsl(0, 0%, 86%);
-  --nav-background-active: hsl(
-    var(--primary-h),
-    var(--primary-s),
-    94%
-  );
+  --nav-background-active: hsl(var(--primary-h),var(--primary-s),94%);
+  --nav-text-active: var(--primary);
   --searchbar-background: hsl(0, 0%, 80%);
   --searchbar-background-active: hsl(0, 0%, 90%);
+}
+
+body.dark {
+  --text: white;
+  --body: black;
+
+  --primary-darker: hsl(
+    var(--primary-h),
+    var(--primary-s),
+    calc( var(--primary-l) + 50% )
+  );
+
+  --header-background: hsl(0, 0%, 8%);
+  --nav-background: hsl(0, 0%, 12%);
+  --nav-background-hover: hsl(0, 0%, 24%);
+  --nav-background-active: var(--primary);
+  --nav-text-active: var(--text);
+  --searchbar-background: hsl(0, 0%, 20%);
+  --searchbar-background-active: hsl(0, 0%, 10%);
+}
+
+h1,h2,h3,h4,h5,h6,p,li,.text {
+  color: var(--text);
+}
+a, a:active {
+  text-decoration: none;
+  color: var(--text);
+}
+
+p a, li a {
+  text-decoration: underline;
+  color: var(--primary-darker);
+}
+p a:hover, li a:hover {
+  color: var(--primary);
 }

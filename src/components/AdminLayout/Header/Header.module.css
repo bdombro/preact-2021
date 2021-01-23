@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: var(--header-height);
-    background: #000;
+    background: var(--header-background);
     color: white;
     display: flex;
     flex-direction: row;

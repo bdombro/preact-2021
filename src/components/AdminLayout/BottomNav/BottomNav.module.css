@@ -15,8 +15,8 @@
     flex-grow: 1;
     text-align: center;
     padding: 8px;
-    border-right: 1px solid #ccc;
-    border-top: 1px solid #e5e5e5;
+    border-right: 1px solid var(--nav-background);
+    border-top: 1px solid var(--nav-background);
 }
 .navlink:hover {
     background: var(--nav-background-active);
@@ -24,10 +24,10 @@
     border-top: 1px solid var(--nav-background-active);
 }
 .active, .active:hover {
-    color: var(--body);
-    background: var(--primary);
-    border-right: 1px solid var(--primary);
-    border-top: 1px solid var(--primary);
+    color: var(--nav-text-active);
+    background: var(--nav-background-active);
+    border-right: 1px solid var(--nav-background-active);
+    border-top: 1px solid var(--nav-background-active);
 }
 .navlink:last-of-type {
     border-right: none;

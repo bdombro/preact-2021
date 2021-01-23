@@ -4,10 +4,6 @@
   --sidebar-width-full: 200px;
   --sidebar-width-mini: 54px;
   --sidebar-width: var(--sidebar-width-full);
-  
-  --searchbar-width-default: 270px;
-  --searchbar-width-focused: 420px;
-  --searchbar-width: var(--searchbar-width-default);
 
   --bottom-nav-height: 36px;
 

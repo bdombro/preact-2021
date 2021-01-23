@@ -3,7 +3,7 @@
     position: absolute;
     top: var(--header-height);
     right: 0;
-    width: 200px;
+    width: var(--sidebar-width);
     background: var(--nav-background);
     height: var(--body-height);
     overflow-x: hidden;
