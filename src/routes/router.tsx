@@ -1,5 +1,9 @@
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks'
+import FillerHomeFactory from '~/components/FillerHomeFactory';
+import FillerEntryFactory from '~/components/FillerListFactory';
+import FillerListFactory from '~/components/FillerListFactory';
+import FillerPageFactory from '~/components/FillerPageFactory';
 import lazy from "~/lib/lazy"
 import { navListen, nav, Route, Stack, useLocation } from '~/lib/routing'
 
@@ -17,7 +21,7 @@ export const Routes = Object.freeze({
 
     Home: {
         path: '/',
-        component: lazy(() => import('./marketing/home')),
+        component: FillerPageFactory('Home'),
         layout: MarketingLayout,
         stack: Route,
     },
@@ -47,19 +51,19 @@ export const Routes = Object.freeze({
     },
     Support: {
         path: '/support',
-        component: lazy(() => import('./marketing/support')),
+        component: FillerPageFactory('Support'),
         layout: MarketingLayout,
         stack: Route,
     },
     About: {
         path: '/about',
-        component: lazy(() => import('./marketing/about')),
+        component: FillerPageFactory('About'),
         layout: MarketingLayout,
         stack: Route,
     },
     Blog: {
         path: '/blog',
-        component: lazy(() => import('./marketing/blog')),
+        component: FillerPageFactory('Blog'),
         layout: MarketingLayout,
         stack: Route,
     },
@@ -69,7 +73,7 @@ export const Routes = Object.freeze({
 
     AdminSettingsHome: {
         path: '/admin/settings',
-        component: lazy(() => import('./admin/settings/home')),
+        component: FillerPageFactory('Settings'),
         layout: AdminLayout,
         stack: Route,
     },
@@ -82,7 +86,7 @@ export const Routes = Object.freeze({
     },
     AdminStatsHome: {
         path: '/admin/stats/home',
-        component: lazy(() => import('./admin/stats/home')),
+        component: FillerPageFactory('Admin Stats'),
         layout: AdminLayout,
         stack: Stack('/admin/stats'),
     },
@@ -95,19 +99,19 @@ export const Routes = Object.freeze({
     },
     AdminUserHome: {
         path: '/admin/users/home',
-        component: lazy(() => import('./admin/users/home')),
+        component: FillerHomeFactory('Admin Users'),
         layout: AdminLayout,
         stack: Stack('/admin/users'),
     },
     AdminUserList: {
         path: '/admin/users/list',
-        component: lazy(() => import('./admin/users/list')),
+        component: FillerListFactory('Admin User List'),
         layout: AdminLayout,
         stack: Stack('/admin/users'),
     },
     AdminUserEntry: {
         path: '/admin/users/entry',
-        component: lazy(() => import('./admin/users/entry')),
+        component: FillerHomeFactory('Admin User'),
         layout: AdminLayout,
         stack: Stack('/admin/users'),
     },
@@ -120,19 +124,19 @@ export const Routes = Object.freeze({
     },
     AdminBlogHome: {
         path: '/admin/blog/home',
-        component: lazy(() => import('./admin/blog/home')),
+        component: FillerHomeFactory('Admin Blog'),
         layout: AdminLayout,
         stack: Stack('/admin/blog'),
     },
     AdminBlogPostList: {
         path: '/admin/blog/list',
-        component: lazy(() => import('./admin/blog/list')),
+        component: FillerListFactory('Admin Post List'),
         layout: AdminLayout,
         stack: Stack('/admin/blog'),
     },
     AdminBlogPostEntry: {
         path: '/admin/blog/entry',
-        component: lazy(() => import('./admin/blog/entry')),
+        component: FillerEntryFactory('Admin Post'),
         layout: AdminLayout,
         stack: Stack('/admin/blog'),
     },
@@ -144,7 +148,7 @@ export const Routes = Object.freeze({
 
     TenantSettingsHome: {
         path: '/tenant/settings',
-        component: lazy(() => import('./tenant/settings/home')),
+        component: FillerPageFactory('Tenant Settings'),
         layout: TenantLayout,
         stack: Route,
     },
@@ -157,7 +161,7 @@ export const Routes = Object.freeze({
     },
     TenantStatsHome: {
         path: '/tenant/stats/home',
-        component: lazy(() => import('./tenant/stats/home')),
+        component: FillerHomeFactory('Tenant Stats'),
         layout: TenantLayout,
         stack: Stack('/tenant/stats'),
     },
@@ -170,19 +174,19 @@ export const Routes = Object.freeze({
     },
     TenantUserHome: {
         path: '/tenant/users/home',
-        component: lazy(() => import('./tenant/users/home')),
+        component: FillerHomeFactory('Tenant Users Home'),
         layout: TenantLayout,
         stack: Stack('/tenant/users'),
     },
     TenantUserList: {
         path: '/tenant/users/list',
-        component: lazy(() => import('./tenant/users/list')),
+        component: FillerListFactory('Tenant User List'),
         layout: TenantLayout,
         stack: Stack('/tenant/users'),
     },
     TenantUserEntry: {
         path: '/tenant/users/entry',
-        component: lazy(() => import('./tenant/users/entry')),
+        component: FillerEntryFactory('Tenant User'),
         layout: TenantLayout,
         stack: Stack('/tenant/users'),
     },
@@ -195,19 +199,19 @@ export const Routes = Object.freeze({
     },
     TenantPropertiesHome: {
         path: '/tenant/properties/home',
-        component: lazy(() => import('./tenant/properties/home')),
+        component: FillerHomeFactory('Tenant Properties'),
         layout: TenantLayout,
         stack: Stack('/tenant/properties'),
     },
     TenantPropertiesList: {
         path: '/tenant/properties/list',
-        component: lazy(() => import('./tenant/properties/list')),
+        component: FillerListFactory('Tenant Property List'),
         layout: TenantLayout,
         stack: Stack('/tenant/properties'),
     },
     TenantPropertiesEntry: {
         path: '/tenant/properties/entry',
-        component: lazy(() => import('./tenant/properties/entry')),
+        component: FillerEntryFactory('Tenant Property'),
         layout: TenantLayout,
         stack: Stack('/tenant/properties'),
     },
@@ -220,19 +224,19 @@ export const Routes = Object.freeze({
     },
     TenantTasksHome: {
         path: '/tenant/tasks/home',
-        component: lazy(() => import('./tenant/tasks/home')),
+        component: FillerHomeFactory('Tenant Tasks'),
         layout: TenantLayout,
         stack: Stack('/tenant/tasks'),
     },
     TenantTasksList: {
         path: '/tenant/tasks/list',
-        component: lazy(() => import('./tenant/tasks/list')),
+        component: FillerListFactory('Tenant Task List'),
         layout: TenantLayout,
         stack: Stack('/tenant/tasks'),
     },
     TenantTasksEntry: {
         path: '/tenant/tasks/entry',
-        component: lazy(() => import('./tenant/tasks/entry')),
+        component: FillerEntryFactory('Tenant Task'),
         layout: TenantLayout,
         stack: Stack('/tenant/tasks'),
     },
