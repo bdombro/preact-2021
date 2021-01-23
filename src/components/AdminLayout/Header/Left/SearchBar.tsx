@@ -28,14 +28,14 @@ export default function SearchBar() {
     </div>
 
     function onFocus() {
-        const layoutElement = document.getElementById('dashboardLayout')!
+        const layoutElement = document.getElementById('layout')!
         const focusedWidth = getComputedStyle(layoutElement).getPropertyValue('--searchbar-width-focused')
         layoutElement.style.setProperty('--searchbar-width', focusedWidth)
         setIsFocused(true)
     }
     function onBlur(e?: any) {
         if (e?.relatedTarget?.pathname === '/search/clear') setValue('')
-        const layoutElement = document.getElementById('dashboardLayout')!!
+        const layoutElement = document.getElementById('layout')!!
         const defaultWidth = getComputedStyle(layoutElement).getPropertyValue('--searchbar-width-default')
         layoutElement.style.setProperty('--searchbar-width', defaultWidth)
         setIsFocused(false)

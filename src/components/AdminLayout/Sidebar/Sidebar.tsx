@@ -19,7 +19,7 @@ export default function Sidebar() {
     }
     function toggle(e: any) {
         if (e) e.preventDefault()
-        const layoutElement = document.getElementById('dashboardLayout')!
+        const layoutElement = document.getElementById('layout')!
         const fullWidth = getComputedStyle(layoutElement).getPropertyValue('--sidebar-width-full')
         const miniWidth = getComputedStyle(layoutElement).getPropertyValue('--sidebar-width-mini')
         const current = getComputedStyle(layoutElement).getPropertyValue('--sidebar-width')

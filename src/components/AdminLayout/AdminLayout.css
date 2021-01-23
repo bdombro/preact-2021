@@ -1,4 +1,4 @@
-#adminLayout {
+.adminLayout {
   --nav-background: #f3f2f1;
   --nav-background-hover: #e6e6e6;
   --nav-background-active: #f9dddc;
@@ -21,14 +21,14 @@
 }
 
 @media (max-width: 600px) {
-  #adminLayout {
+  .adminLayout {
     --body-height: calc( 100vh - var(--header-height) - var(--bottom-nav-height) );
     --margin-bottom: var(--bottom-nav-height);
     --margin-left: 0;
   }
 }
 
-#adminLayout {
+.adminLayout {
   background: var(--body);
   overflow: hidden;
   margin-top: var(--header-height);
