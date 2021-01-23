@@ -48,6 +48,7 @@ if (!history.state) nav(location.pathname + location.search, { replace: true})
             && (
                 ln.pathname !== window.location.pathname
                 || ln.search !== window.location.search
+                || !window.location.hash
             )
         ) {
             e.preventDefault()
