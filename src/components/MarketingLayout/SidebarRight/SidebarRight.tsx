@@ -9,7 +9,7 @@ export default function SidebarRight() {
     const [isActive, setIsActive] = useState(false)
     useEffect(listenForToggle, [])
 
-    return <div className={`${styles.sidebar} ${isActive && styles.active}`}>
+    return <div class={`${styles.sidebar} ${isActive && styles.active}`}>
         <Nav />
     </div>
 

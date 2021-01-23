@@ -4,7 +4,7 @@ import { h } from 'preact'
 import Logo from './Logo'
 
 export default function Left() {
-    return <div className={styles.left}>
+    return <div class={styles.left}>
         <Logo />
     </div>
 }

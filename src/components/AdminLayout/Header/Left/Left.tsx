@@ -6,7 +6,7 @@ import Logo from './Logo'
 import Search from './SearchBar'
 
 export default function Left() {
-    return <div className={styles.left}>
+    return <div class={styles.left}>
         <Burger />
         <Logo />
         <Search />

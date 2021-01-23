@@ -6,11 +6,11 @@ export default function SearchBar() {
     const [value, setValue] = useState('')
     const [isFocused, setIsFocused] = useState(false)
     const inputRef = useRef(null);
-    return <div className={styles.searchbar}>
+    return <div class={styles.searchbar}>
         <form action='search' onSubmit={onSubmit}>
-            <div className={styles.magglass}>&#934;</div>
+            <div class={styles.magglass}>&#934;</div>
             <input
-                className={styles.input} 
+                class={styles.input} 
                 value={value} 
                 ref={inputRef}
                 onInput={e => setValue((e.target as HTMLInputElement).value)}
@@ -22,7 +22,7 @@ export default function SearchBar() {
                 href="/search/clear" 
                 tabIndex={0}
                 onClick={onClickClear} 
-                className={`${styles.clear} ${isFocused && styles.show}`}
+                class={`${styles.clear} ${isFocused && styles.show}`}
             >x</a>
         </form>
     </div>

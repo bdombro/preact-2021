@@ -3,7 +3,7 @@ import { h } from 'preact';
 
 export default function Burger() {
     return (
-        <a className={styles.burger} 
+        <a class={styles.burger} 
            href="#open-menu" 
            onClick={onClick}>
            Ξ

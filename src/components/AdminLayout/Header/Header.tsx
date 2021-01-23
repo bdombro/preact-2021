@@ -6,7 +6,7 @@ const Left = lazy(() => import('./Left'))
 const Right = lazy(() => import('./Right'))
 
 export default function Header() {
-    return <div className={styles.header}>
+    return <div class={styles.header}>
         <Left />
         <Right />
     </div>

@@ -8,7 +8,7 @@ export default function Nav() {
     const { pathname } = useLocation()
     const [isMenuOpen, setMenuIsOpen] = useState(false)
 
-    return <nav className={styles.nav}>
+    return <nav class={styles.nav}>
         <NavLink uri={Paths.TenantStatsStack} icon='Ø' isActive={isActive(Paths.TenantStatsStack) && !isMenuOpen} />
         <NavLink uri={Paths.TenantTasksStack} icon='Ó' isActive={isActive(Paths.TenantTasksStack) && !isMenuOpen} />
         <NavLink uri={Paths.TenantPropertiesStack} icon='Ó' isActive={isActive(Paths.TenantPropertiesStack) && !isMenuOpen} />
@@ -23,7 +23,7 @@ export default function Nav() {
 
 function NavLink({ uri, icon, isActive }: { uri: string, icon: string, isActive: boolean }) {
     return (
-        <a  className={`${styles.navlink} ${isActive && styles.active}`}
+        <a  class={`${styles.navlink} ${isActive && styles.active}`}
             href={uri + (isActive ? '?stack=reset' : '')}
         >
             <div>{icon}</div>
@@ -34,7 +34,7 @@ function NavLink({ uri, icon, isActive }: { uri: string, icon: string, isActive:
 type SetIsOpenCallback = (prev: boolean) => boolean
 function NavLinkMenu({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (prev: SetIsOpenCallback) => any}) {
     return (
-        <a className={`${styles.navlink} ${isOpen && styles.active}`}
+        <a class={`${styles.navlink} ${isOpen && styles.active}`}
            href="#open-sidebar"
            onClick={onClick}
         >

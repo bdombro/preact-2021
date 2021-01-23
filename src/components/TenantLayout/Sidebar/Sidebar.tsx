@@ -9,7 +9,7 @@ const Nav = lazy(() => import('./Nav'))
 export default function Sidebar() {
     useEffect(listenForToggle, [])
     
-    return <div className={styles.sidebar}>
+    return <div class={styles.sidebar}>
         <Nav />
     </div>
 

@@ -6,7 +6,7 @@ import { useState } from 'preact/hooks';
 
 export default function Nav() {
     const { pathname } = useLocation()
-    return <nav className={styles.nav}>
+    return <nav class={styles.nav}>
         <NavLink uri={Paths.Blog} text='Blog' isActive={isActive(Paths.Blog)} />
         <NavLink uri={Paths.Login} text='Login' isActive={isActive(Paths.Login)} />
         <NavLinkMenu />
@@ -19,7 +19,7 @@ export default function Nav() {
 
 function NavLink({ uri, text, isActive }: { uri: string, text: string, isActive: boolean }) {
     return (
-        <a className={`${styles.navlink} ${isActive && styles.active}`}
+        <a class={`${styles.navlink} ${isActive && styles.active}`}
             href={uri + (isActive ? '?stack=reset' : '')}
         >
             <div>{text}</div>
@@ -30,7 +30,7 @@ function NavLink({ uri, text, isActive }: { uri: string, text: string, isActive:
 function NavLinkMenu() {
     const [isOpen, setIsOpen] = useState(false)
     return (
-        <a className={`${styles.navlink} ${isOpen && styles.active}`}
+        <a class={`${styles.navlink} ${isOpen && styles.active}`}
             href="#open-sidebar"
             onClick={onClick}
         >

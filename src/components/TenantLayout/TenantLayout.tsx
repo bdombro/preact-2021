@@ -8,7 +8,7 @@ const Sidebar = lazy(() => import('./Sidebar'))
 const SidebarRight = lazy(() => import('./SidebarRight'))
 
 export default function TenantLayout({ children }: { children: any }) {
-  return <div id="layout" className="adminLayout">
+  return <div id="layout" class="adminLayout">
     <Header />
     <Sidebar />
     <SidebarRight />
