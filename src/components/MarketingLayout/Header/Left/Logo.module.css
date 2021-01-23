@@ -1,8 +1,15 @@
 .logo {
     display: inline-block;
     color: white;
-    padding: 15px 10px;
+    padding: 15px 10px 15px 38px;
 }
 .logo:hover {
     background: var(--primary);
+}
+.logo img {
+    position: absolute;
+    top: 14px;
+    left: 10px;
+    height: 22px;
+    width: 22px;
 }
