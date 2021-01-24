@@ -28,6 +28,10 @@
   margin-left: var(--margin-left);
 }
 
+.miniSidebar {
+  --sidebar-width: var(--sidebar-width-mini);
+}
+
 #content {
   height: 100vh;
   height: var(--body-height);
