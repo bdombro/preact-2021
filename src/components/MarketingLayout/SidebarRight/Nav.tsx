@@ -9,6 +9,7 @@ export default function Nav() {
         <NavLink uri={Paths.About} text='About' icon='Ø' isActive={isActive(Paths.About)} />
         <NavLink uri={Paths.Blog} text='Blog' icon='Ö' isActive={isActive(Paths.Blog)} />
         <NavLink uri={Paths.Login} text='Login' icon='Ó' isActive={isActive(Paths.Login)} />
+        <NavLink uri="#theme-toggle" text='Theme' icon='Ö' isActive={false} />
     </nav>
 
     function isActive(uri: string) {

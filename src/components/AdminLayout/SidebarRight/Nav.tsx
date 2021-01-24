@@ -12,6 +12,7 @@ export default function Nav() {
         <NavLink uri={Paths.AdminSettingsHome} text='Account' icon='Ö' isActive={isActive('Paths.AdminSettingsHome')} />
         <NavLink uri={Paths.Support} text='Help' icon='Ö' isActive={false} />
         <NavLink uri={Paths.Logout} text='Logout' icon='Ö' isActive={false} />
+        <NavLink uri="#theme-toggle" text='Theme' icon='Ö' isActive={false} />
     </nav>
 
     function isActive(uri: string) {

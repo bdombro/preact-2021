@@ -1,1 +1,1 @@
-export {default} from '~/components/AdminLayout/Header'
+export {default} from './Header'

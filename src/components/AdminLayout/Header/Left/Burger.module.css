@@ -1,10 +1,10 @@
 .burger {
     display: inline-block;
-    color: white;
     padding: 15px 0px;
     text-align: center;
     width: var(--sidebar-width-mini);
     box-sizing: border-box;
+    color: white;
 }
 .burger:hover {
     background: var(--primary);

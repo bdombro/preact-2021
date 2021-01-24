@@ -1,7 +1,7 @@
 import styles from '~/components/AdminLayout/Sidebar/Sidebar.module.css'
 import { h } from 'preact';
-import lazy from '../../../lib/lazy';
-import { useEffect, useState } from 'preact/hooks';
+import lazy from '~/lib/lazy';
+import { useEffect } from 'preact/hooks';
 
 const Nav = lazy(() => import('./Nav'))
 
@@ -14,8 +14,9 @@ export default function Sidebar() {
     </div>
 
     function listenForToggle() {
-        window.addEventListener('toggle-sidebar', toggle)
-        return () => window.removeEventListener('toggle-sidebar', toggle)
+        const event = '#toggle-sidebar'
+        window.addEventListener(event, toggle)
+        return () => window.removeEventListener(event, toggle)
     }
     function toggle(e: any) {
         if (e) e.preventDefault()

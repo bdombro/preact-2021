@@ -1,7 +1,7 @@
 .logo {
     display: inline-block;
-    color: white;
     padding: 15px 10px;
+    color: white;
 }
 .logo:hover {
     background: var(--primary);

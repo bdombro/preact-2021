@@ -1,5 +1,5 @@
 setTimeout(function loadBrowserCheck() {
-    document.body.innerHTML+=`
+    if (location.hostname !== 'localhost') document.body.innerHTML+=`
 <div id="outdated"></div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/outdated-browser-rework/2.10.0/style.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/outdated-browser-rework/2.10.0/outdated-browser-rework.min.js"></script>

@@ -1,15 +1,12 @@
-.logo {
+.navlink {
     height: var(--header-height);
     display: flex;
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;
+    padding: 0 14px;
+    color: white;
 }
-.logo div {
-    padding-right: 14px;
-}
-.logo img {
-    height: 22px;
-    width: 22px;
-    margin: 0 6px 0 10px;
+.navlink:hover, .active {
+    background: var(--primary);
 }

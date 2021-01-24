@@ -4,9 +4,11 @@
     left: 0;
     width: 100%;
     height: var(--header-height);
-    background: #000;
-    color: white;
+    background: var(--header-background);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+.header > * {
+    height: var(--header-height);
 }

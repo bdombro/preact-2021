@@ -42,25 +42,28 @@ if (!history.state) nav(location.pathname + location.search, { replace: true})
     return () => { document.body.removeEventListener('click', handler) }
     function handler(e: any) {
         const ln = findLinkTagInParents(e.target) // aka linkNode
-        if (
-            ln 
-            && ln.host === window.location.host
-            && (
-                ln.pathname !== window.location.pathname
-                || ln.search !== window.location.search
-                || !window.location.hash
-            )
-        ) {
-            e.preventDefault()
-            const s = new URLSearchParams(ln.search)
-            const replace = s.get('replace')
-            if (replace) {
-                s.delete('replace')
-                const searchStr = s.toString() ? '?' + s.toString() : ''
-                nav(ln.pathname + searchStr, {replace: true})
+
+        if (ln?.host === window.location.host) {
+
+            if (ln.hash) {
+                window.dispatchEvent(new Event(ln.hash))
+                
+                // Special events
+                if (ln.hash === '#theme-toggle')
+                    document.body.className.includes('dark') ? document.body.classList.remove("dark") : document.body.classList.add("dark")
+                
+                // If hash happened on same page, prevent url from getting into browser bar
+                if (ln.pathname + ln.search === window.location.pathname + window.location.search)
+                    return e.preventDefault()
             }
-            else 
-                nav(ln.pathname + ln.search)
+
+            if (ln.pathname + ln.search !== window.location.pathname + window.location.search) {
+                e.preventDefault()
+                if (ln.hash === '#replace')
+                    nav(ln.pathname + ln.search, {replace: true})
+                else 
+                    nav(ln.pathname + ln.search)
+            }
         }
     }
     function findLinkTagInParents(node: HTMLElement): any {

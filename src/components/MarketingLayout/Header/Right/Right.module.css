@@ -1,19 +1,4 @@
-.nav {
-    width: 180px;
+.right {
     display: flex;
     flex-direction: row;
-    overflow-y: hidden;
-}
-.navlink {
-    color: white;
-    flex-grow: 1;
-    text-align: center;
-    padding: 15px 10px;
-}
-.navlink:hover {
-    background: var(--primary);
-}
-.active, .active:hover {
-    color: var(--body);
-    background: var(--primary);
 }
