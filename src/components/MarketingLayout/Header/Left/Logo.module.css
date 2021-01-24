@@ -5,8 +5,12 @@
     align-items: center;
     box-sizing: border-box;
 }
+.logo:hover {
+    background: var(--primary);
+}
 .logo div {
     padding-right: 14px;
+    color: white;
 }
 .logo img {
     height: 22px;

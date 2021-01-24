@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--primary-darker);
+    background: hsl(var(--primary-h), var(--primary-s), 30%);
     overflow-x: hidden;
     overflow-y: auto;
     padding: 10px;
@@ -15,7 +15,8 @@
     margin: auto;
     width: 340px;
     max-width: 100%;
-    background:  white;
+    background:  var(--body);
+    color: var(--text);
     padding: 20px 40px;
     border-radius: 10px;
     box-sizing: border-box;

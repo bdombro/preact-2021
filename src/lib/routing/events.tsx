@@ -44,6 +44,8 @@ if (!history.state) nav(location.pathname + location.search, { replace: true})
         const ln = findLinkTagInParents(e.target) // aka linkNode
 
         if (ln?.host === window.location.host) {
+            window.dispatchEvent(new Event('link-clicked'))
+            e.preventDefault()
 
             if (ln.hash) {
                 window.dispatchEvent(new Event(ln.hash))
@@ -51,14 +53,9 @@ if (!history.state) nav(location.pathname + location.search, { replace: true})
                 // Special events
                 if (ln.hash === '#theme-toggle')
                     document.body.className.includes('dark') ? document.body.classList.remove("dark") : document.body.classList.add("dark")
-                
-                // If hash happened on same page, prevent url from getting into browser bar
-                if (ln.pathname + ln.search === window.location.pathname + window.location.search)
-                    return e.preventDefault()
             }
 
             if (ln.pathname + ln.search !== window.location.pathname + window.location.search) {
-                e.preventDefault()
                 if (ln.hash === '#replace')
                     nav(ln.pathname + ln.search, {replace: true})
                 else 

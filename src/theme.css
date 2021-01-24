@@ -35,7 +35,7 @@ body.dark {
     calc( var(--primary-l) + 50% )
   );
 
-  --header-background: hsl(0, 0%, 8%);
+  --header-background: hsl(0, 0%, 40%);
   --nav-background: hsl(0, 0%, 12%);
   --nav-background-hover: hsl(0, 0%, 24%);
   --nav-background-active: var(--primary);
