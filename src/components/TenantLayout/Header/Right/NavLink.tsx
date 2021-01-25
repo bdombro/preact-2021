@@ -9,7 +9,7 @@ export default function NavLink({ uri, text }: { uri: string, text: string }) {
     const [isSidebarActive] = useLayoutState().sidebarRight
     const isActive = location.pathname.startsWith(uri)
     return (
-        <a class={`${styles.navlink} ${isActive && !isSidebarActive && styles.active}`}
+        <a class={`${styles.navlink} ${styles.hideOnMobile} ${isActive && !isSidebarActive && styles.active}`}
             href={uri + (isActive ? '?stack=reset' : '')}
         >
             {text}

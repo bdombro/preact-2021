@@ -10,3 +10,8 @@
 .navlink:hover, .active {
     background: var(--primary);
 }
+@media (max-width: 600px) {
+    .hideOnMobile {
+        display: none;
+    }
+}
