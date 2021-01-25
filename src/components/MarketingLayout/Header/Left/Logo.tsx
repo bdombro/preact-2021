@@ -1,9 +1,10 @@
 import styles from  './Logo.module.css'
 import { h } from 'preact';
+import logo from '~/logo.png'
 
 export default function HeaderLogo() {
     return <a class={styles.logo} href='/'>
-        <img src='/logo192.png' />
+        <img src={logo} />
         <div>Stacks!</div>
     </a>
 }
