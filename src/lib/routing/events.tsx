@@ -37,6 +37,25 @@ if (!history.state) nav(location.pathname + location.search, { replace: true})
     }
 })()
 
+// TODO: Login events
+
+export function scrollListen(el: HTMLElement, callback: any) {
+    let last_known_scroll_position = 0;
+    let ticking = false;
+    el.addEventListener('scroll', function () {
+        last_known_scroll_position = el.scrollTop;
+        if (!ticking) {
+            window.requestAnimationFrame(function () {
+                callback(last_known_scroll_position);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    })
+    return () => el.removeEventListener('scroll', callback)
+}
+
+
 ;(function attachLinkHandler() {
     document.body.addEventListener('click', handler);
     return () => { document.body.removeEventListener('click', handler) }

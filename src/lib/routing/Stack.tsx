@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from "preact/hooks"
-import { nav, useLocation, UseLocationLocation } from "./index"
+import { nav, scrollListen, useLocation, UseLocationLocation } from "./index"
 
 type StackHistoryEntry = {location: UseLocationLocation, scroll: number}
 type StackHistory = StackHistoryEntry[]
@@ -16,7 +16,7 @@ export default function StackFactory(basePath: string) {
             setVisibility('hidden')
         }
         function installListeners() {
-            let watchScrollInterval: NodeJS.Timeout | null = null
+            let cancelScrollListen: any = () => null
             const {pathname, search} = location
             const baseHistory = { location: { pathname: basePath + '/home', search: '' }, scroll: 0 }
             class Stack {
@@ -41,7 +41,8 @@ export default function StackFactory(basePath: string) {
                 // console.log("top")
                 scrollTo(top.scroll)
                 setVisibility('visible')
-                watchScrollInterval = setInterval(updateScrollPos, 300)
+                const e = document.getElementById('content')!
+                if (e) cancelScrollListen = scrollListen(e, updateScrollPos)
             }
             else if (pathname === basePath) {// recall from stack
                 nav(top.location.pathname + top.location.search, {replace: true})
@@ -51,15 +52,15 @@ export default function StackFactory(basePath: string) {
                 scrollTo(0)
                 setVisibility('visible')
                 Stack.push({location, scroll: 0})
-                watchScrollInterval = setInterval(updateScrollPos, 300)
+                const e = document.getElementById('content')!
+                if (e) cancelScrollListen = scrollListen(e, updateScrollPos)
             }
             
-            return () => { watchScrollInterval && clearInterval(watchScrollInterval) }
+            return cancelScrollListen
         }
 
-        function updateScrollPos() {
-            const e = document.getElementById('content')
-            if (e) StackHistories[basePath][StackHistories[basePath].length - 1].scroll = e.scrollTop
+        function updateScrollPos(scrollTop: number) {
+            StackHistories[basePath][StackHistories[basePath].length - 1].scroll = scrollTop
         }
         function scrollTo(to: number) {
             const e = document.getElementById('content')

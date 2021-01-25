@@ -35,19 +35,19 @@ export const Routes = Object.freeze({
         path: '/register',
         component: lazy(() => import('./auth/register')),
         layout: LoginLayout,
-        stack: Route,
+        stack: PassThrough,
     },
     ForgotPassword: {
         path: '/forgotPassword',
         component: lazy(() => import('./auth/forgotPassword')),
         layout: LoginLayout,
-        stack: Route,
+        stack: PassThrough,
     },
     Logout: {
         path: '/logout',
         component: lazy(() => import('./auth/logout')),
         layout: BlankLayout,
-        stack: Route,
+        stack: PassThrough,
     },
     Support: {
         path: '/support',

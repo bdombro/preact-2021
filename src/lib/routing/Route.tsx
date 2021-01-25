@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from "preact/hooks"
-import { nav, useLocation, UseLocationLocation } from "./index"
+import { scrollListen } from "./events"
 
 const RouteHistory: Record<string, number> = {}
 export default function Route({ children }: any) {
@@ -14,18 +14,12 @@ export default function Route({ children }: any) {
         setVisibility('hidden')
     }
     function installListeners() {
-        const watchScrollInterval = setInterval(updateScrollPos, 300)
-        return () => { 
-            clearInterval(watchScrollInterval)
-        }
+        const e = document.getElementById('content')!
+        if (e) return scrollListen(e, updateScrollPos)
     }
 
-    function updateScrollPos() {
-        const e = document.getElementById('content')
-        if (e) RouteHistory[pathname + search] = e.scrollTop
-    }
-    function forward() {
-        setVisibility('visible')
+    function updateScrollPos(scrollTop: number) {
+        RouteHistory[pathname + search] = scrollTop
     }
     function recall() {
         const e = document.getElementById('content')
