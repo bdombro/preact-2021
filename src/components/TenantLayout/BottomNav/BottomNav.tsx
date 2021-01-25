@@ -2,32 +2,34 @@ import styles from '~/components/AdminLayout/BottomNav/BottomNav.module.css'
 import { h } from 'preact';
 import { useLocation } from '~/lib/routing';
 import { Paths } from '~/routes/router';
-import { StateUpdater, useEffect, useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { useLayoutState } from '../context';
+import lazy from '~/lib/lazy';
+
+const StatsIcon = lazy(() => import('~/components/icons/CounterIcon'))
+const TasksIcon = lazy(() => import('~/components/icons/OrderBoolAscendingVariantIcon'))
+const PropertiesIcon = lazy(() => import('~/components/icons/OfficeBuildingMarkerOutlineIcon'))
+const UsersIcon = lazy(() => import('~/components/icons/ShieldAccountOutlineIcon'))
 
 export default function Nav() {
-    const { pathname } = useLocation()
-    const [isBurgerActive, setIsBurgerActive] = useState(false)
-
     return <nav class={styles.nav}>
-        <NavLink uri={Paths.TenantStatsStack} icon='Ø' isActive={isActive(Paths.TenantStatsStack) && !isBurgerActive} />
-        <NavLink uri={Paths.TenantTasksStack} icon='Ó' isActive={isActive(Paths.TenantTasksStack) && !isBurgerActive} />
-        <NavLink uri={Paths.TenantPropertiesStack} icon='Ó' isActive={isActive(Paths.TenantPropertiesStack) && !isBurgerActive} />
-        <NavLink uri={Paths.TenantUserStack} icon='Ö' isActive={isActive(Paths.TenantUserStack) && !isBurgerActive} />
-        <NavBurger isActive={isBurgerActive} setIsActive={setIsBurgerActive} />
+        <NavLink uri={Paths.TenantStatsStack} Icon={StatsIcon} />
+        <NavLink uri={Paths.TenantTasksStack} Icon={TasksIcon} />
+        <NavLink uri={Paths.TenantPropertiesStack} Icon={PropertiesIcon} />
+        <NavLink uri={Paths.TenantUserStack} Icon={UsersIcon} />
+        <NavBurger />
     </nav>
-
-    function isActive(uri: string) {
-        return pathname.startsWith(uri)
-    }
 }
 
-function NavLink({ uri, icon, isActive }: { uri: string, icon: string, isActive: boolean }) {
+function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
+    const location = useLocation()
+    const [isSidebarActive] = useLayoutState().sidebarRight
+    const isActive = location.pathname.startsWith(uri)
     return (
-        <a  class={`${styles.navlink} ${isActive && styles.active}`}
+        <a class={`${styles.navlink} ${isActive && !isSidebarActive && styles.active}`}
             href={uri + (isActive ? '?stack=reset' : '')}
         >
-            <div>{icon}</div>
+            <div><Icon /></div>
         </a>
     )
 }
@@ -38,7 +40,8 @@ function NavLink({ uri, icon, isActive }: { uri: string, icon: string, isActive:
  * Header->Right->Navburger. The added complexity allows NavBurger to handle this
  * gracefully.
  */
-function NavBurger({ isActive, setIsActive }: { isActive: boolean, setIsActive: StateUpdater<boolean> }) {
+function NavBurger() {
+    const [isActive, setIsActive] = useState(false)
     const [isSidebarActive, setIsSidebarActive] = useLayoutState().sidebarRight
     useEffect(() => {
         if (!isSidebarActive) setIsActive(false)

@@ -2475,6 +2475,11 @@ md5.js@^1.3.4:
     inherits "^2.0.1"
     safe-buffer "^5.1.2"
 
+mdi-preact-es6@^7.4.1:
+  version "7.4.1"
+  resolved "https://registry.yarnpkg.com/mdi-preact-es6/-/mdi-preact-es6-7.4.1.tgz#9364f90df73f8247e5ac883050f4f21d759b7259"
+  integrity sha512-WT2QqnyVQ/uuo1QOrnKxmvDWQpDkwhZYUSKHp1LplVBpM3GSLgySJeNniI0tNou9tLt6CfJZk+dV9p2dCeb9bQ==
+
 mdn-data@2.0.14:
   version "2.0.14"
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.14.tgz#7113fc4281917d63ce29b43446f701e68c25ba50"

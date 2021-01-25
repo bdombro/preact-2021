@@ -2,14 +2,20 @@ import styles from './Nav.module.css'
 import { h } from 'preact';
 import { useLocation } from '~/lib/routing';
 import { Paths } from '~/routes/router';
+import lazy from '~/lib/lazy';
+
+const AboutIcon = lazy(() => import('~/components/icons/InformationOutlineIcon'))
+const BlogIcon = lazy(() => import('~/components/icons/PostOutlineIcon'))
+const LoginIcon = lazy(() => import('~/components/icons/LoginVariantIcon'))
+const ThemeIcon = lazy(() => import('~/components/icons/PaletteOutlineIcon'))
 
 export default function Nav() {
     const { pathname } = useLocation()
     return <nav class={styles.nav}>
-        <NavLink uri={Paths.About} text='About' icon='Ø' isActive={isActive(Paths.About)} />
-        <NavLink uri={Paths.Blog} text='Blog' icon='Ö' isActive={isActive(Paths.Blog)} />
-        <NavLink uri={Paths.Login} text='Login' icon='Ó' isActive={isActive(Paths.Login)} />
-        <NavLink uri="#theme-toggle" text='Theme' icon='Ö' isActive={false} />
+        <NavLink uri={Paths.About} text='About' Icon={AboutIcon} isActive={isActive(Paths.About)} />
+        <NavLink uri={Paths.Blog} text='Blog' Icon={BlogIcon} isActive={isActive(Paths.Blog)} />
+        <NavLink uri={Paths.Login} text='Login'  Icon={LoginIcon} isActive={isActive(Paths.Login)} />
+        <NavLink uri="#theme-toggle" text='Theme' Icon={ThemeIcon} isActive={false} />
     </nav>
 
     function isActive(uri: string) {
@@ -17,13 +23,13 @@ export default function Nav() {
     }
 }
 
-function NavLink({ uri, text, icon, isActive }: { uri: string, text: string, icon: string, isActive: boolean }) {
+function NavLink({ uri, text, Icon, isActive }: { uri: string, text: string, Icon: any, isActive: boolean }) {
     return (
         <a
             href={uri + (isActive ? '?stack=reset' : '')}
             class={`${styles.navlink} ${isActive && styles.active}`}
         >
-            <div class={styles.navlinkIcon}>{icon}</div>
+            <div class={styles.navlinkIcon}><Icon /></div>
             <div class={styles.navlinkText}>{text}</div>
         </a>
     )

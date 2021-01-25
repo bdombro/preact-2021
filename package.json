@@ -13,6 +13,7 @@
     "fastify": "^3.10.1",
     "fastify-compress": "^3.4.1",
     "fastify-static": "^3.4.0",
+    "mdi-preact-es6": "^7.4.1",
     "public-encrypt": "^4.0.3"
   },
   "devDependencies": {

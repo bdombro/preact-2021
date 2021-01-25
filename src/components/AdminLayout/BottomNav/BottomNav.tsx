@@ -4,23 +4,22 @@ import { useLocation } from '~/lib/routing';
 import { Paths } from '~/routes/router';
 import { useEffect, useState } from 'preact/hooks';
 import { useLayoutState } from '../context';
+import lazy from '~/lib/lazy';
+
+const StatsIcon = lazy(() => import('~/components/icons/CounterIcon'))
+const AuthIcon = lazy(() => import('~/components/icons/ShieldAccountOutlineIcon'))
+const BlogIcon = lazy(() => import('~/components/icons/PostOutlineIcon'))
 
 export default function Nav() {
-    const { pathname } = useLocation()
-
     return <nav class={styles.nav}>
-        <NavLink uri={Paths.AdminStatsStack} icon='Ø' />
-        <NavLink uri={Paths.AdminUserStack} icon='Ö' />
-        <NavLink uri={Paths.AdminBlogStack} icon='Ó' />
+        <NavLink uri={Paths.AdminStatsStack} Icon={StatsIcon} />
+        <NavLink uri={Paths.AdminUserStack} Icon={AuthIcon} />
+        <NavLink uri={Paths.AdminBlogStack} Icon={BlogIcon} />
         <NavBurger />
     </nav>
-
-    function isActive(uri: string) {
-        return pathname.startsWith(uri)
-    }
 }
 
-function NavLink({ uri, icon }: { uri: string, icon: string }) {
+function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
     const location = useLocation()
     const [isSidebarActive] = useLayoutState().sidebarRight
     const isActive = location.pathname.startsWith(uri)
@@ -28,7 +27,7 @@ function NavLink({ uri, icon }: { uri: string, icon: string }) {
         <a  class={`${styles.navlink} ${isActive && !isSidebarActive && styles.active}`}
             href={uri + (isActive ? '?stack=reset' : '')}
         >
-            <div>{icon}</div>
+            <div><Icon /></div>
         </a>
     )
 }
