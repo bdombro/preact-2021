@@ -17,7 +17,7 @@ main()
 
 async function main() {
   const fastify = Fastify({
-    logger: true,
+    logger: false,
     http2: true,
     https: { allowHTTP1: true, key: sslKey, cert: sslCert }
   })

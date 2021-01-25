@@ -7,17 +7,13 @@
     "start": "snowpack dev",
     "build": "snowpack build",
     "serve": "ts-node --project server.tsconfig.json --transpile-only server.ts",
-    "test": "web-test-runner \"src/**/*.test.tsx\"",
-    "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "lint": "prettier --check \"src/**/*.{js,jsx}\""
+    "test": "web-test-runner \"src/**/*.test.tsx\""
   },
   "dependencies": {
     "fastify": "^3.10.1",
     "fastify-compress": "^3.4.1",
     "fastify-static": "^3.4.0",
-    "preact": "^10.0.0",
-    "public-encrypt": "^4.0.3",
-    "snowpack-plugin-hash": "^0.13.0"
+    "public-encrypt": "^4.0.3"
   },
   "devDependencies": {
     "@prefresh/snowpack": "^3.0.0",
@@ -27,7 +23,9 @@
     "@types/chai": "^4.2.14",
     "@web/test-runner": "^0.12.0",
     "chai": "^4.2.0",
+    "preact": "^10.0.0",
     "snowpack": "^3.0.1",
+    "snowpack-plugin-hash": "^0.13.0",
     "typescript": "^4.0.3"
   }
 }
