@@ -23,6 +23,8 @@ body {
   --nav-text-active: var(--primary);
   --searchbar-background: hsl(0, 0%, 80%);
   --searchbar-background-active: hsl(0, 0%, 90%);
+
+  background: var(--nav-background);
 }
 
 body.dark {
