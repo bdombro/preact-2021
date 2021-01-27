@@ -1,5 +1,4 @@
 .sidebar {
-    display: none;
     position: absolute;
     top: var(--header-height);
     right: 0;
@@ -7,7 +6,4 @@
     background: var(--nav-background);
     height: var(--body-height);
     overflow-x: hidden;
-}
-.active {
-    display: block;
 }

@@ -8,7 +8,5 @@ const Nav = lazy(() => import('./Nav'))
 
 export default function SidebarRight() {
     const [isActive] = useLayoutState().sidebarRight
-    return <div class={`${styles.sidebar} ${isActive && styles.active}`}>
-        <Nav />
-    </div>
+    return isActive && <div class={`${styles.sidebar}`}><Nav /></div>
 }

@@ -4,19 +4,14 @@ import { useLocation } from '~/lib/routing';
 import { Paths } from '~/routes/router';
 import { useEffect, useState } from 'preact/hooks';
 import { useLayoutState } from '../context';
-import lazy from '~/lib/lazy';
-
-const StatsIcon = lazy(() => import('~/components/icons/CounterIcon'))
-const TasksIcon = lazy(() => import('~/components/icons/OrderBoolAscendingVariantIcon'))
-const PropertiesIcon = lazy(() => import('~/components/icons/OfficeBuildingMarkerOutlineIcon'))
-const UsersIcon = lazy(() => import('~/components/icons/ShieldAccountOutlineIcon'))
+import * as i from '~/components/Icons'
 
 export default function Nav() {
     return <nav class={styles.nav}>
-        <NavLink uri={Paths.TenantStatsStack} Icon={StatsIcon} />
-        <NavLink uri={Paths.TenantTasksStack} Icon={TasksIcon} />
-        <NavLink uri={Paths.TenantPropertiesStack} Icon={PropertiesIcon} />
-        <NavLink uri={Paths.TenantUserStack} Icon={UsersIcon} />
+        <NavLink uri={Paths.TenantStatsStack} Icon={i.Counter} />
+        <NavLink uri={Paths.TenantTasksStack} Icon={i.Tasks} />
+        <NavLink uri={Paths.TenantPropertiesStack} Icon={i.Building} />
+        <NavLink uri={Paths.TenantUserStack} Icon={i.Auth} />
         <NavBurger />
     </nav>
 }

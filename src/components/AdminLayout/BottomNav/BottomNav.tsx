@@ -4,17 +4,13 @@ import { useLocation } from '~/lib/routing';
 import { Paths } from '~/routes/router';
 import { useEffect, useState } from 'preact/hooks';
 import { useLayoutState } from '../context';
-import lazy from '~/lib/lazy';
-
-const StatsIcon = lazy(() => import('~/components/icons/CounterIcon'))
-const AuthIcon = lazy(() => import('~/components/icons/ShieldAccountOutlineIcon'))
-const BlogIcon = lazy(() => import('~/components/icons/PostOutlineIcon'))
+import * as i from '~/components/Icons'
 
 export default function Nav() {
     return <nav class={styles.nav}>
-        <NavLink uri={Paths.AdminStatsStack} Icon={StatsIcon} />
-        <NavLink uri={Paths.AdminUserStack} Icon={AuthIcon} />
-        <NavLink uri={Paths.AdminBlogStack} Icon={BlogIcon} />
+        <NavLink uri={Paths.AdminStatsStack} Icon={i.Counter} />
+        <NavLink uri={Paths.AdminUserStack} Icon={i.Auth} />
+        <NavLink uri={Paths.AdminBlogStack} Icon={i.Post} />
         <NavBurger />
     </nav>
 }
