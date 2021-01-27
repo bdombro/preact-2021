@@ -24,7 +24,7 @@ async function main() {
 
   fastify.register(compressPlugin)
 
-  fastify.register(staticPlugin, { root: buildRoot })
+  fastify.register(staticPlugin, { root: buildRoot, maxAge: '30d' })
   fastify.setNotFoundHandler((req, reply) => { reply.type('text/html').send(notFoundHtml) })
 
   fastify.listen(port, function (err, address) {

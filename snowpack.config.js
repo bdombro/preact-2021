@@ -1,6 +1,6 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 
-const nonRouteExtensions = 'js|css|ico|png|jpg|svg'
+const nonRouteExtensions = 'js|css|ico|png|jpg|svg|json'
 
 module.exports = {
   mount: {
@@ -10,7 +10,7 @@ module.exports = {
   plugins: [
     '@snowpack/plugin-typescript',
     '@prefresh/snowpack',
-    ['snowpack-plugin-hash',{ hashLength: 4,logLevel: 'error'}]
+    ['snowpack-plugin-hash',{ hashLength: 4,logLevel: 'error' }]
   ],
   routes: [
     /* Enable an SPA Fallback in development: */

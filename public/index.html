@@ -40,6 +40,7 @@
     <div id="root"></div>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script type="module" src="/dist/index.js"></script>
-    <script src="/browser-check.js" async defer></script>
+    <script src="/browser-check.js"></script>
+    <script>if ('serviceWorker' in navigator && location.hostname !== 'localhost') window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'))</script>
   </body>
 </html>

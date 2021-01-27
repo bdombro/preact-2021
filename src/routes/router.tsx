@@ -1,11 +1,11 @@
 import { h } from 'preact';
-import { useEffect, useState } from 'preact/hooks'
+import { useLayoutEffect, useState } from 'preact/hooks'
 import FillerHomeFactory from '~/components/FillerHomeFactory';
 import FillerEntryFactory from '~/components/FillerListFactory';
 import FillerListFactory from '~/components/FillerListFactory';
 import FillerPageFactory from '~/components/FillerPageFactory';
 import lazy from "~/lib/lazy"
-import { navListen, nav, Route, Stack, useLocation } from '~/lib/routing'
+import { navListen, nav, Route, StackFactory, useLocation } from '~/lib/routing'
 
 const NotFound = lazy(() => import('~/components/NotFound'))
 const LoginLayout = lazy(() => import('~/components/LoginLayout'))
@@ -21,51 +21,51 @@ export const Routes = Object.freeze({
 
     Home: {
         path: '/',
-        component: FillerPageFactory('Home'),
-        layout: MarketingLayout,
-        stack: Route,
+        Component: FillerPageFactory('Home'),
+        Layout: MarketingLayout,
+        Stack: Route,
     },
     Login: {
         path: '/login',
-        component: lazy(() => import('./auth/login')),
-        layout: LoginLayout,
-        stack: Route,
+        Component: lazy(() => import('./auth/login')),
+        Layout: LoginLayout,
+        Stack: Route,
     },
     Register: {
         path: '/register',
-        component: lazy(() => import('./auth/register')),
-        layout: LoginLayout,
-        stack: PassThrough,
+        Component: lazy(() => import('./auth/register')),
+        Layout: LoginLayout,
+        Stack: Route,
     },
     ForgotPassword: {
         path: '/forgotPassword',
-        component: lazy(() => import('./auth/forgotPassword')),
-        layout: LoginLayout,
-        stack: PassThrough,
+        Component: lazy(() => import('./auth/forgotPassword')),
+        Layout: LoginLayout,
+        Stack: Route,
     },
     Logout: {
         path: '/logout',
-        component: lazy(() => import('./auth/logout')),
-        layout: BlankLayout,
-        stack: PassThrough,
+        Component: lazy(() => import('./auth/logout')),
+        Layout: BlankLayout,
+        Stack: Route,
     },
     Support: {
         path: '/support',
-        component: FillerPageFactory('Support'),
-        layout: MarketingLayout,
-        stack: Route,
+        Component: FillerPageFactory('Support'),
+        Layout: MarketingLayout,
+        Stack: Route,
     },
     About: {
         path: '/about',
-        component: FillerPageFactory('About'),
-        layout: MarketingLayout,
-        stack: Route,
+        Component: FillerPageFactory('About'),
+        Layout: MarketingLayout,
+        Stack: Route,
     },
     Blog: {
         path: '/blog',
-        component: FillerPageFactory('Blog'),
-        layout: MarketingLayout,
-        stack: Route,
+        Component: FillerPageFactory('Blog'),
+        Layout: MarketingLayout,
+        Stack: Route,
     },
 
 
@@ -73,72 +73,72 @@ export const Routes = Object.freeze({
 
     AdminSettingsHome: {
         path: '/admin/settings',
-        component: FillerPageFactory('Settings'),
-        layout: AdminLayout,
-        stack: Route,
+        Component: FillerPageFactory('Settings'),
+        Layout: AdminLayout,
+        Stack: Route,
     },
     
     AdminStatsStack: {
         path: '/admin/stats',
-        component: PassThrough,
-        layout: AdminLayout,
-        stack: Stack('/admin/stats'),
+        Component: PassThrough,
+        Layout: AdminLayout,
+        Stack: StackFactory('/admin/stats'),
     },
     AdminStatsHome: {
         path: '/admin/stats/home',
-        component: FillerPageFactory('Admin Stats'),
-        layout: AdminLayout,
-        stack: Stack('/admin/stats'),
+        Component: FillerPageFactory('Admin Stats'),
+        Layout: AdminLayout,
+        Stack: StackFactory('/admin/stats'),
     },
 
     AdminUserStack: {
         path: '/admin/users',
-        component: PassThrough,
-        layout: AdminLayout,
-        stack: Stack('/admin/users'),
+        Component: PassThrough,
+        Layout: AdminLayout,
+        Stack: StackFactory('/admin/users'),
     },
     AdminUserHome: {
         path: '/admin/users/home',
-        component: FillerHomeFactory('Admin Users'),
-        layout: AdminLayout,
-        stack: Stack('/admin/users'),
+        Component: FillerHomeFactory('Admin Users'),
+        Layout: AdminLayout,
+        Stack: StackFactory('/admin/users'),
     },
     AdminUserList: {
         path: '/admin/users/list',
-        component: FillerListFactory('Admin User List'),
-        layout: AdminLayout,
-        stack: Stack('/admin/users'),
+        Component: FillerListFactory('Admin User List'),
+        Layout: AdminLayout,
+        Stack: StackFactory('/admin/users'),
     },
     AdminUserEntry: {
         path: '/admin/users/entry',
-        component: FillerHomeFactory('Admin User'),
-        layout: AdminLayout,
-        stack: Stack('/admin/users'),
+        Component: FillerHomeFactory('Admin User'),
+        Layout: AdminLayout,
+        Stack: StackFactory('/admin/users'),
     },
     
     AdminBlogStack: {
         path: '/admin/blog',
-        component: PassThrough,
-        layout: AdminLayout,
-        stack: Stack('/admin/blog'),
+        Component: PassThrough,
+        Layout: AdminLayout,
+        Stack: StackFactory('/admin/blog'),
     },
     AdminBlogHome: {
         path: '/admin/blog/home',
-        component: FillerHomeFactory('Admin Blog'),
-        layout: AdminLayout,
-        stack: Stack('/admin/blog'),
+        Component: FillerHomeFactory('Admin Blog'),
+        Layout: AdminLayout,
+        Stack: StackFactory('/admin/blog'),
     },
     AdminBlogPostList: {
         path: '/admin/blog/list',
-        component: FillerListFactory('Admin Post List'),
-        layout: AdminLayout,
-        stack: Stack('/admin/blog'),
+        Component: FillerListFactory('Admin Post List'),
+        Layout: AdminLayout,
+        Stack: StackFactory('/admin/blog'),
     },
     AdminBlogPostEntry: {
         path: '/admin/blog/entry',
-        component: FillerEntryFactory('Admin Post'),
-        layout: AdminLayout,
-        stack: Stack('/admin/blog'),
+        Component: FillerEntryFactory('Admin Post'),
+        Layout: AdminLayout,
+        Stack: StackFactory('/admin/blog'),
     },
 
 
@@ -148,97 +148,97 @@ export const Routes = Object.freeze({
 
     TenantSettingsHome: {
         path: '/tenant/settings',
-        component: FillerPageFactory('Tenant Settings'),
-        layout: TenantLayout,
-        stack: Route,
+        Component: FillerPageFactory('Tenant Settings'),
+        Layout: TenantLayout,
+        Stack: Route,
     },
 
     TenantStatsStack: {
         path: '/tenant/stats',
-        component: PassThrough,
-        layout: TenantLayout,
-        stack: Stack('/tenant/stats'),
+        Component: PassThrough,
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/stats'),
     },
     TenantStatsHome: {
         path: '/tenant/stats/home',
-        component: FillerHomeFactory('Tenant Stats'),
-        layout: TenantLayout,
-        stack: Stack('/tenant/stats'),
+        Component: FillerHomeFactory('Tenant Stats'),
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/stats'),
     },
 
     TenantUserStack: {
         path: '/tenant/users',
-        component: PassThrough,
-        layout: TenantLayout,
-        stack: Stack('/tenant/users'),
+        Component: PassThrough,
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/users'),
     },
     TenantUserHome: {
         path: '/tenant/users/home',
-        component: FillerHomeFactory('Tenant Users Home'),
-        layout: TenantLayout,
-        stack: Stack('/tenant/users'),
+        Component: FillerHomeFactory('Tenant Users Home'),
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/users'),
     },
     TenantUserList: {
         path: '/tenant/users/list',
-        component: FillerListFactory('Tenant User List'),
-        layout: TenantLayout,
-        stack: Stack('/tenant/users'),
+        Component: FillerListFactory('Tenant User List'),
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/users'),
     },
     TenantUserEntry: {
         path: '/tenant/users/entry',
-        component: FillerEntryFactory('Tenant User'),
-        layout: TenantLayout,
-        stack: Stack('/tenant/users'),
+        Component: FillerEntryFactory('Tenant User'),
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/users'),
     },
 
     TenantPropertiesStack: {
         path: '/tenant/properties',
-        component: PassThrough,
-        layout: TenantLayout,
-        stack: Stack('/tenant/properties'),
+        Component: PassThrough,
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/properties'),
     },
     TenantPropertiesHome: {
         path: '/tenant/properties/home',
-        component: FillerHomeFactory('Tenant Properties'),
-        layout: TenantLayout,
-        stack: Stack('/tenant/properties'),
+        Component: FillerHomeFactory('Tenant Properties'),
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/properties'),
     },
     TenantPropertiesList: {
         path: '/tenant/properties/list',
-        component: FillerListFactory('Tenant Property List'),
-        layout: TenantLayout,
-        stack: Stack('/tenant/properties'),
+        Component: FillerListFactory('Tenant Property List'),
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/properties'),
     },
     TenantPropertiesEntry: {
         path: '/tenant/properties/entry',
-        component: FillerEntryFactory('Tenant Property'),
-        layout: TenantLayout,
-        stack: Stack('/tenant/properties'),
+        Component: FillerEntryFactory('Tenant Property'),
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/properties'),
     },
 
     TenantTasksStack: {
         path: '/tenant/tasks',
-        component: PassThrough,
-        layout: TenantLayout,
-        stack: Stack('/tenant/tasks'),
+        Component: PassThrough,
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/tasks'),
     },
     TenantTasksHome: {
         path: '/tenant/tasks/home',
-        component: FillerHomeFactory('Tenant Tasks'),
-        layout: TenantLayout,
-        stack: Stack('/tenant/tasks'),
+        Component: FillerHomeFactory('Tenant Tasks'),
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/tasks'),
     },
     TenantTasksList: {
         path: '/tenant/tasks/list',
-        component: FillerListFactory('Tenant Task List'),
-        layout: TenantLayout,
-        stack: Stack('/tenant/tasks'),
+        Component: FillerListFactory('Tenant Task List'),
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/tasks'),
     },
     TenantTasksEntry: {
         path: '/tenant/tasks/entry',
-        component: FillerEntryFactory('Tenant Task'),
-        layout: TenantLayout,
-        stack: Stack('/tenant/tasks'),
+        Component: FillerEntryFactory('Tenant Task'),
+        Layout: TenantLayout,
+        Stack: StackFactory('/tenant/tasks'),
     },
 })
 
@@ -254,11 +254,13 @@ function PassThrough({children}: any) {
 
 function RouterSwitch() {
     const {pathname} = useLocation()
+
+    // Redirects
     if (pathname === '/admin') nav('/admin/stats')
     if (pathname === '/tenant') nav('/tenant/stats')
-    const match = RoutesByPath[pathname]
-    const Stack = match?.stack || PassThrough
-    return match ? <Stack><match.component/></Stack> : <NotFound />
+    
+    const {Stack, Component} = RoutesByPath[pathname] || { Component: NotFound, Stack: Route }
+    return <Stack><Component/></Stack>
 }
 
 /**
@@ -267,8 +269,8 @@ function RouterSwitch() {
  * and improving performance
  */
 export default function Router() {
-    const [Layout, setLayout] = useState<any>(() => PassThrough)
-    useEffect(watchLocation, [])
+    const [Layout, setLayout] = useState<any>(() => BlankLayout)
+    useLayoutEffect(watchLocation, [])
     return <Layout><RouterSwitch /></Layout>
 
     function watchLocation() {
@@ -279,6 +281,6 @@ export default function Router() {
     function onLocationChange() {
         const match = RoutesByPath[location.pathname]
         if (!match) setLayout(() => BlankLayout)
-        else if (Layout !== match.layout) setLayout(() => match.layout)
+        else if (Layout !== match.Layout) setLayout(() => match.Layout)
     }
 }
