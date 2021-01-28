@@ -1,10 +1,8 @@
-import { lazyLib } from '../lazy'
-import type { SetPageMetaProps } from './setPageMeta'
-
-export type { UseLocationLocation } from './useLocation'
-export * from  './events'
+export {default as nav} from './nav'
+export {default as navListener} from './navListener'
 export {default as useLocation} from './useLocation'
-export {default as StackFactory} from './Stack'
 export {default as Route} from './Route'
+export {default as StackFactory} from './StackFactory'
 
-export const setPageMeta: (p: SetPageMetaProps) => void = lazyLib(import('~/lib/routing/setPageMeta'))
+import type { SetPageMetaProps } from './setPageMeta'
+export const setPageMeta = (p: SetPageMetaProps) => import('./setPageMeta').then(m => m.default(p))

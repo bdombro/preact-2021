@@ -5,7 +5,7 @@ import FillerEntryFactory from '~/components/FillerListFactory';
 import FillerListFactory from '~/components/FillerListFactory';
 import FillerPageFactory from '~/components/FillerPageFactory';
 import lazy from "~/lib/lazy"
-import { navListen, nav, Route, StackFactory, useLocation } from '~/lib/routing'
+import { navListener, nav, Route, StackFactory, useLocation } from '~/lib/routing'
 
 const NotFound = lazy(() => import('~/components/NotFound'))
 const LoginLayout = lazy(() => import('~/components/LoginLayout'))
@@ -274,9 +274,8 @@ export default function Router() {
     return <Layout><RouterSwitch /></Layout>
 
     function watchLocation() {
-        const cancel = navListen(onLocationChange)
         onLocationChange()
-        return cancel
+        return navListener(onLocationChange)
     }
     function onLocationChange() {
         const match = RoutesByPath[location.pathname]

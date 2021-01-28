@@ -25,7 +25,3 @@ export default function lazy (imp: ImportComponent, loadingJsx = <div/>) {
         }
     }
 }
-
-export function lazyLib(imp: Promise<any>) {
-    return (props: any) => imp.then((lib: any) => lib.default(props))
-}

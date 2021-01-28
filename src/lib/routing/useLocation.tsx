@@ -3,7 +3,7 @@
  */
 import { useEffect, useRef, useState } from "preact/hooks";
 
-import { navListen } from './events'
+import navListener from './navListener'
 
 export interface UseLocationLocation { pathname: string, search: string }
 
@@ -15,14 +15,11 @@ export default function useLocation(): UseLocationLocation {
     return location
 
     function _attachListeners() {
-        const detachListener = navListen(checkForUpdates)
-
         // it's possible that an update has occurred between render and the effect handler,
         // so we run additional check on mount to catch these updates. Based on:
         // https://gist.github.com/bvaughn/e25397f70e8c65b0ae0d7c90b731b189
         checkForUpdates();
-
-        return detachListener
+        return navListener(checkForUpdates)
     }
 
     // this function checks if the location has been changed since the

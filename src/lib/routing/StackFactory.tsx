@@ -1,5 +1,11 @@
+/**
+ * An HOC to join a page to a route stack
+ */
 import { useEffect, useLayoutEffect } from "preact/hooks"
-import { nav, scrollListen, useLocation, UseLocationLocation } from "./index"
+import scrollListener from "./scrollListener"
+import type { UseLocationLocation } from './useLocation'
+import nav from './nav'
+import useLocation from './useLocation'
 
 type StackHistoryEntry = {location: UseLocationLocation, scroll: number}
 type StackHistory = StackHistoryEntry[]
@@ -42,7 +48,7 @@ export default function StackFactory(basePath: string) {
                 scrollTo(top.scroll)
                 setVisibility('visible')
                 const e = document.getElementById('content')!
-                if (e) cancelScrollListen = scrollListen(e, updateScrollPos)
+                if (e) cancelScrollListen = scrollListener(e, updateScrollPos)
             }
             else if (pathname === basePath) {// recall from stack
                 nav(top.location.pathname + top.location.search, {replace: true})
@@ -53,7 +59,7 @@ export default function StackFactory(basePath: string) {
                 setVisibility('visible')
                 Stack.push({location, scroll: 0})
                 const e = document.getElementById('content')!
-                if (e) cancelScrollListen = scrollListen(e, updateScrollPos)
+                if (e) cancelScrollListen = scrollListener(e, updateScrollPos)
             }
             
             return cancelScrollListen
@@ -63,6 +69,7 @@ export default function StackFactory(basePath: string) {
             StackHistories[basePath][StackHistories[basePath].length - 1].scroll = scrollTop
         }
         function scrollTo(to: number) {
+            updateScrollPos(to)
             const e = document.getElementById('content')
             if (e) e.scrollTop = to
         }
