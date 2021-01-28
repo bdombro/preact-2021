@@ -1,6 +1,7 @@
 import styles from './SearchBar.module.css'
 import { h } from 'preact';
 import { useRef, useState } from 'preact/hooks';
+import { Search } from '~/components/icons';
 
 export default function SearchBar() {
     const [value, setValue] = useState('')
@@ -9,7 +10,7 @@ export default function SearchBar() {
     const inputRef = useRef(null);
     return <div class={styles.searchbar} ref={sidebarRef}>
         <form action='search' onSubmit={onSubmit}>
-            <div class={styles.magglass}>&#934;</div>
+            <div class={styles.magglass}><Search size={20} horizontal /></div>
             <input
                 class={styles.input} 
                 value={value} 

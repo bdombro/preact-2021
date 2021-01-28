@@ -4,7 +4,7 @@ import { useLocation } from '~/lib/routing';
 import { Paths } from '~/routes/router';
 import { useEffect, useState } from 'preact/hooks';
 import { useLayoutState } from '../context';
-import * as i from '~/components/Icons'
+import * as i from '~/components/icons'
 
 export default function Nav() {
     return <nav class={styles.nav}>
