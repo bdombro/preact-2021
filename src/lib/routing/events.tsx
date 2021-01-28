@@ -66,13 +66,7 @@ export function scrollListen(el: HTMLElement, callback: any) {
             window.dispatchEvent(new Event('link-clicked'))
             e.preventDefault()
 
-            if (ln.hash) {
-                window.dispatchEvent(new Event(ln.hash))
-                
-                // Special events
-                if (ln.hash === '#theme-toggle')
-                    document.body.className.includes('dark') ? document.body.classList.remove("dark") : document.body.classList.add("dark")
-            }
+            if (ln.hash) window.dispatchEvent(new Event(ln.hash))
 
             if (ln.pathname + ln.search !== window.location.pathname + window.location.search) {
                 if (ln.hash === '#replace')

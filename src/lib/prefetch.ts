@@ -7,19 +7,15 @@ prefetch()
 function prefetch() {
     // @ts-ignore
     if(import.meta.env.NODE_ENV === 'production') 
-        setTimeout(
-            () => 
-                fetch("/asset-manifest.json")
-                .then((res) => res.json())
-                .then((assets: string[]) => {
-                    for (let a of Object.values(assets)) {
-                        if (a.endsWith("js") && !a.includes("browser-check"))
-                            loadAndUnload('/' + a)
-                    }
-                }).catch((e) => e)
-            ,
-            10000
-        )
+        fetch("/asset-manifest.json")
+            .then((res) => res.json())
+            .then((assets: string[]) => {
+                for (let a of Object.values(assets)) {
+                    if (a.endsWith("js") && !a.includes("browser-check"))
+                        loadAndUnload('/' + a)
+                }
+            })
+            .catch(e => e)
 }
 
 /**
@@ -33,11 +29,6 @@ async function loadAndUnload(src: string) {
     s.setAttribute("class", 'prefetcher');
     s.setAttribute("type", "module");
     s.setAttribute("async", "true");
-    // s.onload=() => {
-    //     const el = document.querySelector(`script[src="${src}"]`)
-    //     el?.remove()
-    // }
     document.body.appendChild(s);
-    const el = document.querySelector(`script[src="${src}"]`)
-    el?.remove()
+    document.querySelector(`script[src="${src}"]`)?.remove()
 }
