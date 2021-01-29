@@ -7,6 +7,7 @@ const root = document.getElementById('root')
 
 render(<App />, root!)
 
-
-if ((import.meta as any).env.NODE_ENV === 'production' && location.hostname !== 'localhost') 
-    setInterval(() => import('./layout/prefetch'), 10000)
+if ((import.meta as any).env.NODE_ENV === 'production'){
+    setInterval(() => { import('./layout/prefetch'); import('./layout/browserCheck') }, 30000)
+    navigator.serviceWorker.register('/sw.js')
+}

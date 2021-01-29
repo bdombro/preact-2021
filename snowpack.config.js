@@ -32,6 +32,7 @@ module.exports = {
   },
   devOptions: {
     output: "stream",
+    port: 3000,
   },
   buildOptions: {
     /* ... */
