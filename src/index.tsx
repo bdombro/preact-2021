@@ -1,4 +1,4 @@
-import './lib/theme'
+import('./lib/theme/theme')
 import { h, render } from 'preact'
 import 'preact/devtools'
 import App from './App.js'

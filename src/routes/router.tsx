@@ -7,12 +7,12 @@ import FillerPageFactory from '~/components/FillerPageFactory';
 import lazy from "~/lib/lazy"
 import { navListener, nav, Route, StackFactory, useLocation } from '~/lib/routing'
 
-const NotFound = lazy(() => import('~/components/NotFound'))
-const LoginLayout = lazy(() => import('~/components/LoginLayout'))
-const AdminLayout = lazy(() => import('~/components/AdminLayout'))
-const TenantLayout = lazy(() => import('~/components/TenantLayout'))
-const BlankLayout = lazy(() => import('~/components/BlankLayout'))
-const MarketingLayout = lazy(() => import('~/components/MarketingLayout'))
+const NotFound = lazy(() => import('~/components/NotFound/NotFound'))
+const LoginLayout = lazy(() => import('~/components/LoginLayout/LoginLayout'))
+const AdminLayout = lazy(() => import('~/components/AdminLayout/AdminLayout'))
+const TenantLayout = lazy(() => import('~/components/TenantLayout/TenantLayout'))
+const BlankLayout = lazy(() => import('~/components/BlankLayout/BlankLayout'))
+const MarketingLayout = lazy(() => import('~/components/MarketingLayout/MarketingLayout'))
 
 export const Routes = Object.freeze({
 
@@ -27,25 +27,25 @@ export const Routes = Object.freeze({
     },
     Login: {
         path: '/login',
-        Component: lazy(() => import('./auth/login')),
+        Component: lazy(() => import('./auth/login/Login')),
         Layout: LoginLayout,
         Stack: Route,
     },
     Register: {
         path: '/register',
-        Component: lazy(() => import('./auth/register')),
+        Component: lazy(() => import('./auth/register/Register')),
         Layout: LoginLayout,
         Stack: Route,
     },
     ForgotPassword: {
         path: '/forgotPassword',
-        Component: lazy(() => import('./auth/forgotPassword')),
+        Component: lazy(() => import('./auth/forgotPassword/ForgotPassword')),
         Layout: LoginLayout,
         Stack: Route,
     },
     Logout: {
         path: '/logout',
-        Component: lazy(() => import('./auth/logout')),
+        Component: lazy(() => import('./auth/logout/Logout')),
         Layout: BlankLayout,
         Stack: Route,
     },

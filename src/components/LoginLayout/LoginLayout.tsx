@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import styles from './index.module.css'
+import styles from './LoginLayout.module.css'
 
 export default function LoginLayout({children}: any) {
     return <div class={styles.loginLayout}>
