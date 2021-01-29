@@ -1,6 +1,6 @@
 import { Fragment, h } from 'preact';
 import { useLayoutEffect } from 'preact/hooks';
-import setPageMeta from '~/lib/routing/setPageMeta';
+import setPageMeta from '~/layout/routing/setPageMeta';
 import { Paths } from '~/routes/router';
 
 export default function Login() {

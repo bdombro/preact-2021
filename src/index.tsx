@@ -1,4 +1,4 @@
-import('./lib/theme/theme')
+import('./layout/theme/theme')
 import { h, render } from 'preact'
 import 'preact/devtools'
 import App from './App.jsx'
@@ -9,4 +9,4 @@ render(<App />, root!)
 
 
 if ((import.meta as any).env.NODE_ENV === 'production' && location.hostname !== 'localhost') 
-    setInterval(() => import('./lib/prefetch'), 10000)
+    setInterval(() => import('./layout/prefetch'), 10000)

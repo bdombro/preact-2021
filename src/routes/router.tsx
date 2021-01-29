@@ -1,18 +1,18 @@
 import { h } from 'preact';
 import { useLayoutEffect, useState } from 'preact/hooks'
-import FillerHomeFactory from '~/components/FillerHomeFactory';
-import FillerEntryFactory from '~/components/FillerListFactory';
-import FillerListFactory from '~/components/FillerListFactory';
-import FillerPageFactory from '~/components/FillerPageFactory';
-import lazy from "~/lib/lazy"
-import { navListener, nav, Route, StackFactory, useLocation } from '~/lib/routing'
+import FillerHomeFactory from '~/layout/FillerHomeFactory';
+import FillerEntryFactory from '~/layout/FillerListFactory';
+import FillerListFactory from '~/layout/FillerListFactory';
+import FillerPageFactory from '~/layout/FillerPageFactory';
+import lazy from "~/layout/lazy"
+import { navListener, nav, Route, StackFactory, useLocation } from '~/layout/routing'
 
-const NotFound = lazy(() => import('~/components/NotFound/NotFound'))
-const LoginLayout = lazy(() => import('~/components/LoginLayout/LoginLayout'))
-const AdminLayout = lazy(() => import('~/components/AdminLayout/AdminLayout'))
-const TenantLayout = lazy(() => import('~/components/TenantLayout/TenantLayout'))
-const BlankLayout = lazy(() => import('~/components/BlankLayout/BlankLayout'))
-const MarketingLayout = lazy(() => import('~/components/MarketingLayout/MarketingLayout'))
+const NotFound = lazy(() => import('~/layout/NotFound/NotFound'))
+const LoginLayout = lazy(() => import('~/layout/LoginLayout/LoginLayout'))
+const AdminLayout = lazy(() => import('~/layout/AdminLayout/AdminLayout'))
+const TenantLayout = lazy(() => import('~/layout/TenantLayout/TenantLayout'))
+const BlankLayout = lazy(() => import('~/layout/BlankLayout/BlankLayout'))
+const MarketingLayout = lazy(() => import('~/layout/MarketingLayout/MarketingLayout'))
 
 export const Routes = Object.freeze({
 
