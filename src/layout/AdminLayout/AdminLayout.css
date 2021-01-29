@@ -1,8 +1,10 @@
 .adminLayout {
   
   --header-height: 48px;
+  --sidebarRight-width: 200px;
+  
   --sidebar-width-full: 200px;
-  --sidebar-width-mini: 54px;
+  --sidebar-width-mini: 52px;
   --sidebar-width: var(--sidebar-width-full);
 
   --bottom-nav-height: 36px;

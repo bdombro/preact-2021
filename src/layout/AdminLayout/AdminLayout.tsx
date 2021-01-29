@@ -6,8 +6,6 @@ import { useEffect, useRef } from 'preact/hooks'
 import lazy from '~/layout/lazy'
 import useMedia from '~/layout/useMedia'
 
-import { ContextProvider } from './context'
-
 const BottomNav = lazy(() => import('./BottomNav/BottomNav'))
 const Header = lazy(() => import('./Header/Header'))
 const Sidebar = lazy(() => import('./Sidebar/Sidebar'))
@@ -19,17 +17,15 @@ export default function AdminLayout({ children }: { children: any }) {
   useEffect(listenForToggle, [])
   
   return (
-    <ContextProvider>
-      <div class="adminLayout" ref={ref}>
-        <Header />
-        {isWide && <Sidebar />}
-        <SidebarRight />
-        {!isWide && <BottomNav />}
-        <div id="content">
-          {children}
-        </div>
+    <div class="adminLayout" ref={ref}>
+      <Header />
+      {isWide && <Sidebar />}
+      <SidebarRight />
+      {!isWide && <BottomNav />}
+      <div id="content">
+        {children}
       </div>
-    </ContextProvider>
+    </div>
   )
   
   // Use event listeners instead of context, so that we don't trigger

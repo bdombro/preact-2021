@@ -4,21 +4,17 @@ import { h } from 'preact'
 
 import lazy from '~/layout/lazy'
 
-import { ContextProvider } from './context'
-
 const Header = lazy(() => import('./Header/Header'))
 const SidebarRight = lazy(() => import('./SidebarRight/SidebarRight'))
 
 export default function MarketingLayout({ children }: { children: any }) {
   return (
-    <ContextProvider>
-      <div id="marketingLayout">
-        <Header />
-        <SidebarRight />
-        <div id="content">
-          {children}
-        </div>
+    <div id="marketingLayout">
+      <Header />
+      <SidebarRight />
+      <div id="content">
+        {children}
       </div>
-    </ContextProvider>
+    </div>
   )
 }

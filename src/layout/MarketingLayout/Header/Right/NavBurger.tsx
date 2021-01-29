@@ -1,11 +1,11 @@
 import { h } from 'preact'
 
-import { useLayoutState } from '../../context'
+import { useSidebarState } from '../../SidebarRight/SidebarRight'
 import styles from './NavBurger.module.css'
 import linkStyles from './NavLink.module.css'
 
 export default function NavBurger() {
-  const [isActive, setIsActive] = useLayoutState().sidebarRight
+  const [isActive, setIsActive] = useSidebarState()
   return (
     <a class={`${linkStyles.navlink} ${styles.hamburger} ${isActive ? linkStyles.active : ''}`}
       href={'#navburger-click'}

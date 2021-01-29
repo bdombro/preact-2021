@@ -5,7 +5,7 @@ import * as i from '~/layout/icons'
 import { useLocation } from '~/layout/routing'
 import { Paths } from '~/routes/router'
 
-import { useLayoutState } from '../context'
+import { useSidebarState } from '../SidebarRight/SidebarRight'
 import styles from './BottomNav.module.css'
 
 export default function Nav() {
@@ -19,11 +19,11 @@ export default function Nav() {
 
 function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
   const location = useLocation()
-  const [isSidebarActive] = useLayoutState().sidebarRight
-  const isActive = location.pathname.startsWith(uri)
+  const [isSidebarActive] = useSidebarState()
+  const isLinkActive = location.pathname.startsWith(uri)
   return (
-    <a  class={`${styles.navlink} ${isActive && !isSidebarActive && styles.active}`}
-      href={uri + (isActive ? '?stack=reset' : '')}
+    <a class={`${styles.navlink} ${isLinkActive && !isSidebarActive && styles.active}`}
+      href={uri + (isLinkActive ? '?stack=reset' : '')}
     >
       <div><Icon /></div>
     </a>
@@ -38,7 +38,7 @@ function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
  */
 function NavBurger() {
   const [isActive, setIsActive] = useState(false)
-  const [isSidebarActive, setIsSidebarActive] = useLayoutState().sidebarRight
+  const [isSidebarActive, setIsSidebarActive] = useSidebarState()
   useEffect(() => {
     if (!isSidebarActive) setIsActive(false)
   }, [isSidebarActive])

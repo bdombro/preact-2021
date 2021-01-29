@@ -6,7 +6,7 @@ import * as i from '~/layout/icons'
 import { useLocation } from '~/layout/routing'
 import { Paths } from '~/routes/router'
 
-import { useLayoutState } from '../context'
+import { useSidebarState } from '../SidebarRight/SidebarRight'
 
 export default function Nav() {
   return <nav class={styles.nav}>
@@ -20,7 +20,7 @@ export default function Nav() {
 
 function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
   const location = useLocation()
-  const [isSidebarActive] = useLayoutState().sidebarRight
+  const [isSidebarActive] = useSidebarState()
   const isActive = location.pathname.startsWith(uri)
   return (
     <a class={`${styles.navlink} ${isActive && !isSidebarActive && styles.active}`}
@@ -39,7 +39,7 @@ function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
  */
 function NavBurger() {
   const [isActive, setIsActive] = useState(false)
-  const [isSidebarActive, setIsSidebarActive] = useLayoutState().sidebarRight
+  const [isSidebarActive, setIsSidebarActive] = useSidebarState()
   useEffect(() => {
     if (!isSidebarActive) setIsActive(false)
   }, [isSidebarActive])

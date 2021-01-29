@@ -1,7 +1,6 @@
 #marketingLayout {
   --header-height: 48px;
-  --sidebar-width: 200px;
-
+  --sidebarRight-width: 200px;
   --body-height: calc( 100vh - var(--header-height) );
   --margin-bottom: 0;
   --margin-left: 0;
