@@ -1,12 +1,17 @@
 import { h } from 'preact';
 import { Paths } from '~/routes/router';
 import styles from '~/layout/MarketingLayout/Header/Right/Right.module.css'
-import NavLink from './NavLink';
-import NavBurger from './NavBurger';
+import useMedia from '~/layout/useMedia';
+import lazy from '~/layout/lazy';
+
+const NavLink = lazy(() => import('./NavLink'))
+const NavBurger = lazy(() => import('./NavBurger'))
 
 export default function Nav() {
+    const isWide = useMedia('(min-width: 600px)')
     return <nav class={styles.right}>
-        <NavLink uri={Paths.Support} text='Need Help?' />
+        {/* @ts-ignore */}
+        {isWide && <NavLink uri={Paths.Support} text='Need Help?' />}
         <NavBurger />
     </nav>
 }

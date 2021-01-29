@@ -1,5 +1,4 @@
 import { h } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
 import lazy from '~/layout/lazy';
 import styles from '~/layout/MarketingLayout/SidebarRight/SidebarRight.module.css'
 import { useLayoutState } from '../context';
