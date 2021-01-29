@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useLayoutEffect, useState } from 'preact/hooks'
 import FillerHomeFactory from '~/layout/FillerHomeFactory';
-import FillerEntryFactory from '~/layout/FillerListFactory';
+import FillerEntryFactory from '~/layout/FillerEntryFactory';
 import FillerListFactory from '~/layout/FillerListFactory';
 import FillerPageFactory from '~/layout/FillerPageFactory';
 import lazy from "~/layout/lazy"

@@ -1,6 +1,3 @@
-import _default from "mdi-paths-split/CardAccountDetailsOutline"
-
-export default ''
 document.body.innerHTML+=`
 <div id="outdated"></div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/outdated-browser-rework/2.10.0/style.min.css" />

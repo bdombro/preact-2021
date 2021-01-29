@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "snowpack dev --secure",
-    "build": "snowpack build && workbox generateSW",
+    "build": "snowpack build && workbox generateSW && cp -r public/scripts/ build/scripts",
     "serve": "ts-node --project server.tsconfig.json --transpile-only server.ts",
     "test": "web-test-runner \"src/**/*.test.tsx\""
   },
