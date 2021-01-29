@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "snowpack dev",
+    "start": "snowpack dev --secure",
     "build": "snowpack build && workbox generateSW",
     "serve": "ts-node --project server.tsconfig.json --transpile-only server.ts",
     "test": "web-test-runner \"src/**/*.test.tsx\""
@@ -13,8 +13,7 @@
     "fastify": "^3.10.1",
     "fastify-caching": "^6.0.1",
     "fastify-compress": "^3.4.1",
-    "fastify-static": "^3.4.0",
-    "public-encrypt": "^4.0.3"
+    "fastify-static": "^3.4.0"
   },
   "devDependencies": {
     "@prefresh/snowpack": "^3.0.0",

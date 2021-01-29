@@ -8,8 +8,8 @@ import * as path from 'path'
 const buildRoot = path.join(__dirname, './build')
 const notFoundHtml = fs.readFileSync(path.join(buildRoot, '/index.html'))
 
-const sslKey = fs.readFileSync('node_modules/public-encrypt/test/test_key.pem', 'utf8')
-const sslCert = fs.readFileSync('node_modules/public-encrypt/test/test_cert.pem', 'utf8')
+const sslKey = fs.readFileSync('snowpack.key', 'utf8')
+const sslCert = fs.readFileSync('snowpack.crt', 'utf8')
 
 const port = process.env.PORT || 3000
 
