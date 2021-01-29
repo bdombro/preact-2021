@@ -1,6 +1,9 @@
 import './MarketingLayout.css'
+
 import { h } from 'preact'
+
 import lazy from '~/layout/lazy'
+
 import { ContextProvider } from './context'
 
 const Header = lazy(() => import('./Header/Header'))

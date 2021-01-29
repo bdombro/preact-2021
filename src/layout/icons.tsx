@@ -6,8 +6,9 @@
  */
 
 import './icons.css'
-import { h } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+
+import { h } from 'preact'
+import { useEffect, useState } from 'preact/hooks'
 
 
 // The Icons
@@ -43,7 +44,7 @@ interface LazyIconSvgProps extends Omit<IconSvgProps, 'path'> {
 function LazyIconSvg({ lazyPath, ...props }: LazyIconSvgProps) {
   const [path, setPath] = useState('')
   useEffect(() => { lazyPath().then((module: any) => setPath(module.default)) }, [])
-  return <IconSvg path={path} {...props} />;
+  return <IconSvg path={path} {...props} />
 }
 
 // Enhanced svg element
@@ -70,18 +71,18 @@ function IconSvg({
 }: IconSvgProps) {
 
   if (typeof style !== 'string') {
-    let transforms: string[] = style.transform ? [style.transform as string] : []
-    if (horizontal) transforms.push("scaleX(-1)")
-    if (vertical) transforms.push("scaleY(-1)")
+    const transforms: string[] = style.transform ? [style.transform as string] : []
+    if (horizontal) transforms.push('scaleX(-1)')
+    if (vertical) transforms.push('scaleY(-1)')
     if (rotate !== 0) transforms.push(`rotate(${rotate}deg)`)
     if (transforms.length > 0) {
-      style.transform = transforms.join(' ');
-      style.transformOrigin = 'center';
+      style.transform = transforms.join(' ')
+      style.transformOrigin = 'center'
     }
     if (spin) {
       const spinSec = spin === true || typeof spin !== 'number' ? 2 : spin
       style.animation = `spin${spinInverse ? '-inverse' : ''} linear ${Math.abs(spinSec)}s infinite`
-      style.transformOrigin = 'center';
+      style.transformOrigin = 'center'
     }
   }
 
@@ -96,5 +97,5 @@ function IconSvg({
     >
       <path d={path} />
     </svg>
-  );
+  )
 }

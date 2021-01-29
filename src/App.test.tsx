@@ -1,12 +1,13 @@
-import { h } from 'preact';
-import { render } from '@testing-library/preact';
-import { expect } from 'chai';
-import App from './App';
+import { render } from '@testing-library/preact'
+import { expect } from 'chai'
+import { h } from 'preact'
+
+import App from './App'
 
 describe('<App>', () => {
   it('renders learn react link', () => {
-    const { getByText } = render(<App />);
-    const linkElement = getByText(/learn preact/i);
-    expect(document.body.contains(linkElement));
-  });
-});
+    const { getByText } = render(<App />)
+    const linkElement = getByText(/learn preact/i)
+    expect(document.body.contains(linkElement))
+  })
+})

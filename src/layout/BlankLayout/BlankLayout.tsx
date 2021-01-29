@@ -1,4 +1,5 @@
 import './BlankLayout.css'
+
 import { h } from 'preact'
 
 export default function BlankLayout({ children }: { children: any }) {

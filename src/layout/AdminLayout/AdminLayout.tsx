@@ -1,9 +1,12 @@
 import './AdminLayout.css'
+
 import { h } from 'preact'
-import lazy from '~/layout/lazy'
-import { ContextProvider } from './context'
 import { useEffect, useRef } from 'preact/hooks'
+
+import lazy from '~/layout/lazy'
 import useMedia from '~/layout/useMedia'
+
+import { ContextProvider } from './context'
 
 const BottomNav = lazy(() => import('./BottomNav/BottomNav'))
 const Header = lazy(() => import('./Header/Header'))
@@ -11,7 +14,7 @@ const Sidebar = lazy(() => import('./Sidebar/Sidebar'))
 const SidebarRight = lazy(() => import('./SidebarRight/SidebarRight'))
 
 export default function AdminLayout({ children }: { children: any }) {
-  const isWide = useMedia('(min-width: 600px)');
+  const isWide = useMedia('(min-width: 600px)')
   const ref = useRef<HTMLDivElement>(null)
   useEffect(listenForToggle, [])
   

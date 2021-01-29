@@ -16,19 +16,19 @@ export interface SetPageMetaProps {
 }
 
 export default function setPageMeta(p: SetPageMetaProps) {
-    const title = p.title ? `${p.title} - ${siteName}` : siteName
-    if (title !== document.title) document.title = title
+  const title = p.title ? `${p.title} - ${siteName}` : siteName
+  if (title !== document.title) document.title = title
 
-    if (link.href !== location.href) link.href = location.href
+  if (link.href !== location.href) link.href = location.href
 
-    author.upsert(p.author || p.title)
-    ogTitle.upsert(p.title)
-    locale.upsert(p.locale)
-    description.upsert(p.description)
-    ogDescription.upsert(p.description)
-    ogUrl.upsert(location.href)
-    ogSiteName.upsert(p.siteName)
-    ogImage.upsert(p.image)
+  author.upsert(p.author || p.title)
+  ogTitle.upsert(p.title)
+  locale.upsert(p.locale)
+  description.upsert(p.description)
+  ogDescription.upsert(p.description)
+  ogUrl.upsert(location.href)
+  ogSiteName.upsert(p.siteName)
+  ogImage.upsert(p.image)
 }
 
 /**
@@ -39,13 +39,13 @@ class MetaClass {
     orig: string
     set: (val: string) => void
     constructor(e: Element) {
-        this.get = () => e.getAttribute('content')!
-        this.set = (v: string) => e.setAttribute('content', v)
-        this.orig = this.get()
+      this.get = () => e.getAttribute('content')!
+      this.set = (v: string) => e.setAttribute('content', v)
+      this.orig = this.get()
     }
     upsert(val?: string) {
-        if (!val) val = this.orig
-        if (this.get() !== val) this.set(val)
+      if (!val) val = this.orig
+      if (this.get() !== val) this.set(val)
     }
 }
 
@@ -61,11 +61,11 @@ const ogSiteName = new MetaClass(byProp('og:site_name'))
 const ogImage = new MetaClass(byProp('og:image'))
 
 function byName(name: string) {
-    return find(`meta[name="${name}"]`)
+  return find(`meta[name="${name}"]`)
 }
 function byProp(prop: string) {
-    return find(`meta[property="${prop}"]`)
+  return find(`meta[property="${prop}"]`)
 }
 function find(selector: string) {
-    return document.head.querySelector(selector)!
+  return document.head.querySelector(selector)!
 }

@@ -1,32 +1,34 @@
+import { h } from 'preact'
+import { useEffect, useState } from 'preact/hooks'
+
 import styles from '~/layout/AdminLayout/BottomNav/BottomNav.module.css'
-import { h } from 'preact';
-import { useLocation } from '~/layout/routing';
-import { Paths } from '~/routes/router';
-import { useEffect, useState } from 'preact/hooks';
-import { useLayoutState } from '../context';
 import * as i from '~/layout/icons'
+import { useLocation } from '~/layout/routing'
+import { Paths } from '~/routes/router'
+
+import { useLayoutState } from '../context'
 
 export default function Nav() {
-    return <nav class={styles.nav}>
-        <NavLink uri={Paths.TenantStatsStack} Icon={i.Counter} />
-        <NavLink uri={Paths.TenantTasksStack} Icon={i.Tasks} />
-        <NavLink uri={Paths.TenantPropertiesStack} Icon={i.Building} />
-        <NavLink uri={Paths.TenantUserStack} Icon={i.Auth} />
-        <NavBurger />
-    </nav>
+  return <nav class={styles.nav}>
+    <NavLink uri={Paths.TenantStatsStack} Icon={i.Counter} />
+    <NavLink uri={Paths.TenantTasksStack} Icon={i.Tasks} />
+    <NavLink uri={Paths.TenantPropertiesStack} Icon={i.Building} />
+    <NavLink uri={Paths.TenantUserStack} Icon={i.Auth} />
+    <NavBurger />
+  </nav>
 }
 
 function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
-    const location = useLocation()
-    const [isSidebarActive] = useLayoutState().sidebarRight
-    const isActive = location.pathname.startsWith(uri)
-    return (
-        <a class={`${styles.navlink} ${isActive && !isSidebarActive && styles.active}`}
-            href={uri + (isActive ? '?stack=reset' : '')}
-        >
-            <div><Icon /></div>
-        </a>
-    )
+  const location = useLocation()
+  const [isSidebarActive] = useLayoutState().sidebarRight
+  const isActive = location.pathname.startsWith(uri)
+  return (
+    <a class={`${styles.navlink} ${isActive && !isSidebarActive && styles.active}`}
+      href={uri + (isActive ? '?stack=reset' : '')}
+    >
+      <div><Icon /></div>
+    </a>
+  )
 }
 
 /**
@@ -36,22 +38,22 @@ function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
  * gracefully.
  */
 function NavBurger() {
-    const [isActive, setIsActive] = useState(false)
-    const [isSidebarActive, setIsSidebarActive] = useLayoutState().sidebarRight
-    useEffect(() => {
-        if (!isSidebarActive) setIsActive(false)
-    }, [isSidebarActive])
-    return (
-        <a class={`${styles.navlink} ${isActive && styles.active}`}
-            href="#toggle-sidebar-right"
-            onClick={() => {
-                setIsActive(isActive => {
-                    setIsSidebarActive(!isActive)
-                    return !isActive
-                })
-            }}
-        >
-            <div>{isActive ? "X" : "Ξ"}</div>
-        </a>
-    )
+  const [isActive, setIsActive] = useState(false)
+  const [isSidebarActive, setIsSidebarActive] = useLayoutState().sidebarRight
+  useEffect(() => {
+    if (!isSidebarActive) setIsActive(false)
+  }, [isSidebarActive])
+  return (
+    <a class={`${styles.navlink} ${isActive && styles.active}`}
+      href="#toggle-sidebar-right"
+      onClick={() => {
+        setIsActive(isActive => {
+          setIsSidebarActive(!isActive)
+          return !isActive
+        })
+      }}
+    >
+      <div>{isActive ? 'X' : 'Ξ'}</div>
+    </a>
+  )
 }
