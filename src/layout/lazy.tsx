@@ -2,26 +2,23 @@
  * Functions like react's lazy, only it doesn't need suspense
  */
 
-import { Component, FunctionalComponent, h } from 'preact';
+import { useEffect, useState } from "preact/hooks";
 
-type ImportComponent = () => Promise<any>
+import { h } from 'preact';
 
-export default function lazy (imp: ImportComponent, loadingJsx = <div/>) {
-    return class Lazy extends Component {
-        state: {
-            component: FunctionalComponent | null
-        }
-        constructor(props: any) {
-            super(props)
-            this.state = { component: null }
-        }
-        async componentDidMount() {
-            const { default: component } = await imp()
-            this.setState({ component })
-        }
-        render() {
-            const C = this.state.component
-            return C ? <C {...this.props} /> : loadingJsx;
-        }
+export default function lazy<T>(loader: () => Promise<{ default: T }>, loadingJsx = <div />): any {
+    return function Lazy(props: any = {}) {
+        const [jsx, setJsx] = useState<any>(loadingJsx)
+        useEffect(() => {
+            loader().then((m: { default: any }) => {
+                if (!m || !m.default) {
+                    const e = new Error('Lazy import must export default') as any
+                    e.import = m
+                    throw e
+                }
+                setJsx(<m.default {...props} />)
+            })
+        }, [props])
+        return jsx
     }
 }

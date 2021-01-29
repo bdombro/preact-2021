@@ -10,7 +10,6 @@ const NavBurger = lazy(() => import('./NavBurger'))
 export default function Nav() {
     const isWide = useMedia('(min-width: 600px)')
     return <nav class={styles.right}>
-        {/* @ts-ignore */}
         {isWide && <NavLink uri={Paths.Support} text='Need Help?' />}
         <NavBurger />
     </nav>

@@ -11,9 +11,7 @@ export default function Right() {
     const isWide = useMedia('(min-width: 600px)')
     return <div class={styles.right}>
         {isWide && <F>
-            {/* @ts-ignore */}
             <NavLink uri={Paths.Blog} text='Blog' />
-            {/* @ts-ignore */}
             <NavLink uri={Paths.Login} text='Login' />
         </F>}
         <NavBurger />
