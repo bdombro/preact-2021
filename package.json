@@ -7,13 +7,21 @@
     "start": "snowpack dev --secure",
     "build": "snowpack build && workbox generateSW && cp -r public/scripts/ build/scripts",
     "serve": "ts-node --project server.tsconfig.json --transpile-only server.ts",
-    "test": "web-test-runner \"src/**/*.test.tsx\""
+    "test": "web-test-runner \"src/**/*.test.tsx\"",
+    "validate": "yarn lint && tsc",
+    "lint": "eslint --cache --ext .ts,.tsx src server.ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint --fix"
+    }
   },
   "dependencies": {
     "fastify": "^3.10.1",
     "fastify-caching": "^6.0.1",
     "fastify-compress": "^3.4.1",
-    "fastify-static": "^3.4.0"
+    "fastify-static": "^3.4.0",
+    "husky": "^4.3.8"
   },
   "devDependencies": {
     "@prefresh/snowpack": "^3.0.0",
@@ -21,8 +29,12 @@
     "@snowpack/web-test-runner-plugin": "^0.2.0",
     "@testing-library/preact": "^2.0.0",
     "@types/chai": "^4.2.14",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
     "@web/test-runner": "^0.12.0",
     "chai": "^4.2.0",
+    "eslint": "^7.18.0",
+    "eslint-plugin-simple-import-sort": "^6.0.1",
     "mdi-paths-split": "^5.9.55",
     "preact": "^10.0.0",
     "snowpack": "^3.0.1",
