@@ -1,9 +1,10 @@
 import styles from './Left.module.css'
 import { h } from 'preact'
+import lazy from '~/lib/lazy'
 
-import Burger from './Burger'
-import Logo from './Logo'
-import Search from './SearchBar'
+const Burger = lazy(() => import('./Burger'))
+const Logo = lazy(() => import('./Logo'))
+const Search = lazy(() => import('./SearchBar'))
 
 export default function Left() {
     return <div class={styles.left}>

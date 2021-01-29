@@ -4,18 +4,16 @@ prefetch()
  * Prefetches scripts from the asset-manifest.json file
  * after most browsers would finish loading a page (<10s)
  */
-function prefetch() {
-    // @ts-ignore
-    if(import.meta.env.NODE_ENV === 'production') 
-        fetch("/asset-manifest.json")
-            .then((res) => res.json())
-            .then((assets: string[]) => {
-                for (let a of Object.values(assets)) {
-                    if (a.endsWith("js") && !a.includes("browser-check"))
-                        loadAndUnload('/' + a)
-                }
-            })
-            .catch(e => e)
+export function prefetch() {
+    fetch("/asset-manifest.json")
+        .then((res) => res.json())
+        .then((assets: string[]) => {
+            for (let a of Object.values(assets)) {
+                if (a.endsWith("js") && !a.includes("browser-check"))
+                    loadAndUnload('/' + a)
+            }
+        })
+        .catch(e => e)
 }
 
 /**

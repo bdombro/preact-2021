@@ -3,6 +3,7 @@ import { h } from 'preact'
 import lazy from '../../lib/lazy'
 import { ContextProvider } from './context'
 import { useEffect, useRef } from 'preact/hooks'
+import useMedia from '~/lib/useMedia'
 
 const BottomNav = lazy(() => import('./BottomNav/BottomNav'))
 const Header = lazy(() => import('./Header/Header'))
@@ -10,6 +11,7 @@ const Sidebar = lazy(() => import('./Sidebar/Sidebar'))
 const SidebarRight = lazy(() => import('./SidebarRight/SidebarRight'))
 
 export default function TenantLayout({ children }: { children: any }) {
+  const isWide = useMedia('(min-width: 600px)');
   const ref = useRef<HTMLDivElement>(null)
   useEffect(listenForToggle, [])
 
@@ -17,9 +19,9 @@ export default function TenantLayout({ children }: { children: any }) {
     <ContextProvider>
       <div class="adminLayout" ref={ref}>
         <Header />
-        <Sidebar />
+        {isWide && <Sidebar />}
         <SidebarRight />
-        <BottomNav />
+        {!isWide && <BottomNav />}
         <div id="content">
           {children}
         </div>

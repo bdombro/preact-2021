@@ -1,5 +1,4 @@
 .nav {
-    display: block;
     will-change: scroll-position;
     position: fixed;
     bottom: 0;
@@ -31,10 +30,4 @@
 }
 .navlink:last-of-type {
     border-right: none;
-}
-
-@media (min-width: 600px) {
-    .nav {
-        display: none;
-    }
 }
