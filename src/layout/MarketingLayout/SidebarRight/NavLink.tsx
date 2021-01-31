@@ -1,6 +1,6 @@
 import { h } from 'preact'
 
-import useLocation from '~/layout/routing/useLocation'
+import useLocation from '~/layout/useLocation'
 
 import styles from './NavLink.module.css'
 

@@ -2,7 +2,7 @@ import { h } from 'preact'
 
 import { SidebarRightCtx } from '~/App.context'
 import styles from '~/layout/AdminLayout/BottomNav/NavLink.module.css'
-import useLocation from '~/layout/routing/useLocation'
+import useLocation from '~/layout/useLocation'
 
 export default function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
   const location = useLocation()

@@ -1,7 +1,7 @@
 import { h } from 'preact'
 import { useEffect } from 'preact/hooks'
 
-import { nav } from '~/layout/routing'
+import nav from '~/layout/navigate'
 
 export default function Logout() {
   useEffect(() => {nav('/', {replace: true})})

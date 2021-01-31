@@ -1,8 +1,8 @@
 import { FunctionalComponent, FunctionComponent, h } from 'preact'
 import { useLayoutEffect, useState } from 'preact/hooks'
 
-import BlankLayout from '../BlankLayout/BlankLayout'
-import nav from './nav'
+import BlankLayout from './BlankLayout/BlankLayout'
+import nav from './navigate'
 import navListener from './navListener'
 import RouteWrapper from './RouteWrapper'
 import useLocation from './useLocation'
@@ -17,7 +17,7 @@ function RouterSwitch({ routesByPath, NotFound, redirects = {} }: RouterProps) {
   
   if (pathname === '/tenant') nav('/tenant/stats')
 
-  const { Stack, Component } = routesByPath[pathname] || { Component: NotFound, Stack: RouteWrapper }
+  const { Stack = RouteWrapper, Component = NotFound } = routesByPath[pathname] || {}
   return <Stack><Component /></Stack>
 }
 
@@ -38,7 +38,7 @@ export default function Router(props: RouterProps) {
   }
   function onLocationChange() {
     const match = props.routesByPath[location.pathname]
-    if (!match) setLayout(() => BlankLayout)
+    if (!match || !match.Layout) setLayout(() => BlankLayout)
     else if (Layout !== match.Layout) setLayout(() => match.Layout)
   }
 }
@@ -52,6 +52,6 @@ interface RouterProps {
 interface Route {
   path: string
   Component: FunctionalComponent
-  Layout: FunctionalComponent
-  Stack: FunctionalComponent
+  Layout?: FunctionalComponent
+  Stack?: FunctionalComponent
 }

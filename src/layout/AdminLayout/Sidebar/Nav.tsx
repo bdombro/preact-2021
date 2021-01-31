@@ -3,7 +3,7 @@ import { h } from 'preact'
 import * as i from '~/layout/icons'
 import styles from '~/layout/MarketingLayout/SidebarRight/Nav.module.css'
 import NavLink from '~/layout/MarketingLayout/SidebarRight/NavLink'
-import { useLocation } from '~/layout/routing'
+import useLocation from '~/layout/useLocation'
 import { Paths } from '~/routes/routes'
 
 export default function Nav() {

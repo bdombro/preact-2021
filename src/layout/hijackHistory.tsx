@@ -1,7 +1,7 @@
 /**
  * Intercept changes to navigation to dispatch events and prevent default
  */
-import nav from './nav'
+import nav from './navigate'
 
 export let loaded = 0
 if (!loaded++) {

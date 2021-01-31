@@ -3,7 +3,7 @@
  */
 import { useEffect, useLayoutEffect } from 'preact/hooks'
 
-import nav from './nav'
+import nav from './navigate'
 import scrollListener from './scrollListener'
 import type { UseLocationLocation } from './useLocation'
 import useLocation from './useLocation'

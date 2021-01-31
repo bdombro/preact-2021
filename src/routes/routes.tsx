@@ -1,19 +1,17 @@
 import { h } from 'preact'
-import { useLayoutEffect, useState } from 'preact/hooks'
 
 import FillerEntryFactory from '~/layout/FillerEntryFactory'
 import FillerHomeFactory from '~/layout/FillerHomeFactory'
 import FillerListFactory from '~/layout/FillerListFactory'
 import FillerPageFactory from '~/layout/FillerPageFactory'
 import lazy from '~/layout/lazy'
-import { Route, StackFactory } from '~/layout/routing'
-import Router from '~/layout/routing/Router'
+import Router from '~/layout/Router'
+import StackFactory from '~/layout/StackFactory'
 
-const NotFound = lazy(() => import('~/layout/NotFound/NotFound'))
+const NotFound = lazy(() => import('~/layout/NotFound'))
 const LoginLayout = lazy(() => import('~/layout/LoginLayout/LoginLayout'))
 const AdminLayout = lazy(() => import('~/layout/AdminLayout/AdminLayout'))
 const TenantLayout = lazy(() => import('~/layout/TenantLayout/TenantLayout'))
-const BlankLayout = lazy(() => import('~/layout/BlankLayout/BlankLayout'))
 const MarketingLayout = lazy(() => import('~/layout/MarketingLayout/MarketingLayout'))
 
 
@@ -25,49 +23,40 @@ export const routes = Object.freeze({
     path: '/',
     Component: FillerPageFactory('Home'),
     Layout: MarketingLayout,
-    Stack: Route,
   },
   Login: {
     path: '/login',
     Component: lazy(() => import('./auth/login/Login')),
     Layout: LoginLayout,
-    Stack: Route,
   },
   Register: {
     path: '/register',
     Component: lazy(() => import('./auth/register/Register')),
     Layout: LoginLayout,
-    Stack: Route,
   },
   ForgotPassword: {
     path: '/forgotPassword',
     Component: lazy(() => import('./auth/forgotPassword/ForgotPassword')),
     Layout: LoginLayout,
-    Stack: Route,
   },
   Logout: {
     path: '/logout',
     Component: lazy(() => import('./auth/logout/Logout')),
-    Layout: BlankLayout,
-    Stack: Route,
   },
   Support: {
     path: '/support',
     Component: FillerPageFactory('Support'),
     Layout: MarketingLayout,
-    Stack: Route,
   },
   About: {
     path: '/about',
     Component: FillerPageFactory('About'),
     Layout: MarketingLayout,
-    Stack: Route,
   },
   Blog: {
     path: '/blog',
     Component: FillerPageFactory('Blog'),
     Layout: MarketingLayout,
-    Stack: Route,
   },
 
 
@@ -77,7 +66,6 @@ export const routes = Object.freeze({
     path: '/admin/settings',
     Component: FillerPageFactory('Settings'),
     Layout: AdminLayout,
-    Stack: Route,
   },
     
   AdminStatsStack: {
@@ -152,7 +140,6 @@ export const routes = Object.freeze({
     path: '/tenant/settings',
     Component: FillerPageFactory('Tenant Settings'),
     Layout: TenantLayout,
-    Stack: Route,
   },
 
   TenantStatsStack: {

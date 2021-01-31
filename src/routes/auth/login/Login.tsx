@@ -1,6 +1,6 @@
 import { Fragment as F, h } from 'preact'
 
-import setPageMeta from '~/layout/routing/setPageMeta'
+import setPageMeta from '~/layout/setPageMeta'
 import { Paths } from '~/routes/routes'
 
 export default function Login() {
