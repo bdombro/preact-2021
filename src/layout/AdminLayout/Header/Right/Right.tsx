@@ -5,8 +5,8 @@ import styles from '~/layout/MarketingLayout/Header/Right/Right.module.css'
 import useMedia from '~/layout/useMedia'
 import { Paths } from '~/routes/routes'
 
-const NavLink = lazy(() => import('./NavLink'))
-const NavBurger = lazy(() => import('./NavBurger'))
+const NavLink = lazy(() => import('~/layout/MarketingLayout/Header/Right/NavLink'))
+const NavBurger = lazy(() => import('~/layout/MarketingLayout/Header/Right/NavBurger'))
 
 export default function Nav() {
   const isWide = useMedia('(min-width: 600px)')

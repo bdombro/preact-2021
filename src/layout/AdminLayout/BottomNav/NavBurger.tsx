@@ -2,13 +2,14 @@ import { h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import { SidebarRightCtx } from '~/App.context'
-import styles from '~/layout/MarketingLayout/Header/Right/NavBurger.module.css'
-import linkStyles from '~/layout/MarketingLayout/Header/Right/NavLink.module.css'
+
+import styles from './NavLink.module.css'
 
 /**
  * This is a little more complex than the Marketing Navburger, b/c it can have a diff
- * state than sidebarRight b/c the sidebar can also be activated in BottomNav. The 
- * added complexity allows NavBurger to handle this gracefully.
+ * state than sidebarRight b/c the sidebar can also be activated in the 
+ * Header->Right->Navburger. The added complexity allows NavBurger to handle this
+ * gracefully.
  */
 export default function NavBurger() {
   const [isActive, setIsActive] = useState(false)
@@ -17,8 +18,8 @@ export default function NavBurger() {
     if (!isSidebarActive) setIsActive(false)
   }, [isSidebarActive])
   return (
-    <a class={`${linkStyles.navlink} ${styles.hamburger} ${isActive ? linkStyles.active: ''}`}
-      href={'#navburger-click'}
+    <a class={`${styles.navlink} ${isActive && styles.active}`}
+      href="#sidebar-right-toggle"
       onClick={() => {
         setIsActive(isActive => {
           setIsSidebarActive(!isActive)
@@ -26,7 +27,7 @@ export default function NavBurger() {
         })
       }}
     >
-      {isActive ? 'X' : 'Ξ'}
+      <div>{isActive ? 'X' : 'Ξ'}</div>
     </a>
   )
 }

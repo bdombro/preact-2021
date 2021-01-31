@@ -1,8 +1,7 @@
 import { h } from 'preact'
 
 import lazy from '~/layout/lazy'
-
-import styles from './Left.module.css'
+import styles from '~/layout/MarketingLayout/Header/Left/Left.module.css'
 
 const Burger = lazy(() => import('./Burger'))
 const Logo = lazy(() => import('./Logo'))

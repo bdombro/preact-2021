@@ -4,7 +4,7 @@ import lazy from '~/layout/lazy'
 import styles from '~/layout/MarketingLayout/Header/Header.module.css'
 
 const Left = lazy(() => import('~/layout/AdminLayout/Header/Left/Left'))
-const Right = lazy(() => import('./Right/Right'))
+const Right = lazy(() => import('~/layout/AdminLayout/Header/Right/Right'))
 
 export default function Header() {
   return <div class={styles.header}>

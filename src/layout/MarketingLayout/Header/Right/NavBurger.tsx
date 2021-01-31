@@ -1,18 +1,33 @@
 import { h } from 'preact'
+import { useEffect, useState } from 'preact/hooks'
 
 import { SidebarRightCtx } from '~/App.context'
 
 import styles from './NavBurger.module.css'
 import linkStyles from './NavLink.module.css'
 
+/**
+ * This is a little complex b/c it can have a diff state than sidebarRight b/c the sidebar can
+ * also be activated in BottomNav components. The added complexity allows NavBurger to handle 
+ * this gracefully.
+ */
 export default function NavBurger() {
-  const [isActive, setIsActive] = SidebarRightCtx.use()
+  const [isLinkActive, setIsLinkActive] = useState(false)
+  const [isSidebarActive, setIsSidebarActive] = SidebarRightCtx.use()
+  useEffect(() => {
+    if (!isSidebarActive) setIsLinkActive(false)
+  }, [isSidebarActive])
   return (
-    <a class={`${linkStyles.navlink} ${styles.hamburger} ${isActive ? linkStyles.active : ''}`}
+    <a class={`${linkStyles.navlink} ${styles.hamburger} ${isLinkActive ? linkStyles.active : ''}`}
       href={'#navburger-click'}
-      onClick={() => setIsActive(!isActive)}
+      onClick={() => {
+        setIsLinkActive(isActive => {
+          setIsSidebarActive(!isActive)
+          return !isActive
+        })
+      }}
     >
-      {isActive ? 'X' : 'Ξ'}
+      {isLinkActive ? 'X' : 'Ξ'}
     </a>
   )
 }
