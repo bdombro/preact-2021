@@ -1,6 +1,6 @@
 export {default as nav} from './nav'
 export {default as navListener} from './navListener'
-export {default as Route} from './Route'
+export {default as Route} from './RouteWrapper'
 export {default as StackFactory} from './StackFactory'
 export {default as useLocation} from './useLocation'
 

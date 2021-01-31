@@ -2,7 +2,7 @@ import { Fragment as F, h } from 'preact'
 
 import lazy from '~/layout/lazy'
 import useMedia from '~/layout/useMedia'
-import { Paths } from '~/routes/router'
+import { Paths } from '~/routes/routes'
 
 import styles from './Right.module.css'
 

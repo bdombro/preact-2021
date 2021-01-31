@@ -1,11 +1,11 @@
 import { h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
+import { SidebarRightCtx } from '~/App.context'
 import * as i from '~/layout/icons'
 import { useLocation } from '~/layout/routing'
-import { Paths } from '~/routes/router'
+import { Paths } from '~/routes/routes'
 
-import { useSidebarState } from '../SidebarRight/SidebarRight'
 import styles from './BottomNav.module.css'
 
 export default function Nav() {
@@ -19,7 +19,7 @@ export default function Nav() {
 
 function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
   const location = useLocation()
-  const [isSidebarActive] = useSidebarState()
+  const [isSidebarActive] = SidebarRightCtx.use()
   const isLinkActive = location.pathname.startsWith(uri)
   return (
     <a class={`${styles.navlink} ${isLinkActive && !isSidebarActive && styles.active}`}
@@ -38,13 +38,13 @@ function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
  */
 function NavBurger() {
   const [isActive, setIsActive] = useState(false)
-  const [isSidebarActive, setIsSidebarActive] = useSidebarState()
+  const [isSidebarActive, setIsSidebarActive] = SidebarRightCtx.use()
   useEffect(() => {
     if (!isSidebarActive) setIsActive(false)
   }, [isSidebarActive])
   return (
     <a class={`${styles.navlink} ${isActive && styles.active}`}
-      href="#toggle-sidebar-right"
+      href="#sidebar-right-toggle"
       onClick={() => {
         setIsActive(isActive => {
           setIsSidebarActive(!isActive)

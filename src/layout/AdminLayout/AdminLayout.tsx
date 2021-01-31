@@ -1,7 +1,7 @@
 import './AdminLayout.css'
 
 import { h } from 'preact'
-import { useEffect, useRef } from 'preact/hooks'
+import { useRef } from 'preact/hooks'
 
 import lazy from '~/layout/lazy'
 import useMedia from '~/layout/useMedia'
@@ -14,7 +14,6 @@ const SidebarRight = lazy(() => import('./SidebarRight/SidebarRight'))
 export default function AdminLayout({ children }: { children: any }) {
   const isWide = useMedia('(min-width: 600px)')
   const ref = useRef<HTMLDivElement>(null)
-  useEffect(listenForToggle, [])
   
   return (
     <div class="adminLayout" ref={ref}>
@@ -27,13 +26,4 @@ export default function AdminLayout({ children }: { children: any }) {
       </div>
     </div>
   )
-  
-  // Use event listeners instead of context, so that we don't trigger
-  // unnecessary re-renders
-  function listenForToggle() {
-    const toggle = () => ref.current.classList.toggle('miniSidebar')
-    const event = '#toggle-sidebar'
-    window.addEventListener(event, toggle)
-    return () => window.removeEventListener(event, toggle)
-  }
 }

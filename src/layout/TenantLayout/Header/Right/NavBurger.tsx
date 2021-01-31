@@ -1,10 +1,9 @@
 import { h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
+import { SidebarRightCtx } from '~/App.context'
 import styles from '~/layout/MarketingLayout/Header/Right/NavBurger.module.css'
 import linkStyles from '~/layout/MarketingLayout/Header/Right/NavLink.module.css'
-
-import { useSidebarState } from '../../SidebarRight/SidebarRight'
 
 /**
  * This is a little more complex than the Marketing Navburger, b/c it can have a diff
@@ -13,7 +12,7 @@ import { useSidebarState } from '../../SidebarRight/SidebarRight'
  */
 export default function NavBurger() {
   const [isActive, setIsActive] = useState(false)
-  const [isSidebarActive, setIsSidebarActive] = useSidebarState()
+  const [isSidebarActive, setIsSidebarActive] = SidebarRightCtx.use()
   useEffect(() => {
     if (!isSidebarActive) setIsActive(false)
   }, [isSidebarActive])

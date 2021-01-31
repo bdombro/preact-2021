@@ -1,7 +1,7 @@
 import { Fragment as F, h } from 'preact'
 
 import setPageMeta from '~/layout/routing/setPageMeta'
-import { Paths } from '~/routes/router'
+import { Paths } from '~/routes/routes'
 
 export default function Register() {
   setPageMeta({ title: 'Register' })

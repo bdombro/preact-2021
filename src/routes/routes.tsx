@@ -6,7 +6,8 @@ import FillerHomeFactory from '~/layout/FillerHomeFactory'
 import FillerListFactory from '~/layout/FillerListFactory'
 import FillerPageFactory from '~/layout/FillerPageFactory'
 import lazy from '~/layout/lazy'
-import { nav, navListener, Route, StackFactory, useLocation } from '~/layout/routing'
+import { Route, StackFactory } from '~/layout/routing'
+import Router from '~/layout/routing/Router'
 
 const NotFound = lazy(() => import('~/layout/NotFound/NotFound'))
 const LoginLayout = lazy(() => import('~/layout/LoginLayout/LoginLayout'))
@@ -15,8 +16,8 @@ const TenantLayout = lazy(() => import('~/layout/TenantLayout/TenantLayout'))
 const BlankLayout = lazy(() => import('~/layout/BlankLayout/BlankLayout'))
 const MarketingLayout = lazy(() => import('~/layout/MarketingLayout/MarketingLayout'))
 
-export const Routes = Object.freeze({
 
+export const routes = Object.freeze({
 
   // Marketing Routes: home, login, support, about, blog
 
@@ -244,43 +245,23 @@ export const Routes = Object.freeze({
 })
 
 
-export const RoutesByPath = Object.fromEntries(Object.values(Routes).map(r => [r.path, r]))
+export const routesByPath = Object.fromEntries(Object.values(routes).map(r => [r.path, r]))
 // @ts-ignore: Maybe fix later
-export const Paths: Record<keyof typeof Routes, string> = Object.fromEntries(Object.entries(Routes).map(([name, r]) => [name, r.path]))
+export const Paths: Record<keyof typeof routes, string> = Object.fromEntries(Object.entries(routes).map(([name, r]) => [name, r.path]))
+
+
+export function RoutesComponent() {
+  return <Router
+    routesByPath={routesByPath}
+    NotFound={NotFound}
+    redirects={{
+      '/admin': routes.AdminStatsHome.path,
+      '/tenant': routes.TenantStatsHome.path,
+    }}
+  />
+}
 
 
 function PassThrough({children}: any) {
   return children
-}
-
-function RouterSwitch() {
-  const {pathname} = useLocation()
-
-  // Redirects
-  if (pathname === '/admin') nav('/admin/stats')
-  if (pathname === '/tenant') nav('/tenant/stats')
-    
-  const {Stack, Component} = RoutesByPath[pathname] || { Component: NotFound, Stack: Route }
-  return <Stack><Component/></Stack>
-}
-
-/**
- * Wraps the Router Switch in a Layout, and strategically only re-renders
- * the layout if the layout has changed, preserving state in the layouts
- * and improving performance
- */
-export default function Router() {
-  const [Layout, setLayout] = useState<any>(() => BlankLayout)
-  useLayoutEffect(watchLocation, [])
-  return <Layout><RouterSwitch /></Layout>
-
-  function watchLocation() {
-    onLocationChange()
-    return navListener(onLocationChange)
-  }
-  function onLocationChange() {
-    const match = RoutesByPath[location.pathname]
-    if (!match) setLayout(() => BlankLayout)
-    else if (Layout !== match.Layout) setLayout(() => match.Layout)
-  }
 }

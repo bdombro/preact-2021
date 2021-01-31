@@ -1,14 +1,12 @@
 import { h } from 'preact'
 
+import { SidebarRightCtx } from '~/App.context'
 import lazy from '~/layout/lazy'
 import styles from '~/layout/MarketingLayout/SidebarRight/SidebarRight.module.css'
-import useGlobalState from '~/layout/useGlobalState'
 
 const Nav = lazy(() => import('./Nav'))
 
-export const useSidebarState = useGlobalState('adminLayoutSidebarRight', false)
-
 export default function SidebarRight() {
-  const [isActive] = useSidebarState()
+  const [isActive] = SidebarRightCtx.use()
   return isActive && <div class={`${styles.sidebar}`}><Nav /></div>
 }

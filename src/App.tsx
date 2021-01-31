@@ -1,11 +1,13 @@
-import { Fragment as F, h } from 'preact'
+import { h } from 'preact'
 
+import { CtxProviders } from './App.context'
 import UnhandledErrorNotification from './layout/UnhandledErrorNotification'
-import Router from './routes/router'
+import {RoutesComponent} from './routes/routes'
 
 export default function App() {
-  return <F>
+  return <CtxProviders>
     <UnhandledErrorNotification />
-    <Router />
-  </F>
+    <RoutesComponent />
+  </CtxProviders>
+
 }

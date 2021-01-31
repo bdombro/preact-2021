@@ -2,7 +2,7 @@ import { h } from 'preact'
 
 import * as i from '~/layout/icons'
 import { useLocation } from '~/layout/routing'
-import { Paths } from '~/routes/router'
+import { Paths } from '~/routes/routes'
 
 import styles from './Nav.module.css'
 

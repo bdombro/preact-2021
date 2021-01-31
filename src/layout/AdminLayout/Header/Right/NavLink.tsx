@@ -1,14 +1,12 @@
 import { h } from 'preact'
 
+import { SidebarRightCtx } from '~/App.context'
 import styles from '~/layout/MarketingLayout/Header/Right/NavLink.module.css'
 import { useLocation } from '~/layout/routing'
 
-import { useSidebarState } from '../../SidebarRight/SidebarRight'
-
-
 export default function NavLink({ uri, text }: { uri: string, text: string }) {
   const location = useLocation()
-  const [isSidebarActive] = useSidebarState()
+  const [isSidebarActive] = SidebarRightCtx.use()
   const isLinkActive = location.pathname.startsWith(uri)
   return (
     <a 
