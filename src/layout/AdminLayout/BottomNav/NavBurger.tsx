@@ -5,6 +5,8 @@ import { SidebarRightCtx } from '~/App.context'
 
 import styles from './NavLink.module.css'
 
+const useSidebarRight = SidebarRightCtx.use
+
 /**
  * This is a little more complex than the Marketing Navburger, b/c it can have a diff
  * state than sidebarRight b/c the sidebar can also be activated in the 
@@ -13,7 +15,7 @@ import styles from './NavLink.module.css'
  */
 export default function NavBurger() {
   const [isActive, setIsActive] = useState(false)
-  const [isSidebarActive, setIsSidebarActive] = SidebarRightCtx.use()
+  const [isSidebarActive, setIsSidebarActive] = useSidebarRight()
   useEffect(() => {
     if (!isSidebarActive) setIsActive(false)
   }, [isSidebarActive])

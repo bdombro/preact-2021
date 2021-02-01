@@ -6,6 +6,8 @@ import { SidebarRightCtx } from '~/App.context'
 import styles from './NavBurger.module.css'
 import linkStyles from './NavLink.module.css'
 
+const useSidebarRight = SidebarRightCtx.use
+
 /**
  * This is a little complex b/c it can have a diff state than sidebarRight b/c the sidebar can
  * also be activated in BottomNav components. The added complexity allows NavBurger to handle 
@@ -13,7 +15,7 @@ import linkStyles from './NavLink.module.css'
  */
 export default function NavBurger() {
   const [isLinkActive, setIsLinkActive] = useState(false)
-  const [isSidebarActive, setIsSidebarActive] = SidebarRightCtx.use()
+  const [isSidebarActive, setIsSidebarActive] = useSidebarRight()
   useEffect(() => {
     if (!isSidebarActive) setIsLinkActive(false)
   }, [isSidebarActive])

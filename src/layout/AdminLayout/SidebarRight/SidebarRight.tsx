@@ -6,7 +6,9 @@ import styles from '~/layout/MarketingLayout/SidebarRight/SidebarRight.module.cs
 
 const Nav = lazy(() => import('./Nav'))
 
+const useSidebarRight = SidebarRightCtx.use
+
 export default function SidebarRight() {
-  const [isActive] = SidebarRightCtx.use()
+  const [isActive] = useSidebarRight()
   return isActive && <div class={`${styles.sidebar}`}><Nav /></div>
 }
