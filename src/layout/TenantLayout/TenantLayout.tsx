@@ -5,11 +5,12 @@ import { useRef } from 'preact/hooks'
 
 import lazy from '~/layout/lazy'
 import useMedia from '~/layout/useMedia'
+import { Paths } from '~/routes/routes'
 
-const BottomNav = lazy(() => import('./BottomNav/BottomNav'))
-const Header = lazy(() => import('./Header/Header'))
+const Navbar = lazy(() => import('~/components/Navbar'))
 const Sidebar = lazy(() => import('./Sidebar/Sidebar'))
 const SidebarRight = lazy(() => import('./SidebarRight/SidebarRight'))
+const BottomNav = lazy(() => import('./BottomNav/BottomNav'))
 
 export default function TenantLayout({ children }: { children: any }) {
   const isWide = useMedia('(min-width: 600px)')
@@ -17,7 +18,7 @@ export default function TenantLayout({ children }: { children: any }) {
 
   return (
     <div class="adminLayout" ref={ref}>
-      <Header />
+      <Navbar sidebarLeft navLinks={[{ uri: Paths.Support, text: 'Need Help?' }]} />
       {isWide && <Sidebar />}
       <SidebarRight />
       {!isWide && <BottomNav />}

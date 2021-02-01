@@ -1,8 +1,0 @@
-.logo {
-    display: inline-block;
-    padding: 15px 10px;
-    color: white;
-}
-.logo:hover {
-    background: var(--primary);
-}

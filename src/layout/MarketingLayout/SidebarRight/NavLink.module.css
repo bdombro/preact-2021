@@ -9,10 +9,8 @@
 }
 .navlinkIcon {
 }
-.navlinkIcon {
-}
 .navlinkText {
-    padding: 3px 14px;
+    padding: 3px 14px 3px 20px;
 }
 .active, .active:hover {
     background: var(--nav-background-active);
