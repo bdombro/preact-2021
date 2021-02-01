@@ -1,8 +1,5 @@
 coverage/
-build/
-dist/
 contrib/
 reports/
 node_modules/
-__generated__
-*.js
+./*.js

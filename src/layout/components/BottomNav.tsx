@@ -13,24 +13,24 @@ type NavLinks = NavLinkProps[]
 
 
 export default function BottomNav({ navLinks }: { navLinks: NavLinks }) {
-  return <nav class={styles.nav}>
-    {navLinks.map(nl => <NavLink {...nl} />)}
-    <NavBurger />
-  </nav>
+	return <nav class={styles.nav}>
+		{navLinks.map(nl => <NavLink {...nl} />)}
+		<NavBurger />
+	</nav>
 }
 
 
 function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
-  const location = useLocation()
-  const [isSidebarActive] = useSidebarRight()
-  const isActive = location.pathname.startsWith(uri)
-  return (
-    <a class={`${styles.navlink} ${isActive && !isSidebarActive && styles.active}`}
-      href={uri + (isActive ? '?stack=reset' : '')}
-    >
-      <div><Icon /></div>
-    </a>
-  )
+	const location = useLocation()
+	const [isSidebarActive] = useSidebarRight()
+	const isActive = location.pathname.startsWith(uri)
+	return (
+		<a class={`${styles.navlink} ${isActive && !isSidebarActive && styles.active}`}
+			href={uri + (isActive ? '?stack=reset' : '')}
+		>
+			<div><Icon /></div>
+		</a>
+	)
 }
 
 
@@ -41,22 +41,22 @@ function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
  * gracefully.
  */
 function NavBurger() {
-  const [isActive, setIsActive] = useState(false)
-  const [isSidebarActive, setIsSidebarActive] = useSidebarRight()
-  useEffect(() => {
-    if (!isSidebarActive) setIsActive(false)
-  }, [isSidebarActive])
-  return (
-    <a class={`${styles.navlink} ${isActive && styles.active}`}
-      href="#sidebar-right-toggle"
-      onClick={() => {
-        setIsActive(isActive => {
-          setIsSidebarActive(!isActive)
-          return !isActive
-        })
-      }}
-    >
-      <div>{isActive ? 'X' : 'Ξ'}</div>
-    </a>
-  )
+	const [isActive, setIsActive] = useState(false)
+	const [isSidebarActive, setIsSidebarActive] = useSidebarRight()
+	useEffect(() => {
+		if (!isSidebarActive) setIsActive(false)
+	}, [isSidebarActive])
+	return (
+		<a class={`${styles.navlink} ${isActive && styles.active}`}
+			href="#sidebar-right-toggle"
+			onClick={() => {
+				setIsActive(isActive => {
+					setIsSidebarActive(!isActive)
+					return !isActive
+				})
+			}}
+		>
+			<div>{isActive ? 'X' : 'Ξ'}</div>
+		</a>
+	)
 }

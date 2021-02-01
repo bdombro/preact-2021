@@ -8,8 +8,8 @@ import { RouterComponent } from './lib/router'
 import { routesByPath } from './routes'
 
 export default function App() {
-  return <CtxProviders>
-    <UnhandledErrorNotification />
-    <RouterComponent routesByPath={routesByPath} />
-  </CtxProviders>
+	return <CtxProviders>
+		<UnhandledErrorNotification />
+		<RouterComponent routesByPath={routesByPath} />
+	</CtxProviders>
 }

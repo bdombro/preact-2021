@@ -24,10 +24,10 @@ export const SidebarRightCtx = createContext(false)
 navListener(() => SidebarRightCtx.set(false))
 
 export const CtxProviders: FunctionComponent = ({children}) => 
-  <ThemeCtx.Provider>
-    <SidebarLeftCtx.Provider>
-      <SidebarRightCtx.Provider>
-        {children}
-      </SidebarRightCtx.Provider>
-    </SidebarLeftCtx.Provider>
-  </ThemeCtx.Provider>
+	<ThemeCtx.Provider>
+		<SidebarLeftCtx.Provider>
+			<SidebarRightCtx.Provider>
+				{children}
+			</SidebarRightCtx.Provider>
+		</SidebarLeftCtx.Provider>
+	</ThemeCtx.Provider>

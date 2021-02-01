@@ -9,5 +9,5 @@ const root = document.getElementById('root')
 render(<App />, root!)
 
 if ((import.meta as any).env.NODE_ENV === 'production'){
-  navigator.serviceWorker.register('/sw.js')
+	navigator.serviceWorker.register('/sw.js')
 }

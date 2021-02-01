@@ -16,19 +16,19 @@ const port = process.env.PORT || 3000
 main()
 
 async function main() {
-  const fastify = Fastify({
-    logger: false,
-    http2: true,
-    https: { allowHTTP1: true, key: sslKey, cert: sslCert }
-  })
+	const fastify = Fastify({
+		logger: false,
+		http2: true,
+		https: { allowHTTP1: true, key: sslKey, cert: sslCert }
+	})
 
-  fastify.register(compressPlugin)
+	fastify.register(compressPlugin)
 
-  fastify.register(staticPlugin, { root: buildRoot, maxAge: '30d' })
-  fastify.setNotFoundHandler((req, reply) => { reply.type('text/html').send(notFoundHtml) })
+	fastify.register(staticPlugin, { root: buildRoot, maxAge: '30d' })
+	fastify.setNotFoundHandler((req, reply) => { reply.type('text/html').send(notFoundHtml) })
 
-  fastify.listen(port, function (err, address) {
-    if (err) { fastify.log.error(err as any); process.exit(1) }
-    fastify.log.info(`Server listening on ${address}`)
-  })
+	fastify.listen(port, function (err, address) {
+		if (err) { fastify.log.error(err as any); process.exit(1) }
+		fastify.log.info(`Server listening on ${address}`)
+	})
 }

@@ -33,7 +33,7 @@ export const Tasks =     I(() => import('mdi-paths-split/OrderBoolAscendingVaria
 
 // Icon Factory, shortened to be easier to read
 function I(lazyPath: LazyIconSvgProps['lazyPath']) {
-  return (props: IconProps) => <LazyIconSvg lazyPath={lazyPath} {...props} />
+	return (props: IconProps) => <LazyIconSvg lazyPath={lazyPath} {...props} />
 }
 type IconProps = Omit<LazyIconSvgProps, 'lazyPath'>
 
@@ -42,9 +42,9 @@ interface LazyIconSvgProps extends Omit<IconSvgProps, 'path'> {
   lazyPath: () => Promise<any>  // Like () => import('mdi-paths-split/Home')
 }
 function LazyIconSvg({ lazyPath, ...props }: LazyIconSvgProps) {
-  const [path, setPath] = useState('')
-  useEffect(() => { lazyPath().then((module: any) => setPath(module.default)) }, [])
-  return <IconSvg path={path} {...props} />
+	const [path, setPath] = useState('')
+	useEffect(() => { lazyPath().then((module: any) => setPath(module.default)) }, [])
+	return <IconSvg path={path} {...props} />
 }
 
 // Enhanced svg element
@@ -58,44 +58,44 @@ interface IconSvgProps extends Omit<h.JSX.SVGAttributes<SVGSVGElement>, 'size'> 
   spinInverse?: boolean    // inverse the spin
 }
 function IconSvg({
-  path = '',
-  size = 24,
-  fill = 'currentColor',
-  horizontal,
-  vertical,
-  rotate = 0,
-  spin,
-  spinInverse,
-  style = {},
-  ...props
+	path = '',
+	size = 24,
+	fill = 'currentColor',
+	horizontal,
+	vertical,
+	rotate = 0,
+	spin,
+	spinInverse,
+	style = {},
+	...props
 }: IconSvgProps) {
 
-  if (typeof style !== 'string') {
-    const transforms: string[] = style.transform ? [style.transform as string] : []
-    if (horizontal) transforms.push('scaleX(-1)')
-    if (vertical) transforms.push('scaleY(-1)')
-    if (rotate !== 0) transforms.push(`rotate(${rotate}deg)`)
-    if (transforms.length > 0) {
-      style.transform = transforms.join(' ')
-      style.transformOrigin = 'center'
-    }
-    if (spin) {
-      const spinSec = spin === true || typeof spin !== 'number' ? 2 : spin
-      style.animation = `spin${spinInverse ? '-inverse' : ''} linear ${Math.abs(spinSec)}s infinite`
-      style.transformOrigin = 'center'
-    }
-  }
+	if (typeof style !== 'string') {
+		const transforms: string[] = style.transform ? [style.transform as string] : []
+		if (horizontal) transforms.push('scaleX(-1)')
+		if (vertical) transforms.push('scaleY(-1)')
+		if (rotate !== 0) transforms.push(`rotate(${rotate}deg)`)
+		if (transforms.length > 0) {
+			style.transform = transforms.join(' ')
+			style.transformOrigin = 'center'
+		}
+		if (spin) {
+			const spinSec = spin === true || typeof spin !== 'number' ? 2 : spin
+			style.animation = `spin${spinInverse ? '-inverse' : ''} linear ${Math.abs(spinSec)}s infinite`
+			style.transformOrigin = 'center'
+		}
+	}
 
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={size}
-      height={size}
-      fill={fill}
-      style={style}
-      {...props}
-    >
-      <path d={path} />
-    </svg>
-  )
+	return (
+		<svg
+			viewBox="0 0 24 24"
+			width={size}
+			height={size}
+			fill={fill}
+			style={style}
+			{...props}
+		>
+			<path d={path} />
+		</svg>
+	)
 }

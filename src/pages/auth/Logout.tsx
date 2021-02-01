@@ -5,6 +5,6 @@ import { nav } from '~/lib/router'
 
 
 export default function Logout() {
-  useEffect(() => {nav('/', {replace: true})})
-  return <div/>
+	useEffect(() => {nav('/', {replace: true})})
+	return <div/>
 }

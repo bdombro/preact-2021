@@ -8,11 +8,11 @@ interface NavLinkProps { uri: string, text: string, Icon: any }
 type NavLinks = NavLinkProps[]
 
 export default function Sidebar({ navLinks }: { navLinks: NavLinks }) {
-  return (
-    <div class={`${styles.sidebar}`}>
-      <nav class={styles.nav}>
-        {navLinks.map(nl => <NavLink {...nl} />)}
-      </nav>
-    </div>
-  )
+	return (
+		<div class={`${styles.sidebar}`}>
+			<nav class={styles.nav}>
+				{navLinks.map(nl => <NavLink {...nl} />)}
+			</nav>
+		</div>
+	)
 }
