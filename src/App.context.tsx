@@ -1,7 +1,7 @@
 import { FunctionComponent, h } from 'preact'
 
 import { createContext } from './layout/createContext'
-import navListener from './layout/navListener'
+import { navListener } from './layout/router'
 
 const bc = document.body.classList
 

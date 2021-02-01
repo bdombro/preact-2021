@@ -1,14 +1,10 @@
-import { h } from 'preact'
-
 import FillerEntryFactory from '~/layout/FillerEntryFactory'
 import FillerHomeFactory from '~/layout/FillerHomeFactory'
 import FillerListFactory from '~/layout/FillerListFactory'
 import FillerPageFactory from '~/layout/FillerPageFactory'
 import lazy from '~/layout/lazy'
-import Router from '~/layout/Router'
-import StackFactory from '~/layout/StackFactory'
+import { PassThrough, Redirect, StackFactory } from '~/layout/router'
 
-const NotFound = lazy(() => import('~/layout/NotFound'))
 const LoginLayout = lazy(() => import('~/layout/LoginLayout/LoginLayout'))
 const AdminLayout = lazy(() => import('~/layout/AdminLayout/AdminLayout'))
 const TenantLayout = lazy(() => import('~/layout/TenantLayout/TenantLayout'))
@@ -61,6 +57,11 @@ export const routes = Object.freeze({
 
 
   // Admin Routes: stats, settings, users, posts
+
+  AdminRoot: {
+    path: '/admin',
+    Component: Redirect('/admin/stats'),
+  },
 
   AdminSettingsHome: {
     path: '/admin/settings',
@@ -135,6 +136,11 @@ export const routes = Object.freeze({
 
 
   // Tenant/Customer Routes: stats, settings, users, properties, tasks
+
+  TenantRoot: {
+    path: '/tenant',
+    Component: Redirect('/tenant/stats'),
+  },
 
   TenantSettingsHome: {
     path: '/tenant/settings',
@@ -236,19 +242,3 @@ export const routesByPath = Object.fromEntries(Object.values(routes).map(r => [r
 // @ts-ignore: Maybe fix later
 export const Paths: Record<keyof typeof routes, string> = Object.fromEntries(Object.entries(routes).map(([name, r]) => [name, r.path]))
 
-
-export function RoutesComponent() {
-  return <Router
-    routesByPath={routesByPath}
-    NotFound={NotFound}
-    redirects={{
-      '/admin': routes.AdminStatsHome.path,
-      '/tenant': routes.TenantStatsHome.path,
-    }}
-  />
-}
-
-
-function PassThrough({children}: any) {
-  return children
-}

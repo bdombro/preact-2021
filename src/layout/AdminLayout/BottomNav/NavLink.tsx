@@ -2,7 +2,7 @@ import { h } from 'preact'
 
 import { SidebarRightCtx } from '~/App.context'
 import styles from '~/layout/AdminLayout/BottomNav/NavLink.module.css'
-import useLocation from '~/layout/useLocation'
+import { useLocation } from '~/layout/router'
 
 const useSidebarRight = SidebarRightCtx.use
 

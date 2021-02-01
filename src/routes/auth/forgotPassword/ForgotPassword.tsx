@@ -1,6 +1,6 @@
 import { Fragment as F, h } from 'preact'
 
-import setPageMeta from '~/layout/setPageMeta'
+import { setPageMeta } from '~/layout/router'
 import { Paths } from '~/routes/routes'
 
 export default function ForgotPassword() {

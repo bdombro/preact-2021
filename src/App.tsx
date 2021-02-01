@@ -1,13 +1,13 @@
 import { h } from 'preact'
 
 import { CtxProviders } from './App.context'
+import { RouterComponent } from './layout/router'
 import UnhandledErrorNotification from './layout/UnhandledErrorNotification'
-import {RoutesComponent} from './routes/routes'
+import { routesByPath } from './routes/routes'
 
 export default function App() {
   return <CtxProviders>
     <UnhandledErrorNotification />
-    <RoutesComponent />
+    <RouterComponent routesByPath={routesByPath} />
   </CtxProviders>
-
 }

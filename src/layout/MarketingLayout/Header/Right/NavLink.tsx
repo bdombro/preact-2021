@@ -1,7 +1,7 @@
 import { h } from 'preact'
 
 import { SidebarRightCtx } from '~/App.context'
-import useLocation from '~/layout/useLocation'
+import { useLocation } from '~/layout/router'
 
 import styles from  './NavLink.module.css'
 
