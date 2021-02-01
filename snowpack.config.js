@@ -25,7 +25,8 @@ module.exports = {
 		target: 'es2020',
 		// splitting: true,
 		// treeshake: true,
-		// manifest: true,
+		manifest: true,
+		preload: true,
 	},
 	packageOptions: {
 		/* ... */
@@ -36,6 +37,7 @@ module.exports = {
 	},
 	buildOptions: {
 		/* ... */
+		// sourcemap: true,
 	},
 	alias: {
 		'~': './src'
