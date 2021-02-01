@@ -1,4 +1,3 @@
-import './layout/theme.css'
 import 'preact/devtools'
 
 import { h, render } from 'preact'

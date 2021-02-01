@@ -1,3 +1,5 @@
+import './layout/theme.css'
+
 import { h } from 'preact'
 
 import { CtxProviders } from './App.context'
