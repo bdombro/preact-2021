@@ -3,6 +3,7 @@ import './AdminLayout.css'
 import { h } from 'preact'
 import { useRef } from 'preact/hooks'
 
+import { ErrorBoundary } from '~/layout/components/ErrorBoundaries'
 import * as i from '~/lib/icons'
 import lazy from '~/lib/lazy'
 import useMedia from '~/lib/useMedia'
@@ -40,7 +41,9 @@ export default function AdminLayout({ children }: { children: any }) {
 				{ uri: Paths.AdminUserStack, text: 'Users', Icon: i.Auth },
 			]} />}
 			<div id="content">
-				{children}
+				<ErrorBoundary>
+					{children}
+				</ErrorBoundary>
 			</div>
 		</div>
 	)

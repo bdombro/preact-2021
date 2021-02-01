@@ -2,6 +2,7 @@ import './MarketingLayout.css'
 
 import { h } from 'preact'
 
+import { ErrorBoundary } from '~/layout/components/ErrorBoundaries'
 import * as i from '~/lib/icons'
 import lazy from '~/lib/lazy'
 import { Paths } from '~/routes'
@@ -28,7 +29,9 @@ export default function MarketingLayout({ children }: { children: any }) {
 				]}
 			/>
 			<div id="content">
-				{children}
+				<ErrorBoundary>
+					{children}
+				</ErrorBoundary>
 			</div>
 		</div>
 	)
