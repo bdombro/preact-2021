@@ -70,10 +70,10 @@ a, a:active {
   color: var(--text);
 }
 
-p a, li a {
+p a, li a, .body-link {
   text-decoration: underline;
   color: var(--primary-darker);
 }
-p a:hover, li a:hover {
+p a:hover, li a:hover, .body-link:hover {
   color: var(--primary);
 }
