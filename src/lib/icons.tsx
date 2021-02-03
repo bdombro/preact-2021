@@ -5,10 +5,13 @@
  * For enhanced props, see IconSvgProps
  */
 
-import './icons.css'
-
 import { h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
+
+document.head.innerHTML += `<style type="text/css">
+@keyframes spin-inverse { to { transform: rotate(-360deg) } }
+@keyframes spin { to { transform: rotate(360deg) } }
+</style>`
 
 
 // The Icons

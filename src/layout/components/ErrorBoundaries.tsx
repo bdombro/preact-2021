@@ -1,6 +1,8 @@
 import { ComponentChildren, Fragment as F, h } from 'preact'
 import { useEffect, useErrorBoundary, useState } from 'preact/hooks'
 
+import styled from '~/lib/styled'
+
 /**
  * Catch Promise Rejection Errors
  * Place this component once, at the top of your app
@@ -8,7 +10,7 @@ import { useEffect, useErrorBoundary, useState } from 'preact/hooks'
 export function UnhandledErrorNotification() {
 	const [promiseErrorEvent, setPromiseErrorEvent] = useState<any>(null)
 	useEffect(listenForPromiseErrors, [])
-	return promiseErrorEvent ? ErrorJsx : <F />
+	return promiseErrorEvent ? <ErrorC/> : <F />
 
 	function listenForPromiseErrors() {
 		window.addEventListener('unhandledrejection', handleReject)
@@ -29,7 +31,7 @@ export function UnhandledErrorNotification() {
 export function ErrorBoundary({children}: {children: ComponentChildren}) {
 	const [runtimeError] = useErrorBoundary()
 	useEffect(reportRuntimeError, [runtimeError])
-	return <F>{children}{runtimeError ? ErrorJsx : ''}</F>
+	return <F>{children}{runtimeError ? <ErrorC/> : ''}</F>
 	function reportRuntimeError() {
 		if (runtimeError) {
 			console.error(runtimeError)
@@ -38,11 +40,37 @@ export function ErrorBoundary({children}: {children: ComponentChildren}) {
 	}
 }
 
-const ErrorJsx = (
-	<div style={{position:'absolute',bottom:0,left:0,width:'100%',textAlign:'center',zIndex:100}}>
-		<div style={{padding:20,backgroundColor:'var(--primary)',display:'inline-block',color:'#fff'}}>
+function ErrorC() {
+	return (
+		<ErrorOuter>
+			<ErrorInner>
 			Something went wrong on this page! Shoot. Maybe&nbsp;
-			<a style={{color:'hsl(var(--primary-h),var(--primary-s),88%',textDecoration:'underline'}} href="javascript:location.reload()">refresh</a>?
-		</div>
-	</div>
-)
+				<ErrorLink href="javascript:location.reload()">refresh</ErrorLink>?
+			</ErrorInner>
+		</ErrorOuter>
+	)
+}
+const ErrorOuter = styled.div`
+	:root { 
+		position:absolute;
+		bottom:0;
+		left:0;
+		width:100%;
+		text-align:center;
+		z-index:100;
+	}
+`
+const ErrorInner = styled.div`
+	:root {
+		padding:20px;
+		background-color:var(--primary);
+		display:inline-block;
+		color:#fff;
+	}
+`
+const ErrorLink = styled.a`
+	:root {
+		color:hsl(var(--primary-h),var(--primary-s),88%);
+		text-decoration:underline;
+	}
+`

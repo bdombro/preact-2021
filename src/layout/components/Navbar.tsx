@@ -4,9 +4,8 @@ import { useEffect, useState } from 'preact/hooks'
 import { SidebarRightCtx } from '~/App.context'
 import { ReactLogo } from '~/lib/icons'
 import { useLocation } from '~/lib/router'
+import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
-
-import styles from './Navbar.module.css'
 
 const useSidebarRight = SidebarRightCtx.use
 
@@ -14,43 +13,105 @@ interface NavLinkProps { uri: string, text: string }
 type NavLinks = NavLinkProps[]
 
 export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolean, navLinks: NavLinks}) {
-	return <div class={styles.navbar}>
-		<Left sidebarLeft={sidebarLeft} />
-		<Right navLinks={navLinks} />
-	</div>
-}
-
-
-function Left({ sidebarLeft }: { sidebarLeft?: boolean }) {
-	return <div class={styles.left}>
-		{sidebarLeft && <a class={styles.leftBurger} href="#sidebar-toggle">Ξ</a>}
-		<a class={styles.logo} href='/'>
-			{!sidebarLeft && <ReactLogo />}
-			<div>Stacks!</div>
-		</a>
-	</div>
-}
-
-function Right({ navLinks }: { navLinks: NavLinks }) {
 	const isWide = useMedia('(min-width: 600px)')
-	return <div class={styles.right}>
-		{isWide && navLinks.map(nl => <NavLink {...nl} />)}
-		<RightBurger />
-	</div>
+	return <NavbarDiv>
+		<div>
+			{sidebarLeft && isWide && <LeftBurger href="#sidebar-toggle">Ξ</LeftBurger>}
+			<LogoA href='/'>
+				{!sidebarLeft && <ReactLogo />}
+				<div>Stacks!</div>
+			</LogoA>
+		</div>
+
+		<div>
+			{isWide && navLinks.map(nl => <NavLink {...nl} />)}
+			<RightBurger />
+		</div>
+
+	</NavbarDiv>
 }
+const NavbarDiv = styled.div`
+	:root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background: var(--header-background);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+	}
+	:root > div {
+		height: var(--header-height);
+		display: flex;
+		flex-direction: row;
+	}
+`
+const LeftBurger = styled.a`
+	:root {
+    padding: 15px 0px;
+    text-align: center;
+    width: var(--sidebar-width-mini);
+    box-sizing: border-box;
+    color: white;
+	}
+	:root:hover {
+			background: var(--primary);
+	}
+`
+const LogoA = styled.a`
+	:root {
+    height: var(--header-height);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    font-weight: bold;
+    padding-left: 2px;
+	}
+	:root:hover {
+			background: var(--primary);
+	}
+	:root div {
+			padding-right: 14px;
+			color: white;
+	}
+	:root svg {
+			color: hsl(var(--primary-h), var(--primary-s), 70%);
+			margin: 0 6px 0 8px;
+	}
+`
 
 function NavLink({ uri, text }: { uri: string, text: string }) {
 	const location = useLocation()
 	const [isSidebarActive] = useSidebarRight()
 	const isActive = location.pathname.startsWith(uri)
 	return (
-		<a class={`${styles.navlink} ${styles.hideOnMobile} ${isActive && !isSidebarActive && styles.active}`}
+		<NavLinkA class={isActive && !isSidebarActive ? 'active' : ''}
 			href={uri + (isActive ? '?stack=reset' : '')}
 		>
 			{text}
-		</a>
+		</NavLinkA>
 	)
 }
+const NavLinkA = styled.a`
+	:root {
+    height: var(--header-height);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 14px;
+    color: white;
+	}
+	:root:hover, .active {
+			background: var(--primary);
+	}
+	:root.rightBurger {
+			padding: 0 20px;
+	}
+`
 
 /**
  * This is a little complex b/c it can have a diff state than sidebarRight b/c the sidebar can
@@ -64,7 +125,7 @@ function RightBurger() {
 		if (!isSidebarActive) setIsLinkActive(false)
 	}, [isSidebarActive])
 	return (
-		<a class={`${styles.navlink} ${styles.rightBurger} ${isLinkActive ? styles.active : ''}`}
+		<NavLinkA class={`rightBurger ${isLinkActive ? 'active' : ''}`}
 			href={'#navburger-click'}
 			onClick={() => {
 				setIsLinkActive(isActive => {
@@ -74,6 +135,6 @@ function RightBurger() {
 			}}
 		>
 			{isLinkActive ? 'X' : 'Ξ'}
-		</a>
+		</NavLinkA>
 	)
 }

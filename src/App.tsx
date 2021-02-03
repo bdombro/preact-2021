@@ -12,7 +12,7 @@ export default function App() {
 		<ErrorBoundary>
 			<CtxProviders>
 				<UnhandledErrorNotification />
-				<RouterComponent routesByPath={routesByPath} />
+				<RouterComponent routesByPath={routesByPath as any} />
 			</CtxProviders>
 		</ErrorBoundary>
 	)

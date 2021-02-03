@@ -1,18 +1,33 @@
 import { h } from 'preact'
 
 import NavLink from '~/layout/components/SidebarNavLink'
-
-import styles from './Sidebar.module.css'
+import styled from '~/lib/styled'
 
 interface NavLinkProps { uri: string, text: string, Icon: any }
 type NavLinks = NavLinkProps[]
 
 export default function Sidebar({ navLinks }: { navLinks: NavLinks }) {
 	return (
-		<div class={`${styles.sidebar}`}>
-			<nav class={styles.nav}>
+		<SidebarDiv>
+			<Nav>
 				{navLinks.map(nl => <NavLink {...nl} />)}
-			</nav>
-		</div>
+			</Nav>
+		</SidebarDiv>
 	)
 }
+const SidebarDiv = styled.div`
+	:root {
+			position: fixed;
+			top: var(--header-height);
+			left: 0;
+			width: var(--sidebar-width);
+			background: var(--nav-background);
+			height: var(--body-height);
+			overflow-x: hidden;
+	}
+`
+const Nav = styled.nav`
+	:root {
+			width: var(--sidebar-width-full);
+	}
+`

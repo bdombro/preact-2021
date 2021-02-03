@@ -1,25 +1,23 @@
-import '../AdminLayout/AdminLayout.css'
-
 import { h } from 'preact'
-import { useRef } from 'preact/hooks'
 
+import DashboardLayoutDiv from '~/layout/components/DashboardLayoutDiv'
 import { ErrorBoundary } from '~/layout/components/ErrorBoundaries'
 import * as i from '~/lib/icons'
-import lazy from '~/lib/lazy'
+// import lazy from '~/lib/lazy'
 import useMedia from '~/lib/useMedia'
 import { Paths } from '~/routes'
 
-const Navbar = lazy(() => import('~/layout/components/Navbar'))
-const Sidebar = lazy(() => import('~/layout/components/Sidebar'))
-const SidebarRight = lazy(() => import('~/layout/components/SidebarRight'))
-const BottomNav = lazy(() => import('~/layout/components/BottomNav'))
+import BottomNav from '../components/BottomNav'
+import ContentDiv from '../components/ContentDiv'
+import Navbar from '../components/Navbar'
+import Sidebar from '../components/Sidebar'
+import SidebarRight from '../components/SidebarRight'
 
 export default function TenantLayout({ children }: { children: any }) {
 	const isWide = useMedia('(min-width: 600px)')
-	const ref = useRef<HTMLDivElement>(null)
 
 	return (
-		<div class="adminLayout" ref={ref}>
+		<DashboardLayoutDiv>
 			<Navbar sidebarLeft navLinks={[{ uri: Paths.Support, text: 'Need Help?' }]} />
 			{isWide && <Sidebar navLinks={[
 				{ uri: Paths.TenantStatsHome, text: 'Stats', Icon: i.Counter },
@@ -45,11 +43,11 @@ export default function TenantLayout({ children }: { children: any }) {
 				{ uri: Paths.TenantPropertiesStack, text: 'Properties', Icon: i.Building },
 				{ uri: Paths.TenantUserStack, text: 'Users', Icon: i.Auth },
 			]} />}
-			<div id="content">
+			<ContentDiv>
 				<ErrorBoundary>
 					{children}
 				</ErrorBoundary>
-			</div>
-		</div>
+			</ContentDiv>
+		</DashboardLayoutDiv>
 	)
 }

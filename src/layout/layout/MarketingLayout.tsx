@@ -1,18 +1,17 @@
-import './MarketingLayout.css'
-
 import { h } from 'preact'
 
 import { ErrorBoundary } from '~/layout/components/ErrorBoundaries'
 import * as i from '~/lib/icons'
-import lazy from '~/lib/lazy'
+import styled from '~/lib/styled'
 import { Paths } from '~/routes'
 
-const Navbar = lazy(() => import('~/layout/components/Navbar'))
-const SidebarRight = lazy(() => import('~/layout/components/SidebarRight'))
+import ContentDiv from '../components/ContentDiv'
+import Navbar from '../components/Navbar'
+import SidebarRight from '../components/SidebarRight'
 
 export default function MarketingLayout({ children }: { children: any }) {
 	return (
-		<div id="marketingLayout">
+		<MarketingLayoutDiv>
 			<Navbar 
 				navLinks={[
 					{uri: Paths.Blog, text: 'Blog'},
@@ -28,11 +27,28 @@ export default function MarketingLayout({ children }: { children: any }) {
 					{ uri: '#theme-toggle', text: 'Theme', Icon: i.Palette },
 				]}
 			/>
-			<div id="content">
+			<ContentDiv>
 				<ErrorBoundary>
 					{children}
 				</ErrorBoundary>
-			</div>
-		</div>
+			</ContentDiv>
+		</MarketingLayoutDiv>
 	)
 }
+const MarketingLayoutDiv = styled.div`
+	:root {
+		--header-height: 48px;
+		--sidebarRight-width: 200px;
+		--body-height: calc( 100vh - var(--header-height) );
+		--margin-bottom: 0;
+		--margin-left: 0;
+	}
+
+	:root {
+		background: var(--body);
+		overflow: hidden;
+		margin-top: var(--header-height);
+		margin-bottom: var(--margin-bottom);
+		margin-left: var(--margin-left);
+	}
+`

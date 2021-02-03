@@ -1,7 +1,7 @@
 import { FunctionalComponent, h } from 'preact'
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
 
-import BlankLayout from '../layout/layout/BlankLayout/BlankLayout'
+import BlankLayout from '../layout/layout/BlankLayout'
 import lazy from './lazy'
 import scrollListener from './scrollListener'
 

@@ -1,25 +1,24 @@
-import './AdminLayout.css'
+// import './AdminLayout.css'
 
 import { h } from 'preact'
-import { useRef } from 'preact/hooks'
 
+import DashboardLayoutDiv from '~/layout/components/DashboardLayoutDiv'
 import { ErrorBoundary } from '~/layout/components/ErrorBoundaries'
 import * as i from '~/lib/icons'
-import lazy from '~/lib/lazy'
+// import lazy from '~/lib/lazy'
 import useMedia from '~/lib/useMedia'
 import { Paths } from '~/routes'
 
-const Navbar = lazy(() => import('~/layout/components/Navbar'))
-const SidebarRight = lazy(() => import('~/layout/components/SidebarRight'))
-const Sidebar = lazy(() => import('~/layout/components/Sidebar'))
-const BottomNav = lazy(() => import('~/layout/components/BottomNav'))
+import BottomNav from '../components/BottomNav'
+import Navbar from '../components/Navbar'
+import Sidebar from '../components/Sidebar'
+import SidebarRight from '../components/SidebarRight'
 
 export default function AdminLayout({ children }: { children: any }) {
 	const isWide = useMedia('(min-width: 600px)')
-	const ref = useRef<HTMLDivElement>(null)
   
 	return (
-		<div class="adminLayout" ref={ref}>
+		<DashboardLayoutDiv>
 			<Navbar sidebarLeft navLinks={[{ uri: Paths.Support, text: 'Need Help?' }]} />
 			{isWide && <Sidebar navLinks={[
 				{ uri: Paths.AdminStatsHome, text: 'Stats', Icon: i.Counter },
@@ -45,6 +44,6 @@ export default function AdminLayout({ children }: { children: any }) {
 					{children}
 				</ErrorBoundary>
 			</div>
-		</div>
+		</DashboardLayoutDiv>
 	)
 }

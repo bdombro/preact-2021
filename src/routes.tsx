@@ -5,10 +5,11 @@ import FillerPageFactory from '~/layout/components/FillerPageFactory'
 import lazy from '~/lib/lazy'
 import { PassThrough, Redirect, StackFactory } from '~/lib/router'
 
-const LoginLayout = lazy(() => import('~/layout/layout/LoginLayout/LoginLayout'))
-const AdminLayout = lazy(() => import('~/layout/layout/AdminLayout/AdminLayout'))
-const TenantLayout = lazy(() => import('~/layout/layout/TenantLayout/TenantLayout'))
-const MarketingLayout = lazy(() => import('~/layout/layout/MarketingLayout/MarketingLayout'))
+
+const LoginLayout = lazy(() => import('~/layout/layout/LoginLayout'))
+const AdminLayout = lazy(() => import('~/layout/layout/AdminLayout'))
+const TenantLayout = lazy(() => import('~/layout/layout/TenantLayout'))
+const MarketingLayout = lazy(() => import('~/layout/layout/MarketingLayout'))
 
 
 export const routes = Object.freeze({
