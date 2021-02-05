@@ -1,6 +1,6 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 
-const nonRouteExtensions = 'js|css|ico|png|jpg|svg|json'
+const nonRouteExtensions = 'js|css|ico|png|jpg|svg|json|map'
 
 module.exports = {
 	mount: {
@@ -37,7 +37,7 @@ module.exports = {
 	},
 	buildOptions: {
 		/* ... */
-		// sourcemap: true,
+		sourcemap: true,
 	},
 	alias: {
 		'~': './src'

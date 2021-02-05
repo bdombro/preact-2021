@@ -1,7 +1,7 @@
 import { Fragment as F, h } from 'preact'
 
 import { AuthCtx } from '~/App.context'
-import { setPageMeta } from '~/lib/router'
+import setPageMeta from '~/lib/setPageMeta'
 import { Paths } from '~/routes'
 
 export default function Register() {

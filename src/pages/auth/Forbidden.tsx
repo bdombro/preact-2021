@@ -1,7 +1,7 @@
 import {h} from 'preact'
 
 import {Auth} from '~/lib/icons'
-import { setPageMeta } from '~/lib/router'
+import setPageMeta from '~/lib/setPageMeta'
 import styled from '~/lib/styled'
 
 

@@ -12,7 +12,7 @@ class NotFoundError extends Error { type = 'NotFound' }
 
 
 /**
- * Switches routes based on current url and also checks access control
+ * RouterSwitch: Switches routes based on current url and also checks access control
  */
 function RouterSwitch({ routesByPath }: RouterProps) {
 	const [auth] = AuthCtx.use()
@@ -22,8 +22,9 @@ function RouterSwitch({ routesByPath }: RouterProps) {
 	return <Stack><Component /></Stack>
 }
 
+
 /**
- * Wraps the Router Switch in a Layout, and strategically only re-renders
+ * RouterComponent: Wraps the Router Switch in a Layout, and strategically only re-renders
  * the layout if the layout has changed, preserving state in the layouts
  * and improving performance
  */
@@ -78,6 +79,10 @@ function RouterComponent(props: RouterProps) {
 RouterComponent.isFirstRender = true
 
 
+/**
+ * RouteWrapper: Wrapper for routes to provide scroll tracking and restoration
+ * on history.popstate
+ */
 const RouteHistory: Record<string, number> = {}
 function RouteWrapper({ children }: any) {
 	const { pathname, search } = location
@@ -118,7 +123,8 @@ function RouteWrapper({ children }: any) {
 
 
 /**
- * An HOC to join a page to a route stack
+ * StackFactory: A route wrapper factory to join a page to a route stack
+ * and enhance stack-like-features
  */
 type StackHistoryEntry = { location: UseLocationLocation, scroll: number }
 type StackHistory = StackHistoryEntry[]
@@ -193,11 +199,10 @@ function StackFactory(basePath: string) {
 	}
 }
 
+// PassThrough: A passthrough component
+function PassThrough({ children }: any) {return children}
 
-function PassThrough({ children }: any) {
-	return children
-}
-
+// Redirect: A component which immediately redirects elsewhere
 function Redirect(to: string) {
 	return function Redirect() {
 		useLayoutEffect(() => nav(to, { replace: true }), [])
@@ -206,6 +211,7 @@ function Redirect(to: string) {
 }
 
 /**
+ * useLocation: A hook to watch location
  * Inspired by https://github.com/molefrog/wouter's useLocation hook
  */
 interface UseLocationLocation { pathname: string, search: string }
@@ -240,7 +246,8 @@ function useLocation(): UseLocationLocation {
 	}
 }
 
-// React to a change in navigation
+
+// navListener: React to a change in navigation
 function navListener(callback: () => any) {
 	historyEvents.map((e) => addEventListener(e, callback))
 	// callback()
@@ -248,75 +255,17 @@ function navListener(callback: () => any) {
 }
 const historyEvents = ['popstate', 'pushState', 'replaceState']
 
-// Helper to navigate to a new page
+
+// nav: Helper to navigate to a new page
 function nav(to: string, { replace = false } = {}) {
 	history[replace ? 'replaceState' : 'pushState'](Date.now(), '', to)
 }
 if (!history.state) nav(location.pathname + location.search, { replace: true })
 
-/**
- * Allows setting common page attrs. 
- * - Intelligently us the attrs, only setting if changed
- * - Resets back to initial if omitted, based on initial introspection
- * - Stores element handles in memory to remove need to query the dom
- *   on every update
- */
-interface SetPageMetaProps {
-	title: string
-	siteName?: string
-	author?: string
-	description?: string
-	image?: string
-	locale?: string
-}
-function setPageMeta(p: SetPageMetaProps) {
-	const title = p.title ? `${p.title} - ${siteName}` : siteName
-	if (title !== document.title) document.title = title
-
-	const link = getLink()
-	if (link.href !== location.href) link.href = location.href
-
-	author.upsert(p.author || p.title)
-	ogTitle.upsert(p.title)
-	locale.upsert(p.locale)
-	description.upsert(p.description)
-	ogDescription.upsert(p.description)
-	ogUrl.upsert(location.href)
-	ogSiteName.upsert(p.siteName)
-	ogImage.upsert(p.image)
-}
-// Wrapper class on meta elements to simplify usage and make more DRY
-class MetaClass {
-	get: () => string
-	orig: string
-	set: (val: string) => void
-	constructor(getter: () => Element) {
-		this.get = () => getter().getAttribute('content')!
-		this.set = (v: string) => getter().setAttribute('content', v)
-		this.orig = this.get()
-	}
-	upsert(val?: string) {
-		if (!val) val = this.orig
-		if (this.get() !== val) this.set(val)
-	}
-}
-const getLink = () => find('link[rel="canonical"]')! as any
-const siteName = byProp('og:site_name').getAttribute('content')!
-const author = new MetaClass(() => byName('author'))
-const ogTitle = new MetaClass(() => byProp('og:title'))
-const locale = new MetaClass(() => byProp('og:locale'))
-const description = new MetaClass(() => byName('description'))
-const ogDescription = new MetaClass(() => byProp('og:description'))
-const ogUrl = new MetaClass(() => byProp('og:url'))
-const ogSiteName = new MetaClass(() => byProp('og:site_name'))
-const ogImage = new MetaClass(() => byProp('og:image'))
-function byName(name: string) { return find(`meta[name="${name}"]`) }
-function byProp(prop: string) { return find(`meta[property="${prop}"]`) }
-function find(selector: string) { return document.head.querySelector(selector)! }
-
 
 // Intercept changes to navigation to dispatch events and prevent default
-(function interceptNavEvents() {
+interceptNavEvents()
+function interceptNavEvents() {
 	document.body.addEventListener('click', function linkIntercepter(e: any) {
 		const ln = findLinkTagInParents(e.target) // aka linkNode
 
@@ -339,7 +288,8 @@ function find(selector: string) { return document.head.querySelector(selector)! 
 			if (node?.parentNode) return findLinkTagInParents(node.parentElement!)
 		}
 	})
-})()
+}
+
 
 
 // While History API does have `popstate` event, the only
@@ -347,7 +297,8 @@ function find(selector: string) { return document.head.querySelector(selector)! 
 // is to monkey-patch these methods.
 //
 // See https://stackoverflow.com/a/4585031
-; (function monkeyPatchHistory() {
+monkeyPatchHistory()
+function monkeyPatchHistory() {
 	if (typeof history !== 'undefined') {
 		for (const type of ['pushState', 'replaceState']) {
 			const original = (history as any)[type]
@@ -362,7 +313,7 @@ function find(selector: string) { return document.head.querySelector(selector)! 
 			}
 		}
 	}
-})()
+}
 
 export {
 	ForbiddenError,
@@ -372,7 +323,6 @@ export {
 	PassThrough,
 	Redirect,
 	RouterComponent,
-	setPageMeta,
 	StackFactory,
 	useLocation,
 }
