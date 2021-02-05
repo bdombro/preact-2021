@@ -21,5 +21,5 @@ export default function Login() {
 	</F>
 
 	function onAdminLogin() {AuthCtx.loginAsAdmin()}
-	function onTenantLogin() { AuthCtx.loginAsTenant() }
+	function onTenantLogin() {AuthCtx.loginAsTenant()}
 }

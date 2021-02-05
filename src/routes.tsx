@@ -287,5 +287,5 @@ export const routesByPath = Object.fromEntries(Object.values(routes).map(r => [r
 export const Paths: Record<keyof typeof routes, string> = Object.fromEntries(Object.entries(routes).map(([name, r]) => [name, r.path]))
 
 
-function isAdmin(auth: AuthCtxType) { return auth.roles.includes(AuthCtx.roles.admin) }
-function isTenant(auth: AuthCtxType) { return auth.roles.includes(AuthCtx.roles.tenant) }
+function isAdmin() { return AuthCtx.get().roles.includes(AuthCtx.roles.admin) }
+function isTenant() { return AuthCtx.get().roles.includes(AuthCtx.roles.tenant)}

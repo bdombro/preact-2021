@@ -11,7 +11,8 @@ export function createContext<T>(defaultVal: T) {
 		get: getterUnInitialized as () => T, 
 		set: setterUnInitialized as StateUpdater<T>, 
 		subscribe, 
-		subscribers: new Set<(next: T) => any>()
+		subscribers: new Set<(next: T) => any>(),
+		ready: false,
 	}
 	return ctx
 
@@ -20,18 +21,22 @@ export function createContext<T>(defaultVal: T) {
 		const skipNotify = useRef(true)
 		useEffect(notifySubscribers, [state])
 		useEffect(resetOnDismount, [])
+		
+		ctx.get = () => state[0]
+		ctx.set = state[1]
+		ctx.ready = true
+
 		return <ctx.context.Provider value={state}>{children}</ctx.context.Provider>
 
 		function notifySubscribers() {
 			if (skipNotify.current) skipNotify.current = false
 			else ctx.subscribers.forEach(s => s(state[0]))
-			ctx.get = () => state[0]
-			ctx.set = state[1]
 		}
 		function resetOnDismount() {
 			return () => {
 				ctx.get = getterUnInitialized
 				ctx.set = setterUnInitialized
+				ctx.ready = false
 			}
 		}
 	}

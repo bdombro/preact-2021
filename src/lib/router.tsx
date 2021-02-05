@@ -1,8 +1,6 @@
 import { ComponentChildren, Fragment as F, FunctionalComponent, h } from 'preact'
 import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from 'preact/hooks'
 
-import {AuthCtx, AuthCtxType} from '~/App.context'
-
 class ForbiddenError extends Error { type = 'Forbidden' }
 class NotFoundError extends Error { type = 'NotFound' }
 
@@ -11,10 +9,9 @@ class NotFoundError extends Error { type = 'NotFound' }
  * RouterSwitch: Switches routes based on current url and also checks access control
  */
 function RouterSwitch({ routesByPath }: RouterProps) {
-	const [auth] = AuthCtx.use()
 	const { pathname } = useLocation()
 	const { Stack = RouteWrapper, Component=()=><F/>, hasAccess=()=>true } = routesByPath[pathname] || routesByPath['/notfound']
-	if (!hasAccess(auth)) throw new ForbiddenError('Forbidden!')
+	if (!hasAccess()) throw new ForbiddenError('Forbidden!')
 	return <Stack><Component /></Stack>
 }
 
@@ -32,7 +29,7 @@ interface Route {
 	Component: FunctionalComponent
 	Layout?: FunctionalComponent
 	Stack?: FunctionalComponent
-	hasAccess?: (authCtx: AuthCtxType) => boolean
+	hasAccess?: () => boolean
 }
 function RouterComponent(props: RouterProps) {
 	const [Layout, setLayout] = useState<any>(() => BlankLayout)
@@ -153,7 +150,7 @@ function StackFactory(basePath: string) {
 				nav(back.location.pathname + back.location.search, { replace: true })
 			}
 			else if (pathname === top.location.pathname && search === top.location.search) {
-				console.log('top')
+				// console.log('top')
 				scrollTo(top.scroll)
 				ref.current.style.visibility = 'visible'
 				const e = document.getElementById('content')
@@ -163,7 +160,7 @@ function StackFactory(basePath: string) {
 				nav(top.location.pathname + top.location.search, { replace: true })
 			}
 			else { // forward navigation -- add to history 
-				console.log('forward')
+				// console.log('forward')
 				scrollTo(0)
 				ref.current.style.visibility = 'visible'
 				Stack.push({ location, scroll: 0 })
@@ -370,7 +367,10 @@ function interceptNavEvents() {
 				else
 					nav(ln.pathname + ln.search)
 			} 
-			else document.getElementById('content')!.scrollTop = 0
+			else {
+				const c = document.getElementById('content')
+				if (c) c.scrollTop = 0
+			}
 		}
 
 		function findLinkTagInParents(node: HTMLElement): any {
