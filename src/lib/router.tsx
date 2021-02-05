@@ -1,4 +1,4 @@
-import { Fragment as F, FunctionalComponent, h } from 'preact'
+import { ComponentChildren, Fragment as F, FunctionalComponent, h } from 'preact'
 import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from 'preact/hooks'
 
 import {AuthCtx, AuthCtxType} from '~/App.context'
@@ -85,39 +85,35 @@ RouterComponent.isFirstRender = true
  */
 const RouteHistory: Record<string, number> = {}
 function RouteWrapper({ children }: any) {
-	const { pathname, search } = location
-	useLayoutEffect(hideBodyUntilScrollRestored, [location])
+	const _location = useLocation()
 	useEffect(installListeners, [])
-	useEffect(recall, [location])
+	useLayoutEffect(() => { ref.current.style.visibility = 'hidden' }, [_location])
+	useEffect(recall, [_location])
+	const ref = useRef<HTMLDivElement>(null)
 
-	return children
+	return <div style={{visibility: 'hidden'}} ref={ref}>{children}</div>
 
-	function hideBodyUntilScrollRestored() {
-		setVisibility('hidden')
-	}
 	function installListeners() {
-		const e = document.getElementById('content')!
+		const e = document.getElementById('content')
 		if (e) return scrollListener(e, updateScrollPos)
 	}
 
 	function updateScrollPos(scrollTop: number) {
-		RouteHistory[pathname + search] = scrollTop
+		const uri = location.pathname + location.search
+		RouteHistory[uri] = scrollTop
 	}
 	function recall() {
+		const uri = location.pathname + location.search
 		const e = document.getElementById('content')
 		if (e) {
-			if (RouteHistory[pathname + search] && Date.now() - history.state > 3000)
-				e.scrollTop = RouteHistory[pathname + location.search]
+			if (RouteHistory[uri] && Date.now() - history.state > 3000)
+				e.scrollTop = RouteHistory[uri]
 			else {
 				updateScrollPos(0)
 				e.scrollTop = 0
 			}
 		}
-		setVisibility('visible')
-	}
-	function setVisibility(to: 'visible' | 'hidden') {
-		const e = document.getElementById('content')
-		if (e) e.style.visibility = to
+		ref.current.style.visibility = 'visible'
 	}
 }
 
@@ -131,15 +127,13 @@ type StackHistory = StackHistoryEntry[]
 const StackHistories: Record<string, StackHistory> = {}
 function StackFactory(basePath: string) {
 	return function StackHandler({ children }: any) {
-		const location = useLocation()
-		useLayoutEffect(hideBodyUntilScrollRestored, [location])
-		useEffect(installListeners, [basePath, location])
+		const _location = useLocation()
+		useLayoutEffect(() => { ref.current.style.visibility = 'hidden' }, [_location])
+		useEffect(installListeners, [basePath, _location])
+		const ref = useRef<HTMLDivElement>(null)
 
-		return children
+		return <div style={{ visibility: 'hidden' }} ref={ref}>{children}</div>
 
-		function hideBodyUntilScrollRestored() {
-			setVisibility('hidden')
-		}
 		function installListeners() {
 			let cancelScrollListen: any = () => null
 			const { pathname, search } = location
@@ -163,21 +157,21 @@ function StackFactory(basePath: string) {
 				nav(back.location.pathname + back.location.search, { replace: true })
 			}
 			else if (pathname === top.location.pathname && search === top.location.search) {
-				// console.log("top")
+				console.log('top')
 				scrollTo(top.scroll)
-				setVisibility('visible')
-				const e = document.getElementById('content')!
+				ref.current.style.visibility = 'visible'
+				const e = document.getElementById('content')
 				if (e) cancelScrollListen = scrollListener(e, updateScrollPos)
 			}
 			else if (pathname === basePath) {// recall from stack
 				nav(top.location.pathname + top.location.search, { replace: true })
 			}
 			else { // forward navigation -- add to history 
-				// console.log('forward')
+				console.log('forward')
 				scrollTo(0)
-				setVisibility('visible')
+				ref.current.style.visibility = 'visible'
 				Stack.push({ location, scroll: 0 })
-				const e = document.getElementById('content')!
+				const e = document.getElementById('content')
 				if (e) cancelScrollListen = scrollListener(e, updateScrollPos)
 			}
 
@@ -192,10 +186,6 @@ function StackFactory(basePath: string) {
 			const e = document.getElementById('content')
 			if (e) e.scrollTop = to
 		}
-		function setVisibility(to: 'visible' | 'hidden') {
-			const e = document.getElementById('content')
-			if (e) e.style.visibility = to
-		}
 	}
 }
 
@@ -208,6 +198,10 @@ function Redirect(to: string) {
 		useLayoutEffect(() => nav(to, { replace: true }), [])
 		return <div />
 	}
+}
+
+function ContentDiv(props: { children: ComponentChildren }) {
+	return <div id="content" style={{ height: 'var(--body-height)', overflow: 'hidden auto' }} {...props} />
 }
 
 /**
@@ -280,7 +274,8 @@ function interceptNavEvents() {
 					nav(ln.pathname + ln.search, { replace: true })
 				else
 					nav(ln.pathname + ln.search)
-			}
+			} 
+			else document.getElementById('content')!.scrollTop = 0
 		}
 
 		function findLinkTagInParents(node: HTMLElement): any {
@@ -316,6 +311,7 @@ function monkeyPatchHistory() {
 }
 
 export {
+	ContentDiv,
 	ForbiddenError,
 	nav,
 	navListener,

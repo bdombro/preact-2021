@@ -1,8 +1,7 @@
 import { h } from 'preact'
 
+import { ContentDiv } from '~/lib/router'
 import styled from '~/lib/styled'
-
-import ContentDiv from '../components/ContentDiv'
 
 export default function BlankLayout({ children }: { children: any }) {
 	return <BlankLayoutDiv>

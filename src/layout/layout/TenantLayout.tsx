@@ -2,11 +2,11 @@ import { h } from 'preact'
 
 import DashboardLayoutDiv from '~/layout/components/DashboardLayoutDiv'
 import * as i from '~/lib/icons'
+import { ContentDiv } from '~/lib/router'
 import useMedia from '~/lib/useMedia'
 import { Paths } from '~/routes'
 
 import BottomNav from '../components/BottomNav'
-import ContentDiv from '../components/ContentDiv'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import SidebarRight from '../components/SidebarRight'

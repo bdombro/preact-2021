@@ -1,10 +1,10 @@
 import { h } from 'preact'
 
 import * as i from '~/lib/icons'
+import { ContentDiv } from '~/lib/router'
 import styled from '~/lib/styled'
 import { Paths } from '~/routes'
 
-import ContentDiv from '../components/ContentDiv'
 import Navbar from '../components/Navbar'
 import SidebarRight from '../components/SidebarRight'
 

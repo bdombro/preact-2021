@@ -4,6 +4,7 @@ import { h } from 'preact'
 
 import DashboardLayoutDiv from '~/layout/components/DashboardLayoutDiv'
 import * as i from '~/lib/icons'
+import { ContentDiv } from '~/lib/router'
 import useMedia from '~/lib/useMedia'
 import { Paths } from '~/routes'
 
@@ -37,9 +38,9 @@ export default function AdminLayout({ children }: { children: any }) {
 				{ uri: Paths.AdminBlogStack, text: 'Blog', Icon: i.Post },
 				{ uri: Paths.AdminUserStack, text: 'Users', Icon: i.Auth },
 			]} />}
-			<div id="content">
+			<ContentDiv>
 				{children}
-			</div>
+			</ContentDiv>
 		</DashboardLayoutDiv>
 	)
 }
