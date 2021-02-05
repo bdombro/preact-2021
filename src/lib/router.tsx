@@ -1,6 +1,16 @@
 /**
  * A fairly comprehensive suite of router features for Preact (though could be adapted
  * fairly easily to any SPA)
+ * 
+ * Compared to react-router:
+ * - It's tiny. react-router and dependencies are > 30kb gzipped. This is < 3kb
+ * - It's preact compatible
+ * - Features scroll-restoration
+ * - Features Exception-based 404 and Forbidden handling, so you can cause a 404 or
+ *   forbidden page be displayed from deep in your app
+ * - Features a Stack based router similar to react-navigation, so that each "stack"
+ *   can manage it's own history and scroll positions. Absolutely essential if you 
+ *   are serious about mobile users
  */
 
 import { ComponentChildren, Fragment as F, FunctionalComponent, h } from 'preact'
