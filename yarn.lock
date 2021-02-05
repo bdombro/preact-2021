@@ -1003,10 +1003,10 @@
   resolved "https://registry.yarnpkg.com/@prefresh/core/-/core-1.3.0.tgz#90d27e9ee4ddfeef46d120dfbe70b259770731ee"
   integrity sha512-8upcMgA2143mGP0ZCX4Qrt4P+uco5y4KBfDWUVbX4XheGhTk1EbGfdZcdXaHsT8VhnlJem0PWeVDD/f3PijFqA==
 
-"@prefresh/snowpack@^3.0.0":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@prefresh/snowpack/-/snowpack-3.0.1.tgz#b5267342e54e3ba4dbc877265c7e4229187bfe07"
-  integrity sha512-Qzpbo7evgrwlKg+zV5+PtHLda3Kfcw8XCr5OxA9T2ZRJIBcpAY4H1/iOF4iWbzlrrXtEnEFfCMnb9nCOIoZQQg==
+"@prefresh/snowpack@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@prefresh/snowpack/-/snowpack-3.1.0.tgz#9d1522da735f286e33b6b2149f1f20d39695d5e5"
+  integrity sha512-vSq3TRvmgJlbB1fKPbDiiXU/4p+AaMBh4PyFQ1v4XViEksVudcbgH84XyU3n7MnZL6XmHUjpch0x0OEOGHqpyA==
   dependencies:
     "@babel/core" "^7.9.6"
     "@babel/plugin-syntax-class-properties" "^7.10.0"
@@ -1073,7 +1073,7 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@snowpack/plugin-typescript@^1.2.0":
+"@snowpack/plugin-typescript@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@snowpack/plugin-typescript/-/plugin-typescript-1.2.1.tgz#7170b039d16d41963cc61a714fe7c37f3fdd9d51"
   integrity sha512-wU+JNaMVkqGsqTaUY7TnEMhGt/3URTgA9dpMCtZX6wn/ceA7Gwlmue/sOLynf0OTNLygHPvjiQECQYkEi3LTtg==
@@ -5128,10 +5128,10 @@ posix-character-classes@^0.1.0:
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
 
-preact@^10.0.0:
-  version "10.5.10"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.10.tgz#8de7bf669e965a51fc9e45a6fd1e97a47af383e6"
-  integrity sha512-A6SITnHaj5CS4JPLVroQDNOEozq4Y0B4yQSGHLznxHe66Jb2DvoeTEibLjXmfeofgQE3BZ2zurltBIapzCMlwg==
+preact@^10.5.12:
+  version "10.5.12"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.12.tgz#6a8ee8bf40a695c505df9abebacd924e4dd37704"
+  integrity sha512-r6siDkuD36oszwlCkcqDJCAKBQxGoeEGytw2DGMD5A/GGdu5Tymw+N2OBXwvOLxg6d1FeY8MgMV3cc5aVQo4Cg==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
@@ -5787,7 +5787,7 @@ snowpack-plugin-hash@^0.13.0:
     typed-colors "^1.0.0"
     typed-figures "^1.0.0"
 
-snowpack@^3.0.1:
+snowpack@^3.0.11:
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/snowpack/-/snowpack-3.0.11.tgz#95f69f95367116e3a9bb5112d090d6328f2d3a28"
   integrity sha512-lBxgkvWTgdg0szE31JUt01wQkA9Lnmm+6lxqeV9rxDfflpx7ASnldVHFvu7Se70QJmPTQB0UJjfKI+xmYGwiiQ==

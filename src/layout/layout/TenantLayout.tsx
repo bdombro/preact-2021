@@ -1,9 +1,7 @@
 import { h } from 'preact'
 
 import DashboardLayoutDiv from '~/layout/components/DashboardLayoutDiv'
-import { ErrorBoundary } from '~/layout/components/ErrorBoundaries'
 import * as i from '~/lib/icons'
-// import lazy from '~/lib/lazy'
 import useMedia from '~/lib/useMedia'
 import { Paths } from '~/routes'
 
@@ -44,9 +42,7 @@ export default function TenantLayout({ children }: { children: any }) {
 				{ uri: Paths.TenantUserStack, text: 'Users', Icon: i.Auth },
 			]} />}
 			<ContentDiv>
-				<ErrorBoundary>
-					{children}
-				</ErrorBoundary>
+				{children}
 			</ContentDiv>
 		</DashboardLayoutDiv>
 	)

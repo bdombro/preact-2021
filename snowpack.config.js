@@ -9,7 +9,7 @@ module.exports = {
 	},
 	plugins: [
 		'@snowpack/plugin-typescript',
-		'@prefresh/snowpack',
+		// '@prefresh/snowpack', // TODO: file bug b/c causes issues with context hooks right now
 		['snowpack-plugin-hash',{ hashLength: 4,logLevel: 'error' }]
 	],
 	routes: [

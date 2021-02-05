@@ -3,9 +3,7 @@
 import { h } from 'preact'
 
 import DashboardLayoutDiv from '~/layout/components/DashboardLayoutDiv'
-import { ErrorBoundary } from '~/layout/components/ErrorBoundaries'
 import * as i from '~/lib/icons'
-// import lazy from '~/lib/lazy'
 import useMedia from '~/lib/useMedia'
 import { Paths } from '~/routes'
 
@@ -40,9 +38,7 @@ export default function AdminLayout({ children }: { children: any }) {
 				{ uri: Paths.AdminUserStack, text: 'Users', Icon: i.Auth },
 			]} />}
 			<div id="content">
-				<ErrorBoundary>
-					{children}
-				</ErrorBoundary>
+				{children}
 			</div>
 		</DashboardLayoutDiv>
 	)

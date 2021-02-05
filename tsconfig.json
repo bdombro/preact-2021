@@ -24,6 +24,6 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "importsNotUsedAsValues": "error",
-    "lib": ["ES2019"]
+    "lib": ["ES2019"],
   }
 }

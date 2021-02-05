@@ -1,10 +1,11 @@
-import FillerEntryFactory from '~/layout/components/FillerEntryFactory'
-import FillerHomeFactory from '~/layout/components/FillerHomeFactory'
-import FillerListFactory from '~/layout/components/FillerListFactory'
-import FillerPageFactory from '~/layout/components/FillerPageFactory'
+import FillerEntryFactory from '~/layout/FillerEntryFactory'
+import FillerHomeFactory from '~/layout/FillerHomeFactory'
+import FillerListFactory from '~/layout/FillerListFactory'
+import FillerPageFactory from '~/layout/FillerPageFactory'
 import lazy from '~/lib/lazy'
 import { PassThrough, Redirect, StackFactory } from '~/lib/router'
 
+import { AuthCtx, AuthCtxType } from './App.context'
 
 const LoginLayout = lazy(() => import('~/layout/layout/LoginLayout'))
 const AdminLayout = lazy(() => import('~/layout/layout/AdminLayout'))
@@ -14,13 +15,9 @@ const MarketingLayout = lazy(() => import('~/layout/layout/MarketingLayout'))
 
 export const routes = Object.freeze({
 
-	// Marketing Routes: home, login, support, about, blog
 
-	Home: {
-		path: '/',
-		Component: FillerPageFactory('Home'),
-		Layout: MarketingLayout,
-	},
+	// Access Control Routes
+
 	Login: {
 		path: '/login',
 		Component: lazy(() => import('./pages/auth/Login')),
@@ -39,6 +36,19 @@ export const routes = Object.freeze({
 	Logout: {
 		path: '/logout',
 		Component: lazy(() => import('./pages/auth/Logout')),
+	},
+	Forbidden: {
+		path: '/forbidden',
+		Component: lazy(() => import('~/pages/auth/Forbidden')),
+	},
+
+
+	// Marketing Routes: home, support, about, blog
+
+	Home: {
+		path: '/',
+		Component: FillerPageFactory('Home'),
+		Layout: MarketingLayout,
 	},
 	Support: {
 		path: '/support',
@@ -62,12 +72,14 @@ export const routes = Object.freeze({
 	AdminRoot: {
 		path: '/admin',
 		Component: Redirect('/admin/stats'),
+		hasAccess: isAdmin,
 	},
 
 	AdminSettingsHome: {
 		path: '/admin/settings',
 		Component: FillerPageFactory('Settings'),
 		Layout: AdminLayout,
+		hasAccess: isAdmin,
 	},
     
 	AdminStatsStack: {
@@ -75,12 +87,14 @@ export const routes = Object.freeze({
 		Component: PassThrough,
 		Layout: AdminLayout,
 		Stack: StackFactory('/admin/stats'),
+		hasAccess: isAdmin,
 	},
 	AdminStatsHome: {
 		path: '/admin/stats/home',
 		Component: FillerPageFactory('Admin Stats'),
 		Layout: AdminLayout,
 		Stack: StackFactory('/admin/stats'),
+		hasAccess: isAdmin,
 	},
 
 	AdminUserStack: {
@@ -88,24 +102,28 @@ export const routes = Object.freeze({
 		Component: PassThrough,
 		Layout: AdminLayout,
 		Stack: StackFactory('/admin/users'),
+		hasAccess: isAdmin,
 	},
 	AdminUserHome: {
 		path: '/admin/users/home',
 		Component: FillerHomeFactory('Admin Users'),
 		Layout: AdminLayout,
 		Stack: StackFactory('/admin/users'),
+		hasAccess: isAdmin,
 	},
 	AdminUserList: {
 		path: '/admin/users/list',
 		Component: FillerListFactory('Admin User List'),
 		Layout: AdminLayout,
 		Stack: StackFactory('/admin/users'),
+		hasAccess: isAdmin,
 	},
 	AdminUserEntry: {
 		path: '/admin/users/entry',
 		Component: FillerHomeFactory('Admin User'),
 		Layout: AdminLayout,
 		Stack: StackFactory('/admin/users'),
+		hasAccess: isAdmin,
 	},
     
 	AdminBlogStack: {
@@ -113,24 +131,28 @@ export const routes = Object.freeze({
 		Component: PassThrough,
 		Layout: AdminLayout,
 		Stack: StackFactory('/admin/blog'),
+		hasAccess: isAdmin,
 	},
 	AdminBlogHome: {
 		path: '/admin/blog/home',
 		Component: FillerHomeFactory('Admin Blog'),
 		Layout: AdminLayout,
 		Stack: StackFactory('/admin/blog'),
+		hasAccess: isAdmin,
 	},
 	AdminBlogPostList: {
 		path: '/admin/blog/list',
 		Component: FillerListFactory('Admin Post List'),
 		Layout: AdminLayout,
 		Stack: StackFactory('/admin/blog'),
+		hasAccess: isAdmin,
 	},
 	AdminBlogPostEntry: {
 		path: '/admin/blog/entry',
 		Component: FillerEntryFactory('Admin Post'),
 		Layout: AdminLayout,
 		Stack: StackFactory('/admin/blog'),
+		hasAccess: isAdmin,
 	},
 
 
@@ -141,12 +163,14 @@ export const routes = Object.freeze({
 	TenantRoot: {
 		path: '/tenant',
 		Component: Redirect('/tenant/stats'),
+		hasAccess: isTenant,
 	},
 
 	TenantSettingsHome: {
 		path: '/tenant/settings',
 		Component: FillerPageFactory('Tenant Settings'),
 		Layout: TenantLayout,
+		hasAccess: isTenant,
 	},
 
 	TenantStatsStack: {
@@ -154,12 +178,14 @@ export const routes = Object.freeze({
 		Component: PassThrough,
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/stats'),
+		hasAccess: isTenant,
 	},
 	TenantStatsHome: {
 		path: '/tenant/stats/home',
 		Component: FillerHomeFactory('Tenant Stats'),
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/stats'),
+		hasAccess: isTenant,
 	},
 
 	TenantUserStack: {
@@ -167,24 +193,28 @@ export const routes = Object.freeze({
 		Component: PassThrough,
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/users'),
+		hasAccess: isTenant,
 	},
 	TenantUserHome: {
 		path: '/tenant/users/home',
 		Component: FillerHomeFactory('Tenant Users Home'),
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/users'),
+		hasAccess: isTenant,
 	},
 	TenantUserList: {
 		path: '/tenant/users/list',
 		Component: FillerListFactory('Tenant User List'),
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/users'),
+		hasAccess: isTenant,
 	},
 	TenantUserEntry: {
 		path: '/tenant/users/entry',
 		Component: FillerEntryFactory('Tenant User'),
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/users'),
+		hasAccess: isTenant,
 	},
 
 	TenantPropertiesStack: {
@@ -192,24 +222,28 @@ export const routes = Object.freeze({
 		Component: PassThrough,
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/properties'),
+		hasAccess: isTenant,
 	},
 	TenantPropertiesHome: {
 		path: '/tenant/properties/home',
 		Component: FillerHomeFactory('Tenant Properties'),
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/properties'),
+		hasAccess: isTenant,
 	},
 	TenantPropertiesList: {
 		path: '/tenant/properties/list',
 		Component: FillerListFactory('Tenant Property List'),
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/properties'),
+		hasAccess: isTenant,
 	},
 	TenantPropertiesEntry: {
 		path: '/tenant/properties/entry',
 		Component: FillerEntryFactory('Tenant Property'),
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/properties'),
+		hasAccess: isTenant,
 	},
 
 	TenantTasksStack: {
@@ -217,24 +251,33 @@ export const routes = Object.freeze({
 		Component: PassThrough,
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/tasks'),
+		hasAccess: isTenant,
 	},
 	TenantTasksHome: {
 		path: '/tenant/tasks/home',
 		Component: FillerHomeFactory('Tenant Tasks'),
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/tasks'),
+		hasAccess: isTenant,
 	},
 	TenantTasksList: {
 		path: '/tenant/tasks/list',
 		Component: FillerListFactory('Tenant Task List'),
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/tasks'),
+		hasAccess: isTenant,
 	},
 	TenantTasksEntry: {
 		path: '/tenant/tasks/entry',
 		Component: FillerEntryFactory('Tenant Task'),
 		Layout: TenantLayout,
 		Stack: StackFactory('/tenant/tasks'),
+		hasAccess: isTenant,
+	},
+
+	NotFound: {
+		path: '/notfound',
+		Component: lazy(() => import('~/pages/NotFound')),
 	},
 })
 
@@ -243,3 +286,6 @@ export const routesByPath = Object.fromEntries(Object.values(routes).map(r => [r
 // @ts-ignore: Maybe fix later
 export const Paths: Record<keyof typeof routes, string> = Object.fromEntries(Object.entries(routes).map(([name, r]) => [name, r.path]))
 
+
+function isAdmin(auth: AuthCtxType) { return auth.roles.includes(AuthCtx.roles.admin) }
+function isTenant(auth: AuthCtxType) { return auth.roles.includes(AuthCtx.roles.tenant) }

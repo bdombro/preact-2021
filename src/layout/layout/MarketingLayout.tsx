@@ -1,6 +1,5 @@
 import { h } from 'preact'
 
-import { ErrorBoundary } from '~/layout/components/ErrorBoundaries'
 import * as i from '~/lib/icons'
 import styled from '~/lib/styled'
 import { Paths } from '~/routes'
@@ -28,9 +27,7 @@ export default function MarketingLayout({ children }: { children: any }) {
 				]}
 			/>
 			<ContentDiv>
-				<ErrorBoundary>
-					{children}
-				</ErrorBoundary>
+				{children}
 			</ContentDiv>
 		</MarketingLayoutDiv>
 	)

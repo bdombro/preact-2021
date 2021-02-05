@@ -1,27 +1,59 @@
-import { FunctionalComponent, h } from 'preact'
-import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
+import { Fragment as F, FunctionalComponent, h } from 'preact'
+import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from 'preact/hooks'
+
+import {AuthCtx, AuthCtxType} from '~/App.context'
 
 import BlankLayout from '../layout/layout/BlankLayout'
-import lazy from './lazy'
 import scrollListener from './scrollListener'
 
-const NotFound = lazy(() => import('../layout/components/NotFound'))
 
+class ForbiddenError extends Error { type = 'Forbidden' }
+class NotFoundError extends Error { type = 'NotFound' }
+
+
+/**
+ * Switches routes based on current url and also checks access control
+ */
 function RouterSwitch({ routesByPath }: RouterProps) {
+	const [auth] = AuthCtx.use()
 	const { pathname } = useLocation()
-	const { Stack = RouteWrapper, Component = NotFound } = routesByPath[pathname] || {}
+	const { Stack = RouteWrapper, Component=()=><F/>, hasAccess=()=>true } = routesByPath[pathname] || routesByPath['/notfound']
+	if (!hasAccess(auth)) throw new ForbiddenError('Forbidden!')
 	return <Stack><Component /></Stack>
 }
-
 
 /**
  * Wraps the Router Switch in a Layout, and strategically only re-renders
  * the layout if the layout has changed, preserving state in the layouts
  * and improving performance
  */
-export function RouterComponent(props: RouterProps) {
+interface RouterProps {
+	routesByPath: Record<string, Route>,
+}
+interface Route {
+	path: string
+	Component: FunctionalComponent
+	Layout?: FunctionalComponent
+	Stack?: FunctionalComponent
+	hasAccess?: (authCtx: AuthCtxType) => boolean
+}
+function RouterComponent(props: RouterProps) {
 	const [Layout, setLayout] = useState<any>(() => BlankLayout)
 	useLayoutEffect(watchLocation, [])
+	const [error, resetError] = useErrorBoundary()
+	if (error) {
+		if (error instanceof ForbiddenError) {
+			const R = props.routesByPath['/forbidden']
+			const RLayout = R.Layout || BlankLayout
+			return <RLayout><RouteWrapper><R.Component /></RouteWrapper></RLayout>
+		}
+		if (error instanceof NotFoundError) {
+			const R = props.routesByPath['/notfound']
+			const RLayout = R.Layout || BlankLayout
+			return <RLayout><RouteWrapper><R.Component /></RouteWrapper></RLayout>
+		}
+		throw error
+	}
 	return <Layout><RouterSwitch {...props} /></Layout>
 
 	function watchLocation() {
@@ -30,21 +62,20 @@ export function RouterComponent(props: RouterProps) {
 	}
 	function onLocationChange() {
 		const match = props.routesByPath[location.pathname]
-		if (!match || !match.Layout) setLayout(() => BlankLayout)
-		else if (Layout !== match.Layout) setLayout(() => match.Layout)
+
+		// only update the layout if it's changed
+		let Next = BlankLayout as any
+		if (match && match.Layout)
+			Next = match.Layout
+		if (Layout !== Next)
+			setLayout(() => Next)
+		
+		// Reset the errors if location changes, skipping the initial site load
+		if (!RouterComponent.isFirstRender) resetError()
+		RouterComponent.isFirstRender = false
 	}
 }
-
-interface RouterProps { 
-  routesByPath: Record<string, Route>,
-}
-
-interface Route {
-  path: string
-  Component: FunctionalComponent
-  Layout?: FunctionalComponent
-  Stack?: FunctionalComponent
-}
+RouterComponent.isFirstRender = true
 
 
 const RouteHistory: Record<string, number> = {}
@@ -92,7 +123,7 @@ function RouteWrapper({ children }: any) {
 type StackHistoryEntry = { location: UseLocationLocation, scroll: number }
 type StackHistory = StackHistoryEntry[]
 const StackHistories: Record<string, StackHistory> = {}
-export function StackFactory(basePath: string) {
+function StackFactory(basePath: string) {
 	return function StackHandler({ children }: any) {
 		const location = useLocation()
 		useLayoutEffect(hideBodyUntilScrollRestored, [location])
@@ -108,11 +139,11 @@ export function StackFactory(basePath: string) {
 			const { pathname, search } = location
 			const baseHistory = { location: { pathname: basePath + '/home', search: '' }, scroll: 0 }
 			class Stack {
-        static reset = () => { StackHistories[basePath] = [baseHistory]; return StackHistories[basePath][0] }
-        static len = () => StackHistories[basePath]?.length ?? 0
-        static top = () => StackHistories[basePath]?.[Stack.len() - 1] || Stack.reset()
-        static pop = () => StackHistories[basePath].pop() || Stack.reset()
-        static push = (entry: StackHistoryEntry) => StackHistories[basePath].push(entry)
+				static reset = () => { StackHistories[basePath] = [baseHistory]; return StackHistories[basePath][0] }
+				static len = () => StackHistories[basePath]?.length ?? 0
+				static top = () => StackHistories[basePath]?.[Stack.len() - 1] || Stack.reset()
+				static pop = () => StackHistories[basePath].pop() || Stack.reset()
+				static push = (entry: StackHistoryEntry) => StackHistories[basePath].push(entry)
 			}
 			const top = Stack.top()
 			const arg = new URLSearchParams(search).get('stack')
@@ -163,11 +194,11 @@ export function StackFactory(basePath: string) {
 }
 
 
-export function PassThrough({ children }: any) {
+function PassThrough({ children }: any) {
 	return children
 }
 
-export function Redirect(to: string) {
+function Redirect(to: string) {
 	return function Redirect() {
 		useLayoutEffect(() => nav(to, { replace: true }), [])
 		return <div />
@@ -177,8 +208,8 @@ export function Redirect(to: string) {
 /**
  * Inspired by https://github.com/molefrog/wouter's useLocation hook
  */
-export interface UseLocationLocation { pathname: string, search: string }
-export function useLocation(): UseLocationLocation {
+interface UseLocationLocation { pathname: string, search: string }
+function useLocation(): UseLocationLocation {
 	const [location, setLocation] = useState<UseLocationLocation>(currentLocation)
 	const prev = useRef(location)
 	useEffect(_attachListeners, [])
@@ -210,7 +241,7 @@ export function useLocation(): UseLocationLocation {
 }
 
 // React to a change in navigation
-export function navListener(callback: () => any) {
+function navListener(callback: () => any) {
 	historyEvents.map((e) => addEventListener(e, callback))
 	// callback()
 	return function unListen() { historyEvents.map((e) => removeEventListener(e, callback)) }
@@ -218,7 +249,7 @@ export function navListener(callback: () => any) {
 const historyEvents = ['popstate', 'pushState', 'replaceState']
 
 // Helper to navigate to a new page
-export function nav(to: string, { replace = false } = {}) {
+function nav(to: string, { replace = false } = {}) {
 	history[replace ? 'replaceState' : 'pushState'](Date.now(), '', to)
 }
 if (!history.state) nav(location.pathname + location.search, { replace: true })
@@ -230,7 +261,7 @@ if (!history.state) nav(location.pathname + location.search, { replace: true })
  * - Stores element handles in memory to remove need to query the dom
  *   on every update
  */
-export interface SetPageMetaProps {
+interface SetPageMetaProps {
 	title: string
 	siteName?: string
 	author?: string
@@ -238,7 +269,7 @@ export interface SetPageMetaProps {
 	image?: string
 	locale?: string
 }
-export function setPageMeta(p: SetPageMetaProps) {
+function setPageMeta(p: SetPageMetaProps) {
 	const title = p.title ? `${p.title} - ${siteName}` : siteName
 	if (title !== document.title) document.title = title
 
@@ -271,14 +302,14 @@ class MetaClass {
 }
 const getLink = () => find('link[rel="canonical"]')! as any
 const siteName = byProp('og:site_name').getAttribute('content')!
-const author = new MetaClass(()=>byName('author'))
-const ogTitle = new MetaClass(()=>byProp('og:title'))
-const locale = new MetaClass(()=>byProp('og:locale'))
-const description = new MetaClass(()=>byName('description'))
-const ogDescription = new MetaClass(()=>byProp('og:description'))
-const ogUrl = new MetaClass(()=>byProp('og:url'))
-const ogSiteName = new MetaClass(()=>byProp('og:site_name'))
-const ogImage = new MetaClass(()=>byProp('og:image'))
+const author = new MetaClass(() => byName('author'))
+const ogTitle = new MetaClass(() => byProp('og:title'))
+const locale = new MetaClass(() => byProp('og:locale'))
+const description = new MetaClass(() => byName('description'))
+const ogDescription = new MetaClass(() => byProp('og:description'))
+const ogUrl = new MetaClass(() => byProp('og:url'))
+const ogSiteName = new MetaClass(() => byProp('og:site_name'))
+const ogImage = new MetaClass(() => byProp('og:image'))
 function byName(name: string) { return find(`meta[name="${name}"]`) }
 function byProp(prop: string) { return find(`meta[property="${prop}"]`) }
 function find(selector: string) { return document.head.querySelector(selector)! }
@@ -316,12 +347,12 @@ function find(selector: string) { return document.head.querySelector(selector)! 
 // is to monkey-patch these methods.
 //
 // See https://stackoverflow.com/a/4585031
-;(function monkeyPatchHistory() {
+; (function monkeyPatchHistory() {
 	if (typeof history !== 'undefined') {
 		for (const type of ['pushState', 'replaceState']) {
 			const original = (history as any)[type]
 
-          ; (history as any)[type] = function (...props: any) {
+					; (history as any)[type] = function (...props: any) {
 				const result = original.apply(this, props)
 				const event = new Event(type);
 				(event as any).arguments = props
@@ -332,3 +363,16 @@ function find(selector: string) { return document.head.querySelector(selector)! 
 		}
 	}
 })()
+
+export {
+	ForbiddenError,
+	nav,
+	navListener,
+	NotFoundError,
+	PassThrough,
+	Redirect,
+	RouterComponent,
+	setPageMeta,
+	StackFactory,
+	useLocation,
+}
