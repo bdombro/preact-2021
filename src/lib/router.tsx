@@ -4,8 +4,6 @@ import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from '
 import {AuthCtx, AuthCtxType} from '~/App.context'
 
 import BlankLayout from '../layout/layout/BlankLayout'
-import scrollListener from './scrollListener'
-
 
 class ForbiddenError extends Error { type = 'Forbidden' }
 class NotFoundError extends Error { type = 'NotFound' }
@@ -241,6 +239,32 @@ function useLocation(): UseLocationLocation {
 }
 
 
+/**
+ * Call a function on scroll event
+ * 
+ * If scroll event appears to happen near a nav event, skip
+ */
+function scrollListener(el: HTMLElement, callback: any) {
+	let last_known_scroll_position = 0
+	let ticking = false
+	el.addEventListener('scroll', listener)
+	return function unlisten() { el.removeEventListener('scroll', listener) }
+
+	function listener() {
+		last_known_scroll_position = el.scrollTop
+		// const navJustHappened = Date.now() - lastNavEvent < 1000
+		if (!ticking) {
+			window.requestAnimationFrame(() => {
+				callback(last_known_scroll_position)
+				ticking = false
+			})
+			ticking = true
+		}
+	}
+}
+
+
+
 // navListener: React to a change in navigation
 function navListener(callback: () => any) {
 	historyEvents.map((e) => addEventListener(e, callback))
@@ -255,6 +279,71 @@ function nav(to: string, { replace = false } = {}) {
 	history[replace ? 'replaceState' : 'pushState'](Date.now(), '', to)
 }
 if (!history.state) nav(location.pathname + location.search, { replace: true })
+
+
+/**
+ * setPageMeta: Allows setting common page attrs.
+ * - Intelligently us the attrs, only setting if changed
+ * - Resets back to initial if omitted, based on initial introspection
+ * - Stores element handles in memory to remove need to query the dom
+ *   on every update
+ */
+
+function createSetPageMeta() {
+	// Wrapper class on meta elements to simplify usage and make more DRY
+	class MetaClass {
+		get: () => string
+		orig: string
+		set: (val: string) => void
+		constructor(getter: () => Element) {
+			this.get = () => getter().getAttribute('content')!
+			this.set = (v: string) => getter().setAttribute('content', v)
+			this.orig = this.get()
+		}
+		upsert(val?: string) {
+			if (!val) val = this.orig
+			if (this.get() !== val) this.set(val)
+		}
+	}
+	const getLink = () => find('link[rel="canonical"]')! as any
+	const siteName = byProp('og:site_name').getAttribute('content')!
+	const author = new MetaClass(() => byName('author'))
+	const ogTitle = new MetaClass(() => byProp('og:title'))
+	const locale = new MetaClass(() => byProp('og:locale'))
+	const description = new MetaClass(() => byName('description'))
+	const ogDescription = new MetaClass(() => byProp('og:description'))
+	const ogUrl = new MetaClass(() => byProp('og:url'))
+	const ogSiteName = new MetaClass(() => byProp('og:site_name'))
+	const ogImage = new MetaClass(() => byProp('og:image'))
+	function byName(name: string) { return find(`meta[name="${name}"]`) }
+	function byProp(prop: string) { return find(`meta[property="${prop}"]`) }
+	function find(selector: string) { return document.head.querySelector(selector)! }
+
+	return function setPageMeta(p: {
+		title: string
+		siteName?: string
+		author?: string
+		description?: string
+		image?: string
+		locale?: string
+	}) {
+		const title = p.title ? `${p.title} - ${siteName}` : siteName
+		if (title !== document.title) document.title = title
+
+		const link = getLink()
+		if (link.href !== location.href) link.href = location.href
+
+		author.upsert(p.author || p.title)
+		ogTitle.upsert(p.title)
+		locale.upsert(p.locale)
+		description.upsert(p.description)
+		ogDescription.upsert(p.description)
+		ogUrl.upsert(location.href)
+		ogSiteName.upsert(p.siteName)
+		ogImage.upsert(p.image)
+	}
+}
+const setPageMeta = createSetPageMeta()
 
 
 // Intercept changes to navigation to dispatch events and prevent default
@@ -319,6 +408,8 @@ export {
 	PassThrough,
 	Redirect,
 	RouterComponent,
+	scrollListener,
+	setPageMeta,
 	StackFactory,
 	useLocation,
 }
