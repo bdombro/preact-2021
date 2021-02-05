@@ -2,6 +2,9 @@
 
 const nonRouteExtensions = 'js|css|ico|png|jpg|svg|json|map'
 
+const isProd = process.env.NODE_ENV === 'production'
+console.dir(isProd)
+
 module.exports = {
 	mount: {
 		public: {url: '/', static: true},
@@ -37,7 +40,7 @@ module.exports = {
 	},
 	buildOptions: {
 		/* ... */
-		sourcemap: true,
+		sourcemap: !isProd,
 	},
 	alias: {
 		'~': './src'
