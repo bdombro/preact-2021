@@ -3,8 +3,6 @@ import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from '
 
 import {AuthCtx, AuthCtxType} from '~/App.context'
 
-import BlankLayout from '../layout/layout/BlankLayout'
-
 class ForbiddenError extends Error { type = 'Forbidden' }
 class NotFoundError extends Error { type = 'NotFound' }
 
@@ -200,6 +198,14 @@ function Redirect(to: string) {
 
 function ContentDiv(props: { children: ComponentChildren }) {
 	return <div id="content" style={{ height: 'var(--body-height)', overflow: 'hidden auto' }} {...props} />
+}
+
+function BlankLayout({ children }: { children: any }) {
+	return <div>
+		<ContentDiv>
+			{children}
+		</ContentDiv>
+	</div>
 }
 
 /**
@@ -400,6 +406,7 @@ function monkeyPatchHistory() {
 }
 
 export {
+	BlankLayout,
 	ContentDiv,
 	ForbiddenError,
 	nav,
