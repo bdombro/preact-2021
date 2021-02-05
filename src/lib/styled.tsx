@@ -1,3 +1,11 @@
+/**
+ * Features to support css-in-js, similarly to styled-components but extremely lean
+ * 
+ * Styled-components and it's dependencies are > 30kb gzipped. That, and it doesn't
+ * even support preact. In contrast, this library is < 1kb gzipped.
+ * 
+ * Inspired by styled-components and styled-jsx (thanks!)
+ */
 import { h } from 'preact'
 
 let count = 0

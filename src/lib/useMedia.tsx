@@ -1,5 +1,6 @@
-
-import { h } from 'preact'
+/**
+ * A hook that watches a css media breakpoint
+ */
 import { useEffect, useState } from 'preact/hooks'
 
 export default function useMedia (query: string) {

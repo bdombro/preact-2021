@@ -1,3 +1,8 @@
+/**
+ * A fairly comprehensive suite of router features for Preact (though could be adapted
+ * fairly easily to any SPA)
+ */
+
 import { ComponentChildren, Fragment as F, FunctionalComponent, h } from 'preact'
 import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from 'preact/hooks'
 
