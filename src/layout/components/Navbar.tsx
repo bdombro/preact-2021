@@ -65,7 +65,8 @@ const LeftBurger = styled.a`
 const LogoA = styled.a`
 	:root {
 		transform: rotate(20deg);
-		margin: -66px 0 0 -4px;
+		margin-top: -66px;
+		margin-left: -4px;
 		padding: 80px 9px;
 	}
 	:root > div {
@@ -88,7 +89,7 @@ const LogoA = styled.a`
 			margin: 0 6px 0 8px;
 	}
 	:root.withBurger {
-		margin: -65px 0 0 0;
+		margin-top: -65px;
 		padding: 80px 7px;
 	}
 `
@@ -114,7 +115,7 @@ const NavButtonA = styled.a`
 		background: var(--primary);
 	}
 	:root:hover, .active {
-			background: var(--primary-darker);
+		background: var(--primary-hover);
 	}
 `
 

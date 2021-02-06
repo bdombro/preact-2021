@@ -70,7 +70,10 @@ const ErrorInner = styled.div`
 `
 const ErrorLink = styled.a`
 	:root {
-		color:hsl(var(--primary-h),var(--primary-s),88%);
+		color:hsl(var(--primary-h),var(--primary-s),80%);
 		text-decoration:underline;
+	}
+	:root:hover {
+		color:white;
 	}
 `
