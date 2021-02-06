@@ -16,7 +16,8 @@ const LoginLayoutOuter = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: hsl(var(--primary-h), var(--primary-s), 30%);
+    background-color: hsl(var(--primary-h),var(--primary-s),70%);
+		background-image: url("/fabric.png");
     overflow-x: hidden;
     overflow-y: auto;
     padding: 10px;

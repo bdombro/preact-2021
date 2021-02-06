@@ -21,7 +21,7 @@ export function createContext<T>(defaultVal: T) {
 		set: setterUnInitialized as StateUpdater<T>, 
 		subscribe, 
 		subscribers: new Set<(next: T) => any>(),
-		ready: false,
+		isReady: false,
 	}
 	return ctx
 
@@ -33,7 +33,7 @@ export function createContext<T>(defaultVal: T) {
 		
 		ctx.get = () => state[0]
 		ctx.set = state[1]
-		ctx.ready = true
+		ctx.isReady = true
 
 		return <ctx.Context.Provider value={state}>{children}</ctx.Context.Provider>
 
@@ -45,7 +45,7 @@ export function createContext<T>(defaultVal: T) {
 			return () => {
 				ctx.get = getterUnInitialized
 				ctx.set = setterUnInitialized
-				ctx.ready = false
+				ctx.isReady = false
 			}
 		}
 	}

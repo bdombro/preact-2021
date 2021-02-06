@@ -52,27 +52,11 @@ AuthCtx.subscribe(next => ls.set('AuthCtx', JSON.stringify(next)))
 // Providers
 
 export function CtxProviders ({children}: {children: ComponentChildren}) {
-	const [isReady, setIsReady] = useState(false)
-	console.log(isReady)
-	useEffect(() => {
-		const interval = setInterval(() => {
-			if (
-				AuthCtx.ready &&
-				ThemeCtx.ready &&
-				SidebarLeftCtx.ready &&
-				SidebarRightCtx.ready
-			) {
-				setIsReady(true)
-				clearInterval(interval)
-			} else console.log('Not ready')
-		}, 50)
-	},[])
-
 	return <AuthCtx.Provider>
 		<ThemeCtx.Provider>
 			<SidebarLeftCtx.Provider>
 				<SidebarRightCtx.Provider>
-					{isReady && children}
+					{children}
 				</SidebarRightCtx.Provider>
 			</SidebarLeftCtx.Provider>
 		</ThemeCtx.Provider>

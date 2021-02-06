@@ -1,6 +1,6 @@
 body {
   --text: black;
-  --body: white;
+  --body: hsl(0, 0%, 98%);;
 
   --primary-h: 270;
   --primary-s: 100%;
@@ -17,8 +17,8 @@ body {
   );
 
   --header-background: hsl(0, 0%, 0%);
-  --nav-background: hsl(0, 0%, 96%);
-  --nav-background-hover: hsl(0, 0%, 86%);
+  --nav-background: hsl(0, 0%, 94%);
+  --nav-background-hover: hsl(0, 0%, 87%);
   --nav-background-active: hsl(var(--primary-h),var(--primary-s),94%);
   --nav-text-active: var(--primary);
   --searchbar-background: hsl(0, 0%, 80%);
@@ -27,7 +27,7 @@ body {
   --body-height: 100vh;
   
   overflow: hidden;
-  background: var(--nav-background);
+  background: var(--body);
 }
 
 body.dark {

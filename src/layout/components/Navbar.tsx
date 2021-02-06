@@ -7,22 +7,25 @@ import { useLocation } from '~/lib/router'
 import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
 
-interface NavLinkProps { uri: string, text: string }
+interface NavLinkProps { uri: string, text: string, isButton?: boolean }
 type NavLinks = NavLinkProps[]
 
+// TODO: Custom button for login/console
 export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolean, navLinks: NavLinks}) {
 	const isWide = useMedia('(min-width: 600px)')
 	return <NavbarDiv>
 		<div>
 			{sidebarLeft && isWide && <LeftBurger href="#sidebar-toggle">Ξ</LeftBurger>}
-			<LogoA href='/'>
-				{!sidebarLeft && <ReactLogo />}
-				<div>Stacks!</div>
+			<LogoA href='/' class={sidebarLeft && isWide ? 'withBurger' : ''}>
+				<div>
+					{!sidebarLeft && <ReactLogo />}
+					<div>Stacks!</div>
+				</div>
 			</LogoA>
 		</div>
 
 		<div>
-			{isWide && navLinks.map(nl => <NavLink {...nl} />)}
+			{isWide && navLinks.map(nl => nl.isButton ? <NavButton {...nl} /> : <NavLink {...nl} />)}
 			<RightBurger />
 		</div>
 
@@ -39,6 +42,7 @@ const NavbarDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+		overflow: hidden;
 	}
 	:root > div {
 		height: var(--header-height);
@@ -60,7 +64,12 @@ const LeftBurger = styled.a`
 `
 const LogoA = styled.a`
 	:root {
-    height: var(--header-height);
+		transform: rotate(20deg);
+		margin: -66px 0 0 -4px;
+		padding: 80px 9px;
+	}
+	:root > div {
+		transform: rotate(-20deg);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -71,13 +80,41 @@ const LogoA = styled.a`
 	:root:hover {
 			background: var(--primary);
 	}
-	:root div {
-			padding-right: 14px;
+	:root > div > div {
 			color: white;
 	}
 	:root svg {
 			color: hsl(var(--primary-h), var(--primary-s), 70%);
 			margin: 0 6px 0 8px;
+	}
+	:root.withBurger {
+		margin: -65px 0 0 0;
+		padding: 80px 7px;
+	}
+`
+
+function NavButton({ uri, text }: { uri: string, text: string }) {
+	return (
+		<NavButtonA href={uri}>
+			{text}
+		</NavButtonA>
+	)
+}
+const NavButtonA = styled.a`
+	:root {
+    height: calc( var(--header-height) - 12px );
+		margin: 6px 4px 6px 20px;
+		border-radius: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 10px;
+    color: white;
+		background: var(--primary);
+	}
+	:root:hover, .active {
+			background: var(--primary-darker);
 	}
 `
 
@@ -89,25 +126,25 @@ function NavLink({ uri, text }: { uri: string, text: string }) {
 		<NavLinkA class={isActive && !isSidebarActive ? 'active' : ''}
 			href={uri + (isActive ? '?stack=reset' : '')}
 		>
-			{text}
+			<div>{text}</div>
 		</NavLinkA>
 	)
 }
 const NavLinkA = styled.a`
 	:root {
-    height: var(--header-height);
     display: flex;
     flex-direction: row;
     align-items: center;
-    box-sizing: border-box;
-    padding: 0 14px;
+    margin-top: -56px;
+    padding: 80px 14px;
     color: white;
+		transform: rotate(20deg)
 	}
 	:root:hover, .active {
 			background: var(--primary);
 	}
-	:root.rightBurger {
-			padding: 0 20px;
+	:root > div {
+			transform: rotate(-20deg)
 	}
 `
 
@@ -123,7 +160,7 @@ function RightBurger() {
 		if (!isSidebarActive) setIsLinkActive(false)
 	}, [isSidebarActive])
 	return (
-		<NavLinkA class={`rightBurger ${isLinkActive ? 'active' : ''}`}
+		<NavBurgerA class={isLinkActive ? 'active' : ''}
 			href={'#navburger-click'}
 			onClick={() => {
 				setIsLinkActive(isActive => {
@@ -133,6 +170,20 @@ function RightBurger() {
 			}}
 		>
 			{isLinkActive ? 'X' : 'Ξ'}
-		</NavLinkA>
+		</NavBurgerA>
 	)
 }
+const NavBurgerA = styled.a`
+	:root {
+    height: var(--header-height);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 20px;
+    color: white;
+	}
+	:root:hover, .active {
+			background: var(--primary);
+	}
+`

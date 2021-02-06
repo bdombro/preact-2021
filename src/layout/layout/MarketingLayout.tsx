@@ -12,9 +12,9 @@ import SidebarRight from '../components/SidebarRight'
 export default function MarketingLayout({ children }: { children: any }) {
 	const [auth] = AuthCtx.use()
 	const loginNavLink = (false
-		|| auth.roles?.includes(AuthCtx.roles.admin) && { uri: Paths.AdminRoot, text: 'Console', Icon: i.Counter }
-		|| auth.roles?.includes(AuthCtx.roles.admin) && { uri: Paths.TenantRoot, text: 'Console', Icon: i.Counter }
-		|| { uri: Paths.Login, text: 'Login', Icon: i.Login }
+		|| auth.roles?.includes(AuthCtx.roles.admin) && { uri: Paths.AdminRoot, text: 'Dashboard', Icon: i.Counter, isButton: true }
+		|| auth.roles?.includes(AuthCtx.roles.admin) && { uri: Paths.TenantRoot, text: 'Dashboard', Icon: i.Counter, isButton: true }
+		|| { uri: Paths.Login, text: 'Login', Icon: i.Login, isButton: true }
 	)
 	return (
 		<MarketingLayoutDiv>
