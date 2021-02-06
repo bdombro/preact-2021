@@ -1,5 +1,6 @@
 import { h } from 'preact'
 
+import { AuthCtx } from '~/App.context'
 import * as i from '~/lib/icons'
 import { ContentDiv } from '~/lib/router'
 import styled from '~/lib/styled'
@@ -9,12 +10,18 @@ import Navbar from '../components/Navbar'
 import SidebarRight from '../components/SidebarRight'
 
 export default function MarketingLayout({ children }: { children: any }) {
+	const [auth] = AuthCtx.use()
+	const loginNavLink = (false
+		|| auth.roles?.includes(AuthCtx.roles.admin) && { uri: Paths.AdminRoot, text: 'Console', Icon: i.Counter }
+		|| auth.roles?.includes(AuthCtx.roles.admin) && { uri: Paths.TenantRoot, text: 'Console', Icon: i.Counter }
+		|| { uri: Paths.Login, text: 'Login', Icon: i.Login }
+	)
 	return (
 		<MarketingLayoutDiv>
 			<Navbar 
 				navLinks={[
 					{uri: Paths.Blog, text: 'Blog'},
-					{uri: Paths.Login, text: 'Login' },
+					loginNavLink,
 				]}
 			/>
 			<SidebarRight 
@@ -22,7 +29,7 @@ export default function MarketingLayout({ children }: { children: any }) {
 					{ uri: Paths.Home, text: 'Home', Icon: i.Home },
 					{ uri: Paths.Blog, text: 'Blog', Icon: i.Post },
 					{ uri: Paths.Support, text: 'Support', Icon: i.Info },
-					{ uri: Paths.Login, text: 'Login', Icon: i.Login },
+					loginNavLink,
 					{ uri: '#theme-toggle', text: 'Theme', Icon: i.Palette },
 				]}
 			/>

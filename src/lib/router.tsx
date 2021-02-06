@@ -52,7 +52,7 @@ function RouterComponent(props: RouterProps) {
 		}
 		throw error
 	}
-	return <Layout><RouterSwitch {...props} /></Layout>
+	return RouterComponent.isFirstRender ? <F/> : <Layout><RouterSwitch {...props} /></Layout>
 
 	function watchLocation() {
 		onLocationChange()

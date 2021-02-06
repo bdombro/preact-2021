@@ -3,7 +3,6 @@
 const nonRouteExtensions = 'js|css|ico|png|jpg|svg|json|map'
 
 const isProd = process.env.NODE_ENV === 'production'
-console.dir(isProd)
 
 module.exports = {
 	mount: {
@@ -12,7 +11,7 @@ module.exports = {
 	},
 	plugins: [
 		'@snowpack/plugin-typescript',
-		'@prefresh/snowpack', // This is known to sometimes conflict with preact.context
+		// '@prefresh/snowpack', // This is known to sometimes conflict with preact.context
 		['snowpack-plugin-hash',{ hashLength: 4,logLevel: 'error' }]
 	],
 	routes: [

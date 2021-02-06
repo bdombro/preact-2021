@@ -1,4 +1,5 @@
-import { FunctionComponent, h } from 'preact'
+import { ComponentChildren, FunctionComponent, h } from 'preact'
+import { useEffect, useState } from 'preact/hooks'
 
 import { createContext } from './lib/createContext'
 import { navListener } from './lib/router'
@@ -50,13 +51,30 @@ AuthCtx.subscribe(next => ls.set('AuthCtx', JSON.stringify(next)))
 
 // Providers
 
-export const CtxProviders: FunctionComponent = ({children}) => 
-	<AuthCtx.Provider>
+export function CtxProviders ({children}: {children: ComponentChildren}) {
+	const [isReady, setIsReady] = useState(false)
+	console.log(isReady)
+	useEffect(() => {
+		const interval = setInterval(() => {
+			if (
+				AuthCtx.ready &&
+				ThemeCtx.ready &&
+				SidebarLeftCtx.ready &&
+				SidebarRightCtx.ready
+			) {
+				setIsReady(true)
+				clearInterval(interval)
+			} else console.log('Not ready')
+		}, 50)
+	},[])
+
+	return <AuthCtx.Provider>
 		<ThemeCtx.Provider>
 			<SidebarLeftCtx.Provider>
 				<SidebarRightCtx.Provider>
-					{children}
+					{isReady && children}
 				</SidebarRightCtx.Provider>
 			</SidebarLeftCtx.Provider>
 		</ThemeCtx.Provider>
 	</AuthCtx.Provider>
+}

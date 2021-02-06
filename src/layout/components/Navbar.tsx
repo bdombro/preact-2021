@@ -7,8 +7,6 @@ import { useLocation } from '~/lib/router'
 import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
 
-const useSidebarRight = SidebarRightCtx.use
-
 interface NavLinkProps { uri: string, text: string }
 type NavLinks = NavLinkProps[]
 
@@ -85,7 +83,7 @@ const LogoA = styled.a`
 
 function NavLink({ uri, text }: { uri: string, text: string }) {
 	const location = useLocation()
-	const [isSidebarActive] = useSidebarRight()
+	const [isSidebarActive] = SidebarRightCtx.use()
 	const isActive = location.pathname.startsWith(uri)
 	return (
 		<NavLinkA class={isActive && !isSidebarActive ? 'active' : ''}
@@ -120,7 +118,7 @@ const NavLinkA = styled.a`
  */
 function RightBurger() {
 	const [isLinkActive, setIsLinkActive] = useState(false)
-	const [isSidebarActive, setIsSidebarActive] = useSidebarRight()
+	const [isSidebarActive, setIsSidebarActive] = SidebarRightCtx.use()
 	useEffect(() => {
 		if (!isSidebarActive) setIsLinkActive(false)
 	}, [isSidebarActive])
