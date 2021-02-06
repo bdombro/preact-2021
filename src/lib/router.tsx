@@ -36,6 +36,7 @@ interface Route {
 	hasAccess?: () => boolean
 }
 function RouterComponent(props: RouterProps) {
+	const [isLayoutReady, setIsLayoutReady] = useState(false)
 	const [Layout, setLayout] = useState<any>(() => BlankLayout)
 	useLayoutEffect(watchLocation, [])
 	const [error, resetError] = useErrorBoundary()
@@ -52,7 +53,7 @@ function RouterComponent(props: RouterProps) {
 		}
 		throw error
 	}
-	return RouterComponent.isFirstRender ? <F/> : <Layout><RouterSwitch {...props} /></Layout>
+	return isLayoutReady ? <Layout><RouterSwitch {...props} /></Layout> : <F />
 
 	function watchLocation() {
 		onLocationChange()
@@ -70,11 +71,13 @@ function RouterComponent(props: RouterProps) {
 		
 		// Reset the errors if location changes, skipping the initial site load
 		if (!RouterComponent.isFirstRender) resetError()
-		RouterComponent.isFirstRender = false
+		else {
+			setIsLayoutReady(true)
+			RouterComponent.isFirstRender = false
+		}
 	}
 }
 RouterComponent.isFirstRender = true
-
 
 /**
  * RouterSwitch: Switches routes based on current url and also checks access control
