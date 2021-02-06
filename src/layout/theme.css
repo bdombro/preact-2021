@@ -21,6 +21,45 @@ body {
     calc( var(--primary-l) - 10% )
   );
 
+  
+  --warning-h: 45;
+  --warning-s: 100%;
+  --warning-l: 50%;
+  --warning: hsl(
+    var(--warning-h),
+    var(--warning-s),
+    var(--warning-l)
+  );
+  --warning-hover: hsl(
+    var(--warning-h),
+    var(--warning-s),
+    calc( var(--warning-l) + 10% )
+  );
+  --warning-darker: hsl(
+    var(--warning-h),
+    var(--warning-s),
+    calc( var(--warning-l) - 10% )
+  );
+
+  --danger-h: 0;
+  --danger-s: 100%;
+  --danger-l: 50%;
+  --danger: hsl(
+    var(--danger-h),
+    var(--danger-s),
+    var(--danger-l)
+  );
+  --danger-hover: hsl(
+    var(--danger-h),
+    var(--danger-s),
+    calc( var(--danger-l) + 10% )
+  );
+  --danger-darker: hsl(
+    var(--danger-h),
+    var(--danger-s),
+    calc( var(--danger-l) - 10% )
+  );
+
   --header-background: hsl(0, 0%, 0%);
   --nav-background: hsl(0, 0%, 94%);
   --nav-background-hover: hsl(0, 0%, 87%);
