@@ -8,6 +8,7 @@
 import { h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
+// Add css spin effects
 document.head.innerHTML += `<style type="text/css">
 @keyframes spin-inverse { to { transform: rotate(-360deg) } }
 @keyframes spin { to { transform: rotate(360deg) } }
@@ -32,8 +33,8 @@ export const Search =    I(() => import('mdi-paths-split/Magnify'))
 export const Tasks =     I(() => import('mdi-paths-split/OrderBoolAscendingVariant'))
 
 
-// Helpers
 
+// Helpers
 
 // Icon Factory, shortened to be easier to read
 function I(lazyPath: LazyIconSvgProps['lazyPath']) {

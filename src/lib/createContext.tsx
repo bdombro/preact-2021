@@ -1,3 +1,12 @@
+/**
+ * A factory for creating enhanced react-style "context"
+ * 
+ * In comparison to react's context, it provides methods to access/mutate/subscribe
+ * to context outside of components and without hooks. This is really nice if you are
+ * optimizing the performance of your app to avoid unnecessary rendors, and also can
+ * enable some really cool, otherwise impossible functionality.
+ * 
+ */
 import { ComponentChildren, createContext as createContextP, h } from 'preact'
 import { StateUpdater, useContext as useContextP, useEffect, useRef, useState as useStateP } from 'preact/hooks'
 
@@ -7,7 +16,7 @@ export function createContext<T>(defaultVal: T) {
 	const ctx = {
 		use, 
 		Provider, 
-		context: createContextP(defaultState), 
+		Context: createContextP(defaultState), 
 		get: getterUnInitialized as () => T, 
 		set: setterUnInitialized as StateUpdater<T>, 
 		subscribe, 
@@ -26,7 +35,7 @@ export function createContext<T>(defaultVal: T) {
 		ctx.set = state[1]
 		ctx.ready = true
 
-		return <ctx.context.Provider value={state}>{children}</ctx.context.Provider>
+		return <ctx.Context.Provider value={state}>{children}</ctx.Context.Provider>
 
 		function notifySubscribers() {
 			if (skipNotify.current) skipNotify.current = false
@@ -41,7 +50,7 @@ export function createContext<T>(defaultVal: T) {
 		}
 	}
 
-	function use () { return useContextP(ctx.context) }
+	function use () { return useContextP(ctx.Context) }
   
 	function subscribe(callback: (next: T) => any) {
 		ctx.subscribers.add(callback)
