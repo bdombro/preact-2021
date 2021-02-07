@@ -2,7 +2,7 @@ import { h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import { SidebarRightCtx } from '~/App.context'
-import { useLocation } from '~/lib/router'
+import {LocationCtx} from '~/lib/router'
 import styled from '~/lib/styled'
 
 
@@ -34,9 +34,9 @@ const Nav = styled.div`
 
 
 function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
-	const location = useLocation()
+	const [_location] = LocationCtx.use()
 	const [isSidebarActive] = useSidebarRight()
-	const isActive = location.pathname.startsWith(uri)
+	const isActive = _location.pathname.startsWith(uri)
 	return (
 		<NavLinkA class={isActive && !isSidebarActive ? 'active' : ''}
 			href={uri + (isActive ? '?stack=reset' : '')}

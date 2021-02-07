@@ -1,12 +1,10 @@
 import {h} from 'preact'
 
 import {Auth} from '~/lib/icons'
-import {setPageMeta} from '~/lib/router'
 import styled from '~/lib/styled'
 
 
 export default function Forbidden() {
-	setPageMeta({ title: 'Forbidden' })
 	return <ForbiddenDiv>
 		<div>
 			<Auth size={200}  />

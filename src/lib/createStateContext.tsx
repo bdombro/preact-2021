@@ -7,18 +7,17 @@
  * enable some really cool, otherwise impossible functionality.
  * 
  */
-import { ComponentChildren, createContext as createContextP, h } from 'preact'
+import { ComponentChildren, createContext as createContextP, h, PreactContext } from 'preact'
 import { StateUpdater, useContext as useContextP, useEffect, useRef, useState as useStateP } from 'preact/hooks'
 
-export function createContext<T>(defaultVal: T) {
-	const defaultState: [T, StateUpdater<T>] = [defaultVal, () => false]
+export function createStateContext<T>(defaultInitialVal: T, options: { useHookIsReadOnly?: boolean } = {}) {
 
 	const ctx = {
 		use, 
 		Provider, 
-		Context: createContextP(defaultState), 
-		get: getterUnInitialized as () => T, 
-		set: setterUnInitialized as StateUpdater<T>, 
+		Context: createContextP <[T, StateUpdater<T>] | undefined>(undefined), 
+		get: fncUninitialized as () => T, 
+		set: fncUninitialized as StateUpdater<T>, 
 		subscribe, 
 		subscribers: new Set<(next: T) => any>(),
 		isReady: false,
@@ -26,7 +25,7 @@ export function createContext<T>(defaultVal: T) {
 	return ctx
 
 	function Provider({ children }: {children: ComponentChildren}) {
-		const state = useStateP<T>(defaultVal)
+		const state = useStateP<T>(defaultInitialVal)
 		const skipNotify = useRef(true)
 		useEffect(notifySubscribers, [state])
 		useEffect(resetOnDismount, [])
@@ -43,21 +42,30 @@ export function createContext<T>(defaultVal: T) {
 		}
 		function resetOnDismount() {
 			return () => {
-				ctx.get = getterUnInitialized
-				ctx.set = setterUnInitialized
+				ctx.get = fncUninitialized
+				ctx.set = fncUninitialized
 				ctx.isReady = false
 			}
 		}
 	}
 
-	function use () { return useContextP(ctx.Context) }
+	function use () { 
+		const state = useContextP(ctx.Context) 
+		if (state == null) {
+			throw new Error('Ctx.use must be used inside a StateProvider.')
+		}
+		if (options.useHookIsReadOnly) {
+			const readonly: [T, StateUpdater<T>] = [state[0], () => { throw new Error('Ctx.use is ready-only') }]
+			return readonly
+		} 
+		return state
+	}
   
 	function subscribe(callback: (next: T) => any) {
 		ctx.subscribers.add(callback)
 		return () => ctx.subscribers.delete(callback)
 	}
 }
-const getterUnInitialized = () => { throw new Error('Context not initialized') }
-const setterUnInitialized = () => { throw new Error('Context not initialized') }
+const fncUninitialized = () => { throw new Error('Context not initialized') }
 
 

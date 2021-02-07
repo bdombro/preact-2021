@@ -1,12 +1,12 @@
 import { h } from 'preact'
 
-import { useLocation } from '~/lib/router'
+import {LocationCtx} from '~/lib/router'
 import styled from '~/lib/styled'
 
 interface NavLinkProps { uri: string, text: string, Icon: any }
 
 export default function NavLink({ uri, text, Icon }: NavLinkProps) {
-	const pathname = useLocation().pathname
+	const [{pathname}] = LocationCtx.use()
 	const isActive = uri === '/' ? pathname === '/' : pathname.startsWith(uri)
 	return (
 		<NavLinkA

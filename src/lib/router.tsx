@@ -13,8 +13,10 @@
  * - Features scroll-restoration on browser popstate (aka back) and stack recall
  */
 
-import { ComponentChildren, Fragment as F, FunctionalComponent, h } from 'preact'
+import { ComponentChildren, createContext as createContextP, Fragment as F, FunctionalComponent, h } from 'preact'
 import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from 'preact/hooks'
+
+import { createStateContext } from './createStateContext'
 
 class ForbiddenError extends Error { type = 'Forbidden' }
 class NotFoundError extends Error { type = 'NotFound' }
@@ -26,14 +28,16 @@ class NotFoundError extends Error { type = 'NotFound' }
  * and improving performance
  */
 interface RouterProps {
-	routesByPath: Record<string, Route>,
+	routesByPath: Record<string, RouteType>,
 }
-interface Route {
+interface RouteType extends SetPageMetaProps {
+	Icon?: FunctionalComponent
 	path: string
 	Component: FunctionalComponent
 	Layout?: FunctionalComponent
-	Stack?: FunctionalComponent
-	hasAccess?: () => boolean
+	stack?: string
+	hasAccess: () => boolean,
+	hasBack?: boolean, // indicate if back is available
 }
 function RouterComponent(props: RouterProps) {
 	const [isLayoutReady, setIsLayoutReady] = useState(false)
@@ -53,7 +57,11 @@ function RouterComponent(props: RouterProps) {
 		}
 		throw error
 	}
-	return isLayoutReady ? <Layout><RouterSwitch {...props} /></Layout> : <F />
+	return (
+		<CtxProviders>
+			{isLayoutReady ? <Layout><RouterSwitch {...props} /></Layout> : <F />}
+		</CtxProviders>
+	)
 
 	function watchLocation() {
 		onLocationChange()
@@ -83,10 +91,34 @@ RouterComponent.isFirstRender = true
  * RouterSwitch: Switches routes based on current url and also checks access control
  */
 function RouterSwitch({ routesByPath }: RouterProps) {
-	const { pathname } = useLocation()
-	const { Stack = RouteWrapper, Component = () => <F />, hasAccess = () => true } = routesByPath[pathname] || routesByPath['/notfound']
-	if (!hasAccess()) throw new ForbiddenError('Forbidden!')
-	return <Stack><Component /></Stack>
+	const [{ pathname }] = LocationCtx.use()
+	const r = routesByPath[pathname] || routesByPath['/notfound']
+	setPageMeta(r)
+	let Stack = RouteWrapper
+	if (r.stack) {
+		if (stacks.has(r.stack)) Stack = stacks.get(r.stack)
+		else {
+			Stack = StackFactory(r.stack)
+			stacks.set(r.stack, Stack)
+		}
+	}
+	if (!r.hasAccess()) throw new ForbiddenError('Forbidden!')
+	return <Stack><r.Component /></Stack>
+
+}
+const stacks = new Map<string, any>()
+
+
+/**
+ * Enhances a route object and adds typesafety
+ */
+function RouteFactory(props: Omit<RouteType, 'hasBack' | 'hasAccess'> & {hasAccess?: RouteType['hasAccess']}) {
+	const r: RouteType = Object.freeze({
+		hasAccess: (): boolean => true,
+		...props,
+		hasBack: !!props.stack && props.path !== props.stack,
+	})
+	return r
 }
 
 
@@ -96,7 +128,7 @@ function RouterSwitch({ routesByPath }: RouterProps) {
  */
 const RouteHistory: Record<string, number> = {}
 function RouteWrapper({ children }: any) {
-	const _location = useLocation()
+	const [_location] = LocationCtx.use()
 	useEffect(installListeners, [])
 	useLayoutEffect(() => { ref.current.style.visibility = 'hidden' }, [_location])
 	useEffect(recall, [_location])
@@ -133,12 +165,12 @@ function RouteWrapper({ children }: any) {
  * StackFactory: A route wrapper factory to join a page to a route stack
  * and enhance stack-like-features
  */
-type StackHistoryEntry = { location: UseLocationLocation, scroll: number }
+type StackHistoryEntry = { location: LocationType, scroll: number }
 type StackHistory = StackHistoryEntry[]
 const StackHistories: Record<string, StackHistory> = {}
 function StackFactory(basePath: string) {
 	return function StackHandler({ children }: any) {
-		const _location = useLocation()
+		const [_location] = LocationCtx.use()
 		useLayoutEffect(() => { ref.current.style.visibility = 'hidden' }, [_location])
 		useEffect(installListeners, [basePath, _location])
 		const ref = useRef<HTMLDivElement>(null)
@@ -236,43 +268,6 @@ function BlankLayout({ children }: { children: any }) {
 }
 
 /**
- * useLocation: A hook to watch location
- * Inspired by https://github.com/molefrog/wouter's useLocation hook
- */
-interface UseLocationLocation { pathname: string, search: string }
-function useLocation(): UseLocationLocation {
-	const [location, setLocation] = useState<UseLocationLocation>(currentLocation)
-	const prev = useRef(location)
-	useEffect(_attachListeners, [])
-
-	return location
-
-	function _attachListeners() {
-		// it's possible that an update has occurred between render and the effect handler,
-		// so we run additional check on mount to catch these updates. Based on:
-		// https://gist.github.com/bvaughn/e25397f70e8c65b0ae0d7c90b731b189
-		checkForUpdates()
-		return navListener(checkForUpdates)
-	}
-
-	// this function checks if the location has been changed since the
-	// last render and updates the state only when needed.
-	// unfortunately, we can't rely on `path` value here, since it can be stale,
-	// that's why we store the last pathname in a ref.
-	function checkForUpdates() {
-		const next = currentLocation()
-		if (prev.current.pathname !== next.pathname || prev.current.search !== next.search) {
-			prev.current = next
-			setLocation(next)
-		}
-	}
-	function currentLocation() {
-		return { pathname: window.location.pathname, search: window.location.search }
-	}
-}
-
-
-/**
  * Call a function on scroll event
  * 
  * If scroll event appears to happen near a nav event, skip
@@ -301,11 +296,11 @@ function scrollListener(el: HTMLElement, callback: any) {
  * navListener: React to a change in navigation
  */
 function navListener(callback: () => any) {
+	const historyEvents = ['popstate', 'pushState', 'replaceState']
 	historyEvents.map((e) => addEventListener(e, callback))
 	// callback()
 	return function unListen() { historyEvents.map((e) => removeEventListener(e, callback)) }
 }
-const historyEvents = ['popstate', 'pushState', 'replaceState']
 
 
 /**
@@ -324,6 +319,14 @@ if (!history.state) nav(location.pathname + location.search, { replace: true })
  * - Stores element handles in memory to remove need to query the dom
  *   on every update
  */
+interface SetPageMetaProps {
+	title: string
+	siteName?: string
+	author?: string
+	description?: string
+	image?: string
+	locale?: string
+}
 const setPageMeta = (function createSetPageMeta() {
 	// Wrapper class on meta elements to simplify usage and make more DRY
 	class MetaClass {
@@ -354,14 +357,7 @@ const setPageMeta = (function createSetPageMeta() {
 	function byProp(prop: string) { return find(`meta[property="${prop}"]`) }
 	function find(selector: string) { return document.head.querySelector(selector)! }
 
-	return function setPageMeta(p: {
-		title: string
-		siteName?: string
-		author?: string
-		description?: string
-		image?: string
-		locale?: string
-	}) {
+	return function setPageMeta(p: SetPageMetaProps) {
 		const title = p.title ? `${p.title} - ${siteName}` : siteName
 		if (title !== document.title) document.title = title
 
@@ -381,10 +377,32 @@ const setPageMeta = (function createSetPageMeta() {
 
 
 /**
+ * LocationCtx.use: A hook to watch location
+ * Inspired by https://github.com/molefrog/wouter's LocationCtx.use hook
+ */
+interface LocationType { pathname: string, search: string }
+const LocationCtx = createStateContext({ pathname: location.pathname, search: location.search }, {useHookIsReadOnly: true})
+navListener(() => LocationCtx.set({ pathname: location.pathname, search: location.search }))
+
+
+const PageMetaCtx = createStateContext<SetPageMetaProps>({ title: '' })
+PageMetaCtx.subscribe(setPageMeta)
+
+export function CtxProviders({ children }: { children: ComponentChildren }) {
+	return (
+		<LocationCtx.Provider>
+			<PageMetaCtx.Provider>
+				{children}
+			</PageMetaCtx.Provider>
+		</LocationCtx.Provider>
+	)
+}
+
+/**
  * interceptNavEvents: Intercept changes in navigation to dispatch
  * events and prevent default
  */
-;(function interceptNavEvents() {
+(function interceptNavEvents() {
 	document.body.addEventListener('click', function linkIntercepter(e: any) {
 		const ln = findLinkTagInParents(e.target) // aka linkNode
 
@@ -443,14 +461,16 @@ export {
 	BlankLayout,
 	ContentDiv,
 	ForbiddenError,
+	LocationCtx,
 	nav,
 	navListener,
 	NotFoundError,
+	PageMetaCtx,
 	PassThrough,
 	Redirect,
+	RouteFactory,
 	RouterComponent,
 	scrollListener,
 	setPageMeta,
 	StackFactory,
-	useLocation,
 }

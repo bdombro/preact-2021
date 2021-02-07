@@ -2,283 +2,357 @@ import FillerEntryFactory from '~/layout/FillerEntryFactory'
 import FillerHomeFactory from '~/layout/FillerHomeFactory'
 import FillerListFactory from '~/layout/FillerListFactory'
 import FillerPageFactory from '~/layout/FillerPageFactory'
+import * as i from '~/lib/icons'
 import lazy from '~/lib/lazy'
-import { PassThrough, Redirect, StackFactory } from '~/lib/router'
+import { PassThrough, Redirect, RouteFactory } from '~/lib/router'
 
-import { AuthCtx, AuthCtxType } from './App.context'
+import { AuthCtx } from './App.context'
 
 const LoginLayout = lazy(() => import('~/layout/layout/LoginLayout'))
 const AdminLayout = lazy(() => import('~/layout/layout/AdminLayout'))
 const TenantLayout = lazy(() => import('~/layout/layout/TenantLayout'))
 const MarketingLayout = lazy(() => import('~/layout/layout/MarketingLayout'))
 
-
 export const routes = Object.freeze({
 
 
 	// Access Control Routes
 
-	Login: {
+	Login: RouteFactory({
+		title: 'Login',
+		Icon: i.Login,
 		path: '/login',
 		Component: lazy(() => import('./pages/auth/Login')),
 		Layout: LoginLayout,
-	},
-	Register: {
+	}),
+	Register: RouteFactory({
+		title: 'Register',
+		Icon: i.Login,
 		path: '/register',
 		Component: lazy(() => import('./pages/auth/Register')),
 		Layout: LoginLayout,
-	},
-	ForgotPassword: {
+	}),
+	ForgotPassword: RouteFactory({
+		title: 'Forgot Password',
+		Icon: i.Auth,
 		path: '/forgotPassword',
 		Component: lazy(() => import('./pages/auth/ForgotPassword')),
 		Layout: LoginLayout,
-	},
-	Logout: {
+	}),
+	Logout: RouteFactory({
+		title: 'Logout',
+		Icon: i.Logout,
 		path: '/logout',
 		Component: lazy(() => import('./pages/auth/Logout')),
-	},
-	Forbidden: {
+	}),
+	Forbidden: RouteFactory({
+		title: 'Forbidden',
 		path: '/forbidden',
 		Component: lazy(() => import('~/pages/auth/Forbidden')),
-	},
+	}),
 
 
 	// Marketing Routes: home, support, about, blog
 
-	Home: {
+	Home: RouteFactory({
+		title: 'Home',
+		Icon: i.Home,
 		path: '/',
 		Component: FillerPageFactory('Home'),
 		Layout: MarketingLayout,
-	},
-	Support: {
+	}),
+	Support: RouteFactory({
+		title: 'Support',
+		Icon: i.Info,
 		path: '/support',
 		Component: FillerPageFactory('Support'),
 		Layout: MarketingLayout,
-	},
-	About: {
+	}),
+	About: RouteFactory({
+		title: 'About',
+		Icon: i.Info,
 		path: '/about',
 		Component: FillerPageFactory('About'),
 		Layout: MarketingLayout,
-	},
-	Blog: {
+	}),
+	Blog: RouteFactory({
+		title: 'Blog',
+		Icon: i.Post,
 		path: '/blog',
 		Component: FillerPageFactory('Blog'),
 		Layout: MarketingLayout,
-	},
+	}),
 
 
 	// Admin Routes: stats, settings, users, posts
 
-	AdminRoot: {
+	AdminRoot: RouteFactory({
+		title: 'Admin Dashboard',
+		Icon: i.Counter,
 		path: '/admin',
 		Component: Redirect('/admin/stats'),
 		hasAccess: isAdmin,
-	},
+	}),
 
-	AdminSettingsHome: {
+	AdminSettingsHome: RouteFactory({
+		title: 'Settings',
+		Icon: i.Account,
 		path: '/admin/settings',
 		Component: FillerPageFactory('Settings'),
 		Layout: AdminLayout,
 		hasAccess: isAdmin,
-	},
+	}),
     
-	AdminStatsStack: {
+	AdminStatsStack: RouteFactory({
+		title: 'Stats',
+		Icon: i.Counter,
 		path: '/admin/stats',
 		Component: PassThrough,
 		Layout: AdminLayout,
-		Stack: StackFactory('/admin/stats'),
+		stack: '/admin/stats',
 		hasAccess: isAdmin,
-	},
-	AdminStatsHome: {
+	}),
+	AdminStatsHome: RouteFactory({
+		title: 'Stats',
+		Icon: i.Counter,
 		path: '/admin/stats/home',
 		Component: FillerPageFactory('Admin Stats'),
 		Layout: AdminLayout,
-		Stack: StackFactory('/admin/stats'),
+		stack: '/admin/stats',
 		hasAccess: isAdmin,
-	},
+	}),
 
-	AdminUserStack: {
+	AdminUserStack: RouteFactory({
+		title: 'Users',
+		Icon: i.Auth,
 		path: '/admin/users',
 		Component: PassThrough,
 		Layout: AdminLayout,
-		Stack: StackFactory('/admin/users'),
+		stack: '/admin/users',
 		hasAccess: isAdmin,
-	},
-	AdminUserHome: {
+	}),
+	AdminUserHome: RouteFactory({
+		title: 'Users',
+		Icon: i.Auth,
 		path: '/admin/users/home',
 		Component: FillerHomeFactory('Admin Users'),
 		Layout: AdminLayout,
-		Stack: StackFactory('/admin/users'),
+		stack: '/admin/users',
 		hasAccess: isAdmin,
-	},
-	AdminUserList: {
+	}),
+	AdminUserList: RouteFactory({
+		title: 'User List',
+		Icon: i.Auth,
 		path: '/admin/users/list',
 		Component: FillerListFactory('Admin User List'),
 		Layout: AdminLayout,
-		Stack: StackFactory('/admin/users'),
+		stack: '/admin/users',
 		hasAccess: isAdmin,
-	},
-	AdminUserEntry: {
+	}),
+	AdminUserEntry: RouteFactory({
+		title: '',
+		Icon: i.Auth,
 		path: '/admin/users/entry',
-		Component: FillerHomeFactory('Admin User'),
+		Component: FillerEntryFactory('Admin User'),
 		Layout: AdminLayout,
-		Stack: StackFactory('/admin/users'),
+		stack: '/admin/users',
 		hasAccess: isAdmin,
-	},
+	}),
     
-	AdminBlogStack: {
+	AdminBlogStack: RouteFactory({
+		title: 'Blog',
+		Icon: i.Post,
 		path: '/admin/blog',
 		Component: PassThrough,
 		Layout: AdminLayout,
-		Stack: StackFactory('/admin/blog'),
+		stack: '/admin/blog',
 		hasAccess: isAdmin,
-	},
-	AdminBlogHome: {
+	}),
+	AdminBlogHome: RouteFactory({
+		title: 'Blog',
+		Icon: i.Post,
 		path: '/admin/blog/home',
 		Component: FillerHomeFactory('Admin Blog'),
 		Layout: AdminLayout,
-		Stack: StackFactory('/admin/blog'),
+		stack: '/admin/blog',
 		hasAccess: isAdmin,
-	},
-	AdminBlogPostList: {
+	}),
+	AdminBlogPostList: RouteFactory({
+		title: 'Posts',
+		Icon: i.Post,
 		path: '/admin/blog/list',
 		Component: FillerListFactory('Admin Post List'),
 		Layout: AdminLayout,
-		Stack: StackFactory('/admin/blog'),
+		stack: '/admin/blog',
 		hasAccess: isAdmin,
-	},
-	AdminBlogPostEntry: {
+	}),
+	AdminBlogPostEntry: RouteFactory({
+		title: '',
+		Icon: i.Post,
 		path: '/admin/blog/entry',
 		Component: FillerEntryFactory('Admin Post'),
 		Layout: AdminLayout,
-		Stack: StackFactory('/admin/blog'),
+		stack: '/admin/blog',
 		hasAccess: isAdmin,
-	},
+	}),
 
 
 
 
 	// Tenant/Customer Routes: stats, settings, users, properties, tasks
 
-	TenantRoot: {
+	TenantRoot: RouteFactory({
+		title: 'Tenant Dashboard',
+		Icon: i.Counter,
 		path: '/tenant',
 		Component: Redirect('/tenant/stats'),
 		hasAccess: isTenant,
-	},
+	}),
 
-	TenantSettingsHome: {
+	TenantSettingsHome: RouteFactory({
+		title: 'Settings',
+		Icon: i.Account,
 		path: '/tenant/settings',
 		Component: FillerPageFactory('Tenant Settings'),
 		Layout: TenantLayout,
 		hasAccess: isTenant,
-	},
+	}),
 
-	TenantStatsStack: {
+	TenantStatsStack: RouteFactory({
+		title: 'Stats',
+		Icon: i.Counter,
 		path: '/tenant/stats',
 		Component: PassThrough,
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/stats'),
+		stack: '/tenant/stats',
 		hasAccess: isTenant,
-	},
-	TenantStatsHome: {
+	}),
+	TenantStatsHome: RouteFactory({
+		title: 'Stats',
+		Icon: i.Counter,
 		path: '/tenant/stats/home',
 		Component: FillerHomeFactory('Tenant Stats'),
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/stats'),
+		stack: '/tenant/stats',
 		hasAccess: isTenant,
-	},
+	}),
 
-	TenantUserStack: {
+	TenantUserStack: RouteFactory({
+		title: 'Users',
+		Icon: i.Auth,
 		path: '/tenant/users',
 		Component: PassThrough,
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/users'),
+		stack: '/tenant/users',
 		hasAccess: isTenant,
-	},
-	TenantUserHome: {
+	}),
+	TenantUserHome: RouteFactory({
+		title: 'Users',
+		Icon: i.Auth,
 		path: '/tenant/users/home',
 		Component: FillerHomeFactory('Tenant Users Home'),
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/users'),
+		stack: '/tenant/users',
 		hasAccess: isTenant,
-	},
-	TenantUserList: {
+	}),
+	TenantUserList: RouteFactory({
+		title: 'User List',
+		Icon: i.Auth,
 		path: '/tenant/users/list',
 		Component: FillerListFactory('Tenant User List'),
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/users'),
+		stack: '/tenant/users',
 		hasAccess: isTenant,
-	},
-	TenantUserEntry: {
+	}),
+	TenantUserEntry: RouteFactory({
+		title: '',
+		Icon: i.Auth,
 		path: '/tenant/users/entry',
 		Component: FillerEntryFactory('Tenant User'),
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/users'),
+		stack: '/tenant/users',
 		hasAccess: isTenant,
-	},
+	}),
 
-	TenantPropertiesStack: {
+	TenantPropertiesStack: RouteFactory({
+		title: 'Properties',
+		Icon: i.Building,
 		path: '/tenant/properties',
 		Component: PassThrough,
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/properties'),
+		stack: '/tenant/properties',
 		hasAccess: isTenant,
-	},
-	TenantPropertiesHome: {
+	}),
+	TenantPropertiesHome: RouteFactory({
+		title: 'Properties',
+		Icon: i.Building,
 		path: '/tenant/properties/home',
 		Component: FillerHomeFactory('Tenant Properties'),
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/properties'),
+		stack: '/tenant/properties',
 		hasAccess: isTenant,
-	},
-	TenantPropertiesList: {
+	}),
+	TenantPropertiesList: RouteFactory({
+		title: 'Property List',
+		Icon: i.Building,
 		path: '/tenant/properties/list',
 		Component: FillerListFactory('Tenant Property List'),
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/properties'),
+		stack: '/tenant/properties',
 		hasAccess: isTenant,
-	},
-	TenantPropertiesEntry: {
+	}),
+	TenantPropertiesEntry: RouteFactory({
+		title: '',
+		Icon: i.Building,
 		path: '/tenant/properties/entry',
 		Component: FillerEntryFactory('Tenant Property'),
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/properties'),
+		stack: '/tenant/properties',
 		hasAccess: isTenant,
-	},
+	}),
 
-	TenantTasksStack: {
+	TenantTasksStack: RouteFactory({
+		title: 'Tasks',
+		Icon: i.Tasks,
 		path: '/tenant/tasks',
 		Component: PassThrough,
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/tasks'),
+		stack: '/tenant/tasks',
 		hasAccess: isTenant,
-	},
-	TenantTasksHome: {
+	}),
+	TenantTasksHome: RouteFactory({
+		title: 'Tasks',
+		Icon: i.Tasks,
 		path: '/tenant/tasks/home',
 		Component: FillerHomeFactory('Tenant Tasks'),
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/tasks'),
+		stack: '/tenant/tasks',
 		hasAccess: isTenant,
-	},
-	TenantTasksList: {
+	}),
+	TenantTasksList: RouteFactory({
+		title: 'Task List',
+		Icon: i.Tasks,
 		path: '/tenant/tasks/list',
 		Component: FillerListFactory('Tenant Task List'),
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/tasks'),
+		stack: '/tenant/tasks',
 		hasAccess: isTenant,
-	},
-	TenantTasksEntry: {
+	}),
+	TenantTasksEntry: RouteFactory({
+		title: '',
+		Icon: i.Tasks,
 		path: '/tenant/tasks/entry',
 		Component: FillerEntryFactory('Tenant Task'),
 		Layout: TenantLayout,
-		Stack: StackFactory('/tenant/tasks'),
+		stack: '/tenant/tasks',
 		hasAccess: isTenant,
-	},
+	}),
 
-	NotFound: {
+	NotFound: RouteFactory({
+		title: 'Not Found',
 		path: '/notfound',
 		Component: lazy(() => import('~/pages/NotFound')),
-	},
+	}),
 })
 
 

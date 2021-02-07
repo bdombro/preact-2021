@@ -1,11 +1,9 @@
 import { Fragment as F, h } from 'preact'
 
 import { AuthCtx } from '~/App.context'
-import {setPageMeta} from '~/lib/router'
 import { Paths } from '~/routes'
 
 export default function Register() {
-	setPageMeta({ title: 'Register' })
 	const search = new URLSearchParams(location.search)
 	search.set('replace', 'true')
 	const searchStr = '?' + search.toString()

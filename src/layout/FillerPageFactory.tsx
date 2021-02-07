@@ -1,10 +1,7 @@
 import { h } from 'preact'
 
-import {setPageMeta} from '~/lib/router'
-
 export default function FillerPageFactory(name: string) {
 	return () => {
-		setPageMeta({title: name})
 		return <div style={{ padding: '0 10px' }}>
 			<h1>Hello, {name}!</h1>
 			<p>

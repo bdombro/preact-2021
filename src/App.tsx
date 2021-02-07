@@ -4,7 +4,7 @@ import { h } from 'preact'
 
 import { CtxProviders } from './App.context'
 import {ErrorBoundary, UnhandledErrorNotification} from './layout/components/ErrorBoundaries'
-import { RouterComponent } from './lib/router'
+import { RouterComponent as Router } from './lib/router'
 import { routesByPath } from './routes'
 
 export default function App() {
@@ -12,7 +12,7 @@ export default function App() {
 		<ErrorBoundary>
 			<CtxProviders>
 				<UnhandledErrorNotification />
-				<RouterComponent routesByPath={routesByPath as any} />
+				<Router routesByPath={routesByPath} />
 			</CtxProviders>
 		</ErrorBoundary>
 	)

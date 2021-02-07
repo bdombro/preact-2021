@@ -28,6 +28,7 @@ export default function MarketingLayout({ children }: { children: any }) {
 				navLinks={[
 					{ uri: Paths.Home, text: 'Home', Icon: i.Home },
 					{ uri: Paths.Blog, text: 'Blog', Icon: i.Post },
+					{ uri: Paths.About, text: 'About', Icon: i.Info },
 					{ uri: Paths.Support, text: 'Support', Icon: i.Info },
 					loginNavLink,
 					{ uri: '#theme-toggle', text: 'Theme', Icon: i.Palette },
