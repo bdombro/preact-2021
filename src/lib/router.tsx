@@ -213,7 +213,7 @@ function StackFactory(basePath: string) {
 				// console.log('forward')
 				scrollTo(0)
 				ref.current.style.visibility = 'visible'
-				Stack.push({ location, scroll: 0 })
+				Stack.push({ location: {pathname, search}, scroll: 0 })
 				const e = document.getElementById('content')
 				if (e) cancelScrollListen = scrollListener(e, updateScrollPos)
 			}

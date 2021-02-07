@@ -1,11 +1,11 @@
 import { h } from 'preact'
 
-import {setPageMeta} from '~/lib/router'
+import {PageMetaCtx} from '~/lib/router'
 
 export default function FillerEntryFactory(name: string) {
 	return () => {
 		const id = new URLSearchParams(location.search).get('id')
-		setPageMeta({ title: `${name} ${id}` })
+		PageMetaCtx.set({ title: `${name} ${id}` })
 		return <div style={{padding: '0 10px'}}>
 			<h1>Hello, {name}:{id}!</h1>
 			<ul>

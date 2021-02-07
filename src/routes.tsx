@@ -87,7 +87,7 @@ export const routes = Object.freeze({
 	// Admin Routes: stats, settings, users, posts
 
 	AdminRoot: RouteFactory({
-		title: 'Admin Dashboard',
+		title: 'Dashboard',
 		Icon: i.Counter,
 		path: '/admin',
 		Component: Redirect('/admin/stats'),
@@ -202,7 +202,7 @@ export const routes = Object.freeze({
 	// Tenant/Customer Routes: stats, settings, users, properties, tasks
 
 	TenantRoot: RouteFactory({
-		title: 'Tenant Dashboard',
+		title: 'Dashboard',
 		Icon: i.Counter,
 		path: '/tenant',
 		Component: Redirect('/tenant/stats'),
