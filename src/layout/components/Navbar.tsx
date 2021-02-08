@@ -7,7 +7,7 @@ import {LocationCtx} from '~/lib/router'
 import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
 
-interface NavLinkProps { uri: string, text: string, isButton?: boolean }
+interface NavLinkProps { path: string, title: string, isButton?: boolean, hasAccess?: () => boolean }
 type NavLinks = NavLinkProps[]
 
 // TODO: Custom button for login/console
@@ -25,7 +25,9 @@ export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolea
 		</div>
 
 		<div>
-			{isWide && navLinks.map(nl => nl.isButton ? <NavButton {...nl} /> : <NavLink {...nl} />)}
+			{isWide && navLinks
+				.filter(nl => nl.hasAccess ? nl.hasAccess() : true)
+				.map(nl => nl.isButton ? <NavButton {...nl} /> : <NavLink {...nl} />)}
 			<RightBurger />
 		</div>
 
@@ -94,10 +96,10 @@ const LogoA = styled.a`
 	}
 `
 
-function NavButton({ uri, text }: { uri: string, text: string }) {
+function NavButton({ path, title }: { path: string, title: string }) {
 	return (
-		<NavButtonA href={uri}>
-			{text}
+		<NavButtonA href={path}>
+			{title}
 		</NavButtonA>
 	)
 }
@@ -119,15 +121,15 @@ const NavButtonA = styled.a`
 	}
 `
 
-function NavLink({ uri, text }: { uri: string, text: string }) {
+function NavLink({ path, title }: { path: string, title: string }) {
 	const [_location] = LocationCtx.use()
 	const [isSidebarActive] = SidebarRightCtx.use()
-	const isActive = _location.pathname.startsWith(uri)
+	const isActive = _location.pathname.startsWith(path)
 	return (
 		<NavLinkA class={isActive && !isSidebarActive ? 'active' : ''}
-			href={uri + (isActive ? '?stack=reset' : '')}
+			href={path + (isActive ? '?stack=reset' : '')}
 		>
-			<div>{text}</div>
+			<div>{title}</div>
 		</NavLinkA>
 	)
 }

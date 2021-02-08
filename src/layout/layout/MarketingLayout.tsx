@@ -4,7 +4,7 @@ import { AuthCtx } from '~/App.context'
 import * as i from '~/lib/icons'
 import { ContentDiv } from '~/lib/router'
 import styled from '~/lib/styled'
-import { Paths } from '~/routes'
+import { Paths, routes } from '~/routes'
 
 import Navbar from '../components/Navbar'
 import SidebarRight from '../components/SidebarRight'
@@ -12,26 +12,26 @@ import SidebarRight from '../components/SidebarRight'
 export default function MarketingLayout({ children }: { children: any }) {
 	const [auth] = AuthCtx.use()
 	const loginNavLink = (false
-		|| auth.roles?.includes(AuthCtx.roles.admin) && { uri: Paths.AdminRoot, text: 'Dashboard', Icon: i.Counter, isButton: true }
-		|| auth.roles?.includes(AuthCtx.roles.admin) && { uri: Paths.TenantRoot, text: 'Dashboard', Icon: i.Counter, isButton: true }
-		|| { uri: Paths.Login, text: 'Login', Icon: i.Login, isButton: true }
+		|| auth.roles?.includes(AuthCtx.roles.admin) && { ...routes.AdminRoot, isButton: true }
+		|| auth.roles?.includes(AuthCtx.roles.tenant) && { ...routes.TenantRoot, isButton: true }
+		|| { ...routes.Login, isButton: true }
 	)
 	return (
 		<MarketingLayoutDiv>
 			<Navbar 
 				navLinks={[
-					{uri: Paths.Blog, text: 'Blog'},
+					routes.Blog,
 					loginNavLink,
 				]}
 			/>
 			<SidebarRight 
 				navLinks={[
-					{ uri: Paths.Home, text: 'Home', Icon: i.Home },
-					{ uri: Paths.Blog, text: 'Blog', Icon: i.Post },
-					{ uri: Paths.About, text: 'About', Icon: i.Info },
-					{ uri: Paths.Support, text: 'Support', Icon: i.Info },
+					routes.Home,
+					routes.Blog,
+					routes.About,
+					routes.Support,
 					loginNavLink,
-					{ uri: '#theme-toggle', text: 'Theme', Icon: i.Palette },
+					{ path: '#theme-toggle', title: 'Theme', Icon: i.Palette },
 				]}
 			/>
 			<ContentDiv>

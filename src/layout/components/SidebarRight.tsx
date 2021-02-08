@@ -1,4 +1,4 @@
-import { Fragment as F, h } from 'preact'
+import { Fragment as F, FunctionalComponent, h } from 'preact'
 
 import { SidebarRightCtx } from '~/App.context'
 import NavLink from '~/layout/components/SidebarNavLink'
@@ -6,7 +6,7 @@ import styled from '~/lib/styled'
 
 const useSidebarRight = SidebarRightCtx.use
 
-interface NavLinkProps { uri: string, text: string, Icon: any }
+interface NavLinkProps { path: string, title: string, Icon?: FunctionalComponent, hasAccess?: () => boolean }
 type NavLinks = NavLinkProps[]
 
 export default function SidebarRight({ navLinks }: { navLinks: NavLinks }) {
@@ -14,7 +14,9 @@ export default function SidebarRight({ navLinks }: { navLinks: NavLinks }) {
 	return isActive ? (
 		<SidebarDiv>
 			<SidebarNav>
-				{navLinks.map(nl => <NavLink {...nl} />)}
+				{navLinks
+					.filter(nl => nl.hasAccess ? nl.hasAccess() : true)
+					.map(nl => <NavLink {...nl} />)}
 			</SidebarNav>
 		</SidebarDiv>
 	) : <F />

@@ -142,15 +142,15 @@ function RouteWrapper({ children }: any) {
 	}
 
 	function updateScrollPos(scrollTop: number) {
-		const uri = location.pathname + location.search
-		RouteHistory[uri] = scrollTop
+		const path = location.pathname + location.search
+		RouteHistory[path] = scrollTop
 	}
 	function recall() {
-		const uri = location.pathname + location.search
+		const path = location.pathname + location.search
 		const e = document.getElementById('content')
 		if (e) {
-			if (RouteHistory[uri] && Date.now() - history.state > 3000)
-				e.scrollTop = RouteHistory[uri]
+			if (RouteHistory[path] && Date.now() - history.state > 3000)
+				e.scrollTop = RouteHistory[path]
 			else {
 				updateScrollPos(0)
 				e.scrollTop = 0

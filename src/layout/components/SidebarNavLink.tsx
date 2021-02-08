@@ -1,20 +1,21 @@
-import { h } from 'preact'
+import { FunctionalComponent, h } from 'preact'
 
+import * as i from '~/lib/icons'
 import {LocationCtx} from '~/lib/router'
 import styled from '~/lib/styled'
 
-interface NavLinkProps { uri: string, text: string, Icon: any }
+interface NavLinkProps { path: string, title: string, Icon?: FunctionalComponent }
 
-export default function NavLink({ uri, text, Icon }: NavLinkProps) {
+export default function NavLink({ path, title, Icon = i.Info }: NavLinkProps) {
 	const [{pathname}] = LocationCtx.use()
-	const isActive = uri === '/' ? pathname === '/' : pathname.startsWith(uri)
+	const isActive = path === '/' ? pathname === '/' : pathname.startsWith(path)
 	return (
 		<NavLinkA
-			href={uri + (isActive ? '?stack=reset' : '')}
+			href={path + (isActive ? '?stack=reset' : '')}
 			class={isActive ? 'active' : ''}
 		>
 			<div><Icon /></div>
-			<NavLinkText>{text}</NavLinkText>
+			<NavLinkText>{title}</NavLinkText>
 		</NavLinkA>
 	)
 }

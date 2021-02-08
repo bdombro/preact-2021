@@ -4,7 +4,7 @@ import DashboardLayoutDiv from '~/layout/components/DashboardLayoutDiv'
 import * as i from '~/lib/icons'
 import { ContentDiv } from '~/lib/router'
 import useMedia from '~/lib/useMedia'
-import { Paths } from '~/routes'
+import { routes } from '~/routes'
 
 import BottomNav from '../components/BottomNav'
 import Navbar from '../components/Navbar'
@@ -16,30 +16,31 @@ export default function TenantLayout({ children }: { children: any }) {
 
 	return (
 		<DashboardLayoutDiv>
-			<Navbar sidebarLeft navLinks={[{ uri: Paths.Support, text: 'Need Help?' }]} />
+			<Navbar sidebarLeft navLinks={[routes.Support]} />
 			{isWide && <Sidebar navLinks={[
-				{ uri: Paths.TenantStatsHome, text: 'Stats', Icon: i.Counter },
-				{ uri: Paths.TenantTasksStack, text: 'Tasks', Icon: i.Post },
-				{ uri: Paths.TenantPropertiesStack, text: 'Properties', Icon: i.Building },
-				{ uri: Paths.TenantUserStack, text: 'Users', Icon: i.Auth },
+				routes.TenantStatsStack,
+				routes.TenantTaskStack,
+				routes.TenantPropertyStack,
+				routes.TenantUserStack,
 			]} />}
 			<SidebarRight
 				navLinks={[
-					{ uri: Paths.TenantStatsHome, text: 'Stats', Icon: i.Counter },
-					{ uri: Paths.TenantTasksStack, text: 'Tasks', Icon: i.Post },
-					{ uri: Paths.TenantPropertiesStack, text: 'Properties', Icon: i.Building },
-					{ uri: Paths.TenantUserStack, text: 'Users', Icon: i.Auth },
-					{ uri: Paths.TenantSettingsHome, text: 'Settings', Icon: i.Account },
-					{ uri: Paths.Support, text: 'Get Help', Icon: i.Info },
-					{ uri: Paths.Logout, text: 'Logout', Icon: i.Logout },
-					{ uri: '#theme-toggle', text: 'Theme', Icon: i.Palette },
+					routes.TenantStatsStack,
+					routes.TenantTaskStack,
+					routes.TenantPropertyStack,
+					routes.TenantUserStack,
+					routes.TenantSettingsHome,
+					routes.Support,
+					routes.Logout,
+					{ path: '#theme-toggle', title: 'Theme', Icon: i.Palette },
 				]}
 			/>
 			{!isWide && <BottomNav navLinks={[
-				{ uri: Paths.TenantStatsHome, text: 'Stats', Icon: i.Counter },
-				{ uri: Paths.TenantTasksStack, text: 'Tasks', Icon: i.Post },
-				{ uri: Paths.TenantPropertiesStack, text: 'Properties', Icon: i.Building },
-				{ uri: Paths.TenantUserStack, text: 'Users', Icon: i.Auth },
+				routes.TenantStatsStack,
+				routes.TenantTaskStack,
+				routes.TenantPropertyStack,
+				routes.TenantUserStack,
+				routes.TenantSettingsHome,
 			]} />}
 			<ContentDiv>
 				{children}

@@ -1,16 +1,18 @@
-import { h } from 'preact'
+import { FunctionalComponent, h } from 'preact'
 
 import NavLink from '~/layout/components/SidebarNavLink'
 import styled from '~/lib/styled'
 
-interface NavLinkProps { uri: string, text: string, Icon: any }
+interface NavLinkProps { path: string, title: string, Icon?: FunctionalComponent, hasAccess?: () => boolean }
 type NavLinks = NavLinkProps[]
 
 export default function Sidebar({ navLinks }: { navLinks: NavLinks }) {
 	return (
 		<SidebarDiv>
 			<Nav>
-				{navLinks.map(nl => <NavLink {...nl} />)}
+				{navLinks
+					.filter(nl => nl.hasAccess ? nl.hasAccess() : true)
+					.map(nl => <NavLink {...nl} />)}
 			</Nav>
 		</SidebarDiv>
 	)

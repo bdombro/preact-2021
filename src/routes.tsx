@@ -274,7 +274,7 @@ export const routes = Object.freeze({
 		hasAccess: isTenant,
 	}),
 
-	TenantPropertiesStack: RouteFactory({
+	TenantPropertyStack: RouteFactory({
 		title: 'Properties',
 		Icon: i.Building,
 		path: '/tenant/properties',
@@ -283,7 +283,7 @@ export const routes = Object.freeze({
 		stack: '/tenant/properties',
 		hasAccess: isTenant,
 	}),
-	TenantPropertiesHome: RouteFactory({
+	TenantPropertyHome: RouteFactory({
 		title: 'Properties',
 		Icon: i.Building,
 		path: '/tenant/properties/home',
@@ -292,7 +292,7 @@ export const routes = Object.freeze({
 		stack: '/tenant/properties',
 		hasAccess: isTenant,
 	}),
-	TenantPropertiesList: RouteFactory({
+	TenantPropertyList: RouteFactory({
 		title: 'Property List',
 		Icon: i.Building,
 		path: '/tenant/properties/list',
@@ -301,7 +301,7 @@ export const routes = Object.freeze({
 		stack: '/tenant/properties',
 		hasAccess: isTenant,
 	}),
-	TenantPropertiesEntry: RouteFactory({
+	TenantPropertyEntry: RouteFactory({
 		title: '',
 		Icon: i.Building,
 		path: '/tenant/properties/entry',
@@ -311,7 +311,7 @@ export const routes = Object.freeze({
 		hasAccess: isTenant,
 	}),
 
-	TenantTasksStack: RouteFactory({
+	TenantTaskStack: RouteFactory({
 		title: 'Tasks',
 		Icon: i.Tasks,
 		path: '/tenant/tasks',
@@ -320,7 +320,7 @@ export const routes = Object.freeze({
 		stack: '/tenant/tasks',
 		hasAccess: isTenant,
 	}),
-	TenantTasksHome: RouteFactory({
+	TenantTaskHome: RouteFactory({
 		title: 'Tasks',
 		Icon: i.Tasks,
 		path: '/tenant/tasks/home',
@@ -329,7 +329,7 @@ export const routes = Object.freeze({
 		stack: '/tenant/tasks',
 		hasAccess: isTenant,
 	}),
-	TenantTasksList: RouteFactory({
+	TenantTaskList: RouteFactory({
 		title: 'Task List',
 		Icon: i.Tasks,
 		path: '/tenant/tasks/list',
@@ -338,7 +338,7 @@ export const routes = Object.freeze({
 		stack: '/tenant/tasks',
 		hasAccess: isTenant,
 	}),
-	TenantTasksEntry: RouteFactory({
+	TenantTaskEntry: RouteFactory({
 		title: '',
 		Icon: i.Tasks,
 		path: '/tenant/tasks/entry',

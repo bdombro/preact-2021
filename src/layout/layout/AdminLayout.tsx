@@ -6,7 +6,7 @@ import DashboardLayoutDiv from '~/layout/components/DashboardLayoutDiv'
 import * as i from '~/lib/icons'
 import { ContentDiv } from '~/lib/router'
 import useMedia from '~/lib/useMedia'
-import { Paths } from '~/routes'
+import { routes } from '~/routes'
 
 import BottomNav from '../components/BottomNav'
 import Navbar from '../components/Navbar'
@@ -18,25 +18,25 @@ export default function AdminLayout({ children }: { children: any }) {
   
 	return (
 		<DashboardLayoutDiv>
-			<Navbar sidebarLeft navLinks={[{ uri: Paths.Support, text: 'Need Help?' }]} />
+			<Navbar sidebarLeft navLinks={[routes.Support]} />
 			{isWide && <Sidebar navLinks={[
-				{ uri: Paths.AdminStatsHome, text: 'Stats', Icon: i.Counter },
-				{ uri: Paths.AdminBlogStack, text: 'Blog', Icon: i.Post },
-				{ uri: Paths.AdminUserStack, text: 'Users', Icon: i.Auth },
+				routes.AdminStatsStack,
+				routes.AdminBlogStack,
+				routes.AdminUserStack,
 			]}/>}
 			<SidebarRight navLinks={[
-				{ uri: Paths.AdminStatsHome, text: 'Stats', Icon: i.Counter },
-				{ uri: Paths.AdminBlogStack, text: 'Blog', Icon: i.Post },
-				{ uri: Paths.AdminUserStack, text: 'Users', Icon: i.Auth },
-				{ uri: Paths.AdminSettingsHome, text: 'Settings', Icon: i.Account },
-				{ uri: Paths.Support, text: 'Get Help', Icon: i.Info },
-				{ uri: Paths.Logout, text: 'Logout', Icon: i.Logout },
-				{ uri: '#theme-toggle', text: 'Theme', Icon: i.Palette },
+				routes.AdminStatsStack,
+				routes.AdminBlogStack,
+				routes.AdminUserStack,
+				routes.AdminSettingsHome,
+				routes.Support,
+				routes.Logout,
+				{ path: '#theme-toggle', title: 'Theme', Icon: i.Palette },
 			]}/>
 			{!isWide && <BottomNav navLinks={[
-				{ uri: Paths.AdminStatsHome, text: 'Stats', Icon: i.Counter },
-				{ uri: Paths.AdminBlogStack, text: 'Blog', Icon: i.Post },
-				{ uri: Paths.AdminUserStack, text: 'Users', Icon: i.Auth },
+				routes.AdminStatsStack,
+				routes.AdminBlogStack,
+				routes.AdminUserStack,
 			]} />}
 			<ContentDiv>
 				{children}

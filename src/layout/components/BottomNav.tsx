@@ -1,20 +1,23 @@
-import { h } from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import { SidebarRightCtx } from '~/App.context'
+import * as i from '~/lib/icons'
 import {LocationCtx} from '~/lib/router'
 import styled from '~/lib/styled'
 
 
 const useSidebarRight = SidebarRightCtx.use
 
-interface NavLinkProps { uri: string, text: string, Icon: any }
+interface NavLinkProps { path: string, title: string, Icon?: any, hasAccess?: () => boolean }
 type NavLinks = NavLinkProps[]
 
 
 export default function BottomNav({ navLinks }: { navLinks: NavLinks }) {
 	return <Nav>
-		{navLinks.map(nl => <NavLink {...nl} />)}
+		{navLinks
+			.filter(nl => nl.hasAccess ? nl.hasAccess() : true)
+			.map(nl => <NavLink {...nl} />)}
 		<NavBurger />
 	</Nav>
 }
@@ -33,13 +36,13 @@ const Nav = styled.div`
 `
 
 
-function NavLink({ uri, Icon }: { uri: string, Icon: any }) {
+function NavLink({ path, Icon = i.Info }: { path: string, Icon?: FunctionalComponent }) {
 	const [_location] = LocationCtx.use()
 	const [isSidebarActive] = useSidebarRight()
-	const isActive = _location.pathname.startsWith(uri)
+	const isActive = _location.pathname.startsWith(path)
 	return (
 		<NavLinkA class={isActive && !isSidebarActive ? 'active' : ''}
-			href={uri + (isActive ? '?stack=reset' : '')}
+			href={path + (isActive ? '?stack=reset' : '')}
 		>
 			<div><Icon /></div>
 		</NavLinkA>
