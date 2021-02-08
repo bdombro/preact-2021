@@ -104,9 +104,9 @@ function NavButton({ path, title }: { path: string, title: string }) {
 }
 const NavButtonA = styled.a`
 	:root {
-    height: calc( var(--header-height) - 12px );
-		margin: 6px 4px 6px 20px;
-		border-radius: 2px;
+    height: calc( var(--header-height) - 14px );
+		margin: 7px 4px 6px 20px;
+		border-radius: 3px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -115,7 +115,7 @@ const NavButtonA = styled.a`
     color: white;
 		background: var(--primary);
 	}
-	:root:hover, .active {
+	:root:hover, :root.active {
 		background: var(--primary-hover);
 	}
 `
@@ -142,8 +142,8 @@ const NavLinkA = styled.a`
     color: white;
 		transform: rotate(20deg)
 	}
-	:root:hover, .active {
-			background: var(--primary);
+	:root:hover, :root.active {
+			background: var(--secondary);
 	}
 	:root > div {
 			transform: rotate(-20deg)
@@ -185,7 +185,7 @@ const NavBurgerA = styled.a`
     padding: 0 20px;
     color: white;
 	}
-	:root:hover, .active {
+	:root:hover, :root.active {
 			background: var(--primary);
 	}
 `

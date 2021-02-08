@@ -1,102 +1,92 @@
+:root {
+  --primary-h: 270;--primary-s: 100%;--primary-l: 33%;
+  --primary: hsl(var(--primary-h),var(--primary-s),var(--primary-l));
+  --primary-hover: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 10% ));
+
+  --secondary-h: 45;--secondary-s: 100%;--secondary-l: 40%;
+  --secondary: hsl(var(--secondary-h),var(--secondary-s),var(--secondary-l));
+  --secondary-hover: hsl(var(--secondary-h),var(--secondary-s),calc( var(--secondary-l) + 4% ));
+  
+  --warning-h: 45;--warning-s: 100%;--warning-l: 40%;
+  --warning: hsl(var(--warning-h),var(--warning-s),var(--warning-l));
+  --warning-hover: hsl(var(--warning-h),var(--warning-s),calc( var(--warning-l) + 4% ));
+
+  --danger-h: 0;--danger-s: 100%;--danger-l: 40%;
+  --danger: hsl(var(--danger-h),var(--danger-s),var(--danger-l));
+  --danger-hover: hsl(var(--danger-h),var(--danger-s),calc( var(--danger-l) + 10% ));
+
+  --text-default: black;
+  --body-default: hsl(0, 0%, 98%);
+  --gray1-default: hsl(0, 0%, 94%);
+  --gray2-default: hsl(0, 0%, 90%);
+  --gray3-default: hsl(0, 0%, 87%);
+  --gray4-default: hsl(0, 0%, 80%);
+  --links-default: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 20% ));
+  --links-hover-default: var(--primary);
+  --header-background-default: hsl(0, 0%, 0%);
+  --nav-background-default: var(--gray1-default);
+  --nav-background-hover-default: var(--gray3-default);
+  --nav-background-active-default: hsl(var(--primary-h),var(--primary-s),94%);
+  --nav-text-active-default: var(--primary);
+  --searchbar-background-default: var(--gray4-default);
+  --searchbar-background-active-default: var(--gray2-default);
+
+  --text-dark: white;
+  --body-dark: black;
+  --gray1-dark: hsl(0, 0%, 10%);
+  --gray2-dark: hsl(0, 0%, 12%);
+  --gray3-dark: hsl(0, 0%, 20%);
+  --gray4-dark: hsl(0, 0%, 24%);
+  --links-dark: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 47% ));
+  --links-hover-dark: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 40% ));
+  --header-background-dark: hsl(0, 0%, 40%);
+  --nav-background-dark: var(--gray2-dark);
+  --nav-background-hover-dark: var(--gray3-dark);
+  --nav-background-active-dark: var(--primary);
+  --nav-text-active-dark: var(--text-dark);
+  --searchbar-background-dark: var(--gray4-dark);
+  --searchbar-background-active-dark: var(--gray2-dark);
+}
+
 body {
-  --text: black;
-  --body: hsl(0, 0%, 98%);;
-  --gray1: hsl(0, 0%, 94%);
-  --gray2: hsl(0, 0%, 90%);
-  --gray3: hsl(0, 0%, 87%);
-  --gray4: hsl(0, 0%, 80%);
-
-  --primary-h: 270;
-  --primary-s: 100%;
-  --primary-l: 33%;
-  --primary: hsl(
-    var(--primary-h),
-    var(--primary-s),
-    var(--primary-l)
-  );
-  --primary-hover: hsl(
-    var(--primary-h),
-    var(--primary-s),
-    calc( var(--primary-l) + 10% )
-  );
-  --primary-darker: hsl(
-    var(--primary-h),
-    var(--primary-s),
-    calc( var(--primary-l) - 10% )
-  );
-
+  --text: var(--text-default);
+  --body: var(--body-default);
+  --gray1: var(--gray1-default);
+  --gray2: var(--gray2-default);
+  --gray3: var(--gray3-default);
+  --gray4: var(--gray4-default);
+  --header-background: var(--header-background-default);
+  --nav-background: var(--nav-background-default);
+  --nav-background-hover: var(--nav-background-hover-default);
+  --nav-background-active: var(--nav-background-active-default);
+  --nav-text-active: var(--nav-text-active-default);
+  --links: var(--links-default);
+  --links-hover: var(--links-hover-default);
+  --searchbar-background: var(--searchbar-background-default);
+  --searchbar-background-active: var(--searchbar-background-active-default);
   
-  --warning-h: 45;
-  --warning-s: 100%;
-  --warning-l: 50%;
-  --warning: hsl(
-    var(--warning-h),
-    var(--warning-s),
-    var(--warning-l)
-  );
-  --warning-hover: hsl(
-    var(--warning-h),
-    var(--warning-s),
-    calc( var(--warning-l) + 10% )
-  );
-  --warning-darker: hsl(
-    var(--warning-h),
-    var(--warning-s),
-    calc( var(--warning-l) - 10% )
-  );
-
-  --danger-h: 0;
-  --danger-s: 100%;
-  --danger-l: 50%;
-  --danger: hsl(
-    var(--danger-h),
-    var(--danger-s),
-    var(--danger-l)
-  );
-  --danger-hover: hsl(
-    var(--danger-h),
-    var(--danger-s),
-    calc( var(--danger-l) + 10% )
-  );
-  --danger-darker: hsl(
-    var(--danger-h),
-    var(--danger-s),
-    calc( var(--danger-l) - 10% )
-  );
-
-
-  --header-background: hsl(0, 0%, 0%);
-  --nav-background: var(--gray1);
-  --nav-background-hover: var(--gray3);
-  --nav-background-active: hsl(var(--primary-h),var(--primary-s),94%);
-  --nav-text-active: var(--primary);
-  
-  --searchbar-background: var(--gray4);
-  --searchbar-background-active: var(--gray2);
-
   --body-height: 100vh;
-  
+
   overflow: hidden;
   background: var(--body);
 }
 
 body.dark {
-  --text: white;
-  --body: black;
-  --gray1: hsl(0, 0%, 10%);
-  --gray2: hsl(0, 0%, 12%);
-  --gray3: hsl(0, 0%, 24%);
-  --gray4: hsl(0, 0%, 20%);
-
-  --primary-darker: hsl(
-    var(--primary-h),
-    var(--primary-s),
-    calc( var(--primary-l) + 50% )
-  );
-
-  --header-background: hsl(0, 0%, 40%);
-  --nav-background-active: var(--primary);
-  --nav-text-active: var(--text);
+  --text: var(--text-dark);
+  --body: var(--body-dark);
+  --gray1: var(--gray1-dark);
+  --gray2: var(--gray2-dark);
+  --gray3: var(--gray3-dark);
+  --gray4: var(--gray4-dark);
+  --header-background: var(--header-background-dark);
+  --nav-background: var(--nav-background-dark);
+  --nav-background-hover: var(--nav-background-hover-dark);
+  --nav-background-active: var(--nav-background-active-dark);
+  --nav-text-active: var(--nav-text-active-dark);
+  --links: var(--links-dark);
+  --links-hover: var(--links-hover-dark);
+  --searchbar-background: var(--searchbar-background-dark);
+  --searchbar-background-active: var(--searchbar-background-active-dark);
 }
 
 body {
@@ -125,8 +115,8 @@ a, a:active {
 
 p a, li a, .body-link {
   text-decoration: underline;
-  color: var(--primary-darker);
+  color: var(--links);
 }
 p a:hover, li a:hover, .body-link:hover {
-  color: var(--primary);
+  color: var(--links-hover);
 }
