@@ -30,6 +30,7 @@ const SidebarDiv = styled.div`
     background: var(--nav-background);
     height: var(--body-height);
     overflow-x: hidden;
+		z-index: 2;
 	}
 `
 const SidebarNav = styled.nav`

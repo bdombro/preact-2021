@@ -2,12 +2,15 @@ import { h } from 'preact'
 
 import {PageMetaCtx} from '~/lib/router'
 
+import BackButton from './components/BackButton'
+
 export default function FillerEntryFactory(name: string) {
 	return () => {
 		const id = new URLSearchParams(location.search).get('id')
 		PageMetaCtx.set({ title: `${name} ${id}` })
 		return <div style={{padding: '0 10px'}}>
-			<h1>Hello, {name}:{id}!</h1>
+			<BackButton />
+			<h1 style={{ marginTop: 40 }}>Hello, {name}:{id}!</h1>
 			<ul>
 				<li><a href={location.pathname + '?id=' + Math.random()} >Random Post</a></li>
 				<li><a href={'?stack=back'}>Go Back</a></li>

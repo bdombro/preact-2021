@@ -10,7 +10,6 @@ import useMedia from '~/lib/useMedia'
 interface NavLinkProps { path: string, title: string, isButton?: boolean, hasAccess?: () => boolean }
 type NavLinks = NavLinkProps[]
 
-// TODO: Custom button for login/console
 export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolean, navLinks: NavLinks}) {
 	const isWide = useMedia('(min-width: 600px)')
 	return <NavbarDiv>

@@ -1,6 +1,10 @@
 body {
   --text: black;
   --body: hsl(0, 0%, 98%);;
+  --gray1: hsl(0, 0%, 94%);
+  --gray2: hsl(0, 0%, 90%);
+  --gray3: hsl(0, 0%, 87%);
+  --gray4: hsl(0, 0%, 80%);
 
   --primary-h: 270;
   --primary-s: 100%;
@@ -60,13 +64,15 @@ body {
     calc( var(--danger-l) - 10% )
   );
 
+
   --header-background: hsl(0, 0%, 0%);
-  --nav-background: hsl(0, 0%, 94%);
-  --nav-background-hover: hsl(0, 0%, 87%);
+  --nav-background: var(--gray1);
+  --nav-background-hover: var(--gray3);
   --nav-background-active: hsl(var(--primary-h),var(--primary-s),94%);
   --nav-text-active: var(--primary);
-  --searchbar-background: hsl(0, 0%, 80%);
-  --searchbar-background-active: hsl(0, 0%, 90%);
+  
+  --searchbar-background: var(--gray4);
+  --searchbar-background-active: var(--gray2);
 
   --body-height: 100vh;
   
@@ -77,6 +83,10 @@ body {
 body.dark {
   --text: white;
   --body: black;
+  --gray1: hsl(0, 0%, 10%);
+  --gray2: hsl(0, 0%, 12%);
+  --gray3: hsl(0, 0%, 24%);
+  --gray4: hsl(0, 0%, 20%);
 
   --primary-darker: hsl(
     var(--primary-h),
@@ -85,12 +95,8 @@ body.dark {
   );
 
   --header-background: hsl(0, 0%, 40%);
-  --nav-background: hsl(0, 0%, 12%);
-  --nav-background-hover: hsl(0, 0%, 24%);
   --nav-background-active: var(--primary);
   --nav-text-active: var(--text);
-  --searchbar-background: hsl(0, 0%, 20%);
-  --searchbar-background-active: hsl(0, 0%, 10%);
 }
 
 body {

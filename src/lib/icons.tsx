@@ -18,6 +18,8 @@ document.head.innerHTML += `<style type="text/css">
 // The Icons
 
 export const Account =   I(() => import('mdi-paths-split/CardAccountDetailsOutline'))
+export const ArrowL =    I(() => import('mdi-paths-split/ArrowLeft'))
+export const ArrowR =    I(() => import('mdi-paths-split/ArrowRight'))
 export const Auth =      I(() => import('mdi-paths-split/ShieldAccountOutline'))
 export const Building =  I(() => import('mdi-paths-split/OfficeBuildingMarkerOutline'))
 export const Counter =   I(() => import('mdi-paths-split/Counter'))
