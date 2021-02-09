@@ -1,8 +1,8 @@
 import { h } from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import { SidebarRightCtx } from '~/App.context'
-import { ReactLogo } from '~/lib/icons'
+import * as i from '~/lib/icons'
 import {LocationCtx} from '~/lib/router'
 import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
@@ -13,13 +13,14 @@ export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolea
 	const isWide = useMedia('(min-width: 600px)')
 	return <NavbarDiv>
 		<div>
-			{sidebarLeft && isWide && <LeftBurger href="#sidebar-toggle">Ξ</LeftBurger>}
+			{sidebarLeft && isWide && <LeftBurger href="#sidebar-toggle"><div>Ξ</div></LeftBurger>}
 			<LogoA href='/' class={sidebarLeft && isWide ? 'withBurger' : ''}>
 				<div>
-					{!sidebarLeft && <ReactLogo />}
+					{!sidebarLeft && <i.ReactLogo />}
 					<div>Stacks!</div>
 				</div>
 			</LogoA>
+			{sidebarLeft && isWide && <SearchBar />}
 		</div>
 
 		<div>
@@ -50,6 +51,7 @@ const NavbarDiv = styled.div`
 `
 const LeftBurger = styled.a`
 	:root
+		z-index: 2
 		padding: 15px 0px
 		text-align: center
 		width: var(--sidebar-width-mini)
@@ -60,6 +62,8 @@ const LeftBurger = styled.a`
 		color: white
 	:root:hover
 		background: var(--primary)
+	:root:active>div
+		transform: translateY(2px)
 `
 const LogoA = styled.a`
 	:root
@@ -67,7 +71,7 @@ const LogoA = styled.a`
 		margin-top: -91px
 		margin-left: -14px
 		padding: 100px 9px 100px 14px
-		border: 5px solid hsl(0,0%,0%)
+		border: 5px solid var(--header-background)
 	:root>div
 		transform: rotate(-20deg)
 		display: flex
@@ -90,6 +94,95 @@ const LogoA = styled.a`
 	:root.withBurger
 		margin-top: -68px
 		padding: 80px 7px
+`
+
+function SearchBar() {
+	const [value, setValue] = useState('')
+	const [isFocused, setIsFocused] = useState(false)
+	return <SearchBarDiv class={isFocused ? 'focused' : ''}>
+		<form action='search' onSubmit={onSubmit}>
+			<div class='magglass'><i.Search size={20} horizontal /></div>
+			<input
+				value={value}
+				onInput={e => setValue((e.target as HTMLInputElement).value)}
+				placeholder="Search"
+				onFocus={() => setIsFocused(true)}
+				onBlur={onBlur}
+			/>
+			<a
+				href="#search-clear"
+				tabIndex={0}
+				onClick={onClickClear}
+				class={`clear ${isFocused ? 'show' : ''}`}
+			>x</a>
+		</form>
+	</SearchBarDiv>
+
+	function onBlur(e?: any) {
+		if (e?.relatedTarget?.hash === '#search-clear') setValue('')
+		setIsFocused(false)
+	}
+	// I don't think this is ever actually fired due to blur event preventing it,
+	// but just in case it was we handle it.
+	function onClickClear(e: any) {
+		e.preventDefault()
+		setValue('')
+		onBlur()
+	}
+	function onSubmit(e: any) {
+		e.preventDefault()
+		alert('You search for: ' + value)
+	}
+}
+const SearchBarDiv = styled.div`
+	:root
+		--searchbar-width: 270px
+		position: absolute
+		left: var(--sidebar-width-full)
+		top: 10px
+		width: var(--searchbar-width)
+	:root.focused
+		--searchbar-width: 500px
+	:root input
+		box-sizing: border-box
+		width: 100%
+		font-size: .8em
+		padding: .6em 1em .6em 3em
+		background: var(--searchbar-background)
+		color: var(--primary)
+		border-radius: 2px
+		border: none
+		outline: none
+	.dark :root input
+		color: white
+	:root input::placeholder
+		color: var(--primary)
+		opacity: 1
+	.dark :root input::placeholder
+		color: hsl(0,0%,80%)
+	:root.focused input
+		background: var(--white)
+	:root .magglass
+		color: var(--primary)
+		position: absolute
+		left: 12px
+		top: 6px
+	.dark :root .magglass
+		color: hsl(0,0%,80%)
+	:root .clear
+		display: none
+		color: var(--primary)
+		position: absolute
+		right: 10px
+		top: 2px
+		font-size: 1.2em
+	.dark :root .clear
+		color: hsl(0,0%,80%)
+	:root .clear.show
+		display: block
+	@media (max-width: 890px)
+		:root.focused
+			--searchbar-width: 270px
 `
 
 function NavButton({ path, title }: { path: string, title: string }) {
@@ -141,7 +234,7 @@ const NavLinkA = styled.a`
 		margin-top: -60px
 		padding: 80px 14px
 		color: white
-		border: 5px solid hsl(0,0%,0%)
+		border: 5px solid var(--header-background)
 		box-sizing: border-box
 		transform: rotate(20deg)
 	:root:hover,
@@ -177,7 +270,7 @@ function RightBurger() {
 				})
 			}}
 		>
-			{isLinkActive ? 'X' : 'Ξ'}
+			<div>{isLinkActive ? 'X' : 'Ξ'}</div>
 		</NavBurgerA>
 	)
 }
@@ -185,6 +278,7 @@ const NavBurgerA = styled.a`
 	:root
 		z-index: 2
 		height: var(--header-height)
+		width: 50px
 		display: flex
 		flex-direction: row
 		align-items: center
@@ -197,4 +291,6 @@ const NavBurgerA = styled.a`
 	:root:focus,
 	:root:active
 		color: white
+	:root:active>div
+		transform: translateY(2px)
 `
