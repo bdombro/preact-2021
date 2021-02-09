@@ -1,4 +1,4 @@
-import { h } from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import { SidebarRightCtx } from '~/App.context'
@@ -7,8 +7,8 @@ import {LocationCtx} from '~/lib/router'
 import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
 
-interface NavLinkProps { path: string, title: string, isButton?: boolean, hasAccess?: () => boolean }
-type NavLinks = NavLinkProps[]
+import type { NavLinks } from '../types'
+
 
 export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolean, navLinks: NavLinks}) {
 	const isWide = useMedia('(min-width: 600px)')

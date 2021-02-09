@@ -6,11 +6,10 @@ import * as i from '~/lib/icons'
 import {LocationCtx} from '~/lib/router'
 import styled from '~/lib/styled'
 
+import type { NavLinks } from '../types'
+
 
 const useSidebarRight = SidebarRightCtx.use
-
-interface NavLinkProps { path: string, title: string, Icon?: any, hasAccess?: () => boolean }
-type NavLinks = NavLinkProps[]
 
 
 export default function BottomNav({ navLinks }: { navLinks: NavLinks }) {

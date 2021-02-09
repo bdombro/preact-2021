@@ -4,13 +4,10 @@ import { SidebarRightCtx } from '~/App.context'
 import NavLink from '~/layout/components/SidebarNavLink'
 import styled from '~/lib/styled'
 
-const useSidebarRight = SidebarRightCtx.use
-
-interface NavLinkProps { path: string, title: string, Icon?: FunctionalComponent, hasAccess?: () => boolean }
-type NavLinks = NavLinkProps[]
+import type { NavLinks } from '../types'
 
 export default function SidebarRight({ navLinks }: { navLinks: NavLinks }) {
-	const [isActive] = useSidebarRight()
+	const [isActive] = SidebarRightCtx.use()
 	return isActive ? (
 		<SidebarDiv>
 			<SidebarNav>

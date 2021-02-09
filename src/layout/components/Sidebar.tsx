@@ -3,8 +3,7 @@ import { FunctionalComponent, h } from 'preact'
 import NavLink from '~/layout/components/SidebarNavLink'
 import styled from '~/lib/styled'
 
-interface NavLinkProps { path: string, title: string, Icon?: FunctionalComponent, hasAccess?: () => boolean }
-type NavLinks = NavLinkProps[]
+import type { NavLinks } from '../types'
 
 export default function Sidebar({ navLinks }: { navLinks: NavLinks }) {
 	return (

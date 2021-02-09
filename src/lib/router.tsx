@@ -470,6 +470,7 @@ export {
 	Redirect,
 	RouteFactory,
 	RouterComponent,
+	RouteType,
 	scrollListener,
 	setPageMeta,
 	StackFactory,

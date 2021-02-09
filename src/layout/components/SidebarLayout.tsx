@@ -2,14 +2,35 @@ import { ComponentChildren, h } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 
 import { ThemeCtx } from '~/App.context'
+import { ContentDiv } from '~/lib/router'
 import styled from '~/lib/styled'
+import useMedia from '~/lib/useMedia'
 
-export default function SidebarLayout({children}: {children: ComponentChildren}) {
+import type { NavLinks } from '../types'
+import BottomNav from './BottomNav'
+import Navbar from './Navbar'
+import Sidebar from './Sidebar'
+import SidebarRight from './SidebarRight'
+
+export default function SidebarLayout(p: {
+	topLinks: NavLinks
+	leftLinks: NavLinks
+	rightLinks: NavLinks
+	bottomLinks: NavLinks
+	children: ComponentChildren
+}) {
+	const isWide = useMedia('(min-width: 600px)')
 	const ref = useRef<any>(null)
 	useEffect(listenForThemeToggle, [])
 	return (
 		<SidebarLayoutDiv ref={ref} class={ThemeCtx.get() === 'dark' ? 'dark' : ''}>
-			{children}
+			<Navbar sidebarLeft navLinks={p.topLinks} />
+			{isWide && <Sidebar navLinks={p.leftLinks} />}
+			<SidebarRight navLinks={p.rightLinks} />
+			{!isWide && <BottomNav navLinks={p.bottomLinks} />}
+			<ContentDiv>
+				{p.children}
+			</ContentDiv>
 		</SidebarLayoutDiv>
 	)
 
