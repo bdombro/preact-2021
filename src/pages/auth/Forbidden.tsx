@@ -7,7 +7,7 @@ import styled from '~/lib/styled'
 export default function Forbidden() {
 	return <ForbiddenDiv>
 		<div>
-			<Auth size={200}  />
+			<Auth size={200} />
 			<h1>You lack access to this page.</h1>
 			<br />
 			<a href='/'>Home</a>&nbsp;&nbsp;&nbsp;

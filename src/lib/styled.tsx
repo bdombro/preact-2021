@@ -97,10 +97,29 @@ function combineClasses(...classes: (string | undefined)[]) {
 
 /**
  * Converts my css shorthand (aka pcss) to real css
+ * - Treats indentation as indicator for '{' and '}'
+ * - Auto-appends ';' to end of lines
+ * 
+ * Assumptions/Reqs: 
+ * - No '{' or '}' allowed in pcss
+ * - starts and ends with a new-line (aka \n)
+ * - Use \t or 2-space indents
+ * 
+ * ex. `
+ *   .cool-class
+ *     display: none
+ * `
+ *
+ * converts to `
+ *   .cool-class {
+ *     display: none;
+ *   }
+ * `
  */
 function processPcss(pcss: string) {
 	pcss = pcss.replace(/ {2}/g, '\t')
 	const lines = pcss.split('\n')
+	let initialIndent = 0
 	let lastIndent = 0
 
 	lines.forEach((l, i) => {
@@ -109,17 +128,18 @@ function processPcss(pcss: string) {
 			if (c === '\t') currentIndent++
 			else break
 		}
+		if (i === 1) initialIndent = currentIndent
 
 		if (i <= 1) {}
-		else if (currentIndent > lastIndent) {
+		else if (currentIndent > lastIndent)
 			lines[i - 1] = lines[i - 1] + '{'
-		}
 		else if (currentIndent < lastIndent) {
-			Array(lastIndent-currentIndent).fill('').forEach(() => lines[i - 1] += '}')
-		}
-		else if (i > 1 && !lines[i - 1].endsWith(',')) {
+			let closeCount = lastIndent - currentIndent
+			if (i===lines.length-1) closeCount-=initialIndent
+			for (let ci = 0; ci < closeCount; ci++)
+				lines[i - 1] += '}'
+		} else if (i > 1 && !lines[i - 1].endsWith(','))
 			lines[i - 1] += ';'
-		}
 
 		lastIndent = currentIndent
 	})
