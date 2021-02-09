@@ -48,12 +48,12 @@ function RouterComponent(props: RouterProps) {
 		if (error instanceof ForbiddenError) {
 			const r = props.routesByPath['/forbidden'] || props.routesByPath['/notfound']
 			const RLayout = r.Layout || BlankLayout
-			return <RLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></RLayout>
+			return <CtxProviders><RLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></RLayout></CtxProviders>
 		}
 		if (error instanceof NotFoundError) {
 			const r = props.routesByPath['/notfound']
 			const RLayout = r.Layout || BlankLayout
-			return <RLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></RLayout>
+			return <CtxProviders><RLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></RLayout></CtxProviders>
 		}
 		throw error
 	}
