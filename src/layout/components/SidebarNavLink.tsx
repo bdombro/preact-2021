@@ -20,20 +20,20 @@ export default function NavLink({ path, title, Icon = i.Info }: NavLinkProps) {
 	)
 }
 const NavLinkA = styled.a`
-	:root {
-			padding: 18px 0 14px 14px;
-			color: var(--black);
-			display: flex;
-			flex-direction: row;
-	}
-	:root:hover {
-			background: var(--nav-background-hover);
-	}
-	:root.active, :root.active:hover, :root:active {
-			background: var(--nav-background-active);
-			color: var(--nav-text-active);
-	}
+	:root
+		padding: 18px 0 14px 14px
+		color: var(--black)
+		display: flex
+		flex-direction: row
+	:root:hover
+		background: var(--nav-background-hover)
+	:root.active,
+	:root.active:hover,
+	:root:active
+		background: var(--nav-background-active)
+		color: var(--nav-text-active)
 `
 const NavLinkText = styled.div`
-	:root {padding: 3px 14px 3px 20px;}
+	:root
+		padding: 3px 14px 3px 20px
 `

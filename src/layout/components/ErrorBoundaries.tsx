@@ -51,29 +51,26 @@ function ErrorC() {
 	)
 }
 const ErrorOuter = styled.div`
-	:root { 
-		position:absolute;
-		bottom:0;
-		left:0;
-		width:100%;
-		text-align:center;
-		z-index:100;
-	}
+	:root
+		position:absolute
+		bottom:0
+		left:0
+		width:100%
+		text-align:center
+		z-index:100
 `
 const ErrorInner = styled.div`
-	:root {
-		padding:20px;
-		background-color:var(--primary);
-		display:inline-block;
-		color:#fff;
-	}
+	:root
+		padding:20px
+		background-color:var(--primary)
+		display:inline-block
+		color:#fff
 `
 const ErrorLink = styled.a`
-	:root {
-		color:var(--links-dark);
-		text-decoration:underline;
+	:root
+		color:var(--links-dark)
+		text-decoration:underline
 	}
-	:root:hover {
-		color:var(--links-hover-dark);
-	}
+	:root:hover
+		color:var(--links-hover-dark)
 `

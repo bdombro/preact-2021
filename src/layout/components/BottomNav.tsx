@@ -21,17 +21,16 @@ export default function BottomNav({ navLinks }: { navLinks: NavLinks }) {
 	</Nav>
 }
 const Nav = styled.div`
-	:root {
-			will-change: scroll-position;
-			position: fixed;
-			bottom: 0;
-			width: 100%;
-			background: var(--nav-background);
-			display: flex;
-			flex-direction: row;
-			height: var(--bottom-nav-height);
-			overflow-y: hidden;
-	}
+	:root
+		will-change: scroll-position
+		position: fixed
+		bottom: 0
+		width: 100%
+		background: var(--nav-background)
+		display: flex
+		flex-direction: row
+		height: var(--bottom-nav-height)
+		overflow-y: hidden
 `
 
 
@@ -48,28 +47,26 @@ function NavLink({ path, Icon = i.Info }: { path: string, Icon?: FunctionalCompo
 	)
 }
 const NavLinkA = styled.a`
-	:root {
-			color: var(--black);
-			flex-grow: 1;
-			text-align: center;
-			padding: 8px;
-			border-right: 1px solid var(--nav-background);
-			border-top: 1px solid var(--nav-background);
+	:root
+		color: var(--black)
+		flex-grow: 1
+		text-align: center
+		padding: 8px
+		border-right: 1px solid var(--nav-background)
+		border-top: 1px solid var(--nav-background)
 	}
-	:root:hover {
-			background: var(--nav-background-active);
-			border-right: 1px solid var(--nav-background-active);
-			border-top: 1px solid var(--nav-background-active);
-	}
-	:root.active, :root.active:hover {
-			color: var(--nav-text-active);
-			background: var(--nav-background-active);
-			border-right: 1px solid var(--nav-background-active);
-			border-top: 1px solid var(--nav-background-active);
-	}
-	:root:last-of-type {
-			border-right: none;
-	}
+	:root:hover
+		background: var(--nav-background-active)
+		border-right: 1px solid var(--nav-background-active)
+		border-top: 1px solid var(--nav-background-active)
+	:root.active,
+	:root.active:hover
+		color: var(--nav-text-active)
+		background: var(--nav-background-active)
+		border-right: 1px solid var(--nav-background-active)
+		border-top: 1px solid var(--nav-background-active)
+	:root:last-of-type
+		border-right: none
 `
 
 

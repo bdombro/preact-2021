@@ -9,14 +9,12 @@ export default function BackButton() {
 	</BackButtonA>
 }
 const BackButtonA = styled.a`
-  :root {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    border-radius: 20px;
-    padding: 2px;
-  }
-  :root:hover {
-    background: var(--gray3);
-  }
+  :root
+    position: absolute
+    top: 5px
+    left: 5px
+    border-radius: 20px
+    padding: 2px
+  :root:hover
+    background: var(--gray3)
 `

@@ -19,19 +19,17 @@ export default function SidebarRight({ navLinks }: { navLinks: NavLinks }) {
 	) : <F />
 }
 const SidebarDiv = styled.div`
-	:root {
-    position: absolute;
-    top: var(--header-height);
-    right: 0;
-    width: var(--sidebarRight-width);
-    background: var(--nav-background);
-    height: var(--white-height);
-    overflow-x: hidden;
-		z-index: 2;
-	}
+	:root
+    position: absolute
+    top: var(--header-height)
+    right: 0
+    width: var(--sidebarRight-width)
+    background: var(--nav-background)
+    height: var(--white-height)
+    overflow-x: hidden
+		z-index: 2
 `
 const SidebarNav = styled.nav`
-	:root {
-			width: var(--sidebar-width-full);
-	}
+	:root
+		width: var(--sidebar-width-full)
 `

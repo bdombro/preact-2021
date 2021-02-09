@@ -17,13 +17,26 @@ export default function Forbidden() {
 }
 // Background thanks to transparenttextures.com
 const ForbiddenDiv = styled.div`
-	:root { position:absolute; top:0; bottom:0; left:0; right:0;
-		background-color: hsl(var(--primary-h),var(--primary-s),70%);
-		background-image: url("/fabric.png");
-	}
-	:root div {text-align:center; padding-top:10vh}
-	:root img {max-width:90%}
-	:root * { color: black}
-	:root a { background:var(--primary); color:white; padding:8px 12px; border-radius:2px}
-	:root a:hover { background:hsl(var(--primary-h),var(--primary-s),50%) }
+	:root
+		position: absolute
+		top:0
+		bottom:0
+		left:0
+		right:0
+		background-color: hsl(var(--primary-h),var(--primary-s),70%)
+		background-image: url("/fabric.png")
+	:root div
+		text-align: center
+		padding-top: 10vh
+	:root img
+		max-width:90%
+	:root *
+		color: black
+	:root a
+		background: var(--primary)
+		color:white
+		padding:8px 12px
+		border-radius:2px
+	:root a:hover
+		background: hsl(var(--primary-h),var(--primary-s),50%)
 `

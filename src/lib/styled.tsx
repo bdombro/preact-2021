@@ -9,6 +9,7 @@
 import { h } from 'preact'
 
 let count = 0
+const pcssFlag = true
 
 /**
  * Injects style elements to the page if they don't already exist
@@ -21,6 +22,7 @@ export default function styled(strings: TemplateStringsArray, ...placeHolders: s
 	let css = strings.map((s, i) => s + (placeHolders?.[i] ?? '')).join('')
 	const root = 's' + count++
 	css = css.replace(/:root/g, '.' + root)
+	if (pcssFlag) css = processPcss(css)
 	document.head.innerHTML += `<style type="text/css">${css}</style>`
 	return root
 }
@@ -91,4 +93,35 @@ function assembleTemplateString(strings: TemplateStringsArray, placeHolders: str
 
 function combineClasses(...classes: (string | undefined)[]) {
 	return classes.filter(c => c).join(' ')
+}
+
+/**
+ * Converts my css shorthand (aka pcss) to real css
+ */
+function processPcss(pcss: string) {
+	pcss = pcss.replace(/ {2}/g, '\t')
+	const lines = pcss.split('\n')
+	let lastIndent = 0
+
+	lines.forEach((l, i) => {
+		let currentIndent = 0
+		for (const c of l) {
+			if (c === '\t') currentIndent++
+			else break
+		}
+
+		if (i <= 1) {}
+		else if (currentIndent > lastIndent) {
+			lines[i - 1] = lines[i - 1] + '{'
+		}
+		else if (currentIndent < lastIndent) {
+			Array(lastIndent-currentIndent).fill('').forEach(() => lines[i - 1] += '}')
+		}
+		else if (i > 1 && !lines[i - 1].endsWith(',')) {
+			lines[i - 1] += ';'
+		}
+
+		lastIndent = currentIndent
+	})
+	return lines.join('\n')
 }

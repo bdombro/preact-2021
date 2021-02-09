@@ -10,7 +10,7 @@ export default function LoginLayout({children}: any) {
 	</LoginLayoutOuter>
 }
 const LoginLayoutOuter = styled.div`
-	:root {
+	:root
     position: absolute;
     top: 0;
     left: 0;
@@ -24,7 +24,7 @@ const LoginLayoutOuter = styled.div`
 	}
 `
 const LoginLayoutInner = styled.div`
-	:root {
+	:root
 			position: relative;
 			top: 10vh;
 			margin: auto;
@@ -37,7 +37,7 @@ const LoginLayoutInner = styled.div`
 			box-sizing: border-box;
 	}
 	@media (max-width: 600px) {
-			:root {
+			:root
 					top: 5vh;
 			}
 	}
