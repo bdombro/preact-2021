@@ -24,7 +24,7 @@ export default function SidebarLayout(p: {
 	useEffect(listenForThemeToggle, [])
 	return (
 		<SidebarLayoutDiv ref={ref} class={ThemeCtx.get() === 'dark' ? 'dark' : ''}>
-			<Navbar sidebarLeft navLinks={p.topLinks} />
+			{isWide && <Navbar sidebarLeft navLinks={p.topLinks} />}
 			{isWide && <Sidebar navLinks={p.leftLinks} />}
 			<SidebarRight navLinks={p.rightLinks} />
 			{!isWide && <BottomNav navLinks={p.bottomLinks} />}

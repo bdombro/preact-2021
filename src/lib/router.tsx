@@ -13,7 +13,7 @@
  * - Features scroll-restoration on browser popstate (aka back) and stack recall
  */
 
-import { ComponentChildren, createContext as createContextP, Fragment as F, FunctionalComponent, h } from 'preact'
+import { ComponentChildren, Fragment as F, FunctionalComponent, h } from 'preact'
 import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from 'preact/hooks'
 
 import { createStateContext } from './createStateContext'
@@ -33,7 +33,7 @@ interface RouterProps {
 interface RouteType extends SetPageMetaProps {
 	Icon?: FunctionalComponent
 	path: string
-	Component: FunctionalComponent
+	Component: FunctionalComponent<{route: RouteType}>
 	Layout?: FunctionalComponent
 	stack?: string
 	hasAccess: () => boolean,
@@ -46,14 +46,14 @@ function RouterComponent(props: RouterProps) {
 	const [error, resetError] = useErrorBoundary()
 	if (error) {
 		if (error instanceof ForbiddenError) {
-			const R = props.routesByPath['/forbidden'] || props.routesByPath['/notfound']
-			const RLayout = R.Layout || BlankLayout
-			return <RLayout><RouteWrapper><R.Component /></RouteWrapper></RLayout>
+			const r = props.routesByPath['/forbidden'] || props.routesByPath['/notfound']
+			const RLayout = r.Layout || BlankLayout
+			return <RLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></RLayout>
 		}
 		if (error instanceof NotFoundError) {
-			const R = props.routesByPath['/notfound']
-			const RLayout = R.Layout || BlankLayout
-			return <RLayout><RouteWrapper><R.Component /></RouteWrapper></RLayout>
+			const r = props.routesByPath['/notfound']
+			const RLayout = r.Layout || BlankLayout
+			return <RLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></RLayout>
 		}
 		throw error
 	}
@@ -103,7 +103,7 @@ function RouterSwitch({ routesByPath }: RouterProps) {
 		}
 	}
 	if (!r.hasAccess()) throw new ForbiddenError('Forbidden!')
-	return <Stack><r.Component /></Stack>
+	return <Stack><r.Component route={r} /></Stack>
 
 }
 const stacks = new Map<string, any>()
