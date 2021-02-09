@@ -6,11 +6,11 @@ import { ContentDiv } from '~/lib/router'
 import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
 
+import BottomNav from '../components/BottomNav'
+import Navbar from '../components/Navbar'
+import Sidebar from '../components/Sidebar'
+import SidebarRight from '../components/SidebarRight'
 import type { NavLinks } from '../types'
-import BottomNav from './BottomNav'
-import Navbar from './Navbar'
-import Sidebar from './Sidebar'
-import SidebarRight from './SidebarRight'
 
 export default function SidebarLayout(p: {
 	topLinks: NavLinks

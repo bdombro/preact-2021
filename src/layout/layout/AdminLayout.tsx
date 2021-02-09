@@ -1,6 +1,6 @@
 import { h } from 'preact'
 
-import SidebarLayout from '~/layout/components/SidebarLayout'
+import SidebarLayout from '~/layout/layout/SidebarLayout'
 import * as i from '~/lib/icons'
 import { routes } from '~/routes'
 

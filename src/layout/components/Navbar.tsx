@@ -26,7 +26,7 @@ export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolea
 		<div>
 			{isWide && navLinks
 				.filter(nl => nl.hasAccess ? nl.hasAccess() : true)
-				.map(nl => nl.isButton ? <NavButton {...nl} /> : <NavLink {...nl} />)}
+				.map(nl => 'isButton' in nl ? <NavButton {...nl} /> : <NavLink {...nl} />)}
 			<RightBurger />
 		</div>
 
