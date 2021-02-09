@@ -28,7 +28,7 @@ const SidebarDiv = styled.div`
     right: 0;
     width: var(--sidebarRight-width);
     background: var(--nav-background);
-    height: var(--body-height);
+    height: var(--white-height);
     overflow-x: hidden;
 		z-index: 2;
 	}

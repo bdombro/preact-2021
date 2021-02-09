@@ -22,7 +22,7 @@ export default function NavLink({ path, title, Icon = i.Info }: NavLinkProps) {
 const NavLinkA = styled.a`
 	:root {
 			padding: 18px 0 14px 14px;
-			color: var(--text);
+			color: var(--black);
 			display: flex;
 			flex-direction: row;
 	}

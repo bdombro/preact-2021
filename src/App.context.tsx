@@ -14,8 +14,6 @@ const ls = {
 export const ThemeCtx = createStateContext(ls.get('ThemeCtx') === 'dark' ? 'dark' : 'light')
 window.addEventListener('#theme-toggle', () => ThemeCtx.set(current => current === 'dark' ? 'light' : 'dark'))
 ThemeCtx.subscribe(next => ls.set('ThemeCtx', next))
-ThemeCtx.subscribe(next => next === 'dark' ? bc.add('dark') : bc.remove('dark'))
-if (ls.get('ThemeCtx') === 'dark') bc.add('dark')
 
 
 // SidebarLeftCtx: can be full | mini, persists to disk, and can be toggled with #sidebar-toggle event

@@ -252,7 +252,7 @@ function Redirect(to: string) {
  * be part of your layout, like in BlankLayout below.
  */
 function ContentDiv(props: { children: ComponentChildren }) {
-	return <div id="content" style={{ height: 'var(--body-height)', overflow: 'hidden auto', position: 'relative' }} {...props} />
+	return <div id="content" style={{ height: 'var(--white-height)', overflow: 'hidden auto', position: 'relative' }} {...props} />
 }
 
 /**

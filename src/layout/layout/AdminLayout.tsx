@@ -2,7 +2,7 @@
 
 import { h } from 'preact'
 
-import DashboardLayoutDiv from '~/layout/components/DashboardLayoutDiv'
+import DashboardLayoutDiv from '~/layout/components/SidebarLayout'
 import * as i from '~/lib/icons'
 import { ContentDiv } from '~/lib/router'
 import useMedia from '~/lib/useMedia'

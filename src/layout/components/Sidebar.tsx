@@ -24,7 +24,7 @@ const SidebarDiv = styled.div`
 			left: 0;
 			width: var(--sidebar-width);
 			background: var(--nav-background);
-			height: var(--body-height);
+			height: var(--white-height);
 			overflow-x: hidden;
 	}
 `

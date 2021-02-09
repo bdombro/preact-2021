@@ -31,7 +31,6 @@ export default function MarketingLayout({ children }: { children: any }) {
 					routes.About,
 					routes.Support,
 					loginNavLink,
-					{ path: '#theme-toggle', title: 'Theme', Icon: i.Palette },
 				]}
 			/>
 			<ContentDiv>
@@ -44,7 +43,7 @@ const MarketingLayoutDiv = styled.div`
 	:root {
 		--header-height: 48px;
 		--sidebarRight-width: 200px;
-		--body-height: calc( 100vh - var(--header-height) );
+		--white-height: calc( 100vh - var(--header-height) );
 		--margin-bottom: 0;
 		--margin-left: 0;
 	}

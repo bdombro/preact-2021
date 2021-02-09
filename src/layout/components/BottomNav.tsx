@@ -50,7 +50,7 @@ function NavLink({ path, Icon = i.Info }: { path: string, Icon?: FunctionalCompo
 }
 const NavLinkA = styled.a`
 	:root {
-			color: var(--text);
+			color: var(--black);
 			flex-grow: 1;
 			text-align: center;
 			padding: 8px;
