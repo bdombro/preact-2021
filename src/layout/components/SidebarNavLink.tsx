@@ -29,7 +29,7 @@ const NavLinkA = styled.a`
 	:root:hover {
 			background: var(--nav-background-hover);
 	}
-	:root.active, :root.active:hover {
+	:root.active, :root.active:hover, :root:active {
 			background: var(--nav-background-active);
 			color: var(--nav-text-active);
 	}

@@ -33,7 +33,7 @@ export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolea
 	</NavbarDiv>
 }
 const NavbarDiv = styled.div`
-	:root {
+	:root{
     position: fixed;
     top: 0;
     left: 0;
@@ -43,56 +43,54 @@ const NavbarDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-		overflow: hidden;
-	}
-	:root > div {
-		height: var(--header-height);
-		display: flex;
-		flex-direction: row;
-	}
+		overflow: hidden}
+	:root>div{
+		height:var(--header-height);
+		display:flex;
+		flex-direction:row}
 `
 const LeftBurger = styled.a`
-	:root {
+	:root{
     padding: 15px 0px;
     text-align: center;
     width: var(--sidebar-width-mini);
     box-sizing: border-box;
-    color: white;
-	}
-	:root:hover {
-			background: var(--primary);
-	}
+    color: white}
+	:root:active,
+	:root:focus{
+		color: white}
+	:root:hover{
+		background: var(--primary)}
 `
 const LogoA = styled.a`
-	:root {
+	:root{
 		transform: rotate(20deg);
-		margin-top: -66px;
-		margin-left: -4px;
-		padding: 80px 9px;
-	}
-	:root > div {
+		margin-top: -91px;
+		margin-left: -14px;
+		padding: 100px 9px 100px 14px;
+		border: 5px solid hsl(0,0%,0%)}
+	:root>div{
 		transform: rotate(-20deg);
     display: flex;
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;
     font-weight: bold;
-    padding-left: 2px;
-	}
-	:root:hover {
-			background: var(--primary);
-	}
-	:root > div > div {
-			color: white;
-	}
-	:root svg {
+    padding-left: 2px}
+	:root:hover{
+		background: var(--primary)}
+	:root>div>div,
+	:root:focus>div>div,
+	:root:active>div>div{
+		color: white}
+	:root:active{
+		border: 5px solid var(--secondary)}
+	:root svg{
 			color: hsl(var(--primary-h), var(--primary-s), 70%);
-			margin: 0 6px 0 8px;
-	}
-	:root.withBurger {
-		margin-top: -65px;
-		padding: 80px 7px;
-	}
+			margin: 0 6px 0 8px}
+	:root.withBurger{
+		margin-top: -68px;
+		padding: 80px 7px}
 `
 
 function NavButton({ path, title }: { path: string, title: string }) {
@@ -103,21 +101,25 @@ function NavButton({ path, title }: { path: string, title: string }) {
 	)
 }
 const NavButtonA = styled.a`
-	:root {
+	:root{
+		z-index: 2;
     height: calc( var(--header-height) - 14px );
-		margin: 7px 4px 6px 20px;
+		margin: 7px 4px 6px 12px;
 		border-radius: 3px;
     display: flex;
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;
-    padding: 0 10px;
+    padding: 1px 10px 0;
     color: white;
-		background: var(--primary);
-	}
-	:root:hover, :root.active {
-		background: var(--primary-hover);
-	}
+		background: var(--primary)}
+	:root:hover{
+		background: var(--primary-hover)}
+	:root:active{
+		color:white;
+		transform: translateY(2px)}
+	:root:focus{
+		color: white}
 `
 
 function NavLink({ path, title }: { path: string, title: string }) {
@@ -133,21 +135,26 @@ function NavLink({ path, title }: { path: string, title: string }) {
 	)
 }
 const NavLinkA = styled.a`
-	:root {
+	:root{
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: -56px;
+    margin-top: -60px;
     padding: 80px 14px;
     color: white;
-		transform: rotate(20deg)
-	}
-	:root:hover, :root.active {
-			background: var(--secondary);
-	}
-	:root > div {
-			transform: rotate(-20deg)
-	}
+		border: 5px solid hsl(0,0%,0%);
+		box-sizing: border-box;
+		transform: rotate(20deg)}
+	:root:hover,
+	:root.active{
+		background:var(--secondary)}
+	:root:active{
+		color:white;
+		border: 5px solid var(--primary)}
+	:root:focus{
+		color:white}
+	:root>div{
+		transform: rotate(-20deg)}
 `
 
 /**
@@ -176,16 +183,19 @@ function RightBurger() {
 	)
 }
 const NavBurgerA = styled.a`
-	:root {
+	:root{
+		z-index: 2;
     height: var(--header-height);
     display: flex;
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;
     padding: 0 20px;
-    color: white;
-	}
-	:root:hover, :root.active {
-			background: var(--primary);
-	}
+    color: white}
+	:root:hover,
+	:root.active{
+		background: var(--primary)}
+	:root:focus,
+	:root:active{
+		color: white}
 `

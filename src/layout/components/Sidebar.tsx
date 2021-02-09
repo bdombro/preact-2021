@@ -18,17 +18,17 @@ export default function Sidebar({ navLinks }: { navLinks: NavLinks }) {
 }
 const SidebarDiv = styled.div`
 	:root {
-			position: fixed;
-			top: var(--header-height);
-			left: 0;
-			width: var(--sidebar-width);
-			background: var(--nav-background);
-			height: var(--white-height);
-			overflow-x: hidden;
+		position: fixed;
+		top: var(--header-height);
+		left: 0;
+		width: var(--sidebar-width);
+		background: var(--nav-background);
+		height: var(--white-height);
+		overflow-x: hidden;
 	}
 `
 const Nav = styled.nav`
 	:root {
-			width: var(--sidebar-width-full);
+		width: var(--sidebar-width-full);
 	}
 `

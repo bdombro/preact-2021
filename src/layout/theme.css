@@ -32,13 +32,6 @@
   --searchbar-background-active: var(--gray2);
 }
 
-body {
-  --white-height: 100vh;
-
-  overflow: hidden;
-  background: var(--white);
-}
-
 .dark {
   --black: white;
   --white: black;
@@ -59,6 +52,9 @@ body {
 }
 
 body {
+  --white-height: 100vh;
+  overflow: hidden;
+  background: var(--white);
   margin: 0;
   max-width: 100%;
   overflow-x: hidden;
@@ -77,7 +73,7 @@ code {
 h1,h2,h3,h4,h5,h6,p,li,.text {
   color: var(--black);
 }
-a, a:active {
+a, a:active, a:focus {
   text-decoration: none;
   color: var(--black);
 }
