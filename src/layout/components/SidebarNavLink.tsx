@@ -6,16 +6,17 @@ import styled from '~/lib/styled'
 
 interface NavLinkProps { path: string, title: string, Icon?: FunctionalComponent }
 
-export default function NavLink({ path, title, Icon = i.Info }: NavLinkProps) {
+export default function NavLink(p: NavLinkProps) {
 	const [{pathname}] = LocationCtx.use()
-	const isActive = path === '/' ? pathname === '/' : pathname.startsWith(path)
+	const isActive = p.path === '/' ? pathname === '/' : pathname.startsWith(p.path)
+	const Icon = p.Icon ?? i.Info
 	return (
 		<NavLinkA
-			href={path + (isActive ? '?stack=reset' : '')}
+			href={p.path + (isActive && 'stack' in p ? '#stack-reset' : '')}
 			class={isActive ? 'active' : ''}
 		>
 			<div><Icon /></div>
-			<NavLinkText>{title}</NavLinkText>
+			<NavLinkText>{p.title}</NavLinkText>
 		</NavLinkA>
 	)
 }

@@ -7,7 +7,7 @@ import {LocationCtx} from '~/lib/router'
 import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
 
-import type { NavLinks } from '../types'
+import type { NavLinkProps, NavLinks } from '../types'
 
 export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolean, navLinks: NavLinks}) {
 	const isWide = useMedia('(min-width: 600px)')
@@ -214,15 +214,14 @@ const NavButtonA = styled.a`
 		color: white
 `
 
-function NavLink({ path, title }: { path: string, title: string }) {
+function NavLink(p: NavLinkProps) {
 	const [_location] = LocationCtx.use()
 	const [isSidebarActive] = SidebarRightCtx.use()
-	const isActive = _location.pathname.startsWith(path)
+	const isActive = _location.pathname.startsWith(p.path)
 	return (
 		<NavLinkA class={isActive && !isSidebarActive ? 'active' : ''}
-			href={path + (isActive ? '?stack=reset' : '')}
-		>
-			<div>{title}</div>
+			href={p.path + (isActive && 'stack' in p ? '#stack-reset' : '')}>
+			<div>{p.title}</div>
 		</NavLinkA>
 	)
 }

@@ -129,14 +129,14 @@ function RouteFactory(props: Omit<RouteType, 'hasBack' | 'hasAccess'> & {hasAcce
 const RouteHistory: Record<string, number> = {}
 function RouteWrapper({ children }: any) {
 	const [_location] = LocationCtx.use()
-	useEffect(installListeners, [])
-	useLayoutEffect(() => { ref.current.style.visibility = 'hidden' }, [_location])
-	useEffect(recall, [_location])
+	useEffect(handleEvents, [])
+	useLayoutEffect(function hide(){ ref.current.style.visibility = 'hidden' }, [_location])
+	useEffect(handleLocationChange, [_location])
 	const ref = useRef<HTMLDivElement>(null)
 
 	return <div style={{visibility: 'hidden'}} ref={ref}>{children}</div>
 
-	function installListeners() {
+	function handleEvents() {
 		const e = document.getElementById('content')
 		if (e) return scrollListener(e, updateScrollPos)
 	}
@@ -145,7 +145,7 @@ function RouteWrapper({ children }: any) {
 		const path = location.pathname + location.search
 		RouteHistory[path] = scrollTop
 	}
-	function recall() {
+	function handleLocationChange() {
 		const path = location.pathname + location.search
 		const e = document.getElementById('content')
 		if (e) {
@@ -169,37 +169,50 @@ type StackHistoryEntry = { location: LocationType, scroll: number }
 type StackHistory = StackHistoryEntry[]
 const StackHistories: Record<string, StackHistory> = {}
 function StackFactory(basePath: string) {
+
+	const baseHistory = { location: { pathname: basePath + '/home', search: '' }, scroll: 0 }
+	class Stack {
+		static reset = () => { StackHistories[basePath] = [baseHistory]; return StackHistories[basePath][0] }
+		static len = () => StackHistories[basePath]?.length ?? 0
+		static top = () => StackHistories[basePath]?.[Stack.len() - 1] || Stack.reset()
+		static pop = () => StackHistories[basePath].pop() || Stack.reset()
+		static push = (entry: StackHistoryEntry) => StackHistories[basePath].push(entry)
+	}
+
 	return function StackHandler({ children }: any) {
 		const [_location] = LocationCtx.use()
-		useLayoutEffect(() => { ref.current.style.visibility = 'hidden' }, [_location])
-		useEffect(installListeners, [basePath, _location])
+		useLayoutEffect(function hide(){ ref.current.style.visibility = 'hidden' }, [_location])
+		useEffect(handleStackEvents, [])
+		useEffect(handleNavChange, [_location])
 		const ref = useRef<HTMLDivElement>(null)
 
 		return <div style={{ visibility: 'hidden' }} ref={ref}>{children}</div>
 
-		function installListeners() {
-			let cancelScrollListen: any = () => null
-			const { pathname, search } = location
-			const baseHistory = { location: { pathname: basePath + '/home', search: '' }, scroll: 0 }
-			class Stack {
-				static reset = () => { StackHistories[basePath] = [baseHistory]; return StackHistories[basePath][0] }
-				static len = () => StackHistories[basePath]?.length ?? 0
-				static top = () => StackHistories[basePath]?.[Stack.len() - 1] || Stack.reset()
-				static pop = () => StackHistories[basePath].pop() || Stack.reset()
-				static push = (entry: StackHistoryEntry) => StackHistories[basePath].push(entry)
+		function handleStackEvents() {
+			window.addEventListener('#stack-reset', resetStack)
+			window.addEventListener('#stack-back', goback)
+			return () => {
+				window.removeEventListener('#stack-reset', resetStack)
+				window.removeEventListener('#stack-back', goback)
 			}
-			const top = Stack.top()
-			const arg = new URLSearchParams(search).get('stack')
-			if (arg === 'reset') {
+			
+			function resetStack() {
 				Stack.reset()
-				nav(basePath, { replace: true })
+				nav(basePath)
 			}
-			else if (arg === 'back') {
+			function goback() {
 				Stack.pop()
 				const back = Stack.top()
-				nav(back.location.pathname + back.location.search, { replace: true })
+				nav(back.location.pathname + back.location.search)
 			}
-			else if (pathname === top.location.pathname && search === top.location.search) {
+		}
+
+		function handleNavChange() {
+			let cancelScrollListen: any = () => null
+			const { pathname, search } = location
+			
+			const top = Stack.top()
+			if (pathname === top.location.pathname && search === top.location.search) {
 				// console.log('top')
 				scrollTo(top.scroll)
 				ref.current.style.visibility = 'visible'

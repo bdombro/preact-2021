@@ -6,7 +6,7 @@ import * as i from '~/lib/icons'
 import {LocationCtx} from '~/lib/router'
 import styled from '~/lib/styled'
 
-import type { NavLinks } from '../types'
+import type { NavLinkProps, NavLinks } from '../types'
 
 
 const useSidebarRight = SidebarRightCtx.use
@@ -34,14 +34,15 @@ const Nav = styled.div`
 `
 
 
-function NavLink({ path, Icon = i.Info }: { path: string, Icon?: FunctionalComponent }) {
+function NavLink(p: NavLinkProps) {
 	const [_location] = LocationCtx.use()
 	const [isSidebarActive] = useSidebarRight()
-	const isActive = _location.pathname.startsWith(path)
+	const isActive = _location.pathname.startsWith(p.path)
+	const Icon = p.Icon ?? i.Info
 	return (
-		<NavLinkA class={isActive && !isSidebarActive ? 'active' : ''}
-			href={path + (isActive ? '?stack=reset' : '')}
-		>
+		<NavLinkA 
+			class={isActive && !isSidebarActive ? 'active' : ''}
+			href={p.path + (isActive && 'stack' in p ? '#stack-reset' : '')}>
 			<div><Icon /></div>
 		</NavLinkA>
 	)

@@ -4,7 +4,7 @@ import { ArrowL } from '~/lib/icons'
 import styled from '~/lib/styled'
 
 export default function BackButton() {
-	return <BackButtonA href="?stack=back">
+	return <BackButtonA href="#stack-back">
 		<ArrowL />
 	</BackButtonA>
 }
