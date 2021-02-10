@@ -14,12 +14,10 @@ export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolea
 	return <NavbarDiv>
 		<div>
 			{sidebarLeft && isWide && <LeftBurger href="#sidebar-toggle"><div>Ξ</div></LeftBurger>}
-			<LogoA href='/' class={sidebarLeft && isWide ? 'withBurger' : ''}>
-				<div>
-					{!sidebarLeft && <i.ReactLogo />}
-					<div>Stacks!</div>
-				</div>
-			</LogoA>
+			<LogoA href='/' class={sidebarLeft && isWide ? 'withBurger' : ''}><div><div>
+				{!sidebarLeft && <i.ReactLogo />}
+				<div>Stacks!</div>
+			</div></div></LogoA>
 			{sidebarLeft && isWide && <SearchBar />}
 		</div>
 
@@ -68,12 +66,12 @@ const LeftBurger = styled.a`
 const LogoA = styled.a`
 	:root
 		transform: rotate(20deg)
-		margin-top: -91px
+		margin-top: -87px
 		margin-left: -14px
 		padding: 100px 9px 100px 14px
-		border: 5px solid var(--header-background)
 	:root>div
 		transform: rotate(-20deg)
+	:root>div>div
 		display: flex
 		flex-direction: row
 		align-items: center
@@ -81,18 +79,18 @@ const LogoA = styled.a`
 		font-weight: bold
 		padding-left: 2px
 	:root:hover
-		background: var(--primary)
+		background: var(--secondary)
 	:root,
 	:root:focus,
 	:root:active
 		color: white
-	:root:active
-		border: 5px solid var(--secondary)
+	:root:active>div>div
+		transform: translateY(2px)
 	:root svg
 		color: hsl(var(--primary-h), var(--primary-s), 70%)
 		margin: 0 6px 0 8px
 	:root.withBurger
-		margin-top: -68px
+		margin-top: -64px
 		padding: 80px 7px
 `
 
@@ -221,7 +219,7 @@ function NavLink(p: NavLinkProps) {
 	return (
 		<NavLinkA class={isActive && !isSidebarActive ? 'active' : ''}
 			href={p.path + (isActive && 'stack' in p ? '#stack-reset' : '')}>
-			<div>{p.title}</div>
+			<div><div>{p.title}</div></div>
 		</NavLinkA>
 	)
 }
@@ -230,18 +228,17 @@ const NavLinkA = styled.a`
 		display: flex
 		flex-direction: row
 		align-items: center
-		margin-top: -60px
-		padding: 80px 14px
+		margin-top: -56px
+		padding: 80px 12px
 		color: white
-		border: 5px solid var(--header-background)
 		box-sizing: border-box
 		transform: rotate(20deg)
 	:root:hover,
 	:root.active
 		background:var(--secondary)
-	:root:active
+	:root:active>div>div
 		color:white
-		border: 5px solid var(--primary)
+		transform: translateY(2px)
 	:root:focus
 		color:white
 	:root>div
