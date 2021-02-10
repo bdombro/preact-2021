@@ -90,7 +90,7 @@ const LogoA = styled.a`
 		color: hsl(var(--primary-h), var(--primary-s), 70%)
 		margin: 0 6px 0 8px
 	:root.withBurger
-		margin-top: -64px
+		margin-top: -63px
 		padding: 80px 7px
 `
 

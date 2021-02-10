@@ -33,6 +33,8 @@ const NavLinkA = styled.a`
 	:root:active
 		background: var(--nav-background-active)
 		color: var(--nav-text-active)
+	:root:active
+		transform: translateY(2px)
 `
 const NavLinkText = styled.div`
 	:root
