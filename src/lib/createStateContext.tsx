@@ -51,9 +51,7 @@ export function createStateContext<T>(defaultInitialVal: T, options: { useHookIs
 
 	function use () { 
 		const state = useContextP(ctx.Context) 
-		if (state == null) {
-			throw new Error('Ctx.use must be used inside a StateProvider.')
-		}
+		if (!state) throw new Error('Ctx.use must be used inside a StateProvider.')
 		if (options.useHookIsReadOnly) {
 			const readonly: [T, StateUpdater<T>] = [state[0], () => { throw new Error('Ctx.use is ready-only') }]
 			return readonly

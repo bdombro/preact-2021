@@ -23,7 +23,7 @@ const SidebarDiv = styled.div`
 		left: 0
 		width: var(--sidebar-width)
 		background: var(--nav-background)
-		height: var(--white-height)
+		height: var(--body-height)
 		overflow-x: hidden
 `
 const Nav = styled.nav`

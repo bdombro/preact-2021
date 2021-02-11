@@ -13,8 +13,8 @@ export default function AdminLayout({ children }: { children: any }) {
 				routes.AdminBlogStack,
 				routes.AdminUserStack,
 				routes.AdminSettingsHome,
-				routes.Support,
 				routes.Logout,
+				routes.Support,
 				{ path: '#theme-toggle', title: 'Theme', Icon: i.Palette },
 			]}
 			bottomLinks={[

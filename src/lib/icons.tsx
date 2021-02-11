@@ -32,6 +32,7 @@ export const Palette =   I(() => import('mdi-paths-split/PaletteOutline'))
 export const Post =      I(() => import('mdi-paths-split/PostOutline'))
 export const ReactLogo = I(() => import('mdi-paths-split/React'))
 export const Search =    I(() => import('mdi-paths-split/Magnify'))
+export const Support =   I(() => import('mdi-paths-split/Lifebuoy'))
 export const Tasks =     I(() => import('mdi-paths-split/OrderBoolAscendingVariant'))
 
 

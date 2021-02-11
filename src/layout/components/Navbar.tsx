@@ -1,11 +1,14 @@
+import '~/lib/forms'
+
 import { h } from 'preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
 import { SidebarRightCtx } from '~/App.context'
 import * as i from '~/lib/icons'
-import {LocationCtx} from '~/lib/router'
+import {LocationCtx, nav} from '~/lib/router'
 import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
+import { Paths } from '~/routes'
 
 import type { NavLinkProps, NavLinks } from '../types'
 
@@ -97,15 +100,18 @@ const LogoA = styled.a`
 function SearchBar() {
 	const [value, setValue] = useState('')
 	const [isFocused, setIsFocused] = useState(false)
+	const ref = useRef<HTMLInputElement>(null)
 	return <SearchBarDiv class={isFocused ? 'focused' : ''}>
 		<form action='search' onSubmit={onSubmit}>
 			<div class='magglass'><i.Search size={20} horizontal /></div>
 			<input
+				name="query"
 				value={value}
 				onInput={e => setValue((e.target as HTMLInputElement).value)}
 				placeholder="Search"
 				onFocus={() => setIsFocused(true)}
 				onBlur={onBlur}
+				ref={ref}
 			/>
 			<a
 				href="#search-clear"
@@ -119,6 +125,7 @@ function SearchBar() {
 	function onBlur(e?: any) {
 		if (e?.relatedTarget?.hash === '#search-clear') setValue('')
 		setIsFocused(false)
+		ref.current.blur()
 	}
 	// I don't think this is ever actually fired due to blur event preventing it,
 	// but just in case it was we handle it.
@@ -127,9 +134,10 @@ function SearchBar() {
 		setValue('')
 		onBlur()
 	}
-	function onSubmit(e: any) {
-		e.preventDefault()
-		alert('You search for: ' + value)
+	function onSubmit() { 
+		setValue('')
+		onBlur()
+		nav((location.pathname.includes('admin') ? Paths.AdminUserStack : Paths.TenantUserStack) + '?q=' + value)
 	}
 }
 const SearchBarDiv = styled.div`

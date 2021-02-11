@@ -25,8 +25,8 @@ export default function MarketingLayout({ children }: { children: any }) {
 				routes.Home,
 				routes.Blog,
 				routes.About,
-				routes.Support,
 				loginNavLink,
+				routes.Support,
 			]}
 		>
 			{children}

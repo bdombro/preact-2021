@@ -1,6 +1,6 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 
-const nonRouteExtensions = 'js|css|ico|png|jpg|svg|json|map'
+const nonRouteExtensions = 'js|css|ico|png|jpg|svg|json|map|txt'
 
 const isProd = process.env.NODE_ENV === 'production'
 

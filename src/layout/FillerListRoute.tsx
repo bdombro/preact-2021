@@ -1,18 +1,26 @@
 import { h } from 'preact'
 
-import type { RouteType } from '~/lib/router'
+import { nav, RouteType } from '~/lib/router'
+import styled from '~/lib/styled'
 
-import BackButton from './components/BackButton'
+import PaddedPage from './components/PaddedPage'
 
-export default function FillerEntryFactory({ route }: { route: RouteType }) {
-	const entryPath = location.pathname.split('/').slice(0, -1).join('/') + '/entry'
-	return <div style={{ padding: '0 10px' }}>
-		<BackButton />
-		<h1 style={{marginTop:40}}>Hello, {route.title}!</h1>
+export default function FillerListFactory({ route }: { route: RouteType }) {
+	const stackPath = location.pathname.split('/').slice(0, -1).join('/')
+	const createPath = stackPath + '/create'
+	const entryPath = stackPath + '/entry'
+	return <PaddedPage>
+		<h1>
+			{route.title}
+			<AddNewButton onClick={() => nav(createPath)}>Add New</AddNewButton>
+		</h1>
 		<ul>
-			<li><a href={entryPath + '?id=' + Math.random()} >Random Entry 1</a></li>
-			<li><a href={entryPath + '?id=' + Math.random()} >Random Entry 2</a></li>
-			<li><a href={entryPath + '?id=' + Math.random()} >Random Entry 3</a></li>
+			<li><RandomEntryA /></li>
+			<li><RandomEntryA /></li>
+			<li><RandomEntryA /></li>
+			<li><RandomEntryA /></li>
+			<li><RandomEntryA /></li>
+			<li><RandomEntryA /></li>
 		</ul>
 		<p>
 			<br /><br /><br /><br /><br />1<br /><br /><br /><br /><br />2
@@ -23,5 +31,16 @@ export default function FillerEntryFactory({ route }: { route: RouteType }) {
 			<br /><br /><br /><br /><br />b<br /><br /><br /><br /><br />c
 			<br />Bottom
 		</p>
-	</div>
+	</PaddedPage>
+
+	function RandomEntryA() {
+		const id = `${route.title[0]}-${Math.ceil(Math.random() * 100)}`
+		return <a href={`${entryPath}?id=${id}`} >{id}</a>
+	}
 }
+const AddNewButton = styled.button`
+	:root
+		position: relative
+		top: -4px
+		left: .7rem
+`

@@ -5,7 +5,6 @@ import {setPageMeta} from '~/lib/router'
 import styled from '~/lib/styled'
 
 export default function NotFound() {
-	setPageMeta({ title: '404 Not Found' })
 	return <NotFoundDiv>
 		<div>
 			<div><img src="/notfound.png" width="300" height="300" /></div>

@@ -2,9 +2,11 @@ import { h } from 'preact'
 
 import type { RouteType } from '~/lib/router'
 
+import PaddedPage from './components/PaddedPage'
+
 export default function FillerPageFactory({ route }: { route: RouteType }) {
-	return <div style={{ padding: '0 10px' }}>
-		<h1>Hello, {route.title}!</h1>
+	return <PaddedPage>
+		<h1>{route.title}</h1>
 		<p>
 			<br /><br /><br /><br /><br />1<br /><br /><br /><br /><br />2
 			<br /><br /><br /><br /><br />3<br /><br /><br /><br /><br />4
@@ -14,5 +16,5 @@ export default function FillerPageFactory({ route }: { route: RouteType }) {
 			<br /><br /><br /><br /><br />b<br /><br /><br /><br /><br />c
 			<br />Bottom
 		</p>
-	</div>
+	</PaddedPage>
 }

@@ -191,9 +191,11 @@ function StackFactory(basePath: string) {
 		function handleStackEvents() {
 			window.addEventListener('#stack-reset', resetStack)
 			window.addEventListener('#stack-back', goback)
+			window.addEventListener('#stack-pop', pop)
 			return () => {
 				window.removeEventListener('#stack-reset', resetStack)
 				window.removeEventListener('#stack-back', goback)
+				window.removeEventListener('#stack-pop', pop)
 			}
 			
 			function resetStack() {
@@ -204,6 +206,9 @@ function StackFactory(basePath: string) {
 				Stack.pop()
 				const back = Stack.top()
 				nav(back.location.pathname + back.location.search)
+			}
+			function pop() {
+				Stack.pop()
 			}
 		}
 
@@ -265,7 +270,7 @@ function Redirect(to: string) {
  * be part of your layout, like in BlankLayout below.
  */
 function ContentDiv(props: { children: ComponentChildren }) {
-	return <div id="content" style={{ height: 'var(--white-height)', overflow: 'hidden auto', position: 'relative' }} {...props} />
+	return <div id="content" style={{ height: 'var(--body-height)', overflow: 'hidden auto', position: 'relative' }} {...props} />
 }
 
 /**

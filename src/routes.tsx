@@ -1,5 +1,7 @@
+import {h} from 'preact'
+
+import FillerCreateRoute from '~/layout/FillerCreateRoute'
 import FillerEntryRoute from '~/layout/FillerEntryRoute'
-import FillerHomeRoute from '~/layout/FillerHomeRoute'
 import FillerListRoute from '~/layout/FillerListRoute'
 import FillerPageRoute from '~/layout/FillerPageRoute'
 import * as i from '~/lib/icons'
@@ -63,7 +65,7 @@ export const routes = Object.freeze({
 	}),
 	Support: RouteFactory({
 		title: 'Support',
-		Icon: i.Info,
+		Icon: i.Support,
 		path: '/support',
 		Component: FillerPageRoute,
 		Layout: MarketingLayout,
@@ -104,8 +106,8 @@ export const routes = Object.freeze({
 	}),
     
 	AdminStatsStack: RouteFactory({
-		title: 'Stats',
-		Icon: i.Counter,
+		title: 'Dashboard',
+		Icon: i.Home,
 		path: '/admin/stats',
 		Component: PassThrough,
 		Layout: AdminLayout,
@@ -113,8 +115,8 @@ export const routes = Object.freeze({
 		hasAccess: isAdmin,
 	}),
 	AdminStatsHome: RouteFactory({
-		title: 'Stats',
-		Icon: i.Counter,
+		title: 'Dashboard',
+		Icon: i.Home,
 		path: '/admin/stats/home',
 		Component: FillerPageRoute,
 		Layout: AdminLayout,
@@ -131,29 +133,29 @@ export const routes = Object.freeze({
 		stack: '/admin/users',
 		hasAccess: isAdmin,
 	}),
-	AdminUserHome: RouteFactory({
+	AdminUserList: RouteFactory({
 		title: 'Users',
 		Icon: i.Auth,
 		path: '/admin/users/home',
-		Component: FillerHomeRoute,
-		Layout: AdminLayout,
-		stack: '/admin/users',
-		hasAccess: isAdmin,
-	}),
-	AdminUserList: RouteFactory({
-		title: 'User List',
-		Icon: i.Auth,
-		path: '/admin/users/list',
 		Component: FillerListRoute,
 		Layout: AdminLayout,
 		stack: '/admin/users',
 		hasAccess: isAdmin,
 	}),
 	AdminUserEntry: RouteFactory({
-		title: '',
+		title: 'User',
 		Icon: i.Auth,
 		path: '/admin/users/entry',
 		Component: FillerEntryRoute,
+		Layout: AdminLayout,
+		stack: '/admin/users',
+		hasAccess: isAdmin,
+	}),
+	AdminUserCreate: RouteFactory({
+		title: 'Create User',
+		Icon: i.Auth,
+		path: '/admin/users/create',
+		Component: FillerCreateRoute,
 		Layout: AdminLayout,
 		stack: '/admin/users',
 		hasAccess: isAdmin,
@@ -168,26 +170,17 @@ export const routes = Object.freeze({
 		stack: '/admin/blog',
 		hasAccess: isAdmin,
 	}),
-	AdminBlogHome: RouteFactory({
-		title: 'Blog',
-		Icon: i.Post,
-		path: '/admin/blog/home',
-		Component: FillerHomeRoute,
-		Layout: AdminLayout,
-		stack: '/admin/blog',
-		hasAccess: isAdmin,
-	}),
 	AdminBlogPostList: RouteFactory({
 		title: 'Posts',
 		Icon: i.Post,
-		path: '/admin/blog/list',
+		path: '/admin/blog/home',
 		Component: FillerListRoute,
 		Layout: AdminLayout,
 		stack: '/admin/blog',
 		hasAccess: isAdmin,
 	}),
 	AdminBlogPostEntry: RouteFactory({
-		title: '',
+		title: 'Post',
 		Icon: i.Post,
 		path: '/admin/blog/entry',
 		Component: FillerEntryRoute,
@@ -218,18 +211,18 @@ export const routes = Object.freeze({
 		hasAccess: isTenant,
 	}),
 
-	TenantStatsStack: RouteFactory({
-		title: 'Stats',
-		Icon: i.Counter,
+	TenantDashboardStack: RouteFactory({
+		title: 'Dashboard',
+		Icon: i.Home,
 		path: '/tenant/stats',
 		Component: PassThrough,
 		Layout: TenantLayout,
 		stack: '/tenant/stats',
 		hasAccess: isTenant,
 	}),
-	TenantStatsHome: RouteFactory({
-		title: 'Stats',
-		Icon: i.Counter,
+	TenantDashboardHome: RouteFactory({
+		title: 'Dashboard',
+		Icon: i.Home,
 		path: '/tenant/stats/home',
 		Component: FillerPageRoute,
 		Layout: TenantLayout,
@@ -246,26 +239,17 @@ export const routes = Object.freeze({
 		stack: '/tenant/users',
 		hasAccess: isTenant,
 	}),
-	TenantUserHome: RouteFactory({
+	TenantUserList: RouteFactory({
 		title: 'Users',
 		Icon: i.Auth,
 		path: '/tenant/users/home',
-		Component: FillerHomeRoute,
-		Layout: TenantLayout,
-		stack: '/tenant/users',
-		hasAccess: isTenant,
-	}),
-	TenantUserList: RouteFactory({
-		title: 'User List',
-		Icon: i.Auth,
-		path: '/tenant/users/list',
 		Component: FillerListRoute,
 		Layout: TenantLayout,
 		stack: '/tenant/users',
 		hasAccess: isTenant,
 	}),
 	TenantUserEntry: RouteFactory({
-		title: '',
+		title: 'User',
 		Icon: i.Auth,
 		path: '/tenant/users/entry',
 		Component: FillerEntryRoute,
@@ -283,26 +267,17 @@ export const routes = Object.freeze({
 		stack: '/tenant/properties',
 		hasAccess: isTenant,
 	}),
-	TenantPropertyHome: RouteFactory({
+	TenantPropertyList: RouteFactory({
 		title: 'Properties',
 		Icon: i.Building,
 		path: '/tenant/properties/home',
-		Component: FillerHomeRoute,
-		Layout: TenantLayout,
-		stack: '/tenant/properties',
-		hasAccess: isTenant,
-	}),
-	TenantPropertyList: RouteFactory({
-		title: 'Property List',
-		Icon: i.Building,
-		path: '/tenant/properties/list',
 		Component: FillerListRoute,
 		Layout: TenantLayout,
 		stack: '/tenant/properties',
 		hasAccess: isTenant,
 	}),
 	TenantPropertyEntry: RouteFactory({
-		title: '',
+		title: 'Property',
 		Icon: i.Building,
 		path: '/tenant/properties/entry',
 		Component: FillerEntryRoute,
@@ -320,26 +295,17 @@ export const routes = Object.freeze({
 		stack: '/tenant/tasks',
 		hasAccess: isTenant,
 	}),
-	TenantTaskHome: RouteFactory({
+	TenantTaskList: RouteFactory({
 		title: 'Tasks',
 		Icon: i.Tasks,
 		path: '/tenant/tasks/home',
-		Component: FillerHomeRoute,
-		Layout: TenantLayout,
-		stack: '/tenant/tasks',
-		hasAccess: isTenant,
-	}),
-	TenantTaskList: RouteFactory({
-		title: 'Task List',
-		Icon: i.Tasks,
-		path: '/tenant/tasks/list',
 		Component: FillerListRoute,
 		Layout: TenantLayout,
 		stack: '/tenant/tasks',
 		hasAccess: isTenant,
 	}),
 	TenantTaskEntry: RouteFactory({
-		title: '',
+		title: 'Task',
 		Icon: i.Tasks,
 		path: '/tenant/tasks/entry',
 		Component: FillerEntryRoute,
@@ -349,7 +315,7 @@ export const routes = Object.freeze({
 	}),
 
 	NotFound: RouteFactory({
-		title: 'Not Found',
+		title: '404 Not Found',
 		path: '/notfound',
 		Component: lazy(() => import('~/pages/NotFound')),
 	}),

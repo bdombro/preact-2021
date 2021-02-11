@@ -9,24 +9,24 @@ export default function TenantLayout({ children }: { children: any }) {
 		<SidebarLayout
 			topLinks={[routes.Support]}
 			rightLinks={[
-				routes.TenantStatsStack,
+				routes.TenantDashboardStack,
 				routes.TenantTaskStack,
 				routes.TenantPropertyStack,
 				routes.TenantUserStack,
 				routes.TenantSettingsHome,
-				routes.Support,
 				routes.Logout,
+				routes.Support,
 				{ path: '#theme-toggle', title: 'Theme', Icon: i.Palette },
 			]}
 			bottomLinks={[
-				routes.TenantStatsStack,
+				routes.TenantDashboardStack,
 				routes.TenantTaskStack,
 				routes.TenantPropertyStack,
 				routes.TenantUserStack,
 				routes.TenantSettingsHome,
 			]}
 			leftLinks={[
-				routes.TenantStatsStack,
+				routes.TenantDashboardStack,
 				routes.TenantTaskStack,
 				routes.TenantPropertyStack,
 				routes.TenantUserStack,

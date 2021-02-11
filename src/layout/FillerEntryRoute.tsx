@@ -1,17 +1,19 @@
 import { h } from 'preact'
 
+import qs from '~/lib/queryStrings'
 import {PageMetaCtx, RouteType} from '~/lib/router'
+import styled from '~/lib/styled'
 
 import BackButton from './components/BackButton'
+import PaddedPage from './components/PaddedPage'
 
 export default function FillerEntryFactory({ route }: { route: RouteType }) {
-	const id = new URLSearchParams(location.search).get('id')
-	PageMetaCtx.set({ title: `${name} ${id}` })
-	return <div style={{padding: '0 10px'}}>
-		<BackButton />
-		<h1 style={{ marginTop: 40 }}>Hello, {route.title}:{id}!</h1>
+	const {id} = qs.parse<Record<string,string>>()
+	PageMetaCtx.set({ title: id })
+	return <PaddedPage>
+		<h1><BackButton />{id}!</h1>
 		<ul>
-			<li><a href={location.pathname + '?id=' + Math.random()} >Random Post</a></li>
+			<li><RandomEntryA /></li>
 		</ul>
 		<p>
 			<br /><br /><br /><br /><br />1<br /><br /><br /><br /><br />2
@@ -22,5 +24,10 @@ export default function FillerEntryFactory({ route }: { route: RouteType }) {
 			<br /><br /><br /><br /><br />b<br /><br /><br /><br /><br />c
 			<br />Bottom
 		</p>
-	</div>
+	</PaddedPage>
+
+	function RandomEntryA() {
+		const id = `${route.title[0]}-${Math.ceil(Math.random() * 100)}`
+		return <a href={`${location.pathname}?id=${id}`} >{id}</a>
+	}
 }

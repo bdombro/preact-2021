@@ -21,6 +21,13 @@
   --gray2: hsl(0, 0%, 90%);
   --gray3: hsl(0, 0%, 87%);
   --gray4: hsl(0, 0%, 80%);
+  --gray5: hsl(0, 0%, 70%);
+  --gray6: hsl(0, 0%, 60%);
+  --gray7: hsl(0, 0%, 50%);
+  --gray8: hsl(0, 0%, 40%);
+  --gray9: hsl(0, 0%, 30%);
+  --gray10: hsl(0, 0%, 20%);
+  --gray11: hsl(0, 0%, 10%);
   --links: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 20% ));
   --links-hover: var(--primary);
   --header-background: hsl(0, 0%, 0%);
@@ -39,6 +46,13 @@
   --gray2: hsl(0, 0%, 12%);
   --gray3: hsl(0, 0%, 20%);
   --gray4: hsl(0, 0%, 24%);
+  --gray5: hsl(0, 0%, 30%);
+  --gray6: hsl(0, 0%, 40%);
+  --gray7: hsl(0, 0%, 50%);
+  --gray8: hsl(0, 0%, 60%);
+  --gray9: hsl(0, 0%, 70%);
+  --gray10: hsl(0, 0%, 80%);
+  --gray11: hsl(0, 0%, 90%);
   --links: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 47% ));
   --links-hover: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 40% ));
   --header-background: hsl(0, 0%, 40%);
@@ -52,7 +66,7 @@
 }
 
 body {
-  --white-height: 100vh;
+  --body-height: 100vh;
   overflow: hidden;
   background: var(--white);
   margin: 0;
@@ -84,4 +98,68 @@ p a, li a, .body-link {
 }
 p a:hover, li a:hover, .body-link:hover {
   color: var(--links-hover);
+}
+
+html {
+  font-size: 15px;
+}
+h1 {
+  font-size: 1.6rem
+}
+h2 {
+  font-size: 1.5rem
+}
+h3 {
+  font-size: 1.4rem
+}
+h4 {
+  font-size: 1.3rem
+}
+h5 {
+  font-size: 1.2rem
+}
+h6 {
+  font-size: 1.1rem
+}
+
+button, a.button {
+  font-weight: bold;
+  padding: .2rem .4rem;
+  color: var(--primary);
+  border: 1px solid var(--gray4);
+  border-radius: 2px;
+  cursor: pointer;
+  background: var(--gray1);
+}
+button:hover, a.button:hover {
+  background: var(--gray3);
+}
+button:active, a.button:active {
+  transform: translateY(2px);
+}
+button:focus, a.button:focus {
+  outline: none;
+}
+.dark button,.dark a.button {
+  color: var(--links);
+  background: var(--gray2);
+}
+.dark button:hover,.dark a.button:hover {
+  background: var(--gray3);
+}
+button.primary, a.button.primary {
+  color: white;
+  background: var(--primary);
+  border: 1px solid var(--primary);
+}
+button.primary:hover, a.button.primary:hover {
+  background: var(--primary-hover);
+}
+button.secondary, a.button.secondary {
+  color: white;
+  background: var(--secondary);
+  border: 1px solid var(--secondary);
+}
+button.secondary:hover, a.button.secondary:hover {
+  background: var(--secondary-hover);
 }
