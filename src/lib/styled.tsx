@@ -79,6 +79,30 @@ styled.nav = function nav(strings: TemplateStringsArray, ...placeHolders: string
 		return <nav {...p} class={combineClasses(root,p.class,p.className)} />
 	}
 }
+styled.span = function span(strings: TemplateStringsArray, ...placeHolders: string[]) {
+	const root = styled`${assembleTemplateString(strings, placeHolders)}`
+	return function C(p: h.JSX.HTMLAttributes<HTMLSpanElement>) {
+		return <span {...p} class={combineClasses(root, p.class, p.className)} />
+	}
+}
+styled.table = function table(strings: TemplateStringsArray, ...placeHolders: string[]) {
+	const root = styled`${assembleTemplateString(strings, placeHolders)}`
+	return function C(p: h.JSX.HTMLAttributes<HTMLTableElement>) {
+		return <table {...p} class={combineClasses(root, p.class, p.className)} />
+	}
+}
+styled.td = function td(strings: TemplateStringsArray, ...placeHolders: string[]) {
+	const root = styled`${assembleTemplateString(strings, placeHolders)}`
+	return function C(p: h.JSX.HTMLAttributes<HTMLTableDataCellElement>) {
+		return <td {...p} class={combineClasses(root, p.class, p.className)} />
+	}
+}
+styled.tr = function tr(strings: TemplateStringsArray, ...placeHolders: string[]) {
+	const root = styled`${assembleTemplateString(strings, placeHolders)}`
+	return function C(p: h.JSX.HTMLAttributes<HTMLTableRowElement>) {
+		return <tr {...p} class={combineClasses(root, p.class, p.className)} />
+	}
+}
 styled.textarea = function textarea(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
 	return function C(p: h.JSX.HTMLAttributes<HTMLTextAreaElement>) {

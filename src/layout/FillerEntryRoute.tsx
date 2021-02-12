@@ -13,7 +13,7 @@ export default function FillerEntryFactory({ route }: { route: RouteType }) {
 	return <PaddedPage>
 		<h1><BackButton />{id}!</h1>
 		<ul>
-			<li><RandomEntryA /></li>
+			<li>Goto <RandomEntryA /></li>
 		</ul>
 		<p>
 			<br /><br /><br /><br /><br />1<br /><br /><br /><br /><br />2
@@ -27,7 +27,7 @@ export default function FillerEntryFactory({ route }: { route: RouteType }) {
 	</PaddedPage>
 
 	function RandomEntryA() {
-		const id = `${route.title[0]}-${Math.ceil(Math.random() * 100)}`
+		const id = `Nancy Smith${Math.ceil(Math.random() * 100)}`
 		return <a href={`${location.pathname}?id=${id}`} >{id}</a>
 	}
 }

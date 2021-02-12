@@ -29,6 +29,7 @@ if (ls.get('SidebarLeftCtx') === 'mini') bc.add('miniSidebar')
 
 export const SidebarRightCtx = createStateContext(false)
 navListener(() => SidebarRightCtx.set(false))
+ThemeCtx.subscribe(() => SidebarRightCtx.set(false))
 
 
 // AuthCtx: user id and roles

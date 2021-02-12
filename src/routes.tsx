@@ -188,6 +188,15 @@ export const routes = Object.freeze({
 		stack: '/admin/blog',
 		hasAccess: isAdmin,
 	}),
+	AdminBlogPostCreate: RouteFactory({
+		title: 'Create Post',
+		Icon: i.Post,
+		path: '/admin/blog/create',
+		Component: FillerCreateRoute,
+		Layout: AdminLayout,
+		stack: '/admin/blog',
+		hasAccess: isAdmin,
+	}),
 
 
 
@@ -257,6 +266,15 @@ export const routes = Object.freeze({
 		stack: '/tenant/users',
 		hasAccess: isTenant,
 	}),
+	TenantUserCreate: RouteFactory({
+		title: 'Create User',
+		Icon: i.Auth,
+		path: '/tenant/users/create',
+		Component: FillerCreateRoute,
+		Layout: TenantLayout,
+		stack: '/tenant/users',
+		hasAccess: isTenant,
+	}),
 
 	TenantPropertyStack: RouteFactory({
 		title: 'Properties',
@@ -285,6 +303,15 @@ export const routes = Object.freeze({
 		stack: '/tenant/properties',
 		hasAccess: isTenant,
 	}),
+	TenantPropertyCreate: RouteFactory({
+		title: 'Create Property',
+		Icon: i.Building,
+		path: '/tenant/properties/create',
+		Component: FillerCreateRoute,
+		Layout: TenantLayout,
+		stack: '/tenant/properties',
+		hasAccess: isTenant,
+	}),
 
 	TenantTaskStack: RouteFactory({
 		title: 'Tasks',
@@ -309,6 +336,15 @@ export const routes = Object.freeze({
 		Icon: i.Tasks,
 		path: '/tenant/tasks/entry',
 		Component: FillerEntryRoute,
+		Layout: TenantLayout,
+		stack: '/tenant/tasks',
+		hasAccess: isTenant,
+	}),
+	TenantTaskCreate: RouteFactory({
+		title: 'Create Task',
+		Icon: i.Tasks,
+		path: '/tenant/tasks/create',
+		Component: FillerCreateRoute,
 		Layout: TenantLayout,
 		stack: '/tenant/tasks',
 		hasAccess: isTenant,

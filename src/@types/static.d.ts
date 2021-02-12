@@ -11,7 +11,6 @@ interface ImportMeta {
   }
 }
 
-
 /* CSS MODULES */
 declare module '*.module.css' {
   const classes: { [key: string]: string }

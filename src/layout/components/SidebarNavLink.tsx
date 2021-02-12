@@ -28,6 +28,7 @@ const NavLinkA = styled.a`
 		flex-direction: row
 	:root:hover
 		background: var(--nav-background-hover)
+		text-decoration: none
 	:root.active,
 	:root.active:hover,
 	:root:active

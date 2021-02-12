@@ -55,6 +55,9 @@ const SidebarLayoutDiv = styled.div`
 		--body-height: calc( 100vh - var(--header-height) )
 		--margin-bottom: 0
 		--margin-left: var(--sidebar-width)
+	@media (max-width: 900px)
+		:root
+			--sidebar-width-full: 180px
 	@media (max-width: 600px)
 		:root
 			--header-height: 0

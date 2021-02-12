@@ -49,6 +49,8 @@ const NavbarDiv = styled.div`
 		height:var(--header-height)
 		display:flex
 		flex-direction:row
+	:root :hover
+		text-decoration: none;
 `
 const LeftBurger = styled.a`
 	:root
@@ -63,6 +65,7 @@ const LeftBurger = styled.a`
 		color: white
 	:root:hover
 		background: var(--primary)
+		color: white
 	:root:active>div
 		transform: translateY(2px)
 `
@@ -85,7 +88,8 @@ const LogoA = styled.a`
 		background: var(--secondary)
 	:root,
 	:root:focus,
-	:root:active
+	:root:active,
+	:root:hover
 		color: white
 	:root:active>div>div
 		transform: translateY(2px)
@@ -107,7 +111,7 @@ function SearchBar() {
 			<input
 				name="query"
 				value={value}
-				onInput={e => setValue((e.target as HTMLInputElement).value)}
+				onInput={(e: any) => setValue(e.target.value)}
 				placeholder="Search"
 				onFocus={() => setIsFocused(true)}
 				onBlur={onBlur}
@@ -137,7 +141,7 @@ function SearchBar() {
 	function onSubmit() { 
 		setValue('')
 		onBlur()
-		nav((location.pathname.includes('admin') ? Paths.AdminUserStack : Paths.TenantUserStack) + '?q=' + value)
+		nav((location.pathname.includes('admin') ? Paths.AdminUserList : Paths.TenantUserList) + '?search=' + value)
 	}
 }
 const SearchBarDiv = styled.div`
@@ -152,7 +156,7 @@ const SearchBarDiv = styled.div`
 	:root input
 		box-sizing: border-box
 		width: 100%
-		font-size: .8em
+		line-height: 1rem
 		padding: .6em 1em .6em 3em
 		background: var(--searchbar-background)
 		color: var(--primary)
@@ -180,7 +184,7 @@ const SearchBarDiv = styled.div`
 		color: var(--primary)
 		position: absolute
 		right: 10px
-		top: 2px
+		top: 4px
 		font-size: 1.2em
 	.dark :root .clear
 		color: hsl(0,0%,80%)
@@ -212,6 +216,7 @@ const NavButtonA = styled.a`
 		color: white
 		background: var(--primary)
 	:root:hover
+		color: white
 		background: var(--primary-hover)
 	:root:active
 		color:white
@@ -247,7 +252,7 @@ const NavLinkA = styled.a`
 	:root:active>div>div
 		color:white
 		transform: translateY(2px)
-	:root:focus
+	:root:focus, :root:hover
 		color:white
 	:root>div
 		transform: rotate(-20deg)
@@ -293,7 +298,8 @@ const NavBurgerA = styled.a`
 	:root.active
 		background: var(--primary)
 	:root:focus,
-	:root:active
+	:root:active,
+	:root:hover
 		color: white
 	:root:active>div
 		transform: translateY(2px)

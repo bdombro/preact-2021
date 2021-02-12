@@ -16,7 +16,7 @@ export default function FillerCreateFactory({ route }: { route: RouteType }) {
 	</PaddedPage>
 
 	function onSubmit(e: any) {
-		const id = `${route.title[0]}-${Math.ceil(Math.random() * 100)}`
+		const id = `Nancy Smith${Math.ceil(Math.random() * 100)}`
 		window.dispatchEvent(new Event('#stack-pop'))
 		nav(`${entryPath}?id=${id}`, { replace: true }) 
 	}

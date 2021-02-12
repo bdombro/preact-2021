@@ -325,7 +325,7 @@ function navListener(callback: () => any) {
  * nav: Helper to navigate to a new page
  */
 function nav(to: string, { replace = false } = {}) {
-	history[replace ? 'replaceState' : 'pushState'](Date.now(), '', to)
+	history[replace ? 'replaceState' : 'pushState'](Date.now(), '', to || location.pathname)
 }
 if (!history.state) nav(location.pathname + location.search, { replace: true })
 
@@ -462,7 +462,7 @@ export function CtxProviders({ children }: { children: ComponentChildren }) {
 		for (const type of ['pushState', 'replaceState']) {
 			const original = (history as any)[type]
 
-					; (history as any)[type] = function (...props: any) {
+			;(history as any)[type] = function (...props: any) {
 				const result = original.apply(this, props)
 				const event = new Event(type);
 				(event as any).arguments = props
