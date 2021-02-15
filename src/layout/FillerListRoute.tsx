@@ -1,5 +1,6 @@
 import { h } from 'preact'
 
+import { ToastCtx } from '~/App.context'
 import { nav, RouteType } from '~/lib/router'
 import styled from '~/lib/styled'
 
@@ -27,7 +28,7 @@ export default function FillerListFactory({ route }: { route: RouteType }) {
 				{ title: 'Administrator', count: 16 },
 			]}
 			bulkOptions={[
-				{ title: 'Delete', cb(selection) { alert(`Deleted ${selection.length} items`) } }
+				{ title: 'Delete', cb(selection) { ToastCtx.set({ message: `Deleted ${selection.length} items`, icon: 'success', location: 'right' }) } }
 			]}
 			pages={4}
 			total={16}

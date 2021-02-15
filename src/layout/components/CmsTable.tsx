@@ -1,6 +1,7 @@
 import { ComponentChildren, h } from 'preact'
 import { useState } from 'preact/hooks'
 
+import { ToastCtx } from '~/App.context'
 import * as i from '~/lib/icons'
 import qs from '~/lib/queryStrings'
 import { nav } from '~/lib/router'
@@ -50,7 +51,7 @@ export default function CmsTable(p: {
 		function onSubmit(e: any) {
 			const next = new FormData(e.target).get('search')
 			if (next === (q.search || ''))
-				alert('Search is same')
+				ToastCtx.set({ message: 'Search query hasn\'t changed', icon: 'error', location: 'bottom'})
 			else
 				nav(qs.create({ search: next }, { upsert: true }))
 		}
@@ -92,7 +93,7 @@ export default function CmsTable(p: {
 				onClick={(e: any) => {
 					if (pageTo === pageInt) {
 						e.preventDefault()
-						alert(`You're already on the ${pageTo === 1 ? 'first' : 'last'} page`)
+						ToastCtx.set({ message: `You're already on the ${pageTo === 1 ? 'first' : 'last'} page`, icon: 'error', location: 'bottom' })
 					}
 				}}
 				href={qs.create({ page: pageTo !== 1 ? pageTo : null }, { upsert: true }) || location.pathname}>
@@ -109,9 +110,10 @@ export default function CmsTable(p: {
 		</BulkActionsFormDiv>
 
 		function onClick() {
-			if (action === '-1') return alert('No action selected')
-			if (!checked.size) return alert('No rows selected')
+			if (action === '-1') return ToastCtx.set({ message: 'No action selected', icon: 'error', location: 'bottom' })
+			if (!checked.size) return ToastCtx.set({ message: 'No rows selected', icon: 'error', location: 'bottom' })
       p.bulkOptions?.find(o => o.title === action)!.cb([...checked])
+      setChecked(new Set())
 		}
 	}
 	function HeadRow() {

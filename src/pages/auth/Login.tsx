@@ -1,6 +1,6 @@
 import { Fragment as F, h } from 'preact'
 
-import { AuthCtx } from '~/App.context'
+import { AuthCtx, ToastCtx } from '~/App.context'
 import { Paths } from '~/routes'
 
 export default function Login() {
@@ -18,6 +18,12 @@ export default function Login() {
 		</ul>
 	</F>
 
-	function onAdminLogin() {AuthCtx.loginAsAdmin()}
-	function onTenantLogin() {AuthCtx.loginAsTenant()}
+	function onAdminLogin() {
+		AuthCtx.loginAsAdmin()
+		ToastCtx.set({ message: 'Welcome, admin!', location: 'right' })
+	}
+	function onTenantLogin() {
+		AuthCtx.loginAsTenant()
+		ToastCtx.set({ message: 'Welcome, tenant!', location: 'right' })
+	}
 }

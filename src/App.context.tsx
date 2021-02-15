@@ -1,5 +1,6 @@
-import { ComponentChildren, FunctionComponent, h } from 'preact'
+import { ComponentChildren, h } from 'preact'
 
+import type { ToastProps } from './layout/components/Toast'
 import { createStateContext } from './lib/createStateContext'
 import { navListener } from './lib/router'
 
@@ -15,6 +16,9 @@ export const ThemeCtx = createStateContext(ls.get('ThemeCtx') === 'dark' ? 'dark
 window.addEventListener('#theme-toggle', () => ThemeCtx.set(current => current === 'dark' ? 'light' : 'dark'))
 ThemeCtx.subscribe(next => ls.set('ThemeCtx', next))
 
+// ToastCtx: display a Toast at the bottom or right of the page
+
+export const ToastCtx = createStateContext<ToastProps>({ location: 'right', message: '', duration: 2e3 })
 
 // SidebarLeftCtx: can be full | mini, persists to disk, and can be toggled with #sidebar-toggle event
 
@@ -55,7 +59,9 @@ export function CtxProviders ({children}: {children: ComponentChildren}) {
 			<ThemeCtx.Provider>
 				<SidebarLeftCtx.Provider>
 					<SidebarRightCtx.Provider>
-						{children}
+						<ToastCtx.Provider>
+							{children}
+						</ToastCtx.Provider>
 					</SidebarRightCtx.Provider>
 				</SidebarLeftCtx.Provider>
 			</ThemeCtx.Provider>

@@ -4,6 +4,7 @@ import { h } from 'preact'
 
 import { CtxProviders } from './App.context'
 import {ErrorBoundary, UnhandledErrorNotification} from './layout/components/ErrorBoundaries'
+import { ToastFromContext } from './layout/components/Toast'
 import { RouterComponent as Router } from './lib/router'
 import { routesByPath } from './routes'
 
@@ -13,6 +14,7 @@ export default function App() {
 			<CtxProviders>
 				<UnhandledErrorNotification />
 				<Router routesByPath={routesByPath} />
+				<ToastFromContext />
 			</CtxProviders>
 		</ErrorBoundary>
 	)

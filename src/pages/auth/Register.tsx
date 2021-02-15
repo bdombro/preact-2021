@@ -1,6 +1,6 @@
 import { Fragment as F, h } from 'preact'
 
-import { AuthCtx } from '~/App.context'
+import { AuthCtx, ToastCtx } from '~/App.context'
 import { Paths } from '~/routes'
 
 export default function Register() {
@@ -16,6 +16,12 @@ export default function Register() {
 		</ul>
 	</F>
 
-	function onAdminReg() { AuthCtx.loginAsAdmin() }
-	function onTenantReg() { AuthCtx.loginAsTenant() }
+	function onAdminReg() {
+		AuthCtx.loginAsAdmin()
+		ToastCtx.set({ message: 'Welcome, admin!', location: 'right' })
+	}
+	function onTenantReg() {
+		AuthCtx.loginAsTenant()
+		ToastCtx.set({ message: 'Welcome, tenant!', location: 'right' })
+	}
 }

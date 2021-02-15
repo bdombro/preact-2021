@@ -16,8 +16,9 @@ document.head.innerHTML += `<style type="text/css">
 
 
 // The Icons
-
+const I = IconFactory
 export const Account =		I(() => import('mdi-paths-split/CardAccountDetailsOutline'))
+export const Alert = 			I(() => import('mdi-paths-split/AlertOutline'))
 export const ArrowL =			I(() => import('mdi-paths-split/ArrowLeft'))
 export const ArrowR =			I(() => import('mdi-paths-split/ArrowRight'))
 export const Auth =				I(() => import('mdi-paths-split/ShieldAccountOutline'))
@@ -27,6 +28,7 @@ export const CarrotDown =	I(() => import('mdi-paths-split/MenuDown'))
 export const CarrotLeft = I(() => import('mdi-paths-split/MenuLeft'))
 export const CarrotRight= I(() => import('mdi-paths-split/MenuRight'))
 export const Counter =		I(() => import('mdi-paths-split/Counter'))
+export const Error = 			I(() => import('mdi-paths-split/AlertOctagonOutline'))
 export const Home =				I(() => import('mdi-paths-split/HomeOutline'))
 export const Info =				I(() => import('mdi-paths-split/InformationOutline'))
 export const Login =			I(() => import('mdi-paths-split/LoginVariant'))
@@ -37,6 +39,7 @@ export const Post =				I(() => import('mdi-paths-split/PostOutline'))
 export const ReactLogo =	I(() => import('mdi-paths-split/React'))
 export const Search =			I(() => import('mdi-paths-split/Magnify'))
 export const Support =		I(() => import('mdi-paths-split/Lifebuoy'))
+export const Success =		I(() => import('mdi-paths-split/CheckCircleOutline'))
 export const Tasks =			I(() => import('mdi-paths-split/OrderBoolAscendingVariant'))
 
 
@@ -44,9 +47,11 @@ export const Tasks =			I(() => import('mdi-paths-split/OrderBoolAscendingVariant
 // Helpers
 
 // Icon Factory, shortened to be easier to read
-function I(lazyPath: LazyIconSvgProps['lazyPath']) {
-	return (props: IconProps) => <LazyIconSvg lazyPath={lazyPath} {...props} />
+function IconFactory(lazyPath: LazyIconSvgProps['lazyPath']) {
+	const IconComponent: IconComponentType = (props: IconProps) => <LazyIconSvg lazyPath={lazyPath} {...props} />
+	return IconComponent
 }
+export type IconComponentType = (props: IconProps) => h.JSX.Element
 type IconProps = Omit<LazyIconSvgProps, 'lazyPath'>
 
 // Lazily loaded IconSvg
