@@ -5,7 +5,7 @@ import { ToastCtx } from '~/App.context'
 import * as i from '~/lib/icons'
 import styled from '~/lib/styled'
 
-const timeouts: any[] = []
+const timeouts = new Set<any>()
 
 export function ToastFromContext() {
 	const [ctx] = ToastCtx.use()
@@ -14,7 +14,7 @@ export function ToastFromContext() {
 
 export interface ToastProps {
 	location: 'right' | 'bottom' | 'center',
-	message: string | ComponentChildren,
+	message: ComponentChildren,
 	duration?: number,
 	icon?: 'success' | 'warning' | 'error' | i.IconComponentType,
 	iconSize?: number
@@ -40,27 +40,31 @@ export default function Toast(p: ToastProps) {
 	</ToastOuter>
 
 	function reset() {
-		if (p.message) {
-			if (timeouts.length) {
-				timeouts.forEach(t => clearTimeout(t))
-				ref.current.base.classList.remove('animatedIn')
-				ref.current.base.classList.remove('animatedOut')
-				if (p.location === 'right')
-					ref.current.base.classList.add('hidden')
-			}
+		ref.current.base.classList.remove('animatedIn')
+		ref.current.base.classList.remove('animatedOut')
+		ref.current.base.style.display = 'none'
+		if (p.location === 'right')
+			ref.current.base.classList.add('hidden')
+		if (timeouts.size) {
+			timeouts.forEach(t => clearTimeout(t))
+			timeouts.clear()
 		}
 	}
 	function init() {
 		if (p.message) {
+			ref.current.base.style.display = 'initial'
 			ref.current.base.classList.add('animatedIn')
 			ref.current.base.classList.remove('hidden')
 			if (!p.duration) p.duration = 2e3
 			if (p.duration === -1) return
-			timeouts.push(setTimeout(function selfDestruct() {
+			timeouts.add(setTimeout(function selfDestruct() {
 				ref.current.base.classList.remove('animatedIn')
 				ref.current.base.classList.add('animatedOut')
 				ref.current.base.classList.add('hidden')
-				timeouts.push(setTimeout(() => ref.current.base.classList.remove('animatedOut'), 1000))
+				timeouts.add(setTimeout(() => {
+					ref.current.base.classList.remove('animatedOut')
+					ref.current.base.style.display = 'none'
+				}, 450))
 			}, p.duration))
 		}
 	}

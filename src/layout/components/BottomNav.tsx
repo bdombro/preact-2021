@@ -22,6 +22,7 @@ export default function BottomNav({ navLinks }: { navLinks: NavLinks }) {
 }
 const Nav = styled.div`
 	:root
+		z-index: 1
 		will-change: scroll-position
 		position: fixed
 		bottom: 0

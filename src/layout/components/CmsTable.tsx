@@ -1,4 +1,4 @@
-import { ComponentChildren, h } from 'preact'
+import { ComponentChildren, FunctionalComponent, h } from 'preact'
 import { useState } from 'preact/hooks'
 
 import { ToastCtx } from '~/App.context'
@@ -6,6 +6,7 @@ import * as i from '~/lib/icons'
 import qs from '~/lib/queryStrings'
 import { nav } from '~/lib/router'
 import styled from '~/lib/styled'
+import useMedia from '~/lib/useMedia'
 
 export default function CmsTable(p: {
   cols: { title: string, sortable?: boolean, sortDefault?: 'asc' | 'desc' }[],
@@ -13,13 +14,14 @@ export default function CmsTable(p: {
   bulkOptions?: { title: string, cb: (selection: any[]) => any }[],
   pages: number,
   total: number,
-  rows: any[][],
+  rows: (ComponentChildren)[][],
 }) {
 	const q = qs.parse()
 	const [action, setAction] = useState('-1')
 	const [checked, setChecked] = useState<Set<any>>(new Set())
+	const isWide = useMedia('(min-width: 600px)')
 
-	return <div style={{ color: 'var(--black)' }}>
+	return <CmsTableDiv>
 		<TableFilterDiv>
 			<SearchForm />
 			<CategoryFilters />
@@ -30,17 +32,14 @@ export default function CmsTable(p: {
 				<HeadRow />
 			</thead>
 			<tbody>
-				{p.rows.map(row => <tr>
-					<td><Checkbox row={row} /></td>
-					{row.map(c => <td>{c}</td>)}
-				</tr>)}
+				{p.rows.map(row => <BodyRow row={row} />)}
 			</tbody>
 			<tfoot>
 				<HeadRow />
 			</tfoot>
 		</table>
 		<Header />
-	</div>
+	</CmsTableDiv>
 
 	function SearchForm() {
 		return <SearchFormForm onSubmit={onSubmit}>
@@ -97,7 +96,8 @@ export default function CmsTable(p: {
 					}
 				}}
 				href={qs.create({ page: pageTo !== 1 ? pageTo : null }, { upsert: true }) || location.pathname}>
-				{children}</a>
+				{children}
+			</a>
 		}
 	}
 	function BulkActionsForm() {
@@ -119,10 +119,11 @@ export default function CmsTable(p: {
 	function HeadRow() {
 		const carrotProps = { size: 20, style: { marginBottom: -4, marginTop: -4, color: 'var(--black)' } }
 		const { sortBy, sortDirection } = q
+		const cols = isWide ? p.cols : p.cols.slice(0, 1)
 
 		return <HeadTr>
 			<td style={{ width: 24 }}><input type="checkbox" checked={checked.size === p.rows.length} onClick={toggleChecks} /></td>
-			{p.cols.map(c => <HeadCol colData={c} />)}
+			{cols.map(c => <HeadCol colData={c} />)}
 		</HeadTr>
 
 		function toggleChecks() {
@@ -159,7 +160,7 @@ export default function CmsTable(p: {
 			}
 		}
 	}
-	function Checkbox({ row }: { row: any }) {
+	function Checkbox({ row }: {row: typeof p.rows[0]}) {
 		return <input type="checkbox" checked={checked.has(row)} onClick={() => {
 			setChecked(last => {
 				if (last.has(row))
@@ -170,7 +171,29 @@ export default function CmsTable(p: {
 			})
 		}} />
 	}
+	function BodyRow({ row }: {row: typeof p.rows[0]}) {
+		return <tr>
+			<td><Checkbox row={row} /></td>
+			{isWide
+				? row.map((col,i) => <td class={i === 0 ? 'bold' : ''}>{col}</td>)
+				: <td>
+					{p.cols.map((col, i) => i === 0
+						? <div>
+							<div><b>{row[i]}</b></div>
+							<div style={{margin: '-.4rem 0 .4rem'}}>_ _ _</div>
+						</div>
+						: <div>{col.title}: {row[i]}</div>
+					)}
+				</td>
+			}
+		</tr>
+	}
 }
+
+const CmsTableDiv = styled.div`
+	:root
+		display: block
+`
 
 const HeadTr = styled.tr`
 	:root td.clickable
