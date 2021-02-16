@@ -58,7 +58,6 @@ const LeftBurger = styled.a`
 		padding: 15px 0px
 		text-align: center
 		width: var(--sidebar-width-mini)
-		box-sizing: border-box
 		color: white
 	:root:active,
 	:root:focus
@@ -81,7 +80,6 @@ const LogoA = styled.a`
 		display: flex
 		flex-direction: row
 		align-items: center
-		box-sizing: border-box
 		font-weight: bold
 		padding-left: 2px
 	:root:hover
@@ -154,7 +152,6 @@ const SearchBarDiv = styled.div`
 	:root.focused
 		--searchbar-width: 500px
 	:root input
-		box-sizing: border-box
 		width: 100%
 		line-height: 1rem
 		padding: .6em 1em .6em 3em
@@ -163,6 +160,7 @@ const SearchBarDiv = styled.div`
 		border-radius: 2px
 		border: none
 		outline: none
+		font-size: .85rem
 	.dark :root input
 		color: white
 	:root input::placeholder
@@ -184,7 +182,7 @@ const SearchBarDiv = styled.div`
 		color: var(--primary)
 		position: absolute
 		right: 10px
-		top: 4px
+		top: 2px
 		font-size: 1.2em
 	.dark :root .clear
 		color: hsl(0,0%,80%)
@@ -211,7 +209,6 @@ const NavButtonA = styled.a`
 		display: flex
 		flex-direction: row
 		align-items: center
-		box-sizing: border-box
 		padding: 1px 10px 0
 		color: white
 		background: var(--primary)
@@ -244,7 +241,6 @@ const NavLinkA = styled.a`
 		margin-top: -56px
 		padding: 80px 12px
 		color: white
-		box-sizing: border-box
 		transform: rotate(20deg)
 	:root:hover,
 	:root.active
@@ -291,7 +287,6 @@ const NavBurgerA = styled.a`
 		display: flex
 		flex-direction: row
 		align-items: center
-		box-sizing: border-box
 		padding: 0 20px
 		color: white
 	:root:hover,

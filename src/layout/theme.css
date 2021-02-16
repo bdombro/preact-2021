@@ -69,8 +69,13 @@
   background: var(--white);
 }
 
+* {
+  box-sizing:border-box;
+}
 body {
-  --body-height: 100vh;
+  --vh: 100vh; /* this is set by App.tsx */
+  --body-height: var(--vh);
+  --button-height: 30px;
   overflow: hidden;
   background: var(--white);
   margin: 0;
@@ -104,13 +109,10 @@ h5 {
 h6 {
   font-size: 1.1rem
 }
-input, select, select:focus, textarea {
+input, input:hover, input:focus, select, select:hover, select:focus, textarea, textarea:hover, textarea:focus {
   font-size: 1rem;
 }
 
-h1,h2,h3,h4,h5,h6,p,li,.text {
-  color: var(--black);
-}
 a, a:active, a:focus, .body-link {
   text-decoration: none;
   color: var(--links);
@@ -131,6 +133,9 @@ button, a.button {
   cursor: pointer;
   background: var(--gray1);
   text-decoration: none;
+  font-size: .8rem;
+  height: var(--button-height);
+  line-height: 1.4rem;
 }
 button:hover, a.button:hover {
   background: var(--gray3);
@@ -169,26 +174,44 @@ button.secondary:hover, a.button.secondary:hover {
 
 input, select {
   border: 1px solid var(--gray4);
-  color: var(--black);
-  box-sizing: border-box;
+  color: var(--gray10);
   padding-left: .3rem;
   line-height: 1.3rem;
   border-radius: 2px;
   outline: none;
   margin-right: .2rem;
   background: var(--white);
+  height: var(--button-height);
+}
+input[type=checkbox] {
+  height: 1.5rem;
+  width: 1.5rem;
+  filter: hue-rotate(calc(var(--secondary-h) * 1deg));
+  cursor: pointer;
 }
 select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%238C98F2'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+  background-size: 12px;
+  background-position: calc(100% - 5px) .65rem;
+  background-repeat: no-repeat;
+  cursor: pointer;
   color: var(--gray10);
-  padding: .13rem .2rem;
+  padding: .1rem 24px .12rem .4rem;
+  font-size: .9rem !important;
 }
-
+@media (max-width: 600px) {
+  select {
+    font-size: 1rem !important;
+  }
+}
 
 table {
   width: 100%;
   border: 1px solid var(--gray3);
-  margin-bottom: 12px;
-  color: var(--black);
+  margin-bottom: .4rem;
 }
 table, th, td {
   border-collapse: collapse;

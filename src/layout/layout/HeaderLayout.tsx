@@ -31,9 +31,9 @@ const HeaderLayoutDiv = styled.div`
 	:root
 		--header-height: 48px
 		--sidebarRight-width: 200px
-		--body-height: calc( 100vh - var(--header-height) )
-		--margin-bottom: 0
-		--margin-left: 0
+		--body-height: calc( var(--vh) - var(--header-height) )
+		--margin-bottom: 0px
+		--margin-left: 0px
 		margin-top: var(--header-height)
 		margin-bottom: var(--margin-bottom)
 		margin-left: var(--margin-left)

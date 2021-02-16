@@ -89,7 +89,6 @@ const ToastOuter = styled.div`
 	:root.right
 		top: 60px
 		right:10px
-		box-sizing: border-box
 		border-radius: 6px
 	:root.right.hidden
 		right: -330px
@@ -101,7 +100,6 @@ const ToastOuter = styled.div`
 	:root.center.hidden
 		opacity: 0
 	:root>div
-		box-sizing: border-box
 		max-width: 330px
 		padding:20px
 		background:var(--primary)

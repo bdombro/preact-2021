@@ -1,4 +1,4 @@
-import { ComponentChildren, FunctionalComponent, h } from 'preact'
+import { ComponentChildren, Fragment, FunctionalComponent, h } from 'preact'
 import { useState } from 'preact/hooks'
 
 import { ToastCtx } from '~/App.context'
@@ -7,6 +7,8 @@ import qs from '~/lib/queryStrings'
 import { nav } from '~/lib/router'
 import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
+
+import Checkbox from './Checkbox'
 
 export default function CmsTable(p: {
   cols: { title: string, sortable?: boolean, sortDefault?: 'asc' | 'desc' }[],
@@ -23,10 +25,10 @@ export default function CmsTable(p: {
 
 	return <CmsTableDiv>
 		<TableFilterDiv>
-			<SearchForm />
 			<CategoryFilters />
+			<SearchForm />
 		</TableFilterDiv>
-		<Header />
+		<HeaderFooter />
 		<table>
 			<thead>
 				<HeadRow />
@@ -38,7 +40,7 @@ export default function CmsTable(p: {
 				<HeadRow />
 			</tfoot>
 		</table>
-		<Header />
+		<HeaderFooter isFooter />
 	</CmsTableDiv>
 
 	function SearchForm() {
@@ -69,22 +71,22 @@ export default function CmsTable(p: {
 			return qs.create({ category: next !== categories[0].title ? next : null }, { upsert: true }) || location.pathname
 		}
 	}
-	function Header() {
+	function HeaderFooter({isFooter = false}) {
 		const { page = '1' } = q
 		const pageInt = parseInt(page, 10)
-		return <HeaderDiv>
+		return <HeaderFooterDiv class={isFooter ? 'footer' : ''}>
 			<BulkActionsForm />
 			<CountDiv>
-				{p.total} items
-				{p.pages > 1 && <span>&nbsp;&nbsp;&nbsp;
-					<PageButton pageTo={1}>«</PageButton>&nbsp;
-					<PageButton pageTo={pageInt - 1}>‹</PageButton>&nbsp;
-					&nbsp;{page} of {p.pages}&nbsp;&nbsp;
-					<PageButton pageTo={pageInt + 1}>›</PageButton>&nbsp;
-					<PageButton pageTo={p.pages}>»</PageButton>&nbsp;
-				</span>}
+				<div>{p.total} items&nbsp;</div>
+				{p.pages > 1 && <Fragment>
+					<PageButton pageTo={1}>«</PageButton>
+					<PageButton pageTo={pageInt - 1}>‹</PageButton>
+					<div>&nbsp;{page} of {p.pages}&nbsp;</div>
+					<PageButton pageTo={pageInt + 1}>›</PageButton>
+					<PageButton pageTo={p.pages}>»</PageButton>
+				</Fragment>}
 			</CountDiv>
-		</HeaderDiv>
+		</HeaderFooterDiv>
 		function PageButton({ pageTo, children }: { pageTo: number, children: ComponentChildren }) {
 			if (pageTo < 1) pageTo = 1
 			if (pageTo > p.pages) pageTo = p.pages
@@ -99,21 +101,21 @@ export default function CmsTable(p: {
 				{children}
 			</a>
 		}
-	}
-	function BulkActionsForm() {
-		return <BulkActionsFormDiv>
-			<select name="action" value={action} onChange={(e: any) => setAction(e.target.value)}>
-				<option value="-1">Bulk Actions</option>
-				{p.bulkOptions?.map(o => <option value={o.title}>{o.title}</option>)}
-			</select>
-			<button onClick={onClick}>Apply</button>
-		</BulkActionsFormDiv>
+		function BulkActionsForm() {
+			return <BulkActionsFormDiv>
+				<select name="action" value={action} onChange={(e: any) => setAction(e.target.value)}>
+					<option value="-1">Bulk Actions</option>
+					{p.bulkOptions?.map(o => <option value={o.title}>{o.title}</option>)}
+				</select>
+				<button onClick={onClick}>Apply</button>
+			</BulkActionsFormDiv>
 
-		function onClick() {
-			if (action === '-1') return ToastCtx.set({ message: 'No action selected', icon: 'error', location: 'bottom' })
-			if (!checked.size) return ToastCtx.set({ message: 'No rows selected', icon: 'error', location: 'bottom' })
-      p.bulkOptions?.find(o => o.title === action)!.cb([...checked])
-      setChecked(new Set())
+			function onClick() {
+				if (action === '-1') return ToastCtx.set({ message: 'No action selected', icon: 'error', location: 'bottom' })
+				if (!checked.size) return ToastCtx.set({ message: 'No rows selected', icon: 'error', location: 'bottom' })
+				p.bulkOptions?.find(o => o.title === action)!.cb([...checked])
+				setChecked(new Set())
+			}
 		}
 	}
 	function HeadRow() {
@@ -122,7 +124,7 @@ export default function CmsTable(p: {
 		const cols = isWide ? p.cols : p.cols.slice(0, 1)
 
 		return <HeadTr>
-			<td style={{ width: 24 }}><input type="checkbox" checked={checked.size === p.rows.length} onClick={toggleChecks} /></td>
+			<td style={{ width: 24 }}><Checkbox name="select-all" checked={checked.size === p.rows.length} onClick={toggleChecks} /></td>
 			{cols.map(c => <HeadCol colData={c} />)}
 		</HeadTr>
 
@@ -160,20 +162,9 @@ export default function CmsTable(p: {
 			}
 		}
 	}
-	function Checkbox({ row }: {row: typeof p.rows[0]}) {
-		return <input type="checkbox" checked={checked.has(row)} onClick={() => {
-			setChecked(last => {
-				if (last.has(row))
-					last.delete(row)
-				else
-					last.add(row)
-				return new Set([...last])
-			})
-		}} />
-	}
 	function BodyRow({ row }: {row: typeof p.rows[0]}) {
 		return <tr>
-			<td><Checkbox row={row} /></td>
+			<td><RowCheckbox row={row} /></td>
 			{isWide
 				? row.map((col,i) => <td class={i === 0 ? 'bold' : ''}>{col}</td>)
 				: <td>
@@ -188,6 +179,17 @@ export default function CmsTable(p: {
 			}
 		</tr>
 	}
+	function RowCheckbox({ row }: { row: typeof p.rows[0] }) {
+		return <Checkbox name="row-selected" checked={checked.has(row)} onClick={() => {
+			setChecked(last => {
+				if (last.has(row))
+					last.delete(row)
+				else
+					last.add(row)
+				return new Set([...last])
+			})
+		}} />
+	}
 }
 
 const CmsTableDiv = styled.div`
@@ -200,10 +202,12 @@ const HeadTr = styled.tr`
 		cursor: pointer
 	:root td.clickable:hover a
 		text-decoration: underline
-	:root svg
+	:root td:first-of-type svg.empty
+		fill: var(--gray5)
+	:root td:not(:first-of-type) svg
 		visibility: hidden
-	:root td:hover svg,
-	:root td.active svg
+	:root td:not(:first-of-type):hover svg,
+	:root td:not(:first-of-type).active svg
 		visibility: visible
 	:root td.clickable:active svg
 		transform: translateY(2px)
@@ -212,33 +216,53 @@ const HeadTr = styled.tr`
 const TableFilterDiv = styled.div`
 	:root
 		position: relative
-		padding-bottom: .7rem
+		margin-bottom: .3rem
+		display: flex
+		flex-direction: row
+		justify-content: space-between
+		align-items: center
+	@media (max-width: 600px)
+		:root
+			display: block
 `
 const CategoryFilterDiv = styled.div`
 	:root
 		font-size: .9rem
+		margin-bottom: .3rem
 `
 const SearchFormForm = styled.form`
 	:root
-		position: absolute
-		right: 0
-		top: -4px
+		display: flex
+		flex-direction: row
+		align-items: center
 `
 
-const HeaderDiv = styled.div`
+const HeaderFooterDiv = styled.div`
 	:root
-		position: relative
+		display: flex
+		flex-direction: row
+		justify-content: space-between
+	@media (max-width: 600px)
+		:root
+			flex-direction: column-reverse
+		:root.footer
+			flex-direction: column
 `
 const BulkActionsFormDiv = styled.div`
 	:root
-		position: relative
-		left: 0
-		top: -4px
+		display: flex
+		flex-direction: row
+		align-items: center
+		margin-bottom: .3rem
+
 `
 const CountDiv = styled.div`
 	:root
-		position: absolute
-		top: 0
-		right: 0
+		display: flex
+		flex-direction: row
+		align-items: center
 		font-size: .9rem
+		margin-bottom: .3rem
+	:root > *
+		margin: 0 .1rem
 `

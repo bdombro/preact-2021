@@ -27,6 +27,8 @@ export const CarrotUp =		I(() => import('mdi-paths-split/MenuUp'))
 export const CarrotDown =	I(() => import('mdi-paths-split/MenuDown'))
 export const CarrotLeft = I(() => import('mdi-paths-split/MenuLeft'))
 export const CarrotRight= I(() => import('mdi-paths-split/MenuRight'))
+export const CheckboxM =	I(() => import('mdi-paths-split/CheckboxMarked'))
+export const CheckboxB =	I(() => import('mdi-paths-split/CheckboxBlankOutline'))
 export const Counter =		I(() => import('mdi-paths-split/Counter'))
 export const Error = 			I(() => import('mdi-paths-split/AlertOctagonOutline'))
 export const Home =				I(() => import('mdi-paths-split/HomeOutline'))
@@ -74,7 +76,7 @@ interface IconSvgProps extends Omit<h.JSX.SVGAttributes<SVGSVGElement>, 'size'> 
   spin?: boolean | number  // spin the svg # seconds per spin. Default = 2
   spinInverse?: boolean    // inverse the spin
 }
-function IconSvg({
+export function IconSvg({
 	path = '',
 	size = 24,
 	fill = 'currentColor',

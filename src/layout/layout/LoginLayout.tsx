@@ -30,11 +30,9 @@ const LoginLayoutInner = styled.div`
 			margin: auto;
 			width: 340px;
 			max-width: 100%;
-			background:  var(--white);
-			color: var(--black);
+			background:  white;
 			padding: 20px 40px;
 			border-radius: 10px;
-			box-sizing: border-box;
 	}
 	@media (max-width: 600px) {
 			:root

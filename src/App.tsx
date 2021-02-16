@@ -43,3 +43,10 @@ if(location.hostname != 'localhost') setTimeout(() => {
 		</script>
 	`
 }, 10e3)
+
+const setVh = () => {
+	const vh = window.innerHeight
+	document.body.style.setProperty('--vh', `${vh}px`)
+}
+window.addEventListener('load', setVh)
+window.addEventListener('resize', setVh)

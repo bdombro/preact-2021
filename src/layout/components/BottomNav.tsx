@@ -50,7 +50,6 @@ function NavLink(p: NavLinkProps) {
 }
 const NavLinkA = styled.a`
 	:root
-		color: var(--black)
 		flex-grow: 1
 		text-align: center
 		padding: 8px
