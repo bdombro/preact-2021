@@ -37,4 +37,5 @@ const HeaderLayoutDiv = styled.div`
 		margin-top: var(--header-height)
 		margin-bottom: var(--margin-bottom)
 		margin-left: var(--margin-left)
+		background: var(--white);
 `

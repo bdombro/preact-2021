@@ -91,8 +91,9 @@ RouterComponent.isFirstRender = true
  * RouterSwitch: Switches routes based on current url and also checks access control
  */
 function RouterSwitch({ routesByPath }: RouterProps) {
-	const [{ pathname }] = LocationCtx.use()
-	const r = routesByPath[pathname] || routesByPath['/notfound']
+	const [_location] = LocationCtx.use()
+	useEffect(checkRenderStatus, [_location])
+	const r = routesByPath[_location.pathname] || routesByPath['/notfound']
 	setPageMeta(r)
 	let Stack = RouteWrapper
 	if (r.stack) {
@@ -103,7 +104,23 @@ function RouterSwitch({ routesByPath }: RouterProps) {
 		}
 	}
 	if (!r.hasAccess()) throw new ForbiddenError('Forbidden!')
-	return <Stack><r.Component route={r} /></Stack>
+	return <Stack>
+		<r.Component route={r} />
+		<div id="pagerendercheck" style={{ display: 'none' }}>{location.pathname + location.search}</div>
+	</Stack>
+
+	// For unknown reasons, sometimes the Preact virtual dom crashes in IOS Webkit (aka all IOS browsers,
+	// bc Apple forces all IOS browsers to use Webkit), and refuses to proceed without reloading.
+	// checkRenderStatus checks for this and reloads automatically. It is not great though, b/c there
+	// is a flicker and memory is reset.
+	function checkRenderStatus() {
+		setTimeout(function _checkRenderStatus() {
+			if (document.getElementById('pagerendercheck')?.innerHTML !== location.pathname + location.search) {
+				console.error('error in rendering!')
+				location.reload()
+			}
+		},300)
+	}
 
 }
 const stacks = new Map<string, any>()
@@ -167,9 +184,10 @@ function RouteWrapper({ children }: any) {
  */
 type StackHistoryEntry = { location: LocationType, scroll: number }
 type StackHistory = StackHistoryEntry[]
-const StackHistories: Record<string, StackHistory> = {}
-function StackFactory(basePath: string) {
+const StackHistories: Record<string, StackHistory> = localStorage.getItem('StackHistories') ? JSON.parse(localStorage.getItem('StackHistories')!) : {}
+setInterval(function _saveStackHistories() {localStorage.setItem('StackHistories', JSON.stringify(StackHistories))}, 2000)
 
+function StackFactory(basePath: string) {
 	const baseHistory = { location: { pathname: basePath + '/home', search: '' }, scroll: 0 }
 	class Stack {
 		static reset = () => { StackHistories[basePath] = [baseHistory]; return StackHistories[basePath][0] }

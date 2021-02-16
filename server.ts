@@ -27,7 +27,7 @@ async function main() {
 	fastify.register(staticPlugin, { root: buildRoot, maxAge: '30d' })
 	fastify.setNotFoundHandler((req, reply) => { reply.type('text/html').send(notFoundHtml) })
 
-	fastify.listen(port, function (err, address) {
+	fastify.listen(port, (err, address) => {
 		if (err) { fastify.log.error(err as any); process.exit(1) }
 		fastify.log.info(`Server listening on ${address}`)
 	})
