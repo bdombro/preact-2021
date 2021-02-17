@@ -1,4 +1,7 @@
 :root {
+
+  --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
   --primary-h: 270;--primary-s: 80%;--primary-l: 33%;
   --primary: hsl(var(--primary-h),var(--primary-s),var(--primary-l));
   --primary-hover: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 10% ));
@@ -79,9 +82,14 @@ body {
   background: var(--gray5);
   margin: 0;
   max-width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+@media (max-width: 600px) {
+  body {
+    --button-height: 38px;
+  }
 }
 
 code {
@@ -125,8 +133,10 @@ p a, .body-link {
 }
 
 button, a.button {
+  font-family: var(--font-primary);
   display: inline-block;
-  padding: .2rem .4rem;
+  padding: .2rem .6rem;
+  font-weight: 500;
   color: var(--gray10);
   border: 1px solid var(--gray4);
   border-radius: 2px;
@@ -138,9 +148,19 @@ button, a.button {
   line-height: 1.4rem;
   text-align: center;
 }
+a.button { /* try to match button */
+  font-style: normal;
+  font-variant-ligatures: normal;
+  font-variant-caps: normal;
+  font-variant-numeric: normal;
+  font-variant-east-asian: normal;
+  font-stretch: normal;
+  font-size: 600;
+}
 @media (max-width: 600px) {
   button, a.button {
     min-width: 40px;
+    line-height: 2rem;
   }
 }
 button:hover, a.button:hover {
@@ -210,6 +230,7 @@ select {
 }
 @media (max-width: 600px) {
   select {
+    background-position: calc(100% - 5px) .88rem;
     font-size: 1rem !important;
   }
 }

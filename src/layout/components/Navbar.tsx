@@ -16,7 +16,7 @@ export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolea
 	const isWide = useMedia('(min-width: 600px)')
 	return <NavbarDiv>
 		<div>
-			{sidebarLeft && isWide && <LeftBurger href="#sidebar-toggle"><div>Ξ</div></LeftBurger>}
+			{sidebarLeft && isWide && <LeftBurger href="#sidebar-toggle"><div><i.DotsV /></div></LeftBurger>}
 			<LogoA href='/' class={sidebarLeft && isWide ? 'withBurger' : ''}><div><div>
 				{!sidebarLeft && <i.ReactLogo />}
 				<div>Stacks!</div>
@@ -55,18 +55,23 @@ const NavbarDiv = styled.div`
 const LeftBurger = styled.a`
 	:root
 		z-index: 2
-		padding: 15px 0px
 		text-align: center
-		width: var(--sidebar-width-mini)
 		color: white
+		width: var(--sidebar-width-mini)
+		height:var(--header-height)
+		display: flex
+		align-items: center
+		justify-content: center
 	:root:active,
 	:root:focus
 		color: white
 	:root:hover
 		background: var(--primary)
 		color: white
+	:root>div
+		margin-top: 6px
 	:root:active>div
-		transform: translateY(2px)
+		transform: translateY(3px)
 `
 const LogoA = styled.a`
 	:root
@@ -267,22 +272,27 @@ const NavLinkA = styled.a`
 function RightBurger() {
 	const [isLinkActive, setIsLinkActive] = useState(false)
 	const [isSidebarActive, setIsSidebarActive] = SidebarRightCtx.use()
-	useEffect(() => {
-		if (!isSidebarActive) setIsLinkActive(false)
-	}, [isSidebarActive])
+	useEffect(() => {if (!isSidebarActive) setIsLinkActive(false)}, [isSidebarActive])
+	const onClick = useCallback(_onClick, [])
 	return (
 		<NavBurgerA class={isLinkActive ? 'active' : ''}
 			href={'#navburger-click'}
-			onClick={() => {
-				setIsLinkActive(isActive => {
-					setIsSidebarActive(!isActive)
-					return !isActive
-				})
-			}}
+			onClick={onClick}
 		>
-			<div>{isLinkActive ? 'X' : 'Ξ'}</div>
+			<div>{isLinkActive 
+				? <i.Close size={24} style={{ transform: 'scaleX(1) scaleY(1.3)' }} />
+				: <i.Menu size={24} style={{transform: 'scaleX(.6) scaleY(1.3)'}} />
+			}</div>
 		</NavBurgerA>
 	)
+
+	function _onClick(e: any) {
+		e.preventDefault()
+		setIsLinkActive(isActive => {
+			setIsSidebarActive(!isActive)
+			return !isActive
+		})
+	}
 }
 const NavBurgerA = styled.a`
 	:root
@@ -292,7 +302,7 @@ const NavBurgerA = styled.a`
 		display: flex
 		flex-direction: row
 		align-items: center
-		padding: 0 20px
+		padding-top: 2px
 		color: white
 	:root:hover,
 	:root.active
@@ -301,6 +311,8 @@ const NavBurgerA = styled.a`
 	:root:active,
 	:root:hover
 		color: white
+	:root>div
+		margin: auto
 	:root:active>div
 		transform: translateY(2px)
 `
