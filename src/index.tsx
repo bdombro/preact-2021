@@ -1,4 +1,4 @@
-import 'preact/devtools'
+import 'preact/debug'
 
 import { h, render } from 'preact'
 

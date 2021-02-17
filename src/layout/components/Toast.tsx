@@ -33,7 +33,7 @@ export default function Toast(p: ToastProps) {
 	return <ToastOuter class={`${p.location} hidden ${typeof p.icon === 'string' ? p.icon : ''}`} ref={ref}>
 		<div>
 			<div class={p.icon ? 'withIcon' : ''}>
-				{!!p.icon && <Icon size={p.iconSize ?? 50} />}
+				{!!p.icon && <div><Icon size={p.iconSize ?? 40} /></div>}
 				{p.message}
 			</div>
 		</div>
@@ -101,7 +101,7 @@ const ToastOuter = styled.div`
 		opacity: 0
 	:root>div
 		max-width: 330px
-		padding:20px
+		padding: 15px 20px
 		background:var(--primary)
 		display:inline-block
 		color:#fff
@@ -125,7 +125,7 @@ const ToastOuter = styled.div`
 		flex-direction: row
 		align-items: center
 		text-align: left
-	:root>div>div.withIcon>svg
-		margin: -8px 16px -8px 0
+	:root>div>div.withIcon>div
+		margin-right: 16px
 	
 `

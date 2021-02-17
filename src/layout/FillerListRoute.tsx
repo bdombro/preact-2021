@@ -19,7 +19,6 @@ export default function FillerListFactory({ route }: { route: RouteType }) {
 			{route.title}
 			<AddNewButton href={createPath} class='button'>Add New</AddNewButton>
 		</h1>
-		<Test />
 		<CmsTable
 			cols={[
 				{ title: 'Name', sortable: true, sortDefault: 'asc' },
@@ -53,10 +52,3 @@ const AddNewButton = styled.a`
 		left: .7rem
 		font-weight: initial
 `
-
-
-function Test() {
-	const [val, setVal] = useState(1)
-	const onClick = useCallback(() => setVal(v => ++v), [])
-	return <div>{val} <button onClick={onClick}>+</button></div>
-}

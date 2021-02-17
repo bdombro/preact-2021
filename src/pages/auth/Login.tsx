@@ -1,5 +1,5 @@
 import { Fragment as F, h } from 'preact'
-import { useCallback } from 'preact/hooks/src'
+import { useCallback } from 'preact/hooks'
 
 import { AuthCtx, ToastCtx } from '~/App.context'
 import { Paths } from '~/routes'
