@@ -1,4 +1,5 @@
 import { h } from 'preact'
+import { useCallback, useState } from 'preact/hooks'
 
 import { ToastCtx } from '~/App.context'
 import { nav, RouteType } from '~/lib/router'
@@ -11,11 +12,14 @@ export default function FillerListFactory({ route }: { route: RouteType }) {
 	const stackPath = location.pathname.split('/').slice(0, -1).join('/')
 	const createPath = stackPath + '/create'
 	const entryPath = stackPath + '/entry'
+	const gotoCreate = useCallback(function _gotoCreate() {nav(createPath)}, [])
+	
 	return <PaddedPage>
 		<h1>
 			{route.title}
-			<AddNewButton onClick={() => nav(createPath)}>Add New</AddNewButton>
+			<AddNewButton href={createPath} class='button'>Add New</AddNewButton>
 		</h1>
+		<Test />
 		<CmsTable
 			cols={[
 				{ title: 'Name', sortable: true, sortDefault: 'asc' },
@@ -42,15 +46,17 @@ export default function FillerListFactory({ route }: { route: RouteType }) {
 		/>
 	</PaddedPage>
 }
-const AddNewButton = styled.button`
+const AddNewButton = styled.a`
 	:root
 		position: relative
-		top: -4px
+		top: -5px
 		left: .7rem
-		font-weight: bold
-		color: var(--primary)
-	.dark :root
-		color: var(--links)
+		font-weight: initial
 `
 
 
+function Test() {
+	const [val, setVal] = useState(1)
+	const onClick = useCallback(() => setVal(v => ++v), [])
+	return <div>{val} <button onClick={onClick}>+</button></div>
+}

@@ -1,5 +1,5 @@
 import { FunctionalComponent, h } from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 import { SidebarRightCtx } from '~/App.context'
 import * as i from '~/lib/icons'
@@ -55,6 +55,7 @@ const NavLinkA = styled.a`
 		padding: 8px
 		border-right: 1px solid var(--nav-background)
 		border-top: 1px solid var(--nav-background)
+		text-decoration: none !important
 	}
 	:root:hover
 		background: var(--nav-background-active)
@@ -80,20 +81,21 @@ const NavLinkA = styled.a`
 function NavBurger() {
 	const [isActive, setIsActive] = useState(false)
 	const [isSidebarActive, setIsSidebarActive] = useSidebarRight()
-	useEffect(() => {
-		if (!isSidebarActive) setIsActive(false)
-	}, [isSidebarActive])
+	const onClick = useCallback(_onClick, [])
+	useEffect(() => {if (!isSidebarActive) setIsActive(false)}, [isSidebarActive])
 	return (
 		<NavLinkA class={isActive ? 'active' : ''}
 			href="#sidebar-right-toggle"
-			onClick={() => {
-				setIsActive(isActive => {
-					setIsSidebarActive(!isActive)
-					return !isActive
-				})
-			}}
+			onClick={onClick}
 		>
 			<div>{isActive ? 'X' : 'Ξ'}</div>
 		</NavLinkA>
 	)
+
+	function _onClick() {
+		setIsActive(isActive => {
+			setIsSidebarActive(!isActive)
+			return !isActive
+		})
+	}
 }

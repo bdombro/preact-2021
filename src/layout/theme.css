@@ -120,11 +120,12 @@ a:hover, .body-link:hover {
   color: var(--links-hover);
   text-decoration: underline;
 }
-p a, li a, .body-link {
+p a, .body-link {
   text-decoration: underline;
 }
 
 button, a.button {
+  display: inline-block;
   padding: .2rem .4rem;
   color: var(--gray10);
   border: 1px solid var(--gray4);

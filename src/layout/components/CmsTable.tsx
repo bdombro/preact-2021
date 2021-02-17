@@ -1,5 +1,5 @@
 import { ComponentChildren, Fragment, FunctionalComponent, h } from 'preact'
-import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
 
 import { ToastCtx } from '~/App.context'
 import * as i from '~/lib/icons'
@@ -63,12 +63,15 @@ const TableFilterDiv = styled.div`
 
 function SearchForm() {
 	const q = qs.parse()
+
+	const onSubmit = useCallback(_onSubmit, [])
+
 	return <SearchFormForm onSubmit={onSubmit}>
 		<input name='search' value={q.search} />
 		<button>Search Users</button>
 	</SearchFormForm>
 
-	function onSubmit(e: any) {
+	function _onSubmit(e: any) {
 		const next = new FormData(e.target).get('search')
 		if (next === (q.search || ''))
 			ToastCtx.set({ message: 'Search query hasn\'t changed', icon: 'error', location: 'bottom' })
@@ -110,11 +113,11 @@ function HeaderFooter(p: Pick<CmsTableProps, 'total' | 'pages' | 'bulkOptions'> 
 		<CountDiv>
 			<div>{p.total} items&nbsp;</div>
 			{p.pages > 1 && <Fragment>
-				<PageButton page={page} pages={p.pages} pageTo={1}>«</PageButton>
-				<PageButton page={page} pages={p.pages} pageTo={page - 1}>‹</PageButton>
+				<PageButton title='First Page' page={page} pages={p.pages} pageTo={1}>«</PageButton>
+				<PageButton title='Go back one page' page={page} pages={p.pages} pageTo={page - 1}>‹</PageButton>
 				<div>&nbsp;{page} of {p.pages}&nbsp;</div>
-				<PageButton page={page} pages={p.pages} pageTo={page + 1}>›</PageButton>
-				<PageButton page={page} pages={p.pages} pageTo={p.pages}>»</PageButton>
+				<PageButton title='Go forward one page' page={page} pages={p.pages} pageTo={page + 1}>›</PageButton>
+				<PageButton title='Go to last page' page={page} pages={p.pages} pageTo={p.pages}>»</PageButton>
 			</Fragment>}
 		</CountDiv>
 	</HeaderFooterDiv>
@@ -141,33 +144,38 @@ const CountDiv = styled.div`
 		margin: 0 .1rem
 `
 
-function PageButton(p: Pick<CmsTableProps, 'pages'> & { page: number, pageTo: number, children: ComponentChildren }) {
+function PageButton(p: Pick<CmsTableProps, 'pages'> & { title: string, page: number, pageTo: number, children: ComponentChildren }) {
+	const onClick = useCallback(_onClick, [p.page, p.pageTo])
 	if (p.pageTo < 1) p.pageTo = 1
 	if (p.pageTo > p.pages) p.pageTo = p.pages
-	return <a 
+	return <div><a
+		title={p.title}
 		class={`button ${p.pageTo === p.page ? 'disabled' : ''}`}
-		onClick={(e: any) => {
-			if (p.pageTo === p.page) {
-				e.preventDefault()
-				ToastCtx.set({ message: `You're already on the ${p.pageTo === 1 ? 'first' : 'last'} page`, icon: 'error', location: 'bottom' })
-			}
-		}}
+		onClick={onClick}
 		href={qs.create({ page: p.pageTo !== 1 ? p.pageTo : null }, { upsert: true }) || location.pathname}>
 		{p.children}
-	</a>
+	</a></div>
+	function _onClick(e: any) {
+		if (p.pageTo === p.page) {
+			e.preventDefault()
+			ToastCtx.set({ message: `You're already on the ${p.pageTo === 1 ? 'first' : 'last'} page`, icon: 'error', location: 'bottom' })
+		}
+	}
 }
 
 function BulkActionsForm(p: Pick<CmsTableProps, 'bulkOptions'> & { checked: Set<CmsTableProps['rows'][0]>, setChecked: any}) {
 	const [action, setAction] = useState('-1')
+	const onClick = useCallback(_onClick, [action, p.checked])
+	const onChange = useCallback((e: any) => setAction(e.target.value), [])
 	return <BulkActionsFormDiv>
-		<select name="action" value={action} onChange={(e: any) => setAction(e.target.value)}>
+		<select name="action" value={action} onChange={onChange}>
 			<option value="-1">Bulk Actions</option>
 			{p.bulkOptions?.map(o => <option value={o.title}>{o.title}</option>)}
 		</select>
 		<button onClick={onClick}>Apply</button>
 	</BulkActionsFormDiv>
 
-	function onClick() {
+	function _onClick() {
 		if (action === '-1') return ToastCtx.set({ message: 'No action selected', icon: 'error', location: 'bottom' })
 		if (!p.checked.size) return ToastCtx.set({ message: 'No rows selected', icon: 'error', location: 'bottom' })
 		p.bulkOptions?.find(o => o.title === action)!.cb([...p.checked])
@@ -185,13 +193,14 @@ const BulkActionsFormDiv = styled.div`
 function HeadRow(p: Pick<CmsTableProps, 'cols' | 'rows'> & { checked: Set<CmsTableProps['rows'][0]>, setChecked: any}) {
 	const isWide = useMedia('(min-width: 600px)')
 	const cols = isWide ? p.cols : p.cols.slice(0, 1)
+	const toggleChecks = useCallback(_toggleChecks, [])
 
 	return <HeadTr>
 		<td style={{ width: 24 }}><Checkbox name="select-all" checked={p.checked.size === p.rows.length} onClick={toggleChecks} /></td>
 		{cols.map(c => <HeadCol colData={c} />)}
 	</HeadTr>
 
-	function toggleChecks() {
+	function _toggleChecks() {
 		p.setChecked(new Set(p.checked.size === p.rows.length ? [] : p.rows))
 	}
 }
@@ -226,21 +235,23 @@ function HeadCol({ colData: c }: { colData: CmsTableProps['cols'][0] }) {
 		|| c.sortDefault === 'desc' && <i.CarrotUp {...carrotProps} />
 		|| <i.CarrotDown {...carrotProps} />
 	)
-	return <td onClick={sort} class={`${c.sortable ? 'clickable' : ''} ${sortCurrent ? 'active' : ''}`}>
-		{c.sortable
-			? <a href="#table-sort" onClick={sort}>{c.title} {carrot}</a>
-			: <span>{c.title} {carrot}</span>
-		}
-	</td>
-
-	function sort() {
+	
+	const sort = useCallback(() => {
 		const sortDirection = (
 			sortCurrent && (sortCurrent === 'asc' ? 'desc' : 'asc')
 			|| c.sortDefault
 			|| 'asc'
 		)
-		nav(qs.create({ sortBy: c.title, sortDirection }, { upsert: true }))
-	}
+		const sortUri = qs.create({ sortBy: c.title, sortDirection }, { upsert: true })
+		nav(sortUri)
+	}, [sortCurrent])
+
+	return <td onClick={sort} class={`${c.sortable ? 'clickable' : ''} ${sortCurrent ? 'active' : ''}`}>
+		{c.sortable
+			? <a href="#table-sort">{c.title} {carrot}</a>
+			: <span>{c.title} {carrot}</span>
+		}
+	</td>
 }
 
 function BodyRow(p: Pick<CmsTableProps, 'cols'> & { row: CmsTableProps['rows'][0], checked: Set<CmsTableProps['rows'][0]>, setChecked: any}) {
@@ -263,7 +274,10 @@ function BodyRow(p: Pick<CmsTableProps, 'cols'> & { row: CmsTableProps['rows'][0
 }
 
 function RowCheckbox(p: { row: CmsTableProps['rows'][0], checked: Set<CmsTableProps['rows'][0]>, setChecked: any }) {
-	return <Checkbox name="row-selected" checked={p.checked.has(p.row)} onClick={() => {
+	const onClick = useCallback(_onClick, [])
+	return <Checkbox name="row-selected" checked={p.checked.has(p.row)} onClick={onClick} />
+
+	function _onClick() {
 		p.setChecked((last: typeof p.checked) => {
 			if (last.has(p.row))
 				last.delete(p.row)
@@ -271,7 +285,7 @@ function RowCheckbox(p: { row: CmsTableProps['rows'][0], checked: Set<CmsTablePr
 				last.add(p.row)
 			return new Set([...last])
 		})
-	}} />
+	}
 }
 
 

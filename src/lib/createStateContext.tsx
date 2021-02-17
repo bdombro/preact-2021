@@ -7,7 +7,7 @@
  * enable some really cool, otherwise impossible functionality.
  * 
  */
-import { ComponentChildren, createContext as createContextP, h, PreactContext } from 'preact'
+import { ComponentChildren, createContext as createContextP, h } from 'preact'
 import { StateUpdater, useContext as useContextP, useEffect, useRef, useState as useStateP } from 'preact/hooks'
 
 export function createStateContext<T>(defaultInitialVal: T, options: { useHookIsReadOnly?: boolean } = {}) {

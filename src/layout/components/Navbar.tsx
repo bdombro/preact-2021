@@ -1,7 +1,7 @@
 import '~/lib/forms'
 
 import { h } from 'preact'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import { SidebarRightCtx } from '~/App.context'
 import * as i from '~/lib/icons'
@@ -103,6 +103,11 @@ function SearchBar() {
 	const [value, setValue] = useState('')
 	const [isFocused, setIsFocused] = useState(false)
 	const ref = useRef<HTMLInputElement>(null)
+
+	const onBlur = useCallback(_onBlur, [])
+	const onClickClear = useCallback(_onClickClear, [])
+	const onSubmit = useCallback(_onSubmit, [value])
+
 	return <SearchBarDiv class={isFocused ? 'focused' : ''}>
 		<form action='search' onSubmit={onSubmit}>
 			<div class='magglass'><i.Search size={20} horizontal /></div>
@@ -124,21 +129,21 @@ function SearchBar() {
 		</form>
 	</SearchBarDiv>
 
-	function onBlur(e?: any) {
+	function _onBlur(e?: any) {
 		if (e?.relatedTarget?.hash === '#search-clear') setValue('')
 		setIsFocused(false)
 		ref.current.blur()
 	}
 	// I don't think this is ever actually fired due to blur event preventing it,
 	// but just in case it was we handle it.
-	function onClickClear(e: any) {
+	function _onClickClear(e: any) {
 		e.preventDefault()
 		setValue('')
-		onBlur()
+		_onBlur()
 	}
-	function onSubmit() { 
+	function _onSubmit() { 
 		setValue('')
-		onBlur()
+		_onBlur()
 		nav((location.pathname.includes('admin') ? Paths.AdminUserList : Paths.TenantUserList) + '?search=' + value)
 	}
 }

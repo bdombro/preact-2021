@@ -1,4 +1,5 @@
 import { Fragment as F, h } from 'preact'
+import { useCallback } from 'preact/hooks/src'
 
 import { AuthCtx, ToastCtx } from '~/App.context'
 import { Paths } from '~/routes'
@@ -7,6 +8,9 @@ export default function Login() {
 	const search = new URLSearchParams(location.search)
 	search.set('replace', 'true')
 	const searchStr = '?' + search.toString()
+
+	const onAdminLogin = useCallback(_onAdminLogin, [])
+	const onTenantLogin = useCallback(_onTenantLogin, [])
 
 	return <F>
 		<h1>Login</h1>
@@ -18,11 +22,11 @@ export default function Login() {
 		</ul>
 	</F>
 
-	function onAdminLogin() {
+	function _onAdminLogin() {
 		AuthCtx.loginAsAdmin()
 		ToastCtx.set({ message: 'Welcome, admin!', location: 'right' })
 	}
-	function onTenantLogin() {
+	function _onTenantLogin() {
 		AuthCtx.loginAsTenant()
 		ToastCtx.set({ message: 'Welcome, tenant!', location: 'right' })
 	}

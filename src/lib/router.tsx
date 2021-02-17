@@ -66,22 +66,23 @@ function RouterComponent(props: RouterProps) {
 	function watchLocation() {
 		onLocationChange()
 		return navListener(onLocationChange)
-	}
-	function onLocationChange() {
-		const match = props.routesByPath[location.pathname]
 
-		// only update the layout if it's changed
-		let Next = BlankLayout as any
-		if (match && match.Layout)
-			Next = match.Layout
-		if (Layout !== Next)
-			setLayout(() => Next)
-		
-		// Reset the errors if location changes, skipping the initial site load
-		if (!RouterComponent.isFirstRender) resetError()
-		else {
-			setIsLayoutReady(true)
-			RouterComponent.isFirstRender = false
+		function onLocationChange() {
+			const match = props.routesByPath[location.pathname]
+
+			// only update the layout if it's changed
+			let Next = BlankLayout as any
+			if (match && match.Layout)
+				Next = match.Layout
+			if (Layout !== Next)
+				setLayout(() => Next)
+
+			// Reset the errors if location changes, skipping the initial site load
+			if (!RouterComponent.isFirstRender) resetError()
+			else {
+				setIsLayoutReady(true)
+				RouterComponent.isFirstRender = false
+			}
 		}
 	}
 }
@@ -90,6 +91,7 @@ RouterComponent.isFirstRender = true
 /**
  * RouterSwitch: Switches routes based on current url and also checks access control
  */
+const stacks = new Map<string, any>()
 function RouterSwitch({ routesByPath }: RouterProps) {
 	const [_location] = LocationCtx.use()
 	useEffect(checkRenderStatus, [_location])
@@ -106,7 +108,7 @@ function RouterSwitch({ routesByPath }: RouterProps) {
 	if (!r.hasAccess()) throw new ForbiddenError('Forbidden!')
 	return <Stack>
 		<r.Component route={r} />
-		<div id="pagerendercheck" style={{ display: 'none' }}>{location.pathname + location.search}</div>
+		<div id="pagerendercheck" style={{ display: 'none' }}>{encodeURIComponent(location.pathname + location.search)}</div>
 	</Stack>
 
 	// For unknown reasons, sometimes the Preact virtual dom crashes in IOS Webkit (aka all IOS browsers,
@@ -115,15 +117,14 @@ function RouterSwitch({ routesByPath }: RouterProps) {
 	// is a flicker and memory is reset.
 	function checkRenderStatus() {
 		setTimeout(function _checkRenderStatus() {
-			if (document.getElementById('pagerendercheck')?.innerHTML !== location.pathname + location.search) {
+			if (decodeURIComponent(document.getElementById('pagerendercheck')!.innerHTML) !== location.pathname + location.search) {
 				console.error('error in rendering!')
-				location.reload()
+				// location.reload()
 			}
 		},300)
 	}
 
 }
-const stacks = new Map<string, any>()
 
 
 /**

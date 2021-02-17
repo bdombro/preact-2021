@@ -9,7 +9,7 @@ import {h} from 'preact'
 import { IconSvg } from '~/lib/icons'
 import styled from '~/lib/styled'
 
-export default function Checkbox(p: {name: string, checked: boolean, onClick: () => any}) {
+export default function Checkbox(p: {name: string, checked: boolean, onClick?: () => any}) {
 	return <CheckboxDiv class={p.checked ? 'checked' : ''}>
 		<IconSvg fill="var(--gray6)" class="marked" path={MarkedPath} />
 		<IconSvg fill="var(--gray4)" class="empty" path={EmptyPath} />
