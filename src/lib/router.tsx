@@ -94,7 +94,6 @@ RouterComponent.isFirstRender = true
 const stacks = new Map<string, any>()
 function RouterSwitch({ routesByPath }: RouterProps) {
 	const [_location] = LocationCtx.use()
-	useEffect(checkRenderStatus, [_location])
 	const r = routesByPath[_location.pathname] || routesByPath['/notfound']
 	setPageMeta(r)
 	let Stack = RouteWrapper
@@ -108,22 +107,7 @@ function RouterSwitch({ routesByPath }: RouterProps) {
 	if (!r.hasAccess()) throw new ForbiddenError('Forbidden!')
 	return <Stack>
 		<r.Component route={r} />
-		<div id="pagerendercheck" style={{ display: 'none' }}>{encodeURIComponent(location.pathname + location.search)}</div>
 	</Stack>
-
-	// For unknown reasons, sometimes the Preact virtual dom crashes in IOS Webkit (aka all IOS browsers,
-	// bc Apple forces all IOS browsers to use Webkit), and refuses to proceed without reloading.
-	// checkRenderStatus checks for this and reloads automatically. It is not great though, b/c there
-	// is a flicker and memory is reset.
-	function checkRenderStatus() {
-		setTimeout(function _checkRenderStatus() {
-			if (decodeURIComponent(document.getElementById('pagerendercheck')!.innerHTML) !== location.pathname + location.search) {
-				console.error('error in rendering!')
-				// location.reload()
-			}
-		},300)
-	}
-
 }
 
 
