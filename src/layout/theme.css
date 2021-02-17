@@ -86,7 +86,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   body {
     --button-height: 38px;
   }
@@ -157,7 +157,7 @@ a.button { /* try to match button */
   font-stretch: normal;
   font-size: 600;
 }
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   button, a.button {
     min-width: 40px;
     line-height: 2rem;
@@ -228,7 +228,7 @@ select {
   padding: .1rem 24px .12rem .5rem;
   font-size: .9rem !important;
 }
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   select {
     background-position: calc(100% - 5px) .88rem;
     font-size: 1rem !important;

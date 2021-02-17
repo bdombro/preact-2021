@@ -428,6 +428,7 @@ export function CtxProviders({ children }: { children: ComponentChildren }) {
 		const ln = findLinkTagInParents(e.target) // aka linkNode
 
 		if (ln?.host === window.location.host) {
+			console.log('lc')
 			window.dispatchEvent(new Event('link-clicked'))
 			e.preventDefault()
 

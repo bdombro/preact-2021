@@ -13,10 +13,10 @@ import { Paths } from '~/routes'
 import type { NavLinkProps, NavLinks } from '../types'
 
 export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolean, navLinks: NavLinks}) {
-	const isWide = useMedia('(min-width: 600px)')
+	const isWide = useMedia('(min-width: 700px)')
 	return <NavbarDiv>
 		<div>
-			{sidebarLeft && isWide && <LeftBurger href="#sidebar-toggle"><div><i.DotsV /></div></LeftBurger>}
+			{sidebarLeft && isWide && <LeftBurger href="#sidebar-toggle"><div><i.DotsV size={20} /></div></LeftBurger>}
 			<LogoA href='/' class={sidebarLeft && isWide ? 'withBurger' : ''}><div><div>
 				{!sidebarLeft && <i.ReactLogo />}
 				<div>Stacks!</div>
@@ -280,8 +280,8 @@ function RightBurger() {
 			onClick={onClick}
 		>
 			<div>{isLinkActive 
-				? <i.Close size={24} style={{ transform: 'scaleX(1) scaleY(1.3)' }} />
-				: <i.Menu size={24} style={{transform: 'scaleX(.6) scaleY(1.3)'}} />
+				? <i.Close />
+				: <i.Menu />
 			}</div>
 		</NavBurgerA>
 	)

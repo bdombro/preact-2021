@@ -34,7 +34,7 @@ const LoginLayoutInner = styled.div`
 			padding: 20px 40px;
 			border-radius: 10px;
 	}
-	@media (max-width: 600px) {
+	@media (max-width: 700px) {
 			:root
 					top: 5vh;
 			}

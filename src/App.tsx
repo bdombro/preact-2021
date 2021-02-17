@@ -39,10 +39,13 @@ export default function App() {
 	}
 }
 
-
-const setVh = () => {
-	const vh = window.innerHeight
-	document.body.style.setProperty('--vh', `${vh}px`)
+let vh = window.innerHeight
+function setVh() {
+	if (window.innerHeight !== vh) {
+		vh = window.innerHeight
+		document.body.style.setProperty('--vh', `${vh}px`)
+	}
 }
 window.addEventListener('load', setVh)
 window.addEventListener('resize', setVh)
+setInterval(setVh, 2e3)

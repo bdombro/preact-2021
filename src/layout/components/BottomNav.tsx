@@ -88,11 +88,15 @@ function NavBurger() {
 			href="#sidebar-right-toggle"
 			onClick={onClick}
 		>
-			<div>{isActive ? 'X' : 'Ξ'}</div>
+			<div>{isActive
+				? <i.Close width={22}  />
+				: <i.Menu width={22} />
+			}</div>
 		</NavLinkA>
 	)
 
-	function _onClick() {
+	function _onClick(e: any) {
+		e.preventDefault()
 		setIsActive(isActive => {
 			setIsSidebarActive(!isActive)
 			return !isActive

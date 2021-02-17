@@ -37,7 +37,7 @@ const NotFoundDiv = styled.div`
 		border-radius: 2px
 	:root a:hover
 		background: hsl(var(--primary-h),var(--primary-s),50%)
-	@media (max-width: 600px)
+	@media (max-width: 700px)
 		:root img
 			width: 200px
 			height: 200px
@@ -46,7 +46,7 @@ const MapPinDiv = styled.div`
 	:root
 		margin-top: -190px
 		margin-bottom: 180px
-	@media (max-width: 600px)
+	@media (max-width: 700px)
 		:root
 			margin-top: -130px
 			margin-bottom: 120px

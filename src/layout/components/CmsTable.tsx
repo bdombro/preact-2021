@@ -55,7 +55,7 @@ const TableFilterDiv = styled.div`
 		flex-direction: row
 		justify-content: space-between
 		align-items: center
-	@media (max-width: 600px)
+	@media (max-width: 700px)
 		:root
 			display: block
 `
@@ -127,7 +127,7 @@ const HeaderFooterDiv = styled.div`
 		display: flex
 		flex-direction: row
 		justify-content: space-between
-	@media (max-width: 600px)
+	@media (max-width: 700px)
 		:root
 			flex-direction: column-reverse
 		:root.footer
@@ -191,7 +191,7 @@ const BulkActionsFormDiv = styled.div`
 `
 
 function HeadRow(p: Pick<CmsTableProps, 'cols' | 'rows'> & { checked: Set<CmsTableProps['rows'][0]>, setChecked: any}) {
-	const isWide = useMedia('(min-width: 600px)')
+	const isWide = useMedia('(min-width: 700px)')
 	const cols = isWide ? p.cols : p.cols.slice(0, 1)
 	const toggleChecks = useCallback(_toggleChecks, [])
 
@@ -255,7 +255,7 @@ function HeadCol({ colData: c }: { colData: CmsTableProps['cols'][0] }) {
 }
 
 function BodyRow(p: Pick<CmsTableProps, 'cols'> & { row: CmsTableProps['rows'][0], checked: Set<CmsTableProps['rows'][0]>, setChecked: any}) {
-	const isWide = useMedia('(min-width: 600px)')
+	const isWide = useMedia('(min-width: 700px)')
 	return <tr>
 		<td><RowCheckbox {...p} /></td>
 		{isWide

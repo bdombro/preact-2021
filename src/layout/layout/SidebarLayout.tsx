@@ -19,7 +19,7 @@ export default function SidebarLayout(p: {
 	bottomLinks: NavLinks
 	children: ComponentChildren
 }) {
-	const isWide = useMedia('(min-width: 600px)')
+	const isWide = useMedia('(min-width: 700px)')
 	const ref = useRef<any>(null)
 	useEffect(listenForThemeToggle, [])
 	return (
@@ -59,7 +59,7 @@ const SidebarLayoutDiv = styled.div`
 	@media (max-width: 900px)
 		:root
 			--sidebar-width-full: 180px
-	@media (max-width: 600px)
+	@media (max-width: 700px)
 		:root
 			--header-height: 0px
 			--body-height: calc( var(--vh) - var(--header-height) - var(--bottom-nav-height) )
