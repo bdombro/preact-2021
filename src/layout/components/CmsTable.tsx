@@ -1,5 +1,5 @@
 import { ComponentChildren, Fragment, FunctionalComponent, h } from 'preact'
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
+import { StateUpdater, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
 
 import { ToastCtx } from '~/App.context'
 import * as i from '~/lib/icons'
@@ -20,7 +20,7 @@ interface CmsTableProps {
 }
 export default function CmsTable(p: CmsTableProps) {
 	const [_location] = LocationCtx.use()
-	const [checked, setChecked] = useState<Set<any>>(new Set())
+	const [checked, setChecked] = useState<Set<CmsTableProps['rows'][0]>>(new Set())
 	useLayoutEffect(function reset() {setChecked(new Set())}, [_location])
 
 	return <CmsTableDiv>
@@ -163,7 +163,7 @@ function PageButton(p: Pick<CmsTableProps, 'pages'> & { title: string, page: num
 	}
 }
 
-function BulkActionsForm(p: Pick<CmsTableProps, 'bulkOptions'> & { checked: Set<CmsTableProps['rows'][0]>, setChecked: any}) {
+function BulkActionsForm(p: Pick<CmsTableProps, 'bulkOptions'> & { checked: Set<CmsTableProps['rows'][0]>, setChecked: StateUpdater<Set<CmsTableProps['rows'][0]>>}) {
 	const [action, setAction] = useState('-1')
 	const onClick = useCallback(_onClick, [action, p.checked])
 	const onChange = useCallback((e: any) => setAction(e.target.value), [])
@@ -190,7 +190,7 @@ const BulkActionsFormDiv = styled.div`
 		margin-bottom: .3rem
 `
 
-function HeadRow(p: Pick<CmsTableProps, 'cols' | 'rows'> & { checked: Set<CmsTableProps['rows'][0]>, setChecked: any}) {
+function HeadRow(p: Pick<CmsTableProps, 'cols' | 'rows'> & { checked: Set<CmsTableProps['rows'][0]>, setChecked: StateUpdater<Set<CmsTableProps['rows'][0]>>}) {
 	const isWide = useMedia('(min-width: 700px)')
 	const cols = isWide ? p.cols : p.cols.slice(0, 1)
 	const toggleChecks = useCallback(_toggleChecks, [])
@@ -201,7 +201,7 @@ function HeadRow(p: Pick<CmsTableProps, 'cols' | 'rows'> & { checked: Set<CmsTab
 	</HeadTr>
 
 	function _toggleChecks() {
-		p.setChecked(new Set(p.checked.size === p.rows.length ? [] : p.rows))
+		p.setChecked(checked => new Set(checked.size === p.rows.length ? [] : p.rows))
 	}
 }
 const HeadTr = styled.tr`
@@ -254,7 +254,7 @@ function HeadCol({ colData: c }: { colData: CmsTableProps['cols'][0] }) {
 	</td>
 }
 
-function BodyRow(p: Pick<CmsTableProps, 'cols'> & { row: CmsTableProps['rows'][0], checked: Set<CmsTableProps['rows'][0]>, setChecked: any}) {
+function BodyRow(p: Pick<CmsTableProps, 'cols'> & { row: CmsTableProps['rows'][0], checked: Set<CmsTableProps['rows'][0]>, setChecked: StateUpdater<Set<CmsTableProps['rows'][0]>>}) {
 	const isWide = useMedia('(min-width: 700px)')
 	return <tr>
 		<td><RowCheckbox {...p} /></td>
@@ -273,7 +273,7 @@ function BodyRow(p: Pick<CmsTableProps, 'cols'> & { row: CmsTableProps['rows'][0
 	</tr>
 }
 
-function RowCheckbox(p: { row: CmsTableProps['rows'][0], checked: Set<CmsTableProps['rows'][0]>, setChecked: any }) {
+function RowCheckbox(p: { row: CmsTableProps['rows'][0], checked: Set<CmsTableProps['rows'][0]>, setChecked: StateUpdater<Set<CmsTableProps['rows'][0]>> }) {
 	const onClick = useCallback(_onClick, [])
 	return <Checkbox name="row-selected" checked={p.checked.has(p.row)} onClick={onClick} />
 
