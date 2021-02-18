@@ -6,7 +6,7 @@
   "license": "ISC",
   "scripts": {
     "start": "snowpack dev --secure",
-    "build": "snowpack build && workbox generateSW && ts-node scripts/filterModulepreloads.ts",
+    "build": "snowpack build && workbox generateSW",
     "serve": "ts-node --project server.tsconfig.json --transpile-only server.ts",
     "test": "web-test-runner \"src/**/*.test.tsx\"",
     "validate": "yarn lint && tsc",

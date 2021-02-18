@@ -21,14 +21,10 @@ module.exports = {
 		{'match': 'all', 'src': `^(.(?!\.(${nonRouteExtensions})$))+$`, 'dest': '/index.html'},
 	],
 	optimize: {
-		/* Example: Bundle your final build: */
-		// bundle: true,
-		// minify: true,
-		target: 'es2020',
-		// splitting: true,
-		// treeshake: true,
+		bundle: isProd,
+		// minify: true, // sourcemaps dont work in minify yet :-(
+		// splitting: true, // app breaks with splitting
 		manifest: true,
-		preload: true,
 	},
 	packageOptions: {
 		/* ... */
@@ -39,7 +35,7 @@ module.exports = {
 	},
 	buildOptions: {
 		/* ... */
-		sourcemap: !isProd,
+		sourcemap: true,
 	},
 	alias: {
 		'~': './src'
