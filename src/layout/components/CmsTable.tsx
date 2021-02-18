@@ -7,6 +7,7 @@ import qs from '~/lib/queryStrings'
 import { LocationCtx, nav } from '~/lib/router'
 import styled from '~/lib/styled'
 import useMedia from '~/lib/useMedia'
+import { routesByPath } from '~/routes'
 
 import Checkbox from './Checkbox'
 
@@ -63,12 +64,12 @@ const TableFilterDiv = styled.div`
 
 function SearchForm() {
 	const q = qs.parse()
-
+	const tableName = routesByPath[location.pathname].title
 	const onSubmit = useCallback(_onSubmit, [])
 
 	return <SearchFormForm onSubmit={onSubmit}>
-		<input name='search' value={q.search} />
-		<button>Search Users</button>
+		<input name='search' value={q.search} aria-label={`Search ${tableName}`} />
+		<button>Search {tableName}</button>
 	</SearchFormForm>
 
 	function _onSubmit(e: any) {
@@ -170,7 +171,7 @@ function BulkActionsForm(p: Pick<CmsTableProps, 'bulkOptions'> & { checked: Set<
 	const onClick = useCallback(_onClick, [action, p.checked])
 	const onChange = useCallback((e: any) => setAction(e.target.value), [])
 	return <BulkActionsFormDiv>
-		<select name="action" value={action} onChange={onChange}>
+		<select aria-label="Bulk Actions" name="action" value={action} onChange={onChange}>
 			<option value="-1">Bulk Actions</option>
 			{p.bulkOptions?.map(o => <option value={o.title}>{o.title}</option>)}
 		</select>

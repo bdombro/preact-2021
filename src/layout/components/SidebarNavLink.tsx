@@ -12,6 +12,7 @@ export default function NavLink(p: NavLinkProps) {
 	const Icon = p.Icon ?? i.Info
 	return (
 		<NavLinkA
+			aria-label={p.title}
 			href={p.path + (isActive && 'stack' in p ? '#stack-reset' : '')}
 			class={isActive ? 'active' : ''}
 		>

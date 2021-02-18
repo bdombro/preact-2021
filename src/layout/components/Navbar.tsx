@@ -16,8 +16,12 @@ export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolea
 	const isWide = useMedia('(min-width: 700px)')
 	return <NavbarDiv>
 		<div>
-			{sidebarLeft && isWide && <LeftBurger href="#sidebar-toggle"><div><i.DotsV size={20} /></div></LeftBurger>}
-			<LogoA href='/' class={sidebarLeft && isWide ? 'withBurger' : ''}><div><div>
+			{sidebarLeft && isWide && (
+				<LeftBurgerA aria-label="Toggle Left Menu Size" href="#sidebar-toggle">
+					<div><i.DotsV size={20} /></div>
+				</LeftBurgerA>
+			)}
+			<LogoA aria-label="Home" href='/' class={sidebarLeft && isWide ? 'withBurger' : ''}><div><div>
 				{!sidebarLeft && <i.ReactLogo />}
 				<div>Stacks!</div>
 			</div></div></LogoA>
@@ -52,7 +56,7 @@ const NavbarDiv = styled.div`
 	:root :hover
 		text-decoration: none;
 `
-const LeftBurger = styled.a`
+const LeftBurgerA = styled.a`
 	:root
 		z-index: 2
 		text-align: center
@@ -124,6 +128,7 @@ function SearchBar() {
 				onFocus={() => setIsFocused(true)}
 				onBlur={onBlur}
 				ref={ref}
+				aria-label="Search"
 			/>
 			<a
 				href="#search-clear"
@@ -237,7 +242,9 @@ function NavLink(p: NavLinkProps) {
 	const [isSidebarActive] = SidebarRightCtx.use()
 	const isActive = _location.pathname.startsWith(p.path)
 	return (
-		<NavLinkA class={isActive && !isSidebarActive ? 'active' : ''}
+		<NavLinkA
+			aria-label={p.title}
+			class={isActive && !isSidebarActive ? 'active' : ''}
 			href={p.path + (isActive && 'stack' in p ? '#stack-reset' : '')}>
 			<div><div>{p.title}</div></div>
 		</NavLinkA>
@@ -275,7 +282,9 @@ function RightBurger() {
 	useEffect(() => {if (!isSidebarActive) setIsLinkActive(false)}, [isSidebarActive])
 	const onClick = useCallback(_onClick, [])
 	return (
-		<NavBurgerA class={isLinkActive ? 'active' : ''}
+		<NavBurgerA 
+			aria-label="Toggle Right Menu"
+			class={isLinkActive ? 'active' : ''}
 			href={'#navburger-click'}
 			onClick={onClick}
 		>

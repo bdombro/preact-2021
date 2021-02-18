@@ -41,7 +41,8 @@ function NavLink(p: NavLinkProps) {
 	const isActive = _location.pathname.startsWith(p.path)
 	const Icon = p.Icon ?? i.Info
 	return (
-		<NavLinkA 
+		<NavLinkA
+			aria-label={p.title}
 			class={isActive && !isSidebarActive ? 'active' : ''}
 			href={p.path + (isActive && 'stack' in p ? '#stack-reset' : '')}>
 			<div><Icon /></div>
@@ -84,7 +85,9 @@ function NavBurger() {
 	const onClick = useCallback(_onClick, [])
 	useEffect(() => {if (!isSidebarActive) setIsActive(false)}, [isSidebarActive])
 	return (
-		<NavLinkA class={isActive ? 'active' : ''}
+		<NavLinkA 
+			aria-label="Open Right menu"
+			class={isActive ? 'active' : ''}
 			href="#sidebar-right-toggle"
 			onClick={onClick}
 		>

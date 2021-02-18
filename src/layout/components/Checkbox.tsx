@@ -13,7 +13,7 @@ export default function Checkbox(p: {name: string, checked: boolean, onClick?: (
 	return <CheckboxDiv class={p.checked ? 'checked' : ''}>
 		<IconSvg fill="var(--gray6)" class="marked" path={MarkedPath} />
 		<IconSvg fill="var(--gray4)" class="empty" path={EmptyPath} />
-		<input type="checkbox" {...p} />
+		<input type="checkbox" aria-label={p.name} {...p} />
 	</CheckboxDiv>
 }
 
