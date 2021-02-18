@@ -39,11 +39,10 @@ export default function App() {
 	}
 }
 
-let vh = window.innerHeight
 function setVh() {
+	const vh = parseInt(document.body.style.getPropertyValue('--vh').slice(0, -2), 10)
 	if (window.innerHeight !== vh) {
-		vh = window.innerHeight
-		document.body.style.setProperty('--vh', `${vh}px`)
+		document.body.style.setProperty('--vh', `${window.innerHeight}px`)
 	}
 }
 window.addEventListener('load', setVh)
