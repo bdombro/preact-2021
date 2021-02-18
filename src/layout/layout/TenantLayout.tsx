@@ -7,7 +7,7 @@ import { routes } from '~/routes'
 export default function TenantLayout({ children }: { children: any }) {
 	return (
 		<SidebarLayout
-			topLinks={[routes.Support]}
+			topLinks={[{ ...routes.Support, title: 'Need help?' }]}
 			rightLinks={[
 				routes.TenantDashboardStack,
 				routes.TenantTaskStack,

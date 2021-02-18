@@ -1,6 +1,6 @@
 :root {
 
-  --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-primary: 'Roboto', 'Helvetica Neue', sans-serif;
 
   --primary-h: 270;--primary-s: 80%;--primary-l: 33%;
   --primary: hsl(var(--primary-h),var(--primary-s),var(--primary-l));
@@ -83,6 +83,7 @@ body {
   margin: 0;
   max-width: 100%;
   font-family: var(--font-primary);
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

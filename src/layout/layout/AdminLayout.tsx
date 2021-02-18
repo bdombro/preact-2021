@@ -7,7 +7,7 @@ import { routes } from '~/routes'
 export default function AdminLayout({ children }: { children: any }) {
 	return (
 		<SidebarLayout 
-			topLinks={[routes.Support]}
+			topLinks={[{...routes.Support, title: 'Need help?'}]}
 			rightLinks={[
 				routes.AdminStatsStack,
 				routes.AdminBlogStack,
