@@ -76,7 +76,7 @@ function SearchForm() {
 		if (next === (q.search || ''))
 			ToastCtx.set({ message: 'Search query hasn\'t changed', icon: 'error', location: 'bottom' })
 		else
-			nav(qs.create({ search: next }, { upsert: true }))
+			nav(qs.create({ search: next }, { upsert: true }), {replace: true})
 	}
 }
 const SearchFormForm = styled.form`
@@ -96,7 +96,7 @@ function CategoryFilters({categories}: {categories: CmsTableProps['categories']}
 		)}
 	</CategoryFilterDiv>
 	function createUri(next: string) {
-		return qs.create({ category: next !== categories![0].title ? next : null }, { upsert: true }) || location.pathname
+		return (qs.create({ category: next !== categories![0].title ? next : null }, { upsert: true }) || location.pathname) + '#replace'
 	}
 }
 const CategoryFilterDiv = styled.div`
@@ -148,13 +148,15 @@ function PageButton(p: Pick<CmsTableProps, 'pages'> & { title: string, page: num
 	const onClick = useCallback(_onClick, [p.page, p.pageTo])
 	if (p.pageTo < 1) p.pageTo = 1
 	if (p.pageTo > p.pages) p.pageTo = p.pages
-	return <div><a
-		title={p.title}
-		class={`button ${p.pageTo === p.page ? 'disabled' : ''}`}
-		onClick={onClick}
-		href={qs.create({ page: p.pageTo !== 1 ? p.pageTo : null }, { upsert: true }) || location.pathname}>
-		{p.children}
-	</a></div>
+	return <div>
+		<a
+			title={p.title}
+			class={`button ${p.pageTo === p.page ? 'disabled' : ''}`}
+			onClick={onClick}
+			href={(qs.create({ page: p.pageTo !== 1 ? p.pageTo : null }, { upsert: true }) || location.pathname) + '#replace'}>
+			{p.children}
+		</a>
+	</div>
 	function _onClick(e: any) {
 		if (p.pageTo === p.page) {
 			e.preventDefault()
@@ -242,8 +244,7 @@ function HeadCol({ colData: c }: { colData: CmsTableProps['cols'][0] }) {
 			|| c.sortDefault
 			|| 'asc'
 		)
-		const sortUri = qs.create({ sortBy: c.title, sortDirection }, { upsert: true })
-		nav(sortUri)
+		nav(qs.create({ sortBy: c.title, sortDirection }, { upsert: true }), {replace: true})
 	}, [sortCurrent])
 
 	return <td onClick={sort} class={`${c.sortable ? 'clickable' : ''} ${sortCurrent ? 'active' : ''}`}>
