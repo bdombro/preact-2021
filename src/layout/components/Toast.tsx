@@ -30,9 +30,9 @@ export default function Toast(p: ToastProps) {
 	useLayoutEffect(reset, [p])
 	useEffect(init, [p])
 
-	return <ToastOuter class={`${p.location} hidden ${typeof p.icon === 'string' ? p.icon : ''}`} ref={ref}>
+	return <ToastOuter class={`${p.location} _hidden ${typeof p.icon === 'string' ? p.icon : ''}`} ref={ref}>
 		<div>
-			<div class={p.icon ? 'withIcon' : ''}>
+			<div data-icon={!!p.icon}>
 				{!!p.icon && <div><Icon size={p.iconSize ?? 40} /></div>}
 				{p.message}
 			</div>
@@ -44,7 +44,7 @@ export default function Toast(p: ToastProps) {
 		ref.current.base.classList.remove('animatedOut')
 		ref.current.base.style.display = 'none'
 		if (p.location === 'right')
-			ref.current.base.classList.add('hidden')
+			ref.current.base.classList.add('_hidden')
 		if (timeouts.size) {
 			timeouts.forEach(t => clearTimeout(t))
 			timeouts.clear()
@@ -54,13 +54,13 @@ export default function Toast(p: ToastProps) {
 		if (p.message) {
 			ref.current.base.style.display = 'initial'
 			ref.current.base.classList.add('animatedIn')
-			ref.current.base.classList.remove('hidden')
+			ref.current.base.classList.remove('_hidden')
 			if (!p.duration) p.duration = 2e3
 			if (p.duration === -1) return
 			timeouts.add(setTimeout(function selfDestruct() {
 				ref.current.base.classList.remove('animatedIn')
 				ref.current.base.classList.add('animatedOut')
-				ref.current.base.classList.add('hidden')
+				ref.current.base.classList.add('_hidden')
 				timeouts.add(setTimeout(() => {
 					ref.current.base.classList.remove('animatedOut')
 					ref.current.base.style.display = 'none'
@@ -84,20 +84,20 @@ const ToastOuter = styled.div`
 		left:0
 		width:100%
 		text-align:center
-	:root.bottom.hidden
+	:root.bottom._hidden
 		bottom: -100px
 	:root.right
 		top: 60px
 		right:10px
 		border-radius: 6px
-	:root.right.hidden
+	:root.right._hidden
 		right: -330px
 	:root.center
 		top: 150px
 		left:0
 		width:100%
 		text-align:center
-	:root.center.hidden
+	:root.center._hidden
 		opacity: 0
 	:root>div
 		max-width: 330px
@@ -120,12 +120,12 @@ const ToastOuter = styled.div`
 		text-decoration: underline
 	:root a:active
 		text-decoration: none
-	:root>div>div.withIcon
+	:root>div>div[data-icon="true"]
 		display: flex
 		flex-direction: row
 		align-items: center
 		text-align: left
-	:root>div>div.withIcon>div
+	:root>div>div[data-icon="true"]>div
 		margin-right: 16px
 	
 `

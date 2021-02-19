@@ -96,7 +96,7 @@ body {
   box-sizing:border-box;
 }
 
-
+b, .bold {font-weight: 700}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
@@ -177,7 +177,7 @@ button:active, a.button:active {
 button:focus, a.button:focus {
   outline: none;
 }
-button:disabled, button.disabled, a.button.disabled {
+button:disabled, button[data-disabled="true"], a.button[data-disabled="true"] {
   color: var(--gray6);
 }
 .dark button,.dark a.button {
@@ -217,7 +217,6 @@ input, select {
 input[type=checkbox] {
   height: 1.5rem;
   width: 1.5rem;
-  filter: hue-rotate(calc(var(--secondary-h) * 1deg));
   cursor: pointer;
 }
 select {
@@ -264,9 +263,15 @@ tbody td {
   padding: .5rem .2rem .8rem;
   font-size: .9rem;
 }
-td.clickable {
+td[data-clickable="true"] {
   cursor: pointer
 }
-td.clickable:hover {
+td[data-clickable="true"]:hover {
   background: var(--gray4)
 }
+
+.hidden {display: none !important}
+.block {display: block !important}
+.flex {display: flex !important}
+.inVisible {visibility: 0 !important}
+.visible {visibility: 1 !important}

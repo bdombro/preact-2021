@@ -138,9 +138,10 @@ const TextFieldDiv = styled.div`
 /**
  * A checkbox input with label and error handling
  */
-interface CheckboxProps extends h.JSX.HTMLAttributes<HTMLDivElement> {
+interface CheckboxProps {
   labelText: ComponentChildren
   error?: string
+	divProps?: h.JSX.HTMLAttributes<HTMLDivElement>
 	inputProps: Omit<h.JSX.HTMLAttributes<HTMLInputElement>, 'name'> & { name: string, 'aria-label': string }
 }
 // TODO: Support controlled
@@ -148,7 +149,7 @@ export function CheckboxField(p: CheckboxProps) {
 	const [checked, setChecked] = useState(p.inputProps?.checked)
 	const toggleBox = useCallback(function _toggleBox() { setChecked(curr => !curr) }, [])
 	return (
-		<CheckboxFieldDiv class={(p.className || '') + (p.error ? ' hasError' : '')} >
+		<CheckboxFieldDiv data-error={!!p.error} {...p.divProps} >
 			<div>
 				<Checkbox inputProps={{ ...p.inputProps, onClick: toggleBox, checked: checked}}/>
 				<div onClick={toggleBox}>
@@ -166,12 +167,12 @@ const CheckboxFieldDiv = styled.div`
     display: flex
 		flex-direction: row
 		cursor: pointer
-  :root.hasError input
+  :root[data-error="true"] input
     border: 1px solid var(--danger)
   :root .error
     display: none
     color: var(--danger)
-  :root.hasError .error
+  :root[data-error="true"] .error
     display: block
 `
 

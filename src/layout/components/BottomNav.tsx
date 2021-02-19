@@ -43,7 +43,7 @@ function NavLink(p: NavLinkProps) {
 	return (
 		<NavLinkA
 			aria-label={p.title}
-			class={isActive && !isSidebarActive ? 'active' : ''}
+			data-active={isActive && !isSidebarActive}
 			href={p.path + (isActive && 'stack' in p ? '#stack-reset' : '')}>
 			<div><Icon /></div>
 		</NavLinkA>
@@ -62,8 +62,8 @@ const NavLinkA = styled.a`
 		background: var(--nav-background-active)
 		border-right: 1px solid var(--nav-background-active)
 		border-top: 1px solid var(--nav-background-active)
-	:root.active,
-	:root.active:hover
+	:root[data-active="true"],
+	:root[data-active="true"]:hover
 		color: var(--nav-text-active)
 		background: var(--nav-background-active)
 		border-right: 1px solid var(--nav-background-active)
@@ -87,7 +87,7 @@ function NavBurger() {
 	return (
 		<NavLinkA 
 			aria-label="Open Right menu"
-			class={isActive ? 'active' : ''}
+			data-active={isActive}
 			href="#sidebar-right-toggle"
 			onClick={onClick}
 		>

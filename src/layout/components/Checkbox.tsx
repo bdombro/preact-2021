@@ -1,6 +1,5 @@
-/* eslint-disable max-len */
 /**
- * Adapted from https://codepen.io/5t3ph/pen/RwrOygP
+ * A fancy wrapper for HTML Checkboxes, bc they are not style-able :-(
  */
 import EmptyPath from 'mdi-paths-split/CheckboxBlankOutline'
 import MarkedPath from 'mdi-paths-split/CheckboxMarked'
@@ -36,9 +35,11 @@ const CheckboxDiv = styled.div`
 		position: relative
 		margin-top: -2px
 		margin-bottom: -8px
+		cursor: pointer
 	:root input
 		opacity: 0
 	:root svg
+		cursor: pointer
 		position: absolute
 		top: 0
 		left: 0

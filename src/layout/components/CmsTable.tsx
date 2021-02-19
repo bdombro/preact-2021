@@ -2,7 +2,7 @@ import { ComponentChildren, Fragment, h } from 'preact'
 import { StateUpdater, useCallback, useLayoutEffect, useState } from 'preact/hooks'
 
 import { ToastCtx } from '~/App.context'
-import { useMedia } from '~/lib/hooks'
+import { useMedia, UseSet, useSet } from '~/lib/hooks'
 import * as i from '~/lib/icons'
 import qs from '~/lib/queryStrings'
 import { LocationCtx, nav } from '~/lib/router'
@@ -22,27 +22,27 @@ interface CmsTableProps {
 type CmsRow = ComponentChildren[]
 export default function CmsTable(p: CmsTableProps) {
 	const [_location] = LocationCtx.use()
-	const [checked, setChecked] = useState<Set<CmsRow>>(new Set())
-	useLayoutEffect(function reset() {setChecked(new Set())}, [_location])
+	const checked = useSet<CmsRow>()
+	useLayoutEffect(checked.reset, [_location])
 
 	return <CmsTableDiv>
 		<TableFilterDiv>
 			<CategoryFilters categories={p.categories} />
 			<SearchForm />
 		</TableFilterDiv>
-		<HeaderFooter total={p.total} pages={p.pages} bulkOptions={p.bulkOptions} checked={checked} setChecked={setChecked} />
+		<HeaderFooter total={p.total} pages={p.pages} bulkOptions={p.bulkOptions} checked={checked} />
 		<table>
 			<thead>
-				<HeadRow cols={p.cols} rows={p.rows} checked={checked} setChecked={setChecked} />
+				<HeadRow cols={p.cols} rows={p.rows} checked={checked} />
 			</thead>
 			<tbody>
-				{p.rows.map((row,i) => <BodyRow cols={p.cols} row={row} rowNumber={i} checked={checked} setChecked={setChecked} />)}
+				{p.rows.map((row,i) => <BodyRow cols={p.cols} row={row} rowNumber={i} checked={checked} />)}
 			</tbody>
 			<tfoot>
-				<HeadRow cols={p.cols} rows={p.rows} checked={checked} setChecked={setChecked} />
+				<HeadRow cols={p.cols} rows={p.rows} checked={checked} />
 			</tfoot>
 		</table>
-		<HeaderFooter total={p.total} pages={p.pages} bulkOptions={p.bulkOptions} checked={checked} setChecked={setChecked} isFooter />
+		<HeaderFooter total={p.total} pages={p.pages} bulkOptions={p.bulkOptions} checked={checked} isFooter />
 	</CmsTableDiv>
 }
 const CmsTableDiv = styled.div`
@@ -107,11 +107,11 @@ const CategoryFilterDiv = styled.div`
 		margin-bottom: .3rem
 `
 
-function HeaderFooter(p: Pick<CmsTableProps, 'total' | 'pages' | 'bulkOptions'> & { isFooter?: boolean, checked: Set<any>, setChecked: any}) {
+function HeaderFooter(p: Pick<CmsTableProps, 'total' | 'pages' | 'bulkOptions'> & { isFooter?: boolean, checked: UseSet<CmsRow>}) {
 	const page = parseInt(qs.parse().page || '1')
 	
-	return <HeaderFooterDiv class={p.isFooter ? 'footer' : ''}>
-		<BulkActionsForm bulkOptions={p.bulkOptions} checked={p.checked} setChecked={p.setChecked} />
+	return <HeaderFooterDiv data-footer={p.isFooter}>
+		<BulkActionsForm bulkOptions={p.bulkOptions} checked={p.checked} />
 		<CountDiv>
 			<div>{p.total} items&nbsp;</div>
 			{p.pages > 1 && <Fragment>
@@ -132,7 +132,7 @@ const HeaderFooterDiv = styled.div`
 	@media (max-width: 700px)
 		:root
 			flex-direction: column-reverse
-		:root.footer
+		:root[data-footer="true"]
 			flex-direction: column
 `
 const CountDiv = styled.div`
@@ -153,7 +153,8 @@ function PageButton(p: Pick<CmsTableProps, 'pages'> & { title: string, page: num
 	return <div>
 		<a
 			title={p.title}
-			class={`button ${p.pageTo === p.page ? 'disabled' : ''}`}
+			class="button"
+			data-disabled={p.pageTo === p.page}
 			onClick={onClick}
 			href={(qs.create({ page: p.pageTo !== 1 ? p.pageTo : null }, { upsert: true }) || location.pathname) + '#replace'}>
 			{p.children}
@@ -167,7 +168,7 @@ function PageButton(p: Pick<CmsTableProps, 'pages'> & { title: string, page: num
 	}
 }
 
-function BulkActionsForm(p: Pick<CmsTableProps, 'bulkOptions'> & { checked: Set<CmsRow>, setChecked: StateUpdater<Set<CmsRow>>}) {
+function BulkActionsForm(p: Pick<CmsTableProps, 'bulkOptions'> & { checked: UseSet<CmsRow>}) {
 	const [action, setAction] = useState('-1')
 	const onClick = useCallback(_onClick, [action, p.checked])
 	const onChange = useCallback((e: any) => setAction(e.target.value), [])
@@ -182,8 +183,8 @@ function BulkActionsForm(p: Pick<CmsTableProps, 'bulkOptions'> & { checked: Set<
 	function _onClick() {
 		if (action === '-1') return ToastCtx.set({ message: 'No action selected', icon: 'error', location: 'bottom' })
 		if (!p.checked.size) return ToastCtx.set({ message: 'No rows selected', icon: 'error', location: 'bottom' })
-		p.bulkOptions?.find(o => o.title === action)!.cb([...p.checked])
-		p.setChecked(new Set())
+		p.bulkOptions?.find(o => o.title === action)!.cb([...p.checked.current])
+		p.checked.reset()
 	}
 }
 const BulkActionsFormDiv = styled.div`
@@ -194,37 +195,18 @@ const BulkActionsFormDiv = styled.div`
 		margin-bottom: .3rem
 `
 
-function HeadRow(p: Pick<CmsTableProps, 'cols' | 'rows'> & { checked: Set<CmsRow>, setChecked: StateUpdater<Set<CmsRow>>}) {
+function HeadRow(p: Pick<CmsTableProps, 'cols' | 'rows'> & { checked: UseSet<CmsRow>}) {
 	const isWide = useMedia('(min-width: 700px)')
 	const cols = isWide ? p.cols : p.cols.slice(0, 1)
-	const toggleChecks = useCallback(_toggleChecks, [])
+	const toggleChecks = useCallback(() => p.checked.set(curr => new Set(curr.size === p.rows.length ? [] : p.rows)), [])
 
-	return <HeadTr>
+	return <tr>
 		<td style={{ width: 24 }}>
 			<Checkbox inputProps={{name:'select-all', checked: p.checked.size === p.rows.length, onClick:toggleChecks, 'aria-label': 'Select All'}} />
 		</td>
 		{cols.map(c => <HeadCol colData={c} />)}
-	</HeadTr>
-
-	function _toggleChecks() {
-		p.setChecked(curr => new Set(curr.size === p.rows.length ? [] : p.rows))
-	}
+	</tr>
 }
-const HeadTr = styled.tr`
-	:root td.clickable
-		cursor: pointer
-	:root td.clickable:hover a
-		text-decoration: underline
-	:root td:first-of-type svg.empty
-		fill: var(--gray5)
-	:root td:not(:first-of-type) svg
-		visibility: hidden
-	:root td:not(:first-of-type):hover svg,
-	:root td:not(:first-of-type).active svg
-		visibility: visible
-	:root td.clickable:active svg
-		transform: translateY(2px)
-`
 
 const carrotProps = { size: 20, style: { marginBottom: -4, marginTop: -4, color: 'var(--black)' } }
 function HeadCol({ colData: c }: { colData: CmsTableProps['cols'][0] }) {
@@ -251,15 +233,28 @@ function HeadCol({ colData: c }: { colData: CmsTableProps['cols'][0] }) {
 		nav(qs.create({ sortBy: c.title, sortDirection }, { upsert: true }), {replace: true})
 	}, [sortCurrent])
 
-	return <td onClick={sort} class={`${c.sortable ? 'clickable' : ''} ${sortCurrent ? 'active' : ''}`}>
+	return <HeadColTd onClick={sort} data-clickable={c.sortable} data-sort-active={sortCurrent}>
 		{c.sortable
 			? <a href="#table-sort">{c.title} {carrot}</a>
 			: <span>{c.title} {carrot}</span>
 		}
-	</td>
+	</HeadColTd>
 }
+const HeadColTd = styled.td`
+	:root[data-clickable="true"]:hover a
+		text-decoration: underline
+	:root:first-of-type svg.empty
+		fill: var(--gray5)
+	:root:not(:first-of-type) svg
+		visibility: hidden
+	:root:not(:first-of-type):hover svg,
+	:root:not(:first-of-type).active svg
+		visibility: visible
+	:root[data-clickable="true"]:active svg
+		transform: translateY(2px)
+`
 
-function BodyRow(p: Pick<CmsTableProps, 'cols'> & { row: CmsRow, rowNumber: number, checked: Set<CmsRow>, setChecked: StateUpdater<Set<CmsRow>>}) {
+function BodyRow(p: Pick<CmsTableProps, 'cols'> & { row: CmsRow, rowNumber: number, checked: UseSet<CmsRow>}) {
 	const isWide = useMedia('(min-width: 700px)')
 	return <tr>
 		<td><RowCheckbox {...p} /></td>
@@ -278,19 +273,9 @@ function BodyRow(p: Pick<CmsTableProps, 'cols'> & { row: CmsRow, rowNumber: numb
 	</tr>
 }
 
-function RowCheckbox(p: { row: CmsRow, rowNumber: number, checked: Set<CmsRow>, setChecked: StateUpdater<Set<CmsRow>> }) {
-	const onClick = useCallback(_onClick, [])
+function RowCheckbox(p: { row: CmsRow, rowNumber: number, checked: UseSet<CmsRow> }) {
+	const onClick = useCallback(() => p.checked.toggle(p.row), [])
 	return <Checkbox inputProps={{name:'row-selected', checked: p.checked.has(p.row), onClick: onClick, 'aria-label': `Select row #${p.rowNumber+1}`}} />
-
-	function _onClick() {
-		p.setChecked(curr => {
-			if (curr.has(p.row))
-				curr.delete(p.row)
-			else
-				curr.add(p.row)
-			return new Set([...curr])
-		})
-	}
 }
 
 

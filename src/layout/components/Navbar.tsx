@@ -21,7 +21,7 @@ export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolea
 					<div><i.DotsV size={20} /></div>
 				</LeftBurgerA>
 			)}
-			<LogoA aria-label="Home" href='/' class={sidebarLeft && isWide ? 'withBurger' : ''}><div><div>
+			<LogoA aria-label="Home" href='/' data-burger={sidebarLeft && isWide}><div><div>
 				{!sidebarLeft && <i.ReactLogo />}
 				<div>Stacks!</div>
 			</div></div></LogoA>
@@ -103,7 +103,7 @@ const LogoA = styled.a`
 	:root svg
 		color: hsl(var(--primary-h), var(--primary-s), 70%)
 		margin: 0 6px 0 8px
-	:root.withBurger
+	:root[data-burger="true"]
 		margin-top: -63px
 		padding: 80px 7px
 `
@@ -117,7 +117,7 @@ function SearchBar() {
 	const onClickClear = useCallback(_onClickClear, [])
 	const onSubmit = useCallback(_onSubmit, [value])
 
-	return <SearchBarDiv class={isFocused ? 'focused' : ''}>
+	return <SearchBarDiv data-focused={isFocused}>
 		<form action='search' onSubmit={onSubmit}>
 			<div class='magglass'><i.Search size={20} horizontal /></div>
 			<input
@@ -134,7 +134,7 @@ function SearchBar() {
 				href="#search-clear"
 				tabIndex={0}
 				onClick={onClickClear}
-				class={`clear ${isFocused ? 'show' : ''}`}
+				class={`clear ${isFocused ? 'block' : ''}`}
 			>x</a>
 		</form>
 	</SearchBarDiv>
@@ -164,7 +164,7 @@ const SearchBarDiv = styled.div`
 		left: var(--sidebar-width-full)
 		top: 10px
 		width: var(--searchbar-width)
-	:root.focused
+	:root[data-focused="true"]
 		--searchbar-width: 500px
 	:root input
 		width: 100%
@@ -183,7 +183,7 @@ const SearchBarDiv = styled.div`
 		opacity: 1
 	.dark :root input::placeholder
 		color: hsl(0,0%,80%)
-	:root.focused input
+	:root[data-focused="true"] input
 		background: var(--white)
 	:root .magglass
 		color: var(--primary)
@@ -201,10 +201,8 @@ const SearchBarDiv = styled.div`
 		font-size: 1.2em
 	.dark :root .clear
 		color: hsl(0,0%,80%)
-	:root .clear.show
-		display: block
 	@media (max-width: 890px)
-		:root.focused
+		:root[data-focused="true"]
 			--searchbar-width: 270px
 `
 
@@ -244,7 +242,7 @@ function NavLink(p: NavLinkProps) {
 	return (
 		<NavLinkA
 			aria-label={p.title}
-			class={isActive && !isSidebarActive ? 'active' : ''}
+			data-active={isActive && !isSidebarActive}
 			href={p.path + (isActive && 'stack' in p ? '#stack-reset' : '')}>
 			<div><div>{p.title}</div></div>
 		</NavLinkA>
@@ -260,7 +258,7 @@ const NavLinkA = styled.a`
 		color: white
 		transform: rotate(20deg)
 	:root:hover,
-	:root.active
+	:root[data-active="true"]
 		background:var(--secondary)
 	:root:active>div>div
 		color:white
@@ -284,14 +282,11 @@ function RightBurger() {
 	return (
 		<NavBurgerA 
 			aria-label="Toggle Right Menu"
-			class={isLinkActive ? 'active' : ''}
+			data-active={isLinkActive}
 			href={'#navburger-click'}
 			onClick={onClick}
 		>
-			<div>{isLinkActive 
-				? <i.Close />
-				: <i.Menu />
-			}</div>
+			<div>{isLinkActive ? <i.Close /> : <i.Menu />}</div>
 		</NavBurgerA>
 	)
 
@@ -314,7 +309,7 @@ const NavBurgerA = styled.a`
 		padding-top: 2px
 		color: white
 	:root:hover,
-	:root.active
+	:root[data-active="true"]
 		background: var(--primary)
 	:root:focus,
 	:root:active,

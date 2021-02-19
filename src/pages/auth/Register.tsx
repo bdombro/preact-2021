@@ -55,9 +55,8 @@ export default function Register() {
 				error={errors[RegisterPropsEnum.password]?.note}
 			/>
 			<CheckboxField
-				inputProps={{name: RegisterPropsEnum.acceptedTerms, 'aria-label': 'Do you agree to the terms at the following link? {put link here}'}}
+				inputProps={{ name: RegisterPropsEnum.acceptedTerms, disabled: submitting, 'aria-label': 'Do you agree to the terms at the following link? {put link here}'}}
 				labelText={<span>Do you agree to these<br/>terms?</span>}
-				disabled={submitting}
 				error={errors[RegisterPropsEnum.acceptedTerms]?.note}
 			/>
 			<SubmitButton>Register</SubmitButton>

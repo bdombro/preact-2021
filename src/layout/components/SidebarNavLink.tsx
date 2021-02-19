@@ -14,7 +14,7 @@ export default function NavLink(p: NavLinkProps) {
 		<NavLinkA
 			aria-label={p.title}
 			href={p.path + (isActive && 'stack' in p ? '#stack-reset' : '')}
-			class={isActive ? 'active' : ''}
+			data-active={isActive}
 		>
 			<div><Icon /></div>
 			<NavLinkText>{p.title}</NavLinkText>
@@ -30,8 +30,8 @@ const NavLinkA = styled.a`
 	:root:hover
 		background: var(--nav-background-hover)
 		text-decoration: none
-	:root.active,
-	:root.active:hover,
+	:root[data-active="true"],
+	:root[data-active="true"]:hover,
 	:root:active
 		background: var(--nav-background-active)
 		color: var(--nav-text-active)
