@@ -23,7 +23,7 @@ type CmsRow = ComponentChildren[]
 export default function CmsTable(p: CmsTableProps) {
 	const [_location] = LocationCtx.use()
 	const checked = useSet<CmsRow>()
-	useLayoutEffect(checked.reset, [_location])
+	useLayoutEffect(() => checked.reset(), [_location])
 
 	return <CmsTableDiv>
 		<TableFilterDiv>
@@ -170,7 +170,7 @@ function PageButton(p: Pick<CmsTableProps, 'pages'> & { title: string, page: num
 
 function BulkActionsForm(p: Pick<CmsTableProps, 'bulkOptions'> & { checked: UseSet<CmsRow>}) {
 	const [action, setAction] = useState('-1')
-	const onClick = useCallback(_onClick, [action, p.checked])
+	const onClick = useCallback(_onClick, [action])
 	const onChange = useCallback((e: any) => setAction(e.target.value), [])
 	return <BulkActionsFormDiv>
 		<select aria-label="Bulk Actions" name="action" value={action} onChange={onChange}>
