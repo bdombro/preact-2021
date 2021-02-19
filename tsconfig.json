@@ -23,6 +23,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
     "importsNotUsedAsValues": "error",
     "lib": ["dom", "dom.Iterable", "esnext"],
   }

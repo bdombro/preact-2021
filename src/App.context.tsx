@@ -40,7 +40,7 @@ ThemeCtx.subscribe(() => SidebarRightCtx.set(false))
 
 export interface AuthCtxType { id: string, roles: Roles[], tenants: string[], currentTenant: string }
 const AuthCtxLoggedOut: AuthCtxType = { id: '', roles: [], tenants: [], currentTenant: '' }
-enum Roles { admin, tenant }
+export enum Roles { admin, tenant }
 const AuthCtxBase = createStateContext<typeof AuthCtxLoggedOut>(ls.get('AuthCtx') ? JSON.parse(ls.get('AuthCtx')!) : AuthCtxLoggedOut)
 export const AuthCtx = Object.assign(AuthCtxBase, {
 	logout() { AuthCtx.set(AuthCtxLoggedOut) },

@@ -4,10 +4,10 @@ import { h } from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import { SidebarRightCtx } from '~/App.context'
+import {useMedia} from '~/lib/hooks'
 import * as i from '~/lib/icons'
 import {LocationCtx, nav} from '~/lib/router'
 import styled from '~/lib/styled'
-import useMedia from '~/lib/useMedia'
 import { Paths } from '~/routes'
 
 import type { NavLinkProps, NavLinks } from '../types'

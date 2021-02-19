@@ -45,7 +45,26 @@
   --searchbar-background: var(--gray4);
   --searchbar-background-active: var(--gray2);
 }
-
+body {
+  --vh: 100vh; /* this is set by App.tsx */
+  --body-height: var(--vh);
+  --button-height: 30px;
+  overflow: hidden;
+  background: var(--gray5);
+  margin: 0;
+  max-width: 100%;
+  font-family: var(--font-primary);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--white);
+  color: var(--black);
+}
+@media (max-width: 700px) {
+  body {
+    --button-height: 38px;
+  }
+}
 .dark {
   --black: white;
   --white: black;
@@ -69,29 +88,14 @@
   --nav-text-active: var(--black);
   --searchbar-background: var(--gray4);
   --searchbar-background-active: var(--gray2);
+  background: var(--white);
+  color: var(--black);
 }
 
 * {
   box-sizing:border-box;
 }
-body {
-  --vh: 100vh; /* this is set by App.tsx */
-  --body-height: var(--vh);
-  --button-height: 30px;
-  overflow: hidden;
-  background: var(--gray5);
-  margin: 0;
-  max-width: 100%;
-  font-family: var(--font-primary);
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-@media (max-width: 700px) {
-  body {
-    --button-height: 38px;
-  }
-}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;

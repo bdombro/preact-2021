@@ -2,9 +2,9 @@ import { ComponentChildren, h } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 
 import { ThemeCtx } from '~/App.context'
+import {useMedia} from '~/lib/hooks'
 import { ContentDiv } from '~/lib/router'
 import styled from '~/lib/styled'
-import useMedia from '~/lib/useMedia'
 
 import BottomNav from '../components/BottomNav'
 import Navbar from '../components/Navbar'
