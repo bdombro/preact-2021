@@ -9,9 +9,6 @@ import styled from '~/lib/styled'
 import type { NavLinkProps, NavLinks } from '../types'
 
 
-const useSidebarRight = SidebarRightCtx.use
-
-
 export default function BottomNav({ navLinks }: { navLinks: NavLinks }) {
 	return <Nav>
 		{navLinks
@@ -37,7 +34,7 @@ const Nav = styled.div`
 
 function NavLink(p: NavLinkProps) {
 	const [_location] = LocationCtx.use()
-	const [isSidebarActive] = useSidebarRight()
+	const [isSidebarActive] = SidebarRightCtx.use()
 	const isActive = _location.pathname.startsWith(p.path)
 	const Icon = p.Icon ?? i.Info
 	return (
@@ -81,7 +78,7 @@ const NavLinkA = styled.a`
  */
 function NavBurger() {
 	const [isActive, setIsActive] = useState(false)
-	const [isSidebarActive, setIsSidebarActive] = useSidebarRight()
+	const [isSidebarActive, setIsSidebarActive] = SidebarRightCtx.use()
 	const onClick = useCallback(_onClick, [])
 	useEffect(() => {if (!isSidebarActive) setIsActive(false)}, [isSidebarActive])
 	return (
