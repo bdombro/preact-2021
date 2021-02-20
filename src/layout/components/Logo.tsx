@@ -5,28 +5,26 @@ import styled from '~/lib/styled'
 
 import { currentTheme } from '../theme'
 
-interface LogoProps extends h.JSX.HTMLAttributes<HTMLAnchorElement> {
-  size?: number
-	borderColor?: string
-	borderColorHover?: string
-}
-export function Logo(p: LogoProps) {
-	const {
-		size = 1,
-		borderColor = currentTheme.secondary || '#ccc',
-		borderColorHover = '#aaa',
-		...aProps
-	} = p
+interface LogoProps extends h.JSX.HTMLAttributes<HTMLAnchorElement> {size?: number}
+export function Logo({size = 1, ...aProps}: LogoProps) {
+	const borderColor = currentTheme.secondary
+	const borderColorHover = '#aaa'
 	const innerColor = currentTheme.primary
-	const [borderColorCurrent, setBorderColor] = useState(borderColor)
+	const innerColorHover = currentTheme.primaryHover
+	const [colors, setColors] = useState({borderColor: borderColor, innerColor})
 	
-	return <LogoA href='/' {...aProps} onMouseEnter={() => setBorderColor(borderColorHover)} onMouseLeave={() => setBorderColor(borderColor)}>
-		<div style={{ 
-			padding: `${size * 10}px ${size * 10}px`, 
-			fontSize: `${size}rem`, 
-			backgroundImage: `url('data:image/svg+xml;base64,${btoa(rockyBorderSvg(borderColorCurrent, innerColor))}')`
-		}}>Stacks!</div>
-	</LogoA>
+	return (
+		<LogoA
+			href='/' {...aProps}
+			onMouseEnter={() => setColors({borderColor: borderColorHover, innerColor: innerColorHover})}
+			onMouseLeave={() => setColors({borderColor, innerColor})}>
+			<div style={{ 
+				padding: `${size * 10}px ${size * 10}px`, 
+				fontSize: `${size}rem`, 
+				backgroundImage: `url('data:image/svg+xml;base64,${btoa(rockyBorderSvg(colors.borderColor, colors.innerColor))}')`
+			}}>Stacks!</div>
+		</LogoA>
+	)
 }
 // Inline the border svg so we can set the fill of the border color
 // eslint-disable-next-line max-len

@@ -164,7 +164,7 @@ export function CheckboxField(p: CheckboxProps) {
 const CheckboxFieldDiv = styled.div`
 	:root
 		margin-bottom: .6rem
-  :root>div
+  :root>div:first-of-type
     display: flex
 		flex-direction: row
 		cursor: pointer
