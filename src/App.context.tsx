@@ -2,7 +2,8 @@ import { ComponentChildren, h } from 'preact'
 
 import type { ToastProps } from './layout/components/Toast'
 import { createStateContext } from './lib/createStateContext'
-import { navListener, RouteHistoryReset, StackHistoriesReset } from './lib/router'
+import { nav, navListener, RouteHistoryReset, StackHistoriesReset } from './lib/router'
+import { Paths } from './routes'
 
 const bc = document.body.classList
 const ls = {
@@ -17,7 +18,13 @@ const AuthCtxLoggedOut: AuthCtxType = { id: '', roles: [], tenants: [], currentT
 export enum Roles { admin, tenant }
 const AuthCtxBase = createStateContext<typeof AuthCtxLoggedOut>(ls.get('AuthCtx') ? JSON.parse(ls.get('AuthCtx')!) : AuthCtxLoggedOut)
 export const AuthCtx = Object.assign(AuthCtxBase, {
-	logout() { AuthCtx.set(AuthCtxLoggedOut); StackHistoriesReset(); RouteHistoryReset() },
+	logout() { 
+		AuthCtx.set(AuthCtxLoggedOut) 
+		StackHistoriesReset() 
+		RouteHistoryReset() 
+		ToastCtx.set({ message: 'You\'ve been logged out.', location: 'right' })
+		nav(Paths.Login)
+	},
 	loginAsAdmin() { AuthCtx.set({ id: '1', roles: [Roles.admin], tenants: [], currentTenant: '' }) },
 	loginAsTenant() { AuthCtx.set({ id: '2', roles: [Roles.tenant], tenants: ['123', '311'], currentTenant: '123' }) },
 	roles: Roles,
