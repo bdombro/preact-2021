@@ -17,7 +17,7 @@ export default function Login() {
 	const onSubmit = useCallback(_onSubmit, [])
 	const { submitting, errors } = Form.state
 	return <LoginDiv>
-		<Logo size={3} style={{marginLeft: -10, marginRight: -10, textAlign: 'center', display: 'block'}} />
+		<Logo size={4} style={{marginLeft: -10, marginRight: -10, textAlign: 'center', display: 'block'}} />
 		<Form.Component onSubmit={onSubmit}>
 			<TextField
 				name={LoginPropsEnum.email}

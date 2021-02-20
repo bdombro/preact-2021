@@ -128,7 +128,9 @@ function RouteFactory(props: Omit<RouteType, 'hasBack' | 'hasAccess'> & {hasAcce
  * RouteWrapper: Wrapper for routes to provide scroll tracking and restoration
  * on history.popstate
  */
-const RouteHistory: Record<string, number> = {}
+let RouteHistory: Record<string, number> = localStorage.getItem('RouteHistory') ? JSON.parse(localStorage.getItem('RouteHistory')!) : {}
+setInterval(function _saveRouteHistory() { localStorage.setItem('RouteHistory', JSON.stringify(RouteHistory)) }, 2000)
+function RouteHistoryReset() { localStorage.removeItem('RouteHistory'); RouteHistory = {} }
 function RouteWrapper({ children }: any) {
 	const [_location] = LocationCtx.use()
 	useEffect(handleEvents, [])
@@ -169,9 +171,9 @@ function RouteWrapper({ children }: any) {
  */
 type StackHistoryEntry = { location: LocationType, scroll: number }
 type StackHistory = StackHistoryEntry[]
-const StackHistories: Record<string, StackHistory> = localStorage.getItem('StackHistories') ? JSON.parse(localStorage.getItem('StackHistories')!) : {}
+let StackHistories: Record<string, StackHistory> = localStorage.getItem('StackHistories') ? JSON.parse(localStorage.getItem('StackHistories')!) : {}
 setInterval(function _saveStackHistories() {localStorage.setItem('StackHistories', JSON.stringify(StackHistories))}, 2000)
-
+function StackHistoriesReset() { localStorage.removeItem('StackHistories'); StackHistories = {}}
 function StackFactory(basePath: string) {
 	const baseHistory = { location: { pathname: basePath + '/home', search: '' }, scroll: 0 }
 	class Stack {
@@ -490,9 +492,11 @@ export {
 	PassThrough,
 	Redirect,
 	RouteFactory,
+	RouteHistoryReset,
 	RouterComponent,
 	RouteType,
 	scrollListener,
 	setPageMeta,
 	StackFactory,
+	StackHistoriesReset,
 }

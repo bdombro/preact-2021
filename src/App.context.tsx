@@ -2,13 +2,28 @@ import { ComponentChildren, h } from 'preact'
 
 import type { ToastProps } from './layout/components/Toast'
 import { createStateContext } from './lib/createStateContext'
-import { navListener } from './lib/router'
+import { navListener, RouteHistoryReset, StackHistoriesReset } from './lib/router'
 
 const bc = document.body.classList
 const ls = {
 	get: (key: string) => localStorage.getItem(key),
 	set: (key: string, val: string) => localStorage.setItem(key, val),
 }
+
+// AuthCtx: user id and roles
+
+export interface AuthCtxType { id: string, roles: Roles[], tenants: string[], currentTenant: string }
+const AuthCtxLoggedOut: AuthCtxType = { id: '', roles: [], tenants: [], currentTenant: '' }
+export enum Roles { admin, tenant }
+const AuthCtxBase = createStateContext<typeof AuthCtxLoggedOut>(ls.get('AuthCtx') ? JSON.parse(ls.get('AuthCtx')!) : AuthCtxLoggedOut)
+export const AuthCtx = Object.assign(AuthCtxBase, {
+	logout() { AuthCtx.set(AuthCtxLoggedOut); StackHistoriesReset(); RouteHistoryReset() },
+	loginAsAdmin() { AuthCtx.set({ id: '1', roles: [Roles.admin], tenants: [], currentTenant: '' }) },
+	loginAsTenant() { AuthCtx.set({ id: '2', roles: [Roles.tenant], tenants: ['123', '311'], currentTenant: '123' }) },
+	roles: Roles,
+})
+AuthCtx.subscribe(next => ls.set('AuthCtx', JSON.stringify(next)))
+
 
 // ThemeCtx: can be dark | light, persists to disk, and can be toggled with #theme-toggle event
 
@@ -34,21 +49,6 @@ if (ls.get('SidebarLeftCtx') === 'mini') bc.add('miniSidebar')
 export const SidebarRightCtx = createStateContext(false)
 navListener(() => SidebarRightCtx.set(false))
 ThemeCtx.subscribe(() => SidebarRightCtx.set(false))
-
-
-// AuthCtx: user id and roles
-
-export interface AuthCtxType { id: string, roles: Roles[], tenants: string[], currentTenant: string }
-const AuthCtxLoggedOut: AuthCtxType = { id: '', roles: [], tenants: [], currentTenant: '' }
-export enum Roles { admin, tenant }
-const AuthCtxBase = createStateContext<typeof AuthCtxLoggedOut>(ls.get('AuthCtx') ? JSON.parse(ls.get('AuthCtx')!) : AuthCtxLoggedOut)
-export const AuthCtx = Object.assign(AuthCtxBase, {
-	logout() { AuthCtx.set(AuthCtxLoggedOut) },
-	loginAsAdmin() { AuthCtx.set({ id: '1', roles: [Roles.admin], tenants: [], currentTenant: '' }) },
-	loginAsTenant() { AuthCtx.set({ id: '2', roles: [Roles.tenant], tenants: ['123', '311'], currentTenant: '123' }) },
-	roles: Roles,
-})
-AuthCtx.subscribe(next => ls.set('AuthCtx', JSON.stringify(next)))
 
 
 // Providers
