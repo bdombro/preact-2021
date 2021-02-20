@@ -61,6 +61,11 @@ export default function Register() {
 				labelText={<span>Do you agree to these<br/>terms?</span>}
 				error={errors[RegisterPropsEnum.acceptedTerms]?.note}
 			/>
+			<CheckboxField
+				inputProps={{ name: RegisterPropsEnum.asTenant, disabled: submitting, 'aria-label': 'Sign-in as tenant?' }}
+				labelText={<span>as tenant?</span>}
+				error={errors[RegisterPropsEnum.asTenant]?.note}
+			/>
 			<SubmitButton>Register</SubmitButton>
 			<ErrorMessage>{errors.form?.note}</ErrorMessage>
 		</Form.Component>
@@ -69,12 +74,19 @@ export default function Register() {
 	</RegisterDiv>
 
 	async function _onSubmit(formValues: FormValues) {
-		const values = new RegisterProps(formValues)
-		AuthCtx.loginAsAdmin()
-		ToastCtx.set({ message: 'Welcome, admin!', location: 'right' })
 		const { from } = qs.parse()
-		if (from) nav(from, { replace: true })
-		else nav(Paths.AdminRoot)
+		const values = new RegisterProps(formValues)
+		if (values.asTenant) {
+			AuthCtx.loginAsTenant()
+			ToastCtx.set({ message: 'Welcome, tenant!', location: 'right' })
+			if (from) nav(from, { replace: true })
+			else nav(Paths.TenantRoot)
+		} else {
+			AuthCtx.loginAsAdmin()
+			ToastCtx.set({ message: 'Welcome, admin!', location: 'right' })
+			if (from) nav(from, { replace: true })
+			else nav(Paths.AdminRoot)
+		}
 	}
 }
 const RegisterDiv = styled.div`
@@ -101,6 +113,7 @@ export class RegisterProps {
 	givenName = ''
 	surname = ''
 	acceptedTerms = ''
+	asTenant = ''
 	constructor(props: any) {
 		assertAttrsWithin(props, this)
 		assertValidSet<RegisterProps>(props, {
@@ -109,12 +122,17 @@ export class RegisterProps {
 			givenName: assertValid('givenName', props.givenName, ['isDefined', 'isString', 'isNoneEmpty']),
 			surname: assertValid('surname', props.surname, ['isDefined', 'isString', 'isNoneEmpty']),
 			acceptedTerms: assertValid('accept terms', props.acceptedTerms, ['isDefined', 'isBoolean', 'isTruthy']),
+			asTenant: assertValid('asTenant', props.asTenant, ['isDefined', 'isBoolean']),
 		})
 		Object.assign(this, props)
 	}
 }
 export const RegisterPropsPlaceholder = new RegisterProps({
-	email: userPlaceholder.email, password: userPlaceholder.password,
-	givenName: userPlaceholder.givenName, surname: userPlaceholder.surname, acceptedTerms: true
+	email: userPlaceholder.email,
+	password: userPlaceholder.password,
+	givenName: userPlaceholder.givenName,
+	surname: userPlaceholder.surname,
+	acceptedTerms: true,
+	asTenant: false,
 })
 export const RegisterPropsEnum = getEnumFromClassInstance(RegisterPropsPlaceholder)

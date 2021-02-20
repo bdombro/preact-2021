@@ -23,7 +23,10 @@ export default function styled(strings: TemplateStringsArray, ...placeHolders: s
 	const root = 's' + count++
 	css = css.replace(/:root/g, '.' + root)
 	if (pcssFlag) css = processPcss(css)
-	document.head.innerHTML += `<style type="text/css">${css}</style>`
+	const style = document.createElement('style')
+	style.type = 'text/css'
+	style.innerText = css
+	document.head.appendChild(style)
 	return root
 }
 

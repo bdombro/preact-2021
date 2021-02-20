@@ -1,5 +1,5 @@
 import { ComponentChildren, h } from 'preact'
-import { useEffect, useRef } from 'preact/hooks'
+import { useEffect, useLayoutEffect, useRef } from 'preact/hooks'
 
 import { ThemeCtx } from '~/App.context'
 import {useMedia} from '~/lib/hooks'
@@ -10,6 +10,7 @@ import BottomNav from '../components/BottomNav'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import SidebarRight from '../components/SidebarRight'
+import { applyTheme, tenantDemoTheme } from '../theme'
 import type { NavLinks } from '../types'
 
 export default function SidebarLayout(p: {
@@ -36,7 +37,7 @@ export default function SidebarLayout(p: {
 
 	// Use passive listeners instead of ThemeCtx.use, to avoid unnecessary re-renders
 	function listenForThemeToggle() {
-		return ThemeCtx.subscribe(function toggle() {
+		return ThemeCtx.subscribe(function _toggle() {
 			const cl = ref.current.base.classList
 			if (cl.contains('dark')) cl.remove('dark')
 			else cl.add('dark')

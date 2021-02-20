@@ -1,5 +1,3 @@
-import './layout/theme.css'
-
 import { Fragment, h } from 'preact'
 
 import { CtxProviders } from './App.context'

@@ -355,7 +355,7 @@ export const routes = Object.freeze({
 		path: '/notfound',
 		Component: lazy(() => import('~/pages/NotFound')),
 	}),
-})
+} as const)
 
 
 export const routesByPath = Object.fromEntries(Object.values(routes).map(r => [r.path, r]))

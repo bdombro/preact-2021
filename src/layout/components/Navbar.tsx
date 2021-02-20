@@ -73,7 +73,7 @@ const LeftBurgerA = styled.a`
 		background: var(--primary)
 		color: white
 	:root>div
-		margin-top: 6px
+		margin-top: 7px
 	:root:active>div
 		transform: translateY(3px)
 `
@@ -306,7 +306,7 @@ const NavBurgerA = styled.a`
 		display: flex
 		flex-direction: row
 		align-items: center
-		padding-top: 2px
+		padding-top: 2.5px
 		color: white
 	:root:hover,
 	:root[data-active="true"]

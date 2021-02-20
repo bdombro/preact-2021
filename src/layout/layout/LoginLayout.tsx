@@ -1,8 +1,12 @@
 import { h } from 'preact'
+import { useLayoutEffect } from 'preact/hooks'
 
 import styled from '~/lib/styled'
 
+import { applyTheme, defaultTheme } from '../theme'
+
 export default function LoginLayout({children}: any) {
+	useLayoutEffect(() => applyTheme(defaultTheme))
 	return <LoginLayoutOuter>
 		<LoginLayoutInner>
 			{children}

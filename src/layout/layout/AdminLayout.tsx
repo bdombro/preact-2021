@@ -1,10 +1,14 @@
 import { h } from 'preact'
+import { useLayoutEffect } from 'preact/hooks'
 
 import SidebarLayout from '~/layout/layout/SidebarLayout'
 import * as i from '~/lib/icons'
 import { routes } from '~/routes'
 
+import { applyTheme, defaultTheme } from '../theme'
+
 export default function AdminLayout({ children }: { children: any }) {
+	useLayoutEffect(() => applyTheme(defaultTheme))
 	return (
 		<SidebarLayout 
 			topLinks={[{...routes.Support, title: 'Need help?'}]}

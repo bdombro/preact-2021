@@ -1,9 +1,9 @@
 import {h} from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 
-import constants from '~/constants'
-import { useTimeout } from '~/lib/hooks'
 import styled from '~/lib/styled'
+
+import { currentTheme } from '../theme'
 
 interface LogoProps extends h.JSX.HTMLAttributes<HTMLAnchorElement> {
   size?: number
@@ -13,11 +13,11 @@ interface LogoProps extends h.JSX.HTMLAttributes<HTMLAnchorElement> {
 export function Logo(p: LogoProps) {
 	const {
 		size = 1,
-		borderColor = constants.theme.secondary || '#ccc',
+		borderColor = currentTheme.secondary || '#ccc',
 		borderColorHover = '#aaa',
 		...aProps
 	} = p
-	const innerColor = constants.theme.primary
+	const innerColor = currentTheme.primary
 	const [borderColorCurrent, setBorderColor] = useState(borderColor)
 	
 	return <LogoA href='/' {...aProps} onMouseEnter={() => setBorderColor(borderColorHover)} onMouseLeave={() => setBorderColor(borderColor)}>
