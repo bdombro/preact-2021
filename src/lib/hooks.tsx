@@ -18,6 +18,12 @@ export function useFirstMountState(): boolean {
 }
 
 /**
+ * useForceUpdate: returns a callback, which re-renders component when called
+ * from react-use's useUpdate
+ */
+export const useForceUpdate = useUpdate
+
+/**
  * useMountedState: returns a fcn that returns true if component is mounted.
  * from react-use
  */
@@ -77,6 +83,31 @@ export function useSet<T>(initial: Set<T> = new Set()) {
 	const reset: UseSet<T>['reset'] = useCallback(() => setSet(new Set([...initial])), [])
 	const res: UseSet<T> = { current: set, size: set.size, has, add, delete: del, toggle, clear, reset, set: setSet }
 	return res
+}
+
+/**
+ * useTimeout: Call callback cb after ms milliseconds after mount
+ * @param cb - callback to call after timeout
+ * @param ms - milliseconds to wait before calling cb after mount
+ * @param cancelOnDismount - whether to cancel on dismount
+ */
+export function useTimeout(cb: () => any, ms = 0, cancelOnDismount = true) {
+	useEffect(() => {
+		const timeout = setTimeout(cb, ms)
+		return () => { if(cancelOnDismount) clearTimeout(timeout) }
+	}, [])
+}
+
+/**
+ * useUpdate: returns a callback, which re-renders component when called
+ * from react-use
+ * @param ms - if supplied, will automatically re-render after ms milliseconds
+ */
+export function useUpdate(ms = 0) {
+	const updateReducer = (num: number): number => (num + 1) % 1_000_000
+	const [, update] = useReducer(updateReducer, 0)
+	useTimeout(() => { if (ms) (update as () => void)()}, ms)
+	return update as () => void
 }
 
 /**
