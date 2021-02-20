@@ -35,7 +35,7 @@ module.exports = {
 	},
 	buildOptions: {
 		/* ... */
-		sourcemap: true,
+		sourcemap: !isProd,
 	},
 	alias: {
 		'~': './src'
