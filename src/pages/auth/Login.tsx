@@ -1,8 +1,9 @@
-import { h } from 'preact'
+import { Fragment as F, h } from 'preact'
 import { useCallback } from 'preact/hooks'
 
 import { AuthCtx, ToastCtx } from '~/App.context'
 import { Roles } from '~/App.context'
+import { Logo } from '~/layout/components/Logo'
 import { getEnumFromClassInstance } from '~/lib/enums.iso'
 import { ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
 import qs from '~/lib/queryStrings'
@@ -15,7 +16,7 @@ export default function Login() {
 	const onSubmit = useCallback(_onSubmit, [])
 	const { submitting, errors } = Form.state
 	return <div>
-		<h1>Login</h1>
+		<Logo size={3} style={{marginLeft: -10}} />
 		<Form.Component onSubmit={onSubmit}>
 			<TextField
 				name={LoginPropsEnum.email}

@@ -3,6 +3,7 @@ import { useCallback } from 'preact/hooks'
 
 import { AuthCtx, ToastCtx } from '~/App.context'
 import { Roles } from '~/App.context'
+import { Logo } from '~/layout/components/Logo'
 import { getEnumFromClassInstance } from '~/lib/enums.iso'
 import { CheckboxField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
 import qs from '~/lib/queryStrings'
@@ -15,7 +16,7 @@ export default function Register() {
 	const onSubmit = useCallback(_onSubmit, [])
 	const { submitting, errors } = Form.state
 	return <div>
-		<h1>Register</h1>
+		<Logo size={3} style={{ marginLeft: -10 }} />
 		<Form.Component onSubmit={onSubmit}>
 			<TextField
 				name={RegisterPropsEnum.givenName}

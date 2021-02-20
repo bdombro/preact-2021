@@ -20,19 +20,22 @@ const LoginLayoutOuter = styled.div`
 		background-image: url("/fabric.png")
 		overflow-x: hidden
 		overflow-y: auto
-		padding: 10px
+	@media (max-width: 700px)
+		:root
+			background-color: hsl(var(--primary-h),var(--primary-s),88%)
 `
 const LoginLayoutInner = styled.div`
 	:root
+		z-index: 1
 		position: relative
 		top: 10vh
 		margin: auto
 		width: 280px
 		max-width: 100%
 		background:  var(--white)
-		padding: 20px 40px
+		padding: 20px 40px 40px
 		border-radius: 10px
 	@media (max-width: 700px)
 		:root
-				top: 5vh
+			background: none
 `
