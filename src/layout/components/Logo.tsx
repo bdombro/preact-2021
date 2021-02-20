@@ -1,6 +1,7 @@
 import {h} from 'preact'
 import { useState } from 'preact/hooks'
 
+import { useForceUpdate, useTimeout } from '~/lib/hooks'
 import styled from '~/lib/styled'
 
 interface LogoProps extends h.JSX.HTMLAttributes<HTMLAnchorElement> {
@@ -8,15 +9,18 @@ interface LogoProps extends h.JSX.HTMLAttributes<HTMLAnchorElement> {
 	borderColor?: string
 	borderColorHover?: string
 }
-export function Logo({
-	size = 1,
-	borderColor = getComputedStyle(document.body).getPropertyValue('--secondary') || 'orange',
-	borderColorHover = getComputedStyle(document.body).getPropertyValue('--gray7'),
-	...aProps
-}: LogoProps) {
+export function Logo(p: LogoProps) {
+	const {
+		size = 1,
+		borderColor = getComputedStyle(document.body).getPropertyValue('--secondary') || '#ccc',
+		borderColorHover = getComputedStyle(document.body).getPropertyValue('--gray7'),
+		...aProps
+	} = p
 	// const borderColor: string = (aProps?.style as h.JSX.CSSProperties)?.backgroundColor || getComputedStyle(document.body).getPropertyValue('--white') || 'white'
-	const innerColor: string = getComputedStyle(document.body).getPropertyValue('--primary') || 'blue'
+	const innerColor: string = getComputedStyle(document.body).getPropertyValue('--primary') || '#aaa'
 	const [borderColorCurrent, setBorderColor] = useState(borderColor)
+	useForceUpdate(200) // For some reason getComputedStyle isn't always ready on render, so this forceUpdate helps with that
+	
 	return <LogoA href='/' {...aProps} onMouseEnter={() => setBorderColor(borderColorHover)} onMouseLeave={() => setBorderColor(borderColor)}>
 		<div style={{ 
 			padding: `${size * 10}px ${size * 10}px`, 
