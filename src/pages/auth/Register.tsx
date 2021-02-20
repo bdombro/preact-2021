@@ -8,6 +8,7 @@ import { getEnumFromClassInstance } from '~/lib/enums.iso'
 import { CheckboxField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
 import qs from '~/lib/queryStrings'
 import { nav } from '~/lib/router'
+import styled from '~/lib/styled'
 import { assertAttrsWithin, assertValid, assertValidSet } from '~/lib/validation.iso'
 import { Paths } from '~/routes'
 
@@ -15,8 +16,8 @@ export default function Register() {
 	const Form = useForm()
 	const onSubmit = useCallback(_onSubmit, [])
 	const { submitting, errors } = Form.state
-	return <div>
-		<Logo size={3} style={{ marginLeft: -10 }} />
+	return <RegisterDiv>
+		<Logo size={3} style={{ marginLeft: -10, marginRight: -10, textAlign: 'center', display: 'block' }} />
 		<Form.Component onSubmit={onSubmit}>
 			<TextField
 				name={RegisterPropsEnum.givenName}
@@ -65,7 +66,7 @@ export default function Register() {
 		</Form.Component>
 		<a href={`${Paths.Login}${location.search}#replace`}>Have an account?</a><br />
 		<a href={`${Paths.ForgotPassword}${location.search}#replace`}>Forgot your password?</a>
-	</div>
+	</RegisterDiv>
 
 	async function _onSubmit(formValues: FormValues) {
 		const values = new RegisterProps(formValues)
@@ -76,6 +77,15 @@ export default function Register() {
 		else nav(Paths.AdminRoot)
 	}
 }
+const RegisterDiv = styled.div`
+	:root input:not([type="checkbox"])
+		width: 100%
+	:root form svg.empty
+		fill: var(--gray6)
+	@media (max-width: 700px)
+		:root form
+			margin-top: 20px
+`
 
 const userPlaceholder = {
 	email: 'admin@example.com',

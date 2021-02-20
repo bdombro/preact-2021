@@ -143,6 +143,7 @@ interface CheckboxProps {
   error?: string
 	divProps?: h.JSX.HTMLAttributes<HTMLDivElement>
 	inputProps: Omit<h.JSX.HTMLAttributes<HTMLInputElement>, 'name'> & { name: string, 'aria-label': string }
+	
 }
 // TODO: Support controlled
 export function CheckboxField(p: CheckboxProps) {

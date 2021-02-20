@@ -8,6 +8,7 @@ import { getEnumFromClassInstance } from '~/lib/enums.iso'
 import { ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
 import qs from '~/lib/queryStrings'
 import { nav } from '~/lib/router'
+import styled from '~/lib/styled'
 import { assertAttrsWithin, assertValid, assertValidSet } from '~/lib/validation.iso'
 import { Paths } from '~/routes'
 
@@ -15,8 +16,8 @@ export default function Login() {
 	const Form = useForm()
 	const onSubmit = useCallback(_onSubmit, [])
 	const { submitting, errors } = Form.state
-	return <div>
-		<Logo size={3} style={{marginLeft: -10}} />
+	return <LoginDiv>
+		<Logo size={3} style={{marginLeft: -10, marginRight: -10, textAlign: 'center', display: 'block'}} />
 		<Form.Component onSubmit={onSubmit}>
 			<TextField
 				name={LoginPropsEnum.email}
@@ -42,7 +43,7 @@ export default function Login() {
 		</Form.Component>
 		<a href={`${Paths.Register}${location.search}#replace`}>Need an account?</a><br />
 		<a href={`${Paths.ForgotPassword}${location.search}#replace`}>Forgot your password?</a>
-	</div>
+	</LoginDiv>
 
 	async function _onSubmit(formValues: FormValues) {
 		const values = new LoginProps(formValues)
@@ -53,6 +54,17 @@ export default function Login() {
 		else nav(Paths.AdminRoot)
 	}
 }
+const LoginDiv = styled.div`
+	:root input:not([type="checkbox"])
+		width: 100%
+	:root form svg.empty
+		fill: var(--gray6)
+	@media (max-width: 700px)
+		:root
+			margin-top: 5vh
+		:root form
+			margin-top: 20px
+`
 
 const userPlaceholder = {
 	email: 'admin@example.com',
