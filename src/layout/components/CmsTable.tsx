@@ -31,17 +31,26 @@ export default function CmsTable(p: CmsTableProps) {
 			<SearchForm />
 		</TableFilterDiv>
 		<HeaderFooter total={p.total} pages={p.pages} bulkOptions={p.bulkOptions} checked={checked} />
-		<table>
-			<thead>
-				<HeadRow cols={p.cols} rows={p.rows} checked={checked} />
-			</thead>
-			<tbody>
-				{p.rows.map((row,i) => <BodyRow cols={p.cols} row={row} rowNumber={i} checked={checked} />)}
-			</tbody>
-			<tfoot>
-				<HeadRow cols={p.cols} rows={p.rows} checked={checked} />
-			</tfoot>
-		</table>
+		
+		{p.total 
+			? <table>
+				<thead>
+					<HeadRow cols={p.cols} rows={p.rows} checked={checked} />
+				</thead>
+				<tbody>
+					{p.rows.map((row,i) => <BodyRow cols={p.cols} row={row} rowNumber={i} checked={checked} />)}
+				</tbody>
+				<tfoot>
+					<HeadRow cols={p.cols} rows={p.rows} checked={checked} />
+				</tfoot>
+			</table>
+			: <NoResultDiv>
+				{location.search
+					? <div>No records match your filters. <a href={location.pathname+'#replace'}>Reset filters?</a></div>
+					: <div>No records found of this type.</div>
+				}
+			</NoResultDiv>
+		}
 		<HeaderFooter total={p.total} pages={p.pages} bulkOptions={p.bulkOptions} checked={checked} isFooter />
 	</CmsTableDiv>
 }
@@ -61,7 +70,16 @@ const TableFilterDiv = styled.div`
 		:root
 			display: block
 `
-
+const NoResultDiv = styled.div`
+	:root
+		background: var(--gray3) 
+		border-radius: 3px
+		min-height: 150px
+		margin: .1rem 0 .3rem
+		display: flex
+		align-items: center
+		justify-content: center
+`
 
 function SearchForm() {
 	const q = qs.parse()
@@ -144,6 +162,8 @@ const CountDiv = styled.div`
 		margin-bottom: .3rem
 	:root > *
 		margin: 0 .1rem
+	:root > *:last-of-type
+		margin: 0 0 0 .1rem
 `
 
 function PageButton(p: Pick<CmsTableProps, 'pages'> & { title: string, page: number, pageTo: number, children: ComponentChildren }) {
