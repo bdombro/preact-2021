@@ -31,5 +31,5 @@ const SidebarDiv = styled.div`
 `
 const SidebarNav = styled.nav`
 	:root
-		width: var(--sidebar-width-full)
+		width: var(--sidebarRight-width)
 `

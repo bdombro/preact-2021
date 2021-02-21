@@ -20,7 +20,7 @@ export default function TenantLayout({ children }: { children: any }) {
 				routes.TenantSettingsHome,
 				routes.Logout,
 				routes.Support,
-				{ path: '#theme-toggle', title: 'Theme', Icon: i.Palette },
+				{ path: '#theme-toggle', title: 'Dark Mode', Icon: i.Palette },
 			]}
 			bottomLinks={[
 				routes.TenantDashboardStack,
