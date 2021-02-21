@@ -24,6 +24,7 @@ export default function CmsTable(p: CmsTableProps) {
 	const [_location] = LocationCtx.use()
 	const checked = useSet<CmsRow>()
 	useLayoutEffect(() => checked.reset(), [_location])
+	const q = qs.parse()
 
 	return <CmsTableDiv>
 		<TableFilterDiv>
@@ -45,8 +46,8 @@ export default function CmsTable(p: CmsTableProps) {
 				</tfoot>
 			</table>
 			: <NoResultDiv>
-				{location.search
-					? <div>No records match your filters. <a href={location.pathname+'#replace'}>Reset filters?</a></div>
+				{q.page || q.search || q.category
+					? <div>No records match your filters. <a href={qs.create({ page: undefined, search: undefined, category: undefined }, {upsert: true}) || location.pathname}>Reset filters?</a></div>
 					: <div>No records found of this type.</div>
 				}
 			</NoResultDiv>
@@ -96,7 +97,7 @@ function SearchForm() {
 		if (next === (q.search || ''))
 			ToastCtx.set({ message: 'Search query hasn\'t changed', icon: 'error', location: 'bottom' })
 		else
-			nav(qs.create({ search: next, page: null }, { upsert: true }), {replace: true})
+			nav(qs.create({ search: next ? next : undefined, page: undefined }, { upsert: true }), {replace: true})
 	}
 }
 const SearchFormForm = styled.form`
@@ -116,7 +117,7 @@ function CategoryFilters({categories}: {categories: CmsTableProps['categories']}
 		)}
 	</CategoryFilterDiv>
 	function createUri(next: string) {
-		return (qs.create({ category: next !== categories![0].title ? next : null }, { upsert: true }) || location.pathname) + '#replace'
+		return (qs.create({ category: next !== categories![0].title ? next : undefined }, { upsert: true }) || location.pathname) + '#replace'
 	}
 }
 const CategoryFilterDiv = styled.div`
@@ -176,7 +177,7 @@ function PageButton(p: Pick<CmsTableProps, 'pages'> & { title: string, page: num
 			class="button"
 			data-disabled={p.pageTo === p.page}
 			onClick={onClick}
-			href={(qs.create({ page: p.pageTo !== 1 ? p.pageTo : null }, { upsert: true }) || location.pathname) + '#replace'}>
+			href={(qs.create({ page: p.pageTo !== 1 ? p.pageTo : undefined }, { upsert: true }) || location.pathname) + '#replace'}>
 			{p.children}
 		</a>
 	</div>
