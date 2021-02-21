@@ -96,7 +96,7 @@ function SearchForm() {
 		if (next === (q.search || ''))
 			ToastCtx.set({ message: 'Search query hasn\'t changed', icon: 'error', location: 'bottom' })
 		else
-			nav(qs.create({ search: next }, { upsert: true }), {replace: true})
+			nav(qs.create({ search: next, page: null }, { upsert: true }), {replace: true})
 	}
 }
 const SearchFormForm = styled.form`
