@@ -1,13 +1,15 @@
 window.addEventListener('submit', (e) => e.preventDefault())
 
+import EmptyPath from 'mdi-paths-split/CheckboxBlankOutline'
+import MarkedPath from 'mdi-paths-split/CheckboxMarked'
 import {ComponentChildren, Fragment as F,FunctionalComponent,h} from 'preact'
-import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
-import Checkbox from '~/layout/components/Checkbox'
+import { useCallback, useState, useUpdateEffect } from '~/lib/hooks'
+import { IconSvg } from '~/lib/icons'
+import styled from '~/lib/styled'
 import { ValidationErrorSet } from '~/lib/validation.iso'
 
 import { useMountedState } from './hooks'
-import styled from './styled'
 
 /**
  * Hook that makes forms super easy and DRY
@@ -138,15 +140,14 @@ const TextFieldDiv = styled.div`
 /**
  * A checkbox input with label and error handling
  */
-interface CheckboxProps {
+interface CheckboxFieldProps {
   labelText: ComponentChildren
   error?: string
 	divProps?: h.JSX.HTMLAttributes<HTMLDivElement>
-	inputProps: Omit<h.JSX.HTMLAttributes<HTMLInputElement>, 'name'> & { name: string, 'aria-label': string }
-	
+	inputProps: CheckboxProps['inputProps']
 }
 // TODO: Support controlled
-export function CheckboxField(p: CheckboxProps) {
+export function CheckboxField(p: CheckboxFieldProps) {
 	const [checked, setChecked] = useState(p.inputProps?.checked)
 	const toggleBox = useCallback(function _toggleBox() { setChecked(curr => !curr) }, [])
 	return (
@@ -177,6 +178,52 @@ const CheckboxFieldDiv = styled.div`
     display: block
 `
 
+/**
+ * Checkbox: A fancy wrapper for HTML Checkboxes, bc they are not style-able :-(
+ */
+interface CheckboxProps {
+	divProps?: h.JSX.HTMLAttributes<HTMLDivElement>
+	inputProps: Omit<h.JSX.HTMLAttributes<HTMLInputElement>, 'name'> & { name: string, 'aria-label': string }
+}
+export function Checkbox({ divProps = {}, inputProps }: CheckboxProps) {
+	const [checked, setChecked] = useState(inputProps.checked || inputProps.default || false)
+	useUpdateEffect(function _pullDown() { setChecked(inputProps.checked || false) }, [inputProps.checked])
+	const onClick = useCallback(_onClick, [])
+	return (
+		<CheckboxDiv {...divProps} data-checked={checked}>
+			<IconSvg fill="var(--gray6)" class="marked" path={MarkedPath} />
+			<IconSvg fill="var(--gray4)" class="empty" path={EmptyPath} />
+			<input type="checkbox" {...inputProps} checked={checked} onClick={onClick} />
+		</CheckboxDiv>
+	)
+	function _onClick(e: any) {
+		setChecked(curr => !curr)
+		if (inputProps.onClick) (inputProps as any).onClick(e)
+	}
+}
+const CheckboxDiv = styled.div`
+	:root
+		position: relative
+		margin-top: -2px
+		margin-bottom: -8px
+		cursor: pointer
+	:root input
+		opacity: 0
+	:root svg
+		cursor: pointer
+		position: absolute
+		top: 0
+		left: 0
+	:root .marked
+		display: none
+	:root .empty
+		display: initial
+	:root[data-checked="true"] .marked
+		display: initial
+	:root[data-checked="true"] .empty
+		display: none
+`
+
 export function ErrorMessage({ children, class: className = '', ...buttonProps }: h.JSX.HTMLAttributes<HTMLDivElement>) {
 	return children ? (
 		<div class={`form-error-message ${className}`} {...buttonProps}>{children}</div>
@@ -192,6 +239,7 @@ export function SubmitButton({ children, class: className = '', ...buttonProps }
 /**
  * Extracts form values from a <form> ref, such as e.target from form.onSubmit
  */
+// TODO: Consider using js FormData
 export function formToValues(formElement: any) {
 	const reqBody: Record<string, any> = {}
 	Object.keys(formElement.elements).forEach(key => {

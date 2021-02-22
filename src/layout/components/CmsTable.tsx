@@ -2,14 +2,13 @@ import { ComponentChildren, Fragment, h } from 'preact'
 import { StateUpdater, useCallback, useLayoutEffect, useState } from 'preact/hooks'
 
 import { ToastCtx } from '~/App.context'
+import {Checkbox} from '~/lib/forms'
 import { useMedia, UseSet, useSet } from '~/lib/hooks'
 import * as i from '~/lib/icons'
 import qs from '~/lib/queryStrings'
 import { LocationCtx, nav } from '~/lib/router'
 import styled from '~/lib/styled'
 import { routesByPath } from '~/routes'
-
-import Checkbox from './Checkbox'
 
 interface CmsTableProps {
 	cols: { title: string, sortable?: boolean, sortDefault?: 'asc' | 'desc' }[],
