@@ -5,7 +5,7 @@ import { AuthCtx, ToastCtx } from '~/App.context'
 import { Roles } from '~/App.context'
 import { Logo } from '~/layout/components/Logo'
 import { getEnumFromClassInstance } from '~/lib/enums.iso'
-import { CheckboxField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
+import { BooleanField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
 import qs from '~/lib/queryStrings'
 import { nav } from '~/lib/router'
 import styled from '~/lib/styled'
@@ -38,10 +38,12 @@ export default function Login() {
 				disabled={submitting}
 				error={errors[LoginPropsEnum.password]?.note}
 			/>
-			<CheckboxField
-				inputProps={{ name: LoginPropsEnum.asTenant, disabled: submitting, 'aria-label': 'Sign-in as tenant?' }}
-				labelText={<span>as tenant?</span>}
-				error={errors[LoginPropsEnum.asTenant]?.note}
+			<BooleanField
+				inputProps={{ name: LoginPropsEnum.asAdmin, disabled: submitting, 'aria-label': 'Sign-in as tenant?' }}
+				labelText='Tenant Mode'
+				checkedLabelText='Admin Mode'
+				error={errors[LoginPropsEnum.asAdmin]?.note}
+				type="switch"
 			/>
 			<SubmitButton>Login</SubmitButton>
 			<ErrorMessage>{errors.form?.note}</ErrorMessage>
@@ -53,16 +55,16 @@ export default function Login() {
 	async function _onSubmit(formValues: FormValues) {
 		const { from } = qs.parse()
 		const values = new LoginProps(formValues)
-		if (values.asTenant) {
-			AuthCtx.loginAsTenant()
-			ToastCtx.set({ message: 'Welcome, tenant!', location: 'right' })
-			if (from) nav(from, { replace: true })
-			else nav(Paths.TenantRoot)
-		} else {
+		if (values.asAdmin) {
 			AuthCtx.loginAsAdmin()
 			ToastCtx.set({ message: 'Welcome, admin!', location: 'right' })
 			if (from) nav(from, { replace: true })
 			else nav(Paths.AdminRoot)
+		} else {
+			AuthCtx.loginAsTenant()
+			ToastCtx.set({ message: 'Welcome, tenant!', location: 'right' })
+			if (from) nav(from, { replace: true })
+			else nav(Paths.TenantRoot)
 		}
 	}
 }
@@ -89,13 +91,13 @@ const userPlaceholder = {
 export class LoginProps {
 	email = ''
 	password = ''
-	asTenant = ''
+	asAdmin = ''
 	constructor(props: any) {
 		assertAttrsWithin(props, this)
 		assertValidSet<LoginProps>(props, {
 			email: assertValid('email', props.email, ['isDefined', 'isString', 'isEmail']),
 			password: assertValid('password', props.password, ['isDefined', 'isString', 'isNoneEmpty']),
-			asTenant: assertValid('asTenant', props.asTenant, ['isDefined', 'isBoolean']),
+			asAdmin: assertValid('asAdmin', props.asAdmin, ['isDefined', 'isBoolean']),
 		})
 		Object.assign(this, props)
 	}
@@ -103,6 +105,6 @@ export class LoginProps {
 export const LoginPropsPlaceholder = new LoginProps({
 	email: userPlaceholder.email,
 	password: userPlaceholder.password,
-	asTenant: false,
+	asAdmin: false,
 })
 export const LoginPropsEnum = getEnumFromClassInstance(LoginPropsPlaceholder)

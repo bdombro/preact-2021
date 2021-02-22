@@ -5,7 +5,7 @@ import { AuthCtx, ToastCtx } from '~/App.context'
 import { Roles } from '~/App.context'
 import { Logo } from '~/layout/components/Logo'
 import { getEnumFromClassInstance } from '~/lib/enums.iso'
-import { CheckboxField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
+import { BooleanField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
 import qs from '~/lib/queryStrings'
 import { nav } from '~/lib/router'
 import styled from '~/lib/styled'
@@ -56,15 +56,17 @@ export default function Register() {
 				disabled={submitting}
 				error={errors[RegisterPropsEnum.password]?.note}
 			/>
-			<CheckboxField
+			<BooleanField
 				inputProps={{ name: RegisterPropsEnum.acceptedTerms, disabled: submitting, 'aria-label': 'Do you agree to the terms at the following link? {put link here}'}}
 				labelText={<span>Do you agree to these<br/>terms?</span>}
 				error={errors[RegisterPropsEnum.acceptedTerms]?.note}
 			/>
-			<CheckboxField
-				inputProps={{ name: RegisterPropsEnum.asTenant, disabled: submitting, 'aria-label': 'Sign-in as tenant?' }}
-				labelText={<span>as tenant?</span>}
-				error={errors[RegisterPropsEnum.asTenant]?.note}
+			<BooleanField
+				inputProps={{ name: RegisterPropsEnum.asAdmin, disabled: submitting, 'aria-label': 'Sign-in as tenant?' }}
+				labelText='Tenant Mode'
+				checkedLabelText='Admin Mode'
+				error={errors[RegisterPropsEnum.asAdmin]?.note}
+				type="switch"
 			/>
 			<SubmitButton>Register</SubmitButton>
 			<ErrorMessage>{errors.form?.note}</ErrorMessage>
@@ -76,16 +78,16 @@ export default function Register() {
 	async function _onSubmit(formValues: FormValues) {
 		const { from } = qs.parse()
 		const values = new RegisterProps(formValues)
-		if (values.asTenant) {
-			AuthCtx.loginAsTenant()
-			ToastCtx.set({ message: 'Welcome, tenant!', location: 'right' })
-			if (from) nav(from, { replace: true })
-			else nav(Paths.TenantRoot)
-		} else {
+		if (values.asAdmin) {
 			AuthCtx.loginAsAdmin()
 			ToastCtx.set({ message: 'Welcome, admin!', location: 'right' })
 			if (from) nav(from, { replace: true })
 			else nav(Paths.AdminRoot)
+		} else {
+			AuthCtx.loginAsTenant()
+			ToastCtx.set({ message: 'Welcome, tenant!', location: 'right' })
+			if (from) nav(from, { replace: true })
+			else nav(Paths.TenantRoot)
 		}
 	}
 }
@@ -113,7 +115,7 @@ export class RegisterProps {
 	givenName = ''
 	surname = ''
 	acceptedTerms = ''
-	asTenant = ''
+	asAdmin = ''
 	constructor(props: any) {
 		assertAttrsWithin(props, this)
 		assertValidSet<RegisterProps>(props, {
@@ -122,7 +124,7 @@ export class RegisterProps {
 			givenName: assertValid('givenName', props.givenName, ['isDefined', 'isString', 'isNoneEmpty']),
 			surname: assertValid('surname', props.surname, ['isDefined', 'isString', 'isNoneEmpty']),
 			acceptedTerms: assertValid('accept terms', props.acceptedTerms, ['isDefined', 'isBoolean', 'isTruthy']),
-			asTenant: assertValid('asTenant', props.asTenant, ['isDefined', 'isBoolean']),
+			asAdmin: assertValid('asAdmin', props.asAdmin, ['isDefined', 'isBoolean']),
 		})
 		Object.assign(this, props)
 	}
@@ -133,6 +135,6 @@ export const RegisterPropsPlaceholder = new RegisterProps({
 	givenName: userPlaceholder.givenName,
 	surname: userPlaceholder.surname,
 	acceptedTerms: true,
-	asTenant: false,
+	asAdmin: false,
 })
 export const RegisterPropsEnum = getEnumFromClassInstance(RegisterPropsPlaceholder)

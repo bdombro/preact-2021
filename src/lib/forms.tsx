@@ -132,6 +132,7 @@ const TextFieldDiv = styled.div`
     border: 1px solid var(--danger)
   :root .error
     display: none
+		padding: .2rem 0 0 2px
     color: var(--danger)
   :root.hasError .error
     display: block
@@ -140,38 +141,42 @@ const TextFieldDiv = styled.div`
 /**
  * A checkbox input with label and error handling
  */
-interface CheckboxFieldProps {
+interface BooleanFieldProps {
   labelText: ComponentChildren
+	checkedLabelText?: ComponentChildren
   error?: string
 	divProps?: h.JSX.HTMLAttributes<HTMLDivElement>
 	inputProps: CheckboxProps['inputProps']
+	type?: 'checkbox' | 'switch'
 }
-// TODO: Support controlled
-export function CheckboxField(p: CheckboxFieldProps) {
+export function BooleanField(p: BooleanFieldProps) {
 	const [checked, setChecked] = useState(p.inputProps?.checked)
 	const toggleBox = useCallback(function _toggleBox() { setChecked(curr => !curr) }, [])
+	const Input = p.type === 'switch' ? Switch : Checkbox
 	return (
-		<CheckboxFieldDiv data-error={!!p.error} {...p.divProps} >
+		<BooleanFieldDiv data-error={!!p.error} class={p.type} {...p.divProps} >
 			<div>
-				<Checkbox inputProps={{ ...p.inputProps, onClick: toggleBox, checked: checked}}/>
-				<div onClick={toggleBox}>
-					{p.labelText}
+				<Input inputProps={{ ...p.inputProps, onClick: toggleBox, checked: checked }} hasError={!!p.error} />
+				<div class='label' onClick={toggleBox}>
+					{checked ? (p.checkedLabelText || p.labelText) : p.labelText}
 				</div>
 			</div>
 			<div class="error">{p.error}</div>
-		</CheckboxFieldDiv>
+		</BooleanFieldDiv>
 	)
 }
-const CheckboxFieldDiv = styled.div`
+const BooleanFieldDiv = styled.div`
 	:root
-		margin-bottom: .6rem
+		margin-top: 1rem
+		margin-bottom: 1rem
   :root>div:first-of-type
     display: flex
 		flex-direction: row
 		cursor: pointer
-  :root[data-error="true"] input
-    border: 1px solid var(--danger)
+	:root.switch .label
+		margin-left: .4rem
   :root .error
+		padding: .2rem 0 0 2px
     display: none
     color: var(--danger)
   :root[data-error="true"] .error
@@ -184,13 +189,14 @@ const CheckboxFieldDiv = styled.div`
 interface CheckboxProps {
 	divProps?: h.JSX.HTMLAttributes<HTMLDivElement>
 	inputProps: Omit<h.JSX.HTMLAttributes<HTMLInputElement>, 'name'> & { name: string, 'aria-label': string }
+	hasError?: boolean
 }
-export function Checkbox({ divProps = {}, inputProps }: CheckboxProps) {
+export function Checkbox({ divProps = {}, inputProps, hasError }: CheckboxProps) {
 	const [checked, setChecked] = useState(inputProps.checked || inputProps.default || false)
 	useUpdateEffect(function _pullDown() { setChecked(inputProps.checked || false) }, [inputProps.checked])
 	const onClick = useCallback(_onClick, [])
 	return (
-		<CheckboxDiv {...divProps} data-checked={checked}>
+		<CheckboxDiv {...divProps} data-checked={checked} data-error={hasError}>
 			<IconSvg fill="var(--gray6)" class="marked" path={MarkedPath} />
 			<IconSvg fill="var(--gray4)" class="empty" path={EmptyPath} />
 			<input type="checkbox" {...inputProps} checked={checked} onClick={onClick} />
@@ -214,6 +220,8 @@ const CheckboxDiv = styled.div`
 		position: absolute
 		top: 0
 		left: 0
+		border-radius: 3px
+    border: 1px solid hsla(0,0%,0%,0)
 	:root .marked
 		display: none
 	:root .empty
@@ -222,6 +230,65 @@ const CheckboxDiv = styled.div`
 		display: initial
 	:root[data-checked="true"] .empty
 		display: none
+	:root[data-error="true"] svg
+		border-radius: 3px
+    border: 1px solid var(--danger)
+`
+
+export function Switch({ divProps = {}, inputProps, hasError }: CheckboxProps) {
+	const [checked, setChecked] = useState(inputProps.checked || inputProps.default || false)
+	useUpdateEffect(function _pullDown() { setChecked(inputProps.checked || false) }, [inputProps.checked])
+	const onClick = useCallback(_onClick, [])
+	return (
+		<SwitchDiv {...divProps} data-checked={checked} data-error={hasError}>
+			<div class='switch-button'>
+				<div class='track' onClick={onClick} />
+				<div class='circle' onClick={onClick} />
+			</div>
+			<input type="checkbox" {...inputProps} checked={checked} onClick={onClick} />
+		</SwitchDiv>
+	)
+	function _onClick(e: any) {
+		setChecked(curr => !curr)
+		if (inputProps.onClick) (inputProps as any).onClick(e)
+	}
+}
+const SwitchDiv = styled.div`
+	:root
+		position: relative
+		cursor: pointer
+		color: var(--gray6)
+	:root[data-checked="true"]
+		color: var(--secondary)
+	:root>.switch-button
+		display: block
+		padding: 4px 0
+		margin-top: -4px
+		border-radius: 3px
+		border: 1px solid hsla(0,0%,0%,0)
+	:root>.switch-button>div
+		background: currentColor
+		border-radius: 15px
+	:root>input
+		position: absolute
+		top: 0
+		left: 0
+		opacity: 0
+	:root>.switch-button>.track
+		opacity: .6
+		width: 36px
+		height: 14px
+		margin: 3px 0 0
+	:root>.switch-button>.circle
+		transition: .1s margin linear
+		width: 20px
+		height: 20px
+		margin-top: -17px
+	:root[data-checked="true"]>.switch-button>.circle
+		margin-left: 16px
+	:root[data-error="true"]>.switch-button
+		padding: 4px
+    border: 1px solid var(--danger)
 `
 
 export function ErrorMessage({ children, class: className = '', ...buttonProps }: h.JSX.HTMLAttributes<HTMLDivElement>) {
