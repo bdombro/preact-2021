@@ -1,7 +1,8 @@
 import { ComponentChildren, Fragment, h } from 'preact'
-import { StateUpdater, useCallback, useLayoutEffect, useState } from 'preact/hooks'
+import { useCallback, useLayoutEffect, useState } from 'preact/hooks'
 
 import { ToastCtx } from '~/App.context'
+import OpenMap, { MapMarker } from '~/layout/components/Map'
 import {Checkbox} from '~/lib/forms'
 import { useMedia, UseSet, useSet } from '~/lib/hooks'
 import * as i from '~/lib/icons'
@@ -11,12 +12,13 @@ import styled from '~/lib/styled'
 import { routesByPath } from '~/routes'
 
 interface CmsTableProps {
-	cols: { title: string, sortable?: boolean, sortDefault?: 'asc' | 'desc' }[],
-	categories?: { title: string, count: number }[],
-	bulkOptions?: { title: string, cb: (selection: any[]) => any }[],
-	pages: number,
-	total: number,
-	rows: CmsRow[],
+	cols: { title: string, sortable?: boolean, sortDefault?: 'asc' | 'desc' }[]
+	categories?: { title: string, count: number }[]
+	bulkOptions?: { title: string, cb: (selection: any[]) => any }[]
+	pages: number
+	total: number
+	rows: CmsRow[]
+	mapMarkers?: MapMarker[],
 }
 type CmsRow = ComponentChildren[]
 export default function CmsTable(p: CmsTableProps) {
@@ -30,20 +32,26 @@ export default function CmsTable(p: CmsTableProps) {
 			<CategoryFilters categories={p.categories} />
 			<SearchForm />
 		</TableFilterDiv>
-		<HeaderFooter total={p.total} pages={p.pages} bulkOptions={p.bulkOptions} checked={checked} />
+		<HeaderFooter total={p.total} pages={p.pages} bulkOptions={p.bulkOptions} checked={checked} mapMarkers={p.mapMarkers} />
 		
 		{p.total 
-			? <table>
-				<thead>
-					<HeadRow cols={p.cols} rows={p.rows} checked={checked} />
-				</thead>
-				<tbody>
-					{p.rows.map((row,i) => <BodyRow cols={p.cols} row={row} rowNumber={i} checked={checked} />)}
-				</tbody>
-				<tfoot>
-					<HeadRow cols={p.cols} rows={p.rows} checked={checked} />
-				</tfoot>
-			</table>
+			? (
+				q.viewMode === 'map'
+					? <div style={{ marginBottom: '.3rem' }}>
+						<OpenMap height={400} markers={p.mapMarkers!} />
+					</div>
+					: <table>
+						<thead>
+							<HeadRow cols={p.cols} rows={p.rows} checked={checked} />
+						</thead>
+						<tbody>
+							{p.rows.map((row,i) => <BodyRow cols={p.cols} row={row} rowNumber={i} checked={checked} />)}
+						</tbody>
+						<tfoot>
+							<HeadRow cols={p.cols} rows={p.rows} checked={checked} />
+						</tfoot>
+					</table>
+			)
 			: <NoResultDiv>
 				{q.page || q.search || q.category
 					? <div>No records match your filters. <a href={qs.create({ page: undefined, search: undefined, category: undefined }, {upsert: true}) || location.pathname}>Reset filters?</a></div>
@@ -51,7 +59,7 @@ export default function CmsTable(p: CmsTableProps) {
 				}
 			</NoResultDiv>
 		}
-		<HeaderFooter total={p.total} pages={p.pages} bulkOptions={p.bulkOptions} checked={checked} isFooter />
+		<HeaderFooter total={p.total} pages={p.pages} bulkOptions={p.bulkOptions} checked={checked} mapMarkers={p.mapMarkers} isFooter />
 	</CmsTableDiv>
 }
 const CmsTableDiv = styled.div`
@@ -125,11 +133,18 @@ const CategoryFilterDiv = styled.div`
 		margin-bottom: .3rem
 `
 
-function HeaderFooter(p: Pick<CmsTableProps, 'total' | 'pages' | 'bulkOptions'> & { isFooter?: boolean, checked: UseSet<CmsRow>}) {
-	const page = parseInt(qs.parse().page || '1')
+function HeaderFooter(p: Pick<CmsTableProps, 'total' | 'pages' | 'bulkOptions' | 'mapMarkers'> & { isFooter?: boolean, checked: UseSet<CmsRow>}) {
+	const q = qs.parse()
+	const page = parseInt(q.page || '1')
 	
 	return <HeaderFooterDiv data-footer={p.isFooter}>
-		<BulkActionsForm bulkOptions={p.bulkOptions} checked={p.checked} />
+		<div class="left">
+			<BulkActionsForm bulkOptions={p.bulkOptions} checked={p.checked} />
+			{!!p.mapMarkers?.length && (q.viewMode === 'map'
+				? <a class='button' href={(qs.create({viewMode: undefined}, {upsert: true}) || location.pathname) + '#replace'}>Table View</a>
+				: <a class='button' href={qs.create({viewMode: 'map'}, {upsert: true}) + '#replace'}>Map View</a>
+			)}
+		</div>
 		<CountDiv>
 			<div>{p.total} items&nbsp;</div>
 			{p.pages > 1 && <Fragment>
@@ -147,6 +162,9 @@ const HeaderFooterDiv = styled.div`
 		display: flex
 		flex-direction: row
 		justify-content: space-between
+	:root>.left
+		display: flex
+		flex-direction: row
 	@media (max-width: 700px)
 		:root
 			flex-direction: column-reverse
@@ -213,6 +231,7 @@ const BulkActionsFormDiv = styled.div`
 		flex-direction: row
 		align-items: center
 		margin-bottom: .3rem
+		margin-right: .3rem
 `
 
 function HeadRow(p: Pick<CmsTableProps, 'cols' | 'rows'> & { checked: UseSet<CmsRow>}) {
