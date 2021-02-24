@@ -13,11 +13,7 @@ import HeaderLayout from './HeaderLayout'
 export default function MarketingLayout({ children }: { children: any }) {
 	const [auth] = AuthCtx.use()
 	useLayoutEffect(() => applyTheme(defaultTheme))
-	const loginNavLink = (false
-		|| auth.roles?.includes(AuthCtx.roles.admin) && { ...routes.AdminRoot, isButton: true }
-		|| auth.roles?.includes(AuthCtx.roles.tenant) && { ...routes.TenantRoot, isButton: true }
-		|| { ...routes.Login, isButton: true }
-	)
+	const loginNavLink = { ...(auth.id ? routes.Dashboard : routes.Login), isButton: true }
 	return (
 		<HeaderLayout
 			topLinks={[

@@ -13,9 +13,14 @@ import { assertAttrsWithin, assertValid, assertValidSet } from '~/lib/validation
 import { Paths } from '~/routes'
 
 export default function Register() {
+	const [auth] = AuthCtx.use()
 	const Form = useForm()
 	const onSubmit = useCallback(_onSubmit, [])
 	const { submitting, errors } = Form.state
+	const { from } = qs.parse()
+
+	if (auth.id) nav(from || Paths.Dashboard, { replace: true })
+
 	return <RegisterDiv>
 		<Logo size={4} style={{ marginLeft: -10, marginRight: -10, textAlign: 'center', display: 'block' }} />
 		<Form.Component onSubmit={onSubmit}>
@@ -76,19 +81,10 @@ export default function Register() {
 	</RegisterDiv>
 
 	async function _onSubmit(formValues: FormValues) {
-		const { from } = qs.parse()
 		const values = new RegisterProps(formValues)
-		if (values.asAdmin) {
-			AuthCtx.loginAsAdmin()
-			ToastCtx.set({ message: 'Welcome, admin!', location: 'right' })
-			if (from) nav(from, { replace: true })
-			else nav(Paths.AdminRoot)
-		} else {
-			AuthCtx.loginAsTenant()
-			ToastCtx.set({ message: 'Welcome, tenant!', location: 'right' })
-			if (from) nav(from, { replace: true })
-			else nav(Paths.TenantRoot)
-		}
+		if (values.asAdmin) AuthCtx.loginAsAdmin()
+		else AuthCtx.loginAsTenant()
+		ToastCtx.set({ message: 'Welcome to Stacks!', location: 'right' })
 	}
 }
 const RegisterDiv = styled.div`

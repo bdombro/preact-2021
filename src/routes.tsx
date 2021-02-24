@@ -6,7 +6,7 @@ import FillerListRoute from '~/layout/FillerListRoute'
 import FillerPageRoute from '~/layout/FillerPageRoute'
 import * as i from '~/lib/icons'
 import lazy from '~/lib/lazy'
-import { PassThrough, Redirect, RouteFactory } from '~/lib/router'
+import { nav, PassThrough, Redirect, RouteFactory } from '~/lib/router'
 
 import { AuthCtx } from './App.context'
 
@@ -85,6 +85,21 @@ export const routes = Object.freeze({
 		Layout: MarketingLayout,
 	}),
 
+	Dashboard: RouteFactory({
+		title: 'Dashboard',
+		Icon: i.Counter,
+		path: '/dashboard',
+		Component: () => {
+			const [auth] = AuthCtx.use()
+			if (auth.roles?.includes(AuthCtx.roles.admin))
+				nav(Paths.AdminRoot, { replace: true })
+			else if (auth.roles?.includes(AuthCtx.roles.tenant))
+				nav(Paths.TenantRoot, { replace: true })
+			else
+				nav(Paths.Login)
+			return <div />
+		},
+	}),
 
 	// Admin Routes: stats, settings, users, posts
 

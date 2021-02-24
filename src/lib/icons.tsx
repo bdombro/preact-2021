@@ -6,13 +6,15 @@
  */
 
 import { h } from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+
+import { load } from './assets'
+import { useEffect, useMountedState,useState } from './hooks'
 
 // Add css spin effects
-document.head.innerHTML += `<style type="text/css">
+load('style', {innerHTML: `
 @keyframes spin-inverse { to { transform: rotate(-360deg) } }
 @keyframes spin { to { transform: rotate(360deg) } }
-</style>`
+`})
 
 
 // The Icons
@@ -52,21 +54,27 @@ export const Tasks =			I(() => import('mdi-paths-split/OrderBoolAscendingVariant
 // Helpers
 
 // Icon Factory, shortened to be easier to read
-function IconFactory(lazyPath: LazyIconSvgProps['lazyPath']) {
-	const IconComponent: IconComponentType = (props: IconProps) => <LazyIconSvg lazyPath={lazyPath} {...props} />
+function IconFactory(lazyPath: LazyIconSvgProps['svgPathImport']) {
+	const IconComponent: IconComponentType = (props: IconProps) => <LazyIconSvg svgPathImport={lazyPath} {...props} />
 	return IconComponent
 }
 export type IconComponentType = (props: IconProps) => h.JSX.Element
-type IconProps = Omit<LazyIconSvgProps, 'lazyPath'>
+type IconProps = Omit<LazyIconSvgProps, 'svgPathImport'>
 
 // Lazily loaded IconSvg
 interface LazyIconSvgProps extends Omit<IconSvgProps, 'path'> {
-  lazyPath: () => Promise<any>  // Like () => import('mdi-paths-split/Home')
+  svgPathImport: () => Promise<any>  // Like () => import('mdi-paths-split/Home')
 }
-function LazyIconSvg({ lazyPath, ...props }: LazyIconSvgProps) {
-	const [path, setPath] = useState('')
-	useEffect(() => { lazyPath().then((module: any) => setPath(module.default)) }, [])
-	return <IconSvg path={path} {...props} />
+function LazyIconSvg({ svgPathImport, ...props }: LazyIconSvgProps) {
+	const isMounted = useMountedState()
+	const [svgPath, setSvgPath] = useState('')
+	useEffect(() => {load()}, [])
+	return <IconSvg path={svgPath} {...props} />
+	
+	async function load() {
+		const module: any = await svgPathImport()
+		if(isMounted()) setSvgPath(module.default)
+	}
 }
 
 // Enhanced svg element

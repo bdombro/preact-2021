@@ -27,7 +27,7 @@ export default function OpenMap(p: {
 }) {
 	const mapId = useRef(`map-${Math.ceil(Math.random()*100)}`).current
 	useEffect(() => {load()}, [])
-	return <div id={mapId} style={{height:p.height}}></div>
+	return <div id={mapId} style={{height:p.height, zIndex: 0}}></div>
 
 	async function load() {
 		await loadLib()
@@ -80,7 +80,7 @@ function loadLib() {
 		if (loadLib.libLoaded++) return res()
 		const base = '/lib/leaflet/leaflet.'
 		load('link', { href: base + (window.isProd ? 'min.css' : 'css'), rel: 'stylesheet', crossorigin: '' })
-		load('style', { innerText: `
+		load('style', { innerHTML: `
 			.leaflet-div-icon {
 				color: var(--primary);
 				margin-top: -2px !important;
