@@ -13,11 +13,12 @@ import { assertAttrsWithin, assertValid, assertValidSet } from '~/lib/validation
 import { Paths } from '~/routes'
 
 export default function Register() {
+	const { from } = qs.parse()
 	const [auth] = AuthCtx.use()
 	const Form = useForm()
 	const onSubmit = useCallback(_onSubmit, [])
+	
 	const { submitting, errors } = Form.state
-	const { from } = qs.parse()
 
 	if (auth.id) nav(from || Paths.Dashboard, { replace: true })
 

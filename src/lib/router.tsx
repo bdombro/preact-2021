@@ -17,6 +17,7 @@ import { ComponentChildren, Fragment as F, FunctionalComponent, h } from 'preact
 import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from 'preact/hooks'
 
 import { createStateContext } from './createStateContext'
+import styled from './styled'
 
 class ForbiddenError extends Error { type = 'Forbidden' }
 class NotFoundError extends Error { type = 'NotFound' }
@@ -274,9 +275,19 @@ function Redirect(to: string) {
  * ContentDiv: A component you should wrap all of your content in. Should
  * be part of your layout, like in BlankLayout below.
  */
-function ContentDiv(props: { children: ComponentChildren }) {
-	return <div id="content" style={{ height: 'var(--body-height)', overflow: 'hidden auto', position: 'relative', color: 'var(--black)' }} {...props} />
+function Content(props: { children: ComponentChildren }) {
+	return <ContentDiv id="content" {...props} />
 }
+const ContentDiv = styled.div`
+	:root
+		height: var(--body-height)
+		overflow: hidden auto
+		position: relative
+		color: var(--black)
+		background: var(--gray1)
+	.dark :root
+		background: var(--gray2)
+`
 
 /**
  * BlankLayout: The default layout, and a reference layout for you to
@@ -284,9 +295,9 @@ function ContentDiv(props: { children: ComponentChildren }) {
  */
 function BlankLayout({ children }: { children: any }) {
 	return <div>
-		<ContentDiv>
+		<Content>
 			{children}
-		</ContentDiv>
+		</Content>
 	</div>
 }
 
@@ -482,7 +493,7 @@ export function CtxProviders({ children }: { children: ComponentChildren }) {
 
 export {
 	BlankLayout,
-	ContentDiv,
+	Content as ContentDiv,
 	ForbiddenError,
 	LocationCtx,
 	nav,

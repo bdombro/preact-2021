@@ -24,7 +24,7 @@ const Nav = styled.div`
 		position: fixed
 		bottom: 0
 		width: 100%
-		background: var(--nav-background)
+		background: var(--gray2)
 		display: flex
 		flex-direction: row
 		height: var(--bottom-nav-height)
@@ -51,20 +51,20 @@ const NavLinkA = styled.a`
 		flex-grow: 1
 		text-align: center
 		padding: 8px
-		border-right: 1px solid var(--nav-background)
-		border-top: 1px solid var(--nav-background)
+		border-right: 1px solid var(--sidebar-background)
+		border-top: 1px solid var(--sidebar-background)
 		text-decoration: none !important
 	}
 	:root:hover
-		background: var(--nav-background-active)
-		border-right: 1px solid var(--nav-background-active)
-		border-top: 1px solid var(--nav-background-active)
+		background: var(--sidebar-background-active)
+		border-right: 1px solid var(--sidebar-background-active)
+		border-top: 1px solid var(--sidebar-background-active)
 	:root[data-active="true"],
 	:root[data-active="true"]:hover
 		color: var(--nav-text-active)
-		background: var(--nav-background-active)
-		border-right: 1px solid var(--nav-background-active)
-		border-top: 1px solid var(--nav-background-active)
+		background: var(--sidebar-background-active)
+		border-right: 1px solid var(--sidebar-background-active)
+		border-top: 1px solid var(--sidebar-background-active)
 	:root:last-of-type
 		border-right: none
 `

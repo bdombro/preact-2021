@@ -17,26 +17,33 @@ export default function NavLink(p: NavLinkProps) {
 			data-active={isActive}
 		>
 			<div><Icon /></div>
-			<NavLinkText>{p.title}</NavLinkText>
+			<NavLinkText class='navlinkText'>{p.title}</NavLinkText>
 		</NavLinkA>
 	)
 }
 const NavLinkA = styled.a`
 	:root
-		padding: 18px 0 14px 14px
+		padding: 18px 0 14px 28px
 		color: var(--black)
 		display: flex
 		flex-direction: row
+		border-left: 6px solid rgba(0,0,0,0)
+		overflow-x: hidden
 	:root:hover
-		background: var(--nav-background-hover)
+		background: var(--sidebar-background-hover)
 		text-decoration: none
 	:root[data-active="true"],
 	:root[data-active="true"]:hover,
 	:root:active
-		background: var(--nav-background-active)
+		border-left: 6px solid var(--primary)
+		background: var(--sidebar-background-active)
 		color: var(--nav-text-active)
 	:root:active
 		transform: translateY(2px)
+	.dark :root[data-active="true"],
+	.dark :root[data-active="true"]:hover,
+	.dark :root:active
+		border-left: 6px solid var(--gray9)
 `
 const NavLinkText = styled.div`
 	:root

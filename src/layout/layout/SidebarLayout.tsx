@@ -48,18 +48,18 @@ export default function SidebarLayout(p: {
 const SidebarLayoutDiv = styled.div`
 	:root
 		--header-height: 48px
-		--sidebarRight-width: 200px
-		--sidebar-width-full: 220px
-		--sidebar-width-mini: 52px
+		--sidebarRight-width: 260px
+		--sidebar-width-full: 300px
+		--sidebar-width-mini: 94px
 		--sidebar-width: var(--sidebar-width-full)
 		--bottom-nav-height: 44px
 		--body-height: calc( var(--vh) - var(--header-height) )
 		--margin-bottom: 0px
 		--margin-left: var(--sidebar-width)
 		background: var(--white);
-	@media (max-width: 900px)
+	@media (max-width: 1200px)
 		:root
-			--sidebar-width-full: 180px
+			--sidebar-width-full: 260px
 	@media (max-width: 700px)
 		:root
 			--header-height: 0px

@@ -24,10 +24,12 @@ const SidebarDiv = styled.div`
 		top: var(--header-height)
 		right: 0
 		width: var(--sidebarRight-width)
-		background: var(--nav-background)
+		background: var(--sidebar-background)
 		height: var(--body-height)
 		overflow-x: hidden
 		z-index: 2
+	.dark :root
+		background: var(--gray1)
 `
 const SidebarNav = styled.nav`
 	:root

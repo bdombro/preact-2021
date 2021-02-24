@@ -1,5 +1,6 @@
 :root {
   --font-primary: 'Roboto', 'Helvetica Neue', sans-serif;
+	--font-serif: serif;
 
   --primary-h: 0;--primary-s: 0%;--primary-l: 30%;
   --primary: hsl(var(--primary-h),var(--primary-s),var(--primary-l));
@@ -37,9 +38,9 @@
   --links: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 10% ));
   --links-hover: var(--primary);
   --header-background: hsl(0, 0%, 0%);
-  --nav-background: var(--gray1);
-  --nav-background-hover: var(--gray3);
-  --nav-background-active: hsl(var(--primary-h),var(--primary-s),94%);
+  --sidebar-background: var(--gray3);
+  --sidebar-background-hover: var(--gray4);
+  --sidebar-background-active: hsl(var(--primary-h),var(--primary-s),94%);
   --nav-text-active: var(--primary);
   --searchbar-background: var(--gray4);
   --searchbar-background-active: var(--gray2);
@@ -78,10 +79,10 @@ body {
 .dark {
   --black: white;
   --white: black;
-  --gray1: hsl(0, 0%, 10%);
-  --gray2: hsl(0, 0%, 12%);
-  --gray3: hsl(0, 0%, 20%);
-  --gray4: hsl(0, 0%, 24%);
+  --gray1: hsl(0, 0%, 14%);
+  --gray2: hsl(0, 0%, 17%);
+  --gray3: hsl(0, 0%, 22%);
+  --gray4: hsl(0, 0%, 26%);
   --gray5: hsl(0, 0%, 30%);
   --gray6: hsl(0, 0%, 40%);
   --gray7: hsl(0, 0%, 50%);
@@ -92,9 +93,9 @@ body {
   --links: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 47% ));
   --links-hover: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 40% ));
   --header-background: hsl(0, 0%, 40%);
-  --nav-background: var(--gray2);
-  --nav-background-hover: var(--gray3);
-  --nav-background-active: var(--primary);
+  --sidebar-background: var(--gray1);
+  --sidebar-background-hover: var(--gray3);
+  --sidebar-background-active: var(--primary);
   --nav-text-active: var(--black);
   --searchbar-background: var(--gray4);
   --searchbar-background-active: var(--gray2);
@@ -114,25 +115,29 @@ html {
   font-size: 16px;
 }
 h1 {
-  font-size: 1.6rem
-}
-h2 {
-  font-size: 1.5rem
-}
-h3 {
   font-size: 1.4rem
 }
-h4 {
+h2 {
   font-size: 1.3rem
 }
-h5 {
+h3 {
+  font-size: 1.25rem
+}
+h4 {
   font-size: 1.2rem
+}
+h5 {
+  font-size: 1.15rem
 }
 h6 {
   font-size: 1.1rem
 }
 input, input:hover, input:focus, select, select:hover, select:focus, textarea, textarea:hover, textarea:focus {
   font-size: 1rem;
+}
+
+h1.page-header {
+	margin-bottom: 2rem;
 }
 
 a, a:active, a:focus, .body-link {

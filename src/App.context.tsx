@@ -43,12 +43,12 @@ ThemeCtx.subscribe(next => ls.set('ThemeCtx', next))
 export const ToastCtx = createStateContext<ToastProps>({ location: 'right', message: '', duration: 2e3 })
 
 // SidebarLeftCtx: can be full | mini, persists to disk, and can be toggled with #sidebar-toggle event
-
-export const SidebarLeftCtx = createStateContext(ls.get('SidebarLeftCtx') || 'full')
+const sidebarLeftInitial = ls.get('SidebarLeftCtx') || (window.innerWidth > 900 ? 'full' : 'mini')
+export const SidebarLeftCtx = createStateContext(sidebarLeftInitial)
 window.addEventListener('#sidebar-toggle', () => SidebarLeftCtx.set(current => current === 'mini' ? 'full' : 'mini'))
 SidebarLeftCtx.subscribe(next => ls.set('SidebarLeftCtx', next))
 SidebarLeftCtx.subscribe(next => next === 'mini' ? bc.add('miniSidebar') : bc.remove('miniSidebar'))
-if (ls.get('SidebarLeftCtx') === 'mini') bc.add('miniSidebar')
+if (sidebarLeftInitial === 'mini') bc.add('miniSidebar')
 
 
 // SidebarRightCtx: can be active or inactive, resets on navigation

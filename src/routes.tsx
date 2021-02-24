@@ -115,10 +115,18 @@ export const routes = Object.freeze({
 		title: 'Settings',
 		Icon: i.Account,
 		path: '/admin/settings',
-		Component: FillerPageRoute,
+		Component: lazy(() => import('./pages/auth/Account')),
 		Layout: AdminLayout,
 		hasAccess: isAdmin,
 	}),
+	AdminDeleteAccount: RouteFactory({
+		title: 'Delete Account',
+		Icon: i.Logout,
+		path: '/admin/delete-account',
+		Component: lazy(() => import('./pages/auth/DeleteAccount')),
+		hasAccess: isAdmin,
+	}),
+
     
 	AdminStatsStack: RouteFactory({
 		title: 'Dashboard',
@@ -230,8 +238,15 @@ export const routes = Object.freeze({
 		title: 'Settings',
 		Icon: i.Account,
 		path: '/tenant/settings',
-		Component: FillerPageRoute,
+		Component: lazy(() => import('./pages/auth/Account')),
 		Layout: TenantLayout,
+		hasAccess: isTenant,
+	}),
+	TenantDeleteAccount: RouteFactory({
+		title: 'Delete Account',
+		Icon: i.Logout,
+		path: '/tenant/delete-account',
+		Component: lazy(() => import('./pages/auth/DeleteAccount')),
 		hasAccess: isTenant,
 	}),
 

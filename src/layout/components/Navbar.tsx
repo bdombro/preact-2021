@@ -16,13 +16,8 @@ export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolea
 	const isWide = useMedia('(min-width: 700px)')
 	return <NavbarDiv>
 		<div>
-			{sidebarLeft && isWide && (
-				<LeftBurgerA aria-label="Toggle Left Menu Size" href="#sidebar-toggle">
-					<div><i.DotsV size={20} /></div>
-				</LeftBurgerA>
-			)}
-			<LogoA aria-label="Home" href='/' data-burger={sidebarLeft && isWide}><div><div>
-				{!sidebarLeft && <i.ReactLogo />}
+			<LogoA aria-label="Home" href='/'><div><div>
+				<i.ReactLogo />
 				<div>Stacks!</div>
 			</div></div></LogoA>
 			{sidebarLeft && isWide && <SearchBar />}
@@ -56,27 +51,6 @@ const NavbarDiv = styled.div`
 	:root :hover
 		text-decoration: none;
 `
-const LeftBurgerA = styled.a`
-	:root
-		z-index: 2
-		text-align: center
-		color: white
-		width: var(--sidebar-width-mini)
-		height:var(--header-height)
-		display: flex
-		align-items: center
-		justify-content: center
-	:root:active,
-	:root:focus
-		color: white
-	:root:hover
-		background: var(--primary)
-		color: white
-	:root>div
-		margin-top: 7px
-	:root:active>div
-		transform: translateY(3px)
-`
 const LogoA = styled.a`
 	:root
 		transform: rotate(20deg)
@@ -103,9 +77,6 @@ const LogoA = styled.a`
 	:root svg
 		color: hsl(var(--primary-h), var(--primary-s), 70%)
 		margin: 0 6px 0 8px
-	:root[data-burger="true"]
-		margin-top: -63px
-		padding: 80px 7px
 `
 
 function SearchBar() {
