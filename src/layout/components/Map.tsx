@@ -78,8 +78,8 @@ export default function OpenMap(p: {
 function loadLib() {
 	return new Promise<void>(function _loadLib(res) {
 		if (loadLib.libLoaded++) return res()
-		const base = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.'
-		load('link', { href: base + 'css', rel: 'stylesheet', crossorigin: '' })
+		const base = '/lib/leaflet/leaflet.'
+		load('link', { href: base + (window.isProd ? 'min.css' : 'css'), rel: 'stylesheet', crossorigin: '' })
 		load('style', { innerText: `
 			.leaflet-div-icon {
 				color: var(--primary);

@@ -39,7 +39,7 @@
     "mdi-paths-split": "^5.9.55",
     "preact": "^10.5.12",
     "snowpack": "^3.0.11",
-    "snowpack-plugin-hash": "^0.13.0",
+    "snowpack-plugin-hash": "^0.14.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.0.3",
     "workbox-cli": "^6.0.2"

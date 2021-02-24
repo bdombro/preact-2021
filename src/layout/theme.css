@@ -1,5 +1,4 @@
 :root {
-
   --font-primary: 'Roboto', 'Helvetica Neue', sans-serif;
 
   --primary-h: 0;--primary-s: 0%;--primary-l: 30%;
@@ -45,6 +44,17 @@
   --searchbar-background: var(--gray4);
   --searchbar-background-active: var(--gray2);
 }
+
+/* From google-webfonts-helper.herokuapp.com/fonts/roboto */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('/lib/roboto/roboto-v20-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('/lib/roboto/roboto-v20-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
 body {
   --vh: 100vh; /* this is set by App.tsx */
   --body-height: var(--vh);

@@ -1,6 +1,6 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 
-const nonRouteExtensions = 'js|css|ico|png|jpg|svg|json|map|txt'
+const nonRouteExtensions = 'js|css|ico|png|jpg|svg|json|map|txt|woff|woff2|tff|pdf'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -12,7 +12,7 @@ module.exports = {
 	plugins: [
 		'@snowpack/plugin-typescript',
 		// '@prefresh/snowpack', // This is known to sometimes conflict with preact.context
-		['snowpack-plugin-hash',{ hashLength: 4,logLevel: 'error' }]
+		// ['snowpack-plugin-hash',{ hashLength: 4,logLevel: 'error' }] // fails with Leaflet in public/lib folder
 	],
 	routes: [
 		/* Enable an SPA Fallback in development: */

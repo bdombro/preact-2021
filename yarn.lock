@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@ampproject/remapping@^1.0.0":
+"@ampproject/remapping@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-1.0.1.tgz#1398e73e567c2a7992df6554c15bb94a89b68ba2"
   integrity sha512-Ta9bMA3EtUHDaZJXqUoT5cn/EecwOp+SXpKJqxDbDuMbLvEMu6YTyDDuvTWeStODfdmXyfMo7LymQyPkN3BicA==
@@ -1134,17 +1134,18 @@
     multimatch "^5.0.0"
     typescript "~4.1.2"
 
-"@typed/content-hash@^0.6.0":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@typed/content-hash/-/content-hash-0.6.1.tgz#d4f42c09b49abc71e5fe7d11df61d25c8a28a586"
-  integrity sha512-LR3KWkqQeHT4RTs2hG4gFkoqyrVS8cT2hdBSA8tdeIXD29KRMApTZ3ZYXtxxKdd1feuN0k06RoqWfhPON+YYWg==
+"@typed/content-hash@^0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@typed/content-hash/-/content-hash-0.8.3.tgz#6645b7b5b3c74f28b5fe922fb7d09029d43eaec0"
+  integrity sha512-m8M3fkgMqJ5I9mGy0/5zTDC5wB2vMvgP6O5cUaXUMsyeLLgTZqEaOCKSERtrxdPKgaNR9G8L6LJl+fm1LNzCwA==
   dependencies:
-    "@ampproject/remapping" "^1.0.0"
-    "@typed/fp" "0.0.23"
+    "@ampproject/remapping" "^1.0.1"
+    "@typed/fp" "0.0.24"
     base64url "^3.0.1"
     builtin-modules "^3.2.0"
     css-tree "^1.1.2"
-    fp-ts "^2.9.3"
+    enhanced-resolve "^5.7.0"
+    fp-ts "^2.9.4"
     himalaya "^1.1.0"
     magic-string "^0.25.7"
     resolve "^1.19.0"
@@ -1155,10 +1156,10 @@
     typed-figures "^1.0.0"
     yargs "^16.2.0"
 
-"@typed/fp@0.0.23":
-  version "0.0.23"
-  resolved "https://registry.yarnpkg.com/@typed/fp/-/fp-0.0.23.tgz#300e47a3bbc592d12c53ce35373652c491547d67"
-  integrity sha512-sBicXoTrIspWtkLazMFPlPkncImWv+aXQec5mf6QHaZRLdBR7az1FrpB5GzxpC58zzC9/kfYTBFUE0ipkogqyQ==
+"@typed/fp@0.0.24":
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/@typed/fp/-/fp-0.0.24.tgz#05952041bcc1ecfd5d7402f4c5bde0c57ce8b18c"
+  integrity sha512-theTMmGjilYKsGImngjdd53tVPpv15FpsztwqU41ct2WiKvn3dKi1Ut/BqShJM2sc2FrdCOp5SPpMqwER9iyAw==
   dependencies:
     "@most/adapter" "^1.0.0"
     "@most/core" "^1.6.1"
@@ -2836,6 +2837,14 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0, end-of-stream@^1.4.1:
   dependencies:
     once "^1.4.0"
 
+enhanced-resolve@^5.7.0:
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-5.7.0.tgz#525c5d856680fbd5052de453ac83e32049958b5c"
+  integrity sha512-6njwt/NsZFUKhM6j9U8hzVyD4E4r0x7NQzhTCbcWOJ0IQjNSAoalWmb0AE51Wn+fwan5qVESWi7t2ToBxs9vrw==
+  dependencies:
+    graceful-fs "^4.2.4"
+    tapable "^2.2.0"
+
 enquirer@^2.3.5:
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/enquirer/-/enquirer-2.3.6.tgz#2a7fe5dd634a1e4125a975ec994ff5456dc3734d"
@@ -3346,10 +3355,15 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
-fp-ts@^2.9.0, fp-ts@^2.9.3:
+fp-ts@^2.9.0:
   version "2.9.3"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.9.3.tgz#419b9103018ddf7c785acf2b3fecb2662afab5af"
   integrity sha512-NjzcHYgigcbPQ6yJ52zwgsVDwKz3vwy9sjbxyzcvfXQm+j1BGeOPRuzLKEwsLyE4Xut6gG1FXJtsU9/gUB7tXg==
+
+fp-ts@^2.9.4, fp-ts@^2.9.5:
+  version "2.9.5"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.9.5.tgz#6690cd8b76b84214a38fc77cbbbd04a38f86ea90"
+  integrity sha512-MiHrA5teO6t8zKArE3DdMPT/Db6v2GUt5yfWnhBTrrsVfeCJUUnV6sgFvjGNBKDmEMqVwRFkEePL7wPwqrLKKA==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -3574,6 +3588,11 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0,
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
   integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
+
+graceful-fs@^4.2.4:
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
+  integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
 hard-rejection@^2.1.0:
   version "2.1.0"
@@ -5796,13 +5815,13 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-snowpack-plugin-hash@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/snowpack-plugin-hash/-/snowpack-plugin-hash-0.13.0.tgz#9161ae4cb0134f5aefd813cb2080974842c4df6f"
-  integrity sha512-DAHME9tZo/Ob1QuKShD21CdNuwGkeNYDOYS8PbqUb0I92t6fNOzIPM4Q2m6e5tmpA08/5vsIdkROblUYaAOfcQ==
+snowpack-plugin-hash@^0.14.2:
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/snowpack-plugin-hash/-/snowpack-plugin-hash-0.14.2.tgz#a464e94a508e5cb58081cd2924342f272ae522af"
+  integrity sha512-WHMLl6a+/G+lM8SUv8RVFwHQTyUcS63/mu2Q32akboHlfA0tJAF7PT4hMy3VWxWsJ6xVqzFa6x/tfmKNpKLgdw==
   dependencies:
-    "@typed/content-hash" "^0.6.0"
-    fp-ts "^2.9.3"
+    "@typed/content-hash" "^0.8.3"
+    fp-ts "^2.9.5"
     tslib "^2.1.0"
     typed-colors "^1.0.0"
     typed-figures "^1.0.0"
@@ -6063,6 +6082,11 @@ table@^6.0.4:
     lodash "^4.17.20"
     slice-ansi "^4.0.0"
     string-width "^4.2.0"
+
+tapable@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.2.0.tgz#5c373d281d9c672848213d0e037d1c4165ab426b"
+  integrity sha512-FBk4IesMV1rBxX2tfiK8RAmogtWn53puLOQlvO8XuwlgxcYbP4mVPS9Ph4aeamSyyVjOl24aYWAuc8U5kCVwMw==
 
 tar-fs@^2.0.0:
   version "2.1.1"
