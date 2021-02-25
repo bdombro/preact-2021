@@ -1,16 +1,15 @@
 import { ComponentChildren, h } from 'preact'
-import { useEffect, useLayoutEffect, useRef } from 'preact/hooks'
+import { useEffect, useRef } from 'preact/hooks'
 
 import { ThemeCtx } from '~/App.context'
 import {useMedia} from '~/lib/hooks'
-import { ContentDiv } from '~/lib/router'
 import styled from '~/lib/styled'
 
 import BottomNav from '../components/BottomNav'
 import Navbar from '../components/Navbar'
+import RoundedContent from '../components/RoundedContent'
 import Sidebar from '../components/Sidebar'
 import SidebarRight from '../components/SidebarRight'
-import { applyTheme, tenantDemoTheme } from '../theme'
 import type { NavLinks } from '../types'
 
 export default function SidebarLayout(p: {
@@ -29,9 +28,9 @@ export default function SidebarLayout(p: {
 			{isWide && <Sidebar navLinks={p.leftLinks} />}
 			<SidebarRight navLinks={p.rightLinks} />
 			{!isWide && <BottomNav navLinks={p.bottomLinks} />}
-			<ContentDiv>
+			<RoundedContent withSidebar>
 				{p.children}
-			</ContentDiv>
+			</RoundedContent>
 		</SidebarLayoutDiv>
 	)
 
@@ -47,7 +46,6 @@ export default function SidebarLayout(p: {
 
 const SidebarLayoutDiv = styled.div`
 	:root
-		--header-height: 48px
 		--sidebarRight-width: 260px
 		--sidebar-width-full: 300px
 		--sidebar-width-mini: 94px
@@ -73,3 +71,4 @@ const SidebarLayoutDiv = styled.div`
 	.miniSidebar :root
 		--sidebar-width: var(--sidebar-width-mini)
 `
+

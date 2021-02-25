@@ -50,7 +50,6 @@ SidebarLeftCtx.subscribe(next => ls.set('SidebarLeftCtx', next))
 SidebarLeftCtx.subscribe(next => next === 'mini' ? bc.add('miniSidebar') : bc.remove('miniSidebar'))
 if (sidebarLeftInitial === 'mini') bc.add('miniSidebar')
 
-
 // SidebarRightCtx: can be active or inactive, resets on navigation
 
 export const SidebarRightCtx = createStateContext(false)

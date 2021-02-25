@@ -56,9 +56,14 @@
        url('/lib/roboto/roboto-v20-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
+html {
+	background: hsl(0, 0%, 14%);
+}
+
 body {
   --vh: 100vh; /* this is set by App.tsx */
   --body-height: var(--vh);
+	--header-height: 50px;
   --button-height: 30px;
   overflow: hidden;
   background: var(--gray2);
@@ -68,7 +73,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--white);
+  background: var(--gray2);
   color: var(--black);
 }
 @media (max-width: 700px) {
@@ -92,16 +97,38 @@ body {
   --gray11: hsl(0, 0%, 90%);
   --links: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 47% ));
   --links-hover: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 40% ));
-  --header-background: hsl(0, 0%, 40%);
+  --header-background: black;
 	--sidebar-background: var(--gray2);
   --sidebar-background-hover: var(--gray3);
   --sidebar-background-active: var(--primary);
   --nav-text-active: var(--black);
   --searchbar-background: var(--gray4);
   --searchbar-background-active: var(--gray2);
-  background: var(--white);
+  background: var(--gray2);
   color: var(--black);
 }
+
+.scrollbar,#content {
+	--scrollbar-width: 14px;
+
+	/* Firefox */
+	scrollbar-width: auto;          /* "auto" or "thin". auto ~= 14px  */
+	scrollbar-color: var(--gray7) var(--gray2);   /* scroll thumb & track */
+}
+.scrollbar::-webkit-scrollbar,#content::-webkit-scrollbar {
+	width: 14px; /* width of the entire scrollbar */
+}
+.scrollbar::-webkit-scrollbar-track,#content::-webkit-scrollbar-track {
+	background: var(--gray2); /* color of the tracking area */
+}
+.scrollbar::-webkit-scrollbar-thumb,#content::-webkit-scrollbar-thumb {
+	background-color: var(--gray7); /* color of the scroll thumb */
+	border-radius: 20px; /* roundness of the scroll thumb */
+	border: 3px solid var(--gray2); /* creates padding around scroll thumb */
+	border-right: 2px solid var(--gray2);
+}
+		
+
 
 * {
   box-sizing:border-box;

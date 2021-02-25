@@ -272,19 +272,34 @@ function Redirect(to: string) {
 }
 
 /**
- * ContentDiv: A component you should wrap all of your content in. Should
- * be part of your layout, like in BlankLayout below.
+ * ContentDiv: A component you to wrap content in. Feel free
+ * to roll your own, but make sure it has #content and is
+ * scrollable
  */
-function Content(props: { children: ComponentChildren }) {
-	return <ContentDiv id="content" {...props} />
+function Content(p: { children: ComponentChildren }) {
+	return <ContentDiv id="content" {...p} />
 }
 const ContentDiv = styled.div`
 	:root
-		height: var(--body-height)
-		overflow: hidden auto
+		--content-height: 100vh
+		--content-height: var(--body-height)
+		--content-right-padding: 0px
+		--content-right: 0px
+		--content-bottom: 0px
+		--content-background: #eee
+		--content-background: var(--sidebar-background)
+		--content-top: 0px
+		--content-top-padding: 0px
+		--content-left: 0px
+		--content-left-padding: 0px
 		position: relative
-		color: var(--black)
-		background: var(--sidebar-background)
+		height: var(--content-height)
+		overflow: hidden scroll
+		z-index: 0
+		background: var(--content-background)
+	@media (max-width: 700px)
+		:root
+			overflow: hidden auto
 `
 
 /**
@@ -491,7 +506,7 @@ export function CtxProviders({ children }: { children: ComponentChildren }) {
 
 export {
 	BlankLayout,
-	Content as ContentDiv,
+	Content,
 	ForbiddenError,
 	LocationCtx,
 	nav,

@@ -34,7 +34,8 @@ export function SidebarHeader() {
 	return (
 		<SidebarHeaderDiv>
 			<div class='left'>
-				<i.Person size={76} class="svg-div"/>
+				<i.Person size={76} class="svg-div full"/>
+				<i.Person size={50} class="svg-div mini" />
 				<div class='label'>Free</div>
 			</div>
 			<div class='right'>
@@ -64,7 +65,10 @@ const SidebarHeaderDiv = styled.div`
 		color: var(--gray8)
 		background: var(--gray4)
 		border-radius: 100px
-		padding: 8px 8px 10px
+		padding: 8px 10px 10px 8px
+	:root>.left>.svg-div.mini
+		padding: 0
+		display: none
 	:root>.left>.label
 		font-family: var(--font-serif);
 		text-transform: uppercase
@@ -87,7 +91,13 @@ const SidebarHeaderDiv = styled.div`
 		margin-top: .4rem
 		color: var(--gray10)
 		font-size: .7rem
-	.miniSidebar :root
+	.miniSidebar :root>.left
+		flex-grow: 1
+	.miniSidebar :root>.left>.svg-div.full
+		display: none
+	.miniSidebar :root>.left>.svg-div.mini
+		display: initial
+	.miniSidebar :root>.right
 		display: none
 `
 
@@ -105,7 +115,6 @@ const SidebarTogglerDiv = styled.div`
 	:root
 		border-bottom: 2px solid var(--gray5)
 		position: relative
-		max-width: 240px
 	:root>.toggle
 		color: var(--gray8)
 		background: var(--gray5)
@@ -121,7 +130,7 @@ const SidebarTogglerDiv = styled.div`
 		display: none
 	.miniSidebar :root>.toggle
 		top: 0
-		right: -20px
+		right: 0px
 		border-radius: 0 0 6px 6px
 	.miniSidebar :root>.toggle>.collapse
 		display: none
@@ -131,7 +140,6 @@ const SidebarTogglerDiv = styled.div`
 
 const Nav = styled.nav`
 	:root
-		max-width: 240px
 		visibility: visible
 	.miniSidebar :root
 		width: var(--sidebar-width)

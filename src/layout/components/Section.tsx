@@ -16,7 +16,7 @@ const SectionDiv = styled.div`
 	:root
 		background: var(--white)
 		margin-bottom: 10px
-		border-radius: 4px
+		border-radius: 8px
 	:root>.top
 		padding: 6px 0 0 20px
 		border-bottom: 1px solid var(--gray4)
@@ -26,4 +26,7 @@ const SectionDiv = styled.div`
 		color: var(--gray9)
 	:root>.bottom
 		padding: 20px 20px 30px
+	@media (max-width: 700px)
+		:root
+			margin: 10px
 `

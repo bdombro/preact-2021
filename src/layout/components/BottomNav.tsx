@@ -51,22 +51,24 @@ const NavLinkA = styled.a`
 		flex-grow: 1
 		text-align: center
 		padding: 8px
-		border-right: 1px solid var(--sidebar-background)
-		border-top: 1px solid var(--sidebar-background)
+		border-top: 3px solid var(--sidebar-background)
 		text-decoration: none !important
-	}
 	:root:hover
-		background: var(--sidebar-background-active)
-		border-right: 1px solid var(--sidebar-background-active)
-		border-top: 1px solid var(--sidebar-background-active)
+		border-top: 3px solid var(--gray9)
 	:root[data-active="true"],
 	:root[data-active="true"]:hover
 		color: var(--nav-text-active)
 		background: var(--sidebar-background-active)
-		border-right: 1px solid var(--sidebar-background-active)
-		border-top: 1px solid var(--sidebar-background-active)
-	:root:last-of-type
-		border-right: none
+		border-top: 3px solid var(--primary)
+	.dark :root:hover
+		border-top: 3px solid var(--primary)
+	.dark :root[data-active="true"],
+	.dark :root[data-active="true"]:hover
+		color: var(--nav-text-active)
+		background: var(--sidebar-background-active)
+		border-top: 3px solid var(--gray9)
+	:root:active div
+		transform: translateY(2px)
 `
 
 

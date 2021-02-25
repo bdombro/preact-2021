@@ -54,7 +54,7 @@ const NavbarDiv = styled.div`
 const LogoA = styled.a`
 	:root
 		transform: rotate(20deg)
-		margin-top: -87px
+		margin-top: -86px
 		margin-left: -14px
 		padding: 100px 9px 100px 14px
 	:root>div
@@ -133,11 +133,11 @@ const SearchBarDiv = styled.div`
 		--searchbar-width: 270px
 		position: absolute
 		left: var(--sidebar-width-full)
-		top: 10px
+		top: 11px
 		width: var(--searchbar-width)
 	:root[data-focused="true"]
 		--searchbar-width: 500px
-	:root input
+	:root>form>input
 		width: 100%
 		line-height: 1rem
 		padding: .6em 1em .6em 3em
@@ -147,30 +147,30 @@ const SearchBarDiv = styled.div`
 		border: none
 		outline: none
 		font-size: .85rem
-	.dark :root input
+	.dark :root>form>input
 		color: white
-	:root input::placeholder
+	:root>form>input::placeholder
 		color: var(--primary)
 		opacity: 1
-	.dark :root input::placeholder
+	.dark :root>form>input::placeholder
 		color: hsl(0,0%,80%)
 	:root[data-focused="true"] input
 		background: var(--white)
-	:root .magglass
+	:root>form>.magglass
 		color: var(--primary)
 		position: absolute
 		left: 12px
 		top: 6px
-	.dark :root .magglass
+	.dark :root>form>.magglass
 		color: hsl(0,0%,80%)
-	:root .clear
+	:root>form>.clear
 		display: none
 		color: var(--primary)
 		position: absolute
 		right: 10px
 		top: 2px
 		font-size: 1.2em
-	.dark :root .clear
+	.dark :root>form>.clear
 		color: hsl(0,0%,80%)
 	@media (max-width: 890px)
 		:root[data-focused="true"]
@@ -224,7 +224,7 @@ const NavLinkA = styled.a`
 		display: flex
 		flex-direction: row
 		align-items: center
-		margin-top: -56px
+		margin-top: -55px
 		padding: 80px 12px
 		color: white
 		transform: rotate(20deg)

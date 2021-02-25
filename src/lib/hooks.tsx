@@ -47,13 +47,11 @@ export function useMedia(query: string) {
 		let mounted = true
 		const mql = window.matchMedia(query)
 		const onChange = () => mounted && setState(!!mql.matches)
-
-		mql.addListener(onChange)
+		mql.addEventListener('change', onChange)
 		setState(mql.matches)
-
 		return () => {
 			mounted = false
-			mql.removeListener(onChange)
+			mql.removeEventListener('change', onChange)
 		}
 	}, [query])
 	return state
