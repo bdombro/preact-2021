@@ -284,9 +284,7 @@ const ContentDiv = styled.div`
 		overflow: hidden auto
 		position: relative
 		color: var(--black)
-		background: var(--gray1)
-	.dark :root
-		background: var(--gray2)
+		background: var(--sidebar-background)
 `
 
 /**

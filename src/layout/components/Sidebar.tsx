@@ -10,6 +10,7 @@ export default function Sidebar({ navLinks }: { navLinks: NavLinks }) {
 	return (
 		<SidebarDiv>
 			<SidebarHeader />
+			<SidebarToggler />
 			<Nav>
 				{navLinks
 					.filter(nl => nl.hasAccess ? nl.hasAccess() : true)
@@ -27,8 +28,6 @@ const SidebarDiv = styled.div`
 		background: var(--sidebar-background)
 		height: var(--body-height)
 		z-index: 1
-	.dark :root
-		background: var(--gray1)
 `
 
 export function SidebarHeader() {
@@ -43,23 +42,17 @@ export function SidebarHeader() {
 				<div class='middle'>Nancy Dombrowski</div>
 				<div class='bottom'>nancy.smith@gmail.com</div>
 			</div>
-			<a class='toggle' href='#sidebar-toggle'>
-				<i.ChevronL2x size={28} class="collapse"/>
-				<i.ChevronR2x size={28} class="expand" />
-			</a>
 		</SidebarHeaderDiv>
 	)
 }
 const SidebarHeaderDiv = styled.div`
 	:root
-		--border-color: var(--gray5)
 		width: var(--sidebar-width)
 		position: relative
 		display: flex
 		flex-direction: row
 		align-items: center
 		padding: 18px 0 24px 10px
-		border-bottom: 2px solid var(--border-color)
 		/*margin-bottom: 12px*/
 	:root>.left
 		position: relative
@@ -82,11 +75,9 @@ const SidebarHeaderDiv = styled.div`
 		margin: -10px
 		background: var(--gray4)
 		border-radius: 3px
-		border: 1px solid var(--border-color)
+		border: 1px solid var(--gray5)
 	:root>.right
 		flex-grow: 1
-	.miniSidebar :root>.right
-		display: none
 	:root>.right>.top
 		color: var(--gray8)
 		font-weight: bold
@@ -96,27 +87,54 @@ const SidebarHeaderDiv = styled.div`
 		margin-top: .4rem
 		color: var(--gray10)
 		font-size: .7rem
+	.miniSidebar :root
+		display: none
+`
+
+export function SidebarToggler() {
+	return (
+		<SidebarTogglerDiv>
+			<a class='toggle' href='#sidebar-toggle'>
+				<i.ChevronL2x size={19} class="collapse" />
+				<i.ChevronR2x size={19} class="expand" />
+			</a>
+		</SidebarTogglerDiv>
+	)
+}
+const SidebarTogglerDiv = styled.div`
+	:root
+		border-bottom: 2px solid var(--gray5)
+		position: relative
+		max-width: 240px
 	:root>.toggle
 		color: var(--gray8)
-		background: var(--border-color)
+		background: var(--gray5)
 		position: absolute
-		right: -14px
-		bottom: -15px
-		width: 28px
-		height: 28px
-		border-radius: 40px
+		top: -18px
+		right: 0
+		width: 19px
+		height: 18px
+		border-radius: 6px 6px 0 0
 	:root>.toggle:hover
 		background: var(--gray4)
-	.miniSidebar :root>.toggle>.collapse
-		display: none
 	:root>.toggle>.expand
+		display: none
+	.miniSidebar :root>.toggle
+		top: 0
+		right: -20px
+		border-radius: 0 0 6px 6px
+	.miniSidebar :root>.toggle>.collapse
 		display: none
 	.miniSidebar :root>.toggle>.expand
 		display: block
 `
+
 const Nav = styled.nav`
 	:root
+		max-width: 240px
 		visibility: visible
+	.miniSidebar :root
+		width: var(--sidebar-width)
 	.miniSidebar :root .navlinkText
 		display: none
 `

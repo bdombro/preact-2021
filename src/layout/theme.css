@@ -25,9 +25,9 @@
   --black: black;
   --white: hsl(0, 0%, 98%);
   --gray1: hsl(0, 0%, 94%);
-  --gray2: hsl(0, 0%, 90%);
-  --gray3: hsl(0, 0%, 87%);
-  --gray4: hsl(0, 0%, 80%);
+  --gray2: hsl(0, 0%, 88%);
+  --gray3: hsl(0, 0%, 84%);
+  --gray4: hsl(0, 0%, 78%);
   --gray5: hsl(0, 0%, 70%);
   --gray6: hsl(0, 0%, 60%);
   --gray7: hsl(0, 0%, 50%);
@@ -38,9 +38,9 @@
   --links: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 10% ));
   --links-hover: var(--primary);
   --header-background: hsl(0, 0%, 0%);
-  --sidebar-background: var(--gray3);
-  --sidebar-background-hover: var(--gray4);
-  --sidebar-background-active: hsl(var(--primary-h),var(--primary-s),94%);
+  --sidebar-background: var(--gray2);
+  --sidebar-background-hover: var(--gray3);
+  --sidebar-background-active: hsl(var(--primary-h),var(--primary-s),88%);
   --nav-text-active: var(--primary);
   --searchbar-background: var(--gray4);
   --searchbar-background-active: var(--gray2);
@@ -61,7 +61,7 @@ body {
   --body-height: var(--vh);
   --button-height: 30px;
   overflow: hidden;
-  background: var(--gray5);
+  background: var(--gray2);
   margin: 0;
   max-width: 100%;
   font-family: var(--font-primary);
@@ -79,8 +79,8 @@ body {
 .dark {
   --black: white;
   --white: black;
-  --gray1: hsl(0, 0%, 14%);
-  --gray2: hsl(0, 0%, 17%);
+  --gray1: hsl(0, 0%, 8%);
+  --gray2: hsl(0, 0%, 14%);
   --gray3: hsl(0, 0%, 22%);
   --gray4: hsl(0, 0%, 26%);
   --gray5: hsl(0, 0%, 30%);
@@ -93,7 +93,7 @@ body {
   --links: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 47% ));
   --links-hover: hsl(var(--primary-h),var(--primary-s),calc( var(--primary-l) + 40% ));
   --header-background: hsl(0, 0%, 40%);
-  --sidebar-background: var(--gray1);
+	--sidebar-background: var(--gray2);
   --sidebar-background-hover: var(--gray3);
   --sidebar-background-active: var(--primary);
   --nav-text-active: var(--black);
