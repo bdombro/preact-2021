@@ -1,12 +1,14 @@
-# A demo of how to make a lean, clean-URL stack router in react
+# A reference application for my react/preact R&D
 
-- Only one client dependency (icons)
-- Crazy small bundles (js is < 30kb gzipped)
-- ES6 imports and prefetching
-- Auto handles html A elements without need for Link
-- Scroll restoration on browser back event
-- Extreme bundling performance c/o Snowpack
-- Auto-creation of service-worker with Workbox
+Preview: https://dombro-preact-stack.vercel.app
+
+**Currently under heavy development**
+
+- Very few dependencies
+- A novel router, featuring scroll restoration, stack routing, and tiny bundle size
+- Crazy small bundles (total js is < 30kb gzipped)
+- Extreme bundling performance c/o Snowpack + Esbuild
+- Auto-creation of service-worker with Google Workbox
 - Enhanced `createContext`: In comparison to react's 
   context, it provides methods to access/mutate/subscribe
   to context outside of components and without hooks. This
@@ -43,6 +45,6 @@ yarn start
 Start a production optimized http2 + ssl server by:
 
 ```bash
-yarn build && yarn start
+yarn build && yarn serve
 ```
 
