@@ -16,6 +16,8 @@
 import { ComponentChildren, Fragment as F, FunctionalComponent, h } from 'preact'
 import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from 'preact/hooks'
 
+import { applyTheme, defaultTheme } from '~/layout/theme'
+
 import { createStateContext } from './createStateContext'
 import styled from './styled'
 
@@ -45,16 +47,15 @@ function RouterComponent(props: RouterProps) {
 	const [Layout, setLayout] = useState<any>(() => BlankLayout)
 	useLayoutEffect(watchLocation, [])
 	const [error, resetError] = useErrorBoundary()
+	if (!props.routesByPath['/notfound']) throw new Error('A route with path /notfound is required.')
 	if (error) {
 		if (error instanceof ForbiddenError) {
 			const r = props.routesByPath['/forbidden'] || props.routesByPath['/notfound']
-			const RLayout = r.Layout || BlankLayout
-			return <CtxProviders><RLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></RLayout></CtxProviders>
+			return <CtxProviders><BlankLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></BlankLayout></CtxProviders>
 		}
 		if (error instanceof NotFoundError) {
 			const r = props.routesByPath['/notfound']
-			const RLayout = r.Layout || BlankLayout
-			return <CtxProviders><RLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></RLayout></CtxProviders>
+			return <CtxProviders><BlankLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></BlankLayout></CtxProviders>
 		}
 		throw error
 	}
@@ -307,6 +308,7 @@ const ContentDiv = styled.div`
  * make your own layouts
  */
 function BlankLayout({ children }: { children: any }) {
+	useLayoutEffect(() => applyTheme(defaultTheme))
 	return <div>
 		<Content>
 			{children}
