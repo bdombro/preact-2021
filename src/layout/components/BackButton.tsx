@@ -6,7 +6,7 @@ import styled from '~/lib/styled'
 export default function BackButton() {
 	return <BackButtonDiv>
 		<BackButtonA title="Go Back" href="#stack-back">
-			<ArrowL size={18} />
+			<ArrowL size={20} />
 		</BackButtonA>
 	</BackButtonDiv>
 }
@@ -15,7 +15,7 @@ const BackButtonDiv = styled.div`
 		position: relative
 		display: inline-block
 		width: 40px
-		height: 40px
+		height: 39px
 		margin-top: -40px
 		top: 12px
 		left: -10px
@@ -26,12 +26,12 @@ const BackButtonA = styled.a`
 	:root
 		position: fixed
 		display: block
-		top: calc( var(--content-inner-top) + 21px )
+		top: calc( var(--content-inner-top) + 17px )
 		left: calc( var(--content-inner-left) + 10px )
 		color: var(--gray7)
 		border-radius: 30px
 		margin-right: 4px
-		height: 40px
+		height: 39px
 		width: 40px
 		background: var(--gray3)
 	:root
@@ -44,4 +44,7 @@ const BackButtonA = styled.a`
 		position: relative
 		top: 7px
 		left: 10px
+	@supports (-webkit-touch-callout: none)
+		:root>svg
+			top: 6px
 `

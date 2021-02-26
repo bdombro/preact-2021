@@ -1,6 +1,5 @@
 import {ComponentChildren, h} from 'preact'
 
-import { ArrowL } from '~/lib/icons'
 import styled from '~/lib/styled'
 
 import BackButton from './BackButton'
@@ -37,7 +36,7 @@ const SectionDiv = styled.div`
 		padding: 6px 0 0 20px
 		border-bottom: 1px solid var(--gray4)
 	:root>.top>.header1
-		margin-top: 1.9rem
+		margin-top: 1.6rem
 	:root>.top>.header2
 		margin-top: -.8rem
 		font-size: 1rem
