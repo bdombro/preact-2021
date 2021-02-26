@@ -25,5 +25,9 @@ export default function Account() {
 const DeleteAccountA = styled.a`
 	:root
 		display: block
-		float: right
+		text-align: right
+		margin: 6px 0 10px 10px
+	@media (max-width: 700px)
+		:root
+			margin: 10px
 `

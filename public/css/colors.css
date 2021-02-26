@@ -37,7 +37,7 @@
   --header-background: hsl(0, 0%, 0%);
   --sidebar-background: var(--gray2);
   --sidebar-background-hover: var(--gray3);
-  --sidebar-background-active: hsl(var(--primary-h),var(--primary-s),88%);
+  --sidebar-background-active: hsl(var(--primary-h),calc( var(--primary-s) - 50% ),80%);
   --nav-text-active: var(--primary);
   --searchbar-background: var(--gray4);
   --searchbar-background-active: var(--gray2);
