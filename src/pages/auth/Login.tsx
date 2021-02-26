@@ -23,7 +23,7 @@ export default function Login() {
 	if (auth.id) nav(from || Paths.Dashboard, { replace: true })
 
 	return <LoginDiv>
-		<Logo size={4} style={{marginLeft: -10, marginRight: -10, textAlign: 'center', display: 'block'}} />
+		<Logo size={4} style={{margin: '0 -10px 10px', textAlign: 'center', display: 'block'}} />
 		<Form.Component onSubmit={onSubmit}>
 			<TextField
 				name={LoginPropsEnum.email}

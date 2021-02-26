@@ -109,32 +109,47 @@ interface TextProps extends h.JSX.HTMLAttributes<HTMLInputElement> {
 }
 export function TextField({ name, labelText, error, type = 'text', class: className, ...inputProps }: TextProps) {
 	return (
-		<TextFieldDiv class={`${className} ${!!error && 'hasError'}`}>
-			<label>{labelText}
-				<input type={type} name={name} {...inputProps} />
-			</label>
+		<TextFieldDiv class={className} data-error={!!error}>
+			<label>{labelText}</label>
+			<input type={type} aria-label={labelText} name={name} {...inputProps} />
 			<div class="error">{error}</div>
 		</TextFieldDiv>
 	)
 }
 const TextFieldDiv = styled.div`
 	:root
-		margin-bottom: .4rem
-	:root label
-		font-size: .9rem
-  :root input
+		--error-color: var(--danger)
+		position: relative
+		margin-bottom: 1.4rem
+	:root>label
+		padding: 1px
+		background: var(--white)
+		color: var(--gray8)
+		position: absolute
+		top: -7px
+		left: 5px
+		font-size: .7rem
+  :root>input
     display: block
-	:root input
+		height: 3rem
+		padding-top: .3rem
+		padding-left: .8rem
+	:root>input
 		margin-top: 1px
 		width: 200px
 		max-width: 100%
   :root.hasError input
-    border: 1px solid var(--danger)
-  :root .error
+    border: 1px solid var(--error-color)
+  :root>.error
     display: none
 		padding: .2rem 0 0 2px
-    color: var(--danger)
-  :root.hasError .error
+    color: var(--error-color)
+		font-size: .7rem
+	:root[data-error="true"]>label
+		color: var(--error-color)
+	:root[data-error="true"]>input
+		border: 1px solid var(--error-color)
+  :root[data-error="true"]>.error
     display: block
 `
 
