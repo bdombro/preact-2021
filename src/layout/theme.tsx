@@ -1,5 +1,3 @@
-import './theme.css'
-
 export class Theme {
 	primaryH = 0; primaryS = 0; primaryL = 30; primaryHoverLDelta = 10; primary = ''; primaryHover = ''
 	secondaryH = 0; secondaryS = 0; secondaryL = 40; secondaryHoverLDelta = 4; secondary = ''; secondaryHover = ''

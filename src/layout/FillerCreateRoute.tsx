@@ -1,4 +1,4 @@
-import { h } from 'preact'
+import { Fragment as F, h } from 'preact'
 import { useCallback } from 'preact/hooks'
 
 import { ToastCtx } from '~/App.context'
@@ -20,8 +20,7 @@ export default function FillerCreateFactory({ route }: { route: RouteType }) {
 	const { submitting, errors } = Form.state
 
 	return <PaddedPage>
-		<h1 class="page-header"><BackButton />{route.title}</h1>
-		<Section>
+		<Section header1={route.title} fullHeight backButton>
 			<Form.Component onSubmit={onSubmit}>
 				<TextField
 					name={CreatePropsEnum.title}

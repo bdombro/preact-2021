@@ -120,7 +120,7 @@ function RouteFactory(props: Omit<RouteType, 'hasBack' | 'hasAccess'> & {hasAcce
 	const r: RouteType = Object.freeze({
 		hasAccess: (): boolean => true,
 		...props,
-		hasBack: !!props.stack && props.path !== props.stack,
+		hasBack: !!props.stack && props.path !== props.stack + '/home',
 	})
 	return r
 }

@@ -7,7 +7,7 @@ import Section from './components/Section'
 
 export default function FillerPageFactory({ route }: { route: RouteType }) {
 	return <PaddedPage>
-		<Section header1={route.title}>
+		<Section header1={route.title} backButton={route.hasBack}>
 			<p>
 				1<br /><br /><br /><br /><br />2
 				<br /><br /><br /><br /><br />3<br /><br /><br /><br /><br />4

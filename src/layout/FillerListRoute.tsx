@@ -15,10 +15,13 @@ export default function FillerListFactory({ route }: { route: RouteType }) {
 	
 	return <PaddedPage>
 		<Section
-			header1={<Fragment>
-				{route.title}
-				<AddNewButton href={createPath} class='button'>Add New</AddNewButton>
-			</Fragment>}
+			header1={(
+				<Fragment>
+					{route.title}
+					<AddNewButton href={createPath} class='button'>Add New</AddNewButton>
+				</Fragment>
+			)}
+			fullHeight
 		>
 			<CmsTable
 				cols={[

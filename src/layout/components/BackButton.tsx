@@ -4,22 +4,44 @@ import { ArrowL } from '~/lib/icons'
 import styled from '~/lib/styled'
 
 export default function BackButton() {
-	return <BackButtonA title="Go Back" href="#stack-back">
-		<ArrowL size={18} />
-	</BackButtonA>
+	return <BackButtonDiv>
+		<BackButtonA title="Go Back" href="#stack-back">
+			<ArrowL size={18} />
+		</BackButtonA>
+	</BackButtonDiv>
 }
-const BackButtonA = styled.a`
+const BackButtonDiv = styled.div`
 	:root
 		position: relative
 		display: inline-block
-		top: 1px
+		width: 40px
+		height: 40px
+		margin-top: -40px
+		top: 11px
+		left: -10px
+		background: var(--gray2)
+		border-radius: 30px
+`
+const BackButtonA = styled.a`
+	:root
+		position: fixed
+		display: block
+		top: calc( var(--content-inner-top) + 16px )
+		left: calc( var(--content-inner-left) + 10px )
 		color: var(--gray7)
 		border-radius: 30px
-		padding: 4px 2px 2px 6px
-		margin-right: 3px
-		width: 30px
-	:root:hover
+		margin-right: 4px
+		height: 40px
+		width: 40px
 		background: var(--gray3)
+	:root
+		display: block
+	:root:hover
+		background: var(--gray4)
 	:root:active
 		transform: translateY(2px)
+	:root>svg
+		position: relative
+		top: 10px
+		left: 10px
 `
