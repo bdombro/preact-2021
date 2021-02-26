@@ -113,25 +113,24 @@ export function SidebarToggler() {
 }
 const SidebarTogglerDiv = styled.div`
 	:root
+		margin-right: 10px
+		margin-left: 10px
+		margin: 0 10px 16px
 		border-bottom: 2px solid var(--gray5)
 		position: relative
 	:root>.toggle
 		color: var(--gray8)
 		background: var(--gray5)
 		position: absolute
-		top: -18px
+		top: -9px
 		right: 0
 		width: 19px
 		height: 18px
-		border-radius: 6px 6px 0 0
+		border-radius: 6px
 	:root>.toggle:hover
 		background: var(--gray4)
 	:root>.toggle>.expand
 		display: none
-	.miniSidebar :root>.toggle
-		top: 0
-		right: 0px
-		border-radius: 0 0 6px 6px
 	.miniSidebar :root>.toggle>.collapse
 		display: none
 	.miniSidebar :root>.toggle>.expand
