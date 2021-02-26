@@ -17,7 +17,7 @@ const BackButtonDiv = styled.div`
 		width: 40px
 		height: 40px
 		margin-top: -40px
-		top: 11px
+		top: 12px
 		left: -10px
 		background: var(--gray2)
 		border-radius: 30px
@@ -26,7 +26,7 @@ const BackButtonA = styled.a`
 	:root
 		position: fixed
 		display: block
-		top: calc( var(--content-inner-top) + 16px )
+		top: calc( var(--content-inner-top) + 21px )
 		left: calc( var(--content-inner-left) + 10px )
 		color: var(--gray7)
 		border-radius: 30px
@@ -42,6 +42,6 @@ const BackButtonA = styled.a`
 		transform: translateY(2px)
 	:root>svg
 		position: relative
-		top: 10px
+		top: 7px
 		left: 10px
 `
