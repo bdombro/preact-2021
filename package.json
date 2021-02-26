@@ -1,5 +1,5 @@
 {
-  "name": "react-stack-router-demo",
+  "name": "dombro-preact-stack-demo",
   "description": "A demo of how to make a clean-URL stack router in react",
   "version": "0.1.0",
   "private": true,
