@@ -81,6 +81,13 @@ body {
     --button-height: 38px;
   }
 }
+@supports (-webkit-touch-callout: none) {
+	/* Darken background on IOS so that the scroll bar is visible */
+	body {
+		--sidebar-background: var(--gray5)
+	}
+}
+
 .dark {
   --black: white;
   --white: black;
@@ -127,7 +134,6 @@ body {
 	border: 3px solid var(--gray2); /* creates padding around scroll thumb */
 	border-right: 2px solid var(--gray2);
 }
-		
 
 
 * {

@@ -51,7 +51,7 @@ const NavLinkA = styled.a`
 		flex-grow: 1
 		text-align: center
 		padding: 8px
-		border-top: 3px solid var(--sidebar-background)
+		border-top: 3px solid var(--gray2)
 		text-decoration: none !important
 	:root:hover
 		border-top: 3px solid var(--gray9)
