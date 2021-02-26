@@ -23,11 +23,13 @@ export default function NavLink(p: NavLinkProps) {
 }
 const NavLinkA = styled.a`
 	:root
-		padding: 18px 0 14px 28px
+		padding: 14px 0 10px 18px
 		color: var(--black)
 		display: flex
 		flex-direction: row
+		border-radius: 8px
 		border-left: 6px solid rgba(0,0,0,0)
+		margin: 10px
 		overflow-x: hidden
 	:root:hover
 		background: var(--sidebar-background-hover)

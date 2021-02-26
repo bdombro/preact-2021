@@ -28,8 +28,7 @@ const SidebarDiv = styled.div`
 		height: var(--body-height)
 		overflow-x: hidden
 		z-index: 2
-	.dark :root
-		background: var(--gray1)
+		border-left: 1px solid var(--gray4)
 `
 const SidebarNav = styled.nav`
 	:root
