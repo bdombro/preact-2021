@@ -29,6 +29,8 @@ const Nav = styled.div`
 		flex-direction: row
 		height: var(--bottom-nav-height)
 		overflow-y: hidden
+	.dark :root
+		background: var(--gray1)
 `
 
 
@@ -48,19 +50,26 @@ function NavLink(p: NavLinkProps) {
 }
 const NavLinkA = styled.a`
 	:root
+		--color: var(--gray6)
+		--border-top-color: var(--gray2)
+	:root[data-active="true"]
+		--color: var(--primary)
+		--border-top-color: var(--primary)
+	.dark :root
+		--color: var(--gray7)
+		--border-top-color: var(--gray1)
+	.dark :root[data-active="true"]
+		--border-top-color: var(--primary)
+	:root
 		flex-grow: 1
 		text-align: center
+		color: var(--color)
+		border-top: 3px solid var(--border-top-color)
 		padding: 8px
-		border-top: 3px solid var(--gray2)
 		text-decoration: none !important
-	:root[data-active="true"]
-		color: var(--nav-text-active)
-		background: var(--sidebar-background-active)
-		border-top: 3px solid var(--primary)
-	.dark :root[data-active="true"]
-		color: var(--nav-text-active)
-		background: var(--sidebar-background-active)
-		border-top: 3px solid var(--gray9)
+		margin: 0 6px
+	:root *
+		color: var(--color)
 	:root:active div
 		transform: translateY(2px)
 `
