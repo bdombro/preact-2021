@@ -46,28 +46,36 @@ export default function SidebarLayout(p: {
 
 const SidebarLayoutDiv = styled.div`
 	:root
+		--content-background: var(--sidebar-background)
 		--sidebarRight-width: 260px
 		--sidebar-width-full: 300px
 		--sidebar-width-mini: 94px
 		--sidebar-width: var(--sidebar-width-full)
 		--bottom-nav-height: 44px
-		--body-height: calc( var(--vh) - var(--header-height) )
-		--margin-bottom: 0px
-		--margin-left: var(--sidebar-width)
-		background: var(--white);
+		--content-top: var(--header-height)
+		--content-top-padding: 10px
+		--content-inner-top: calc( var(--content-top) + var(--content-top-padding) )
+		--content-bottom: 0px
+		--content-bottom-padding: 10px
+		--content-inner-bottom: calc( var(--content-bottom) + var(--content-bottom-padding) )
+		--content-right: 0px
+		--content-right-padding: 10px
+		--content-inner-right: calc( var(--content-right) + var(--content-right-padding) + var(--scrollbar-width) )
+		--content-left: var(--sidebar-width)
+		--content-left-padding: 0px
+		--content-inner-left: calc( var(--content-left) + var(--content-left-padding) )
+		--content-height: calc( var(--vh) - var(--header-height) )
+		--content-inner-height: calc( var(--content-height) - var(--content-bottom-padding) )
 	@media (max-width: 1200px)
 		:root
 			--sidebar-width-full: 260px
 	@media (max-width: 700px)
 		:root
-			--header-height: 0px
-			--body-height: calc( var(--vh) - var(--header-height) - var(--bottom-nav-height) )
-			--margin-bottom: var(--bottom-nav-height)
-			--margin-left: 0px
-	:root
-		margin-top: var(--header-height)
-		margin-bottom: var(--margin-bottom)
-		margin-left: var(--margin-left)
+			--content-top: 0px
+			--content-bottom: var(--bottom-nav-height)
+			--content-left: 0px
+			--content-left-padding: 10px
+			--content-height: calc( var(--vh) - var(--bottom-nav-height) )
 	.miniSidebar :root
 		--sidebar-width: var(--sidebar-width-mini)
 `

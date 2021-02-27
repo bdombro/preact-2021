@@ -1,6 +1,7 @@
-.scrollbar,#content {
+:root {
 	--scrollbar-width: 14px;
-
+}
+.scrollbar,#content {
 	/* Firefox */
 	scrollbar-width: auto;          /* "auto" or "thin". auto ~= 14px  */
 	scrollbar-color: var(--gray7) var(--gray2);   /* scroll thumb & track */

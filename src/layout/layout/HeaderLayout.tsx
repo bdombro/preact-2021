@@ -26,12 +26,21 @@ export default function HeaderLayout(p: {
 }
 const HeaderLayoutDiv = styled.div`
 	:root
+		--content-background: var(--sidebar-background)
 		--sidebarRight-width: 200px
-		--body-height: calc( var(--vh) - var(--header-height) )
-		--margin-bottom: 0px
-		--margin-left: 0px
-		margin-top: var(--header-height)
-		margin-bottom: var(--margin-bottom)
-		margin-left: var(--margin-left)
+		--content-top: var(--header-height)
+		--content-top-padding: 10px
+		--content-inner-top: calc( var(--content-top) + var(--content-top-padding) )
+		--content-bottom: 0px
+		--content-bottom-padding: 10px
+		--content-inner-bottom: calc( var(--content-bottom) + var(--content-bottom-padding) )
+		--content-right: 0px
+		--content-right-padding: 10px
+		--content-inner-right: calc( var(--content-right) + var(--content-right-padding) + var(--scrollbar-width) )
+		--content-left: 0px
+		--content-left-padding: 10px
+		--content-inner-left: calc( var(--content-left) + var(--content-left-padding) )
+		--content-height: calc( var(--vh) - var(--header-height) )
+		--content-inner-height: calc( var(--content-height) - var(--content-bottom-padding) )
 		background: var(--white)
 `

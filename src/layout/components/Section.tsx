@@ -43,7 +43,4 @@ const SectionDiv = styled.div`
 		color: var(--gray9)
 	:root>.bottom
 		padding: 20px 20px 30px
-	@media (max-width: 700px)
-		:root
-			margin: 10px
 `
