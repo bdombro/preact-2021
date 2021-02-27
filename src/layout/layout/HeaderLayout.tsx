@@ -27,7 +27,7 @@ export default function HeaderLayout(p: {
 const HeaderLayoutDiv = styled.div`
 	:root
 		--content-background: var(--sidebar-background)
-		--sidebarRight-width: 200px
+		--sidebarRight-width: 260px
 		--content-top: var(--header-height)
 		--content-top-padding: 10px
 		--content-inner-top: calc( var(--content-top) + var(--content-top-padding) )

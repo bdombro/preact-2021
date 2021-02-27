@@ -53,17 +53,11 @@ const NavLinkA = styled.a`
 		padding: 8px
 		border-top: 3px solid var(--gray2)
 		text-decoration: none !important
-	:root:hover
-		border-top: 3px solid var(--gray9)
-	:root[data-active="true"],
-	:root[data-active="true"]:hover
+	:root[data-active="true"]
 		color: var(--nav-text-active)
 		background: var(--sidebar-background-active)
 		border-top: 3px solid var(--primary)
-	.dark :root:hover
-		border-top: 3px solid var(--primary)
-	.dark :root[data-active="true"],
-	.dark :root[data-active="true"]:hover
+	.dark :root[data-active="true"]
 		color: var(--nav-text-active)
 		background: var(--sidebar-background-active)
 		border-top: 3px solid var(--gray9)

@@ -14,9 +14,6 @@ export default function AdminLayout({ children }: { children: any }) {
 		<SidebarLayout 
 			topLinks={[{...routes.Support, title: 'Need help?'}]}
 			rightLinks={[
-				routes.AdminStatsStack,
-				routes.AdminBlogStack,
-				routes.AdminUserStack,
 				routes.AdminSettingsHome,
 				routes.Logout,
 				routes.Support,

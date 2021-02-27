@@ -5,11 +5,13 @@ import NavLink from '~/layout/components/SidebarNavLink'
 import styled from '~/lib/styled'
 
 import type { NavLinks } from '../types'
+import { Logo } from './Logo'
 
 export default function SidebarRight({ navLinks }: { navLinks: NavLinks }) {
 	const [isActive] = SidebarRightCtx.use()
 	return isActive ? (
 		<SidebarDiv>
+			<Logo size={2} class='logo' />
 			<SidebarNav>
 				{navLinks
 					.filter(nl => nl.hasAccess ? nl.hasAccess() : true)
@@ -21,14 +23,26 @@ export default function SidebarRight({ navLinks }: { navLinks: NavLinks }) {
 const SidebarDiv = styled.div`
 	:root
 		position: absolute
-		top: var(--header-height)
+		top: var(--content-top)
 		right: 0
 		width: var(--sidebarRight-width)
-		background: var(--sidebar-background)
-		height: var(--body-height)
+		background: var(--gray6)
 		overflow-x: hidden
-		z-index: 2
 		border-left: 1px solid var(--gray4)
+		border-bottom: 1px solid var(--gray4)
+		border-radius: 0 0 8px 8px
+		z-index: 2
+	:root>.logo
+		display: none
+		margin-left: 28px
+	@media (max-width: 700px)
+		:root
+			padding-top: 30px
+			height: var(--content-height)
+			border-radius: 0
+			border-bottom: none
+		:root>.logo
+			display: initial
 `
 const SidebarNav = styled.nav`
 	:root

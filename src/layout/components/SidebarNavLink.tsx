@@ -23,12 +23,12 @@ export default function NavLink(p: NavLinkProps) {
 }
 const NavLinkA = styled.a`
 	:root
-		padding: 14px 0 10px 18px
+		padding: 14px 0 10px 24px
+		background: var(--sidebar-background)
 		color: var(--black)
 		display: flex
 		flex-direction: row
 		border-radius: 8px
-		border-left: 6px solid rgba(0,0,0,0)
 		margin: 10px
 		overflow-x: hidden
 	:root:hover
@@ -37,6 +37,7 @@ const NavLinkA = styled.a`
 	:root[data-active="true"],
 	:root[data-active="true"]:hover,
 	:root:active
+		padding: 14px 0 10px 18px
 		border-left: 6px solid var(--primary)
 		background: var(--sidebar-background-active)
 		color: var(--nav-text-active)
@@ -46,6 +47,11 @@ const NavLinkA = styled.a`
 	.dark :root[data-active="true"]:hover,
 	.dark :root:active
 		border-left: 6px solid var(--gray9)
+	:root
+		border: 1px solid var(--gray4)
+	@media (max-width: 700px)
+		:root
+			background: var(--gray2)
 `
 const NavLinkText = styled.div`
 	:root

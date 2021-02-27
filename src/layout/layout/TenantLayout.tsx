@@ -13,10 +13,6 @@ export default function TenantLayout({ children }: { children: any }) {
 		<SidebarLayout
 			topLinks={[{ ...routes.Support, title: 'Need help?' }]}
 			rightLinks={[
-				routes.TenantDashboardStack,
-				routes.TenantTaskStack,
-				routes.TenantPropertyStack,
-				routes.TenantUserStack,
 				routes.TenantSettingsHome,
 				routes.Logout,
 				routes.Support,
@@ -27,7 +23,6 @@ export default function TenantLayout({ children }: { children: any }) {
 				routes.TenantTaskStack,
 				routes.TenantPropertyStack,
 				routes.TenantUserStack,
-				routes.TenantSettingsHome,
 			]}
 			leftLinks={[
 				routes.TenantDashboardStack,
