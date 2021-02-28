@@ -1,5 +1,6 @@
 import { h } from 'preact'
 
+import { AuthCtx, Roles, SidebarLeftCtx } from '~/App.context'
 import NavLink from '~/layout/components/SidebarNavLink'
 import * as i from '~/lib/icons'
 import styled from '~/lib/styled'
@@ -36,7 +37,8 @@ export function SidebarHeader() {
 			<div class='left'>
 				<i.Person size={76} class="svg-div full"/>
 				<i.Person size={50} class="svg-div mini" />
-				<div class='label'>Free</div>
+				<div class='label full'>{AuthCtx.get().roles.includes(Roles.admin) ? 'Admin' : 'Tenant'}</div>
+				<div class='label mini'>Nancy</div>
 			</div>
 			<div class='right'>
 				<div class='top'>Active</div>
@@ -80,6 +82,8 @@ const SidebarHeaderDiv = styled.div`
 		background: var(--gray4)
 		border-radius: 3px
 		border: 1px solid var(--gray5)
+	:root>.left>.label.mini
+		display: none
 	:root>.right
 		flex-grow: 1
 	:root>.right>.top
@@ -93,9 +97,11 @@ const SidebarHeaderDiv = styled.div`
 		font-size: .7rem
 	.miniSidebar :root>.left
 		flex-grow: 1
-	.miniSidebar :root>.left>.svg-div.full
+	.miniSidebar :root>.left>.svg-div.full,
+	.miniSidebar :root>.left>.label.full
 		display: none
-	.miniSidebar :root>.left>.svg-div.mini
+	.miniSidebar :root>.left>.svg-div.mini,
+	.miniSidebar :root>.left>.label.mini
 		display: initial
 	.miniSidebar :root>.right
 		display: none
