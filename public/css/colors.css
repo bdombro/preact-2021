@@ -18,8 +18,10 @@
   --danger-h: 0;--danger-s: 0%;--danger-l: 40%;
   --danger: hsl(var(--danger-h),var(--danger-s),var(--danger-l));
   --danger-hover: hsl(var(--danger-h),var(--danger-s),calc( var(--danger-l) + 10% ));
+}
 
-  --black: black;
+:root, .light {
+	--black: black;
   --white: hsl(0, 0%, 98%);
   --gray1: hsl(0, 0%, 94%);
   --gray2: hsl(0, 0%, 90%);

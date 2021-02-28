@@ -6,7 +6,7 @@ import {useMedia} from '~/lib/hooks'
 import styled from '~/lib/styled'
 
 import BottomNav from '../components/BottomNav'
-import Navbar from '../components/Navbar'
+import Navbar, { SearchOption } from '../components/Navbar'
 import RoundedContent from '../components/RoundedContent'
 import Sidebar from '../components/Sidebar'
 import SidebarRight from '../components/SidebarRight'
@@ -17,6 +17,7 @@ export default function SidebarLayout(p: {
 	leftLinks: NavLinks
 	rightLinks: NavLinks
 	bottomLinks: NavLinks
+	searchOptions: SearchOption[]
 	children: ComponentChildren
 }) {
 	const isWide = useMedia('(min-width: 700px)')
@@ -24,7 +25,7 @@ export default function SidebarLayout(p: {
 	useEffect(listenForThemeToggle, [])
 	return (
 		<SidebarLayoutDiv ref={ref} class={ThemeCtx.get() === 'dark' ? 'dark' : ''}>
-			{isWide && <Navbar sidebarLeft navLinks={p.topLinks} />}
+			{isWide && <Navbar sidebarLeft navLinks={p.topLinks} searchOptions={p.searchOptions} />}
 			{isWide && <Sidebar navLinks={p.leftLinks} />}
 			<SidebarRight navLinks={p.rightLinks} />
 			{!isWide && <BottomNav navLinks={p.bottomLinks} />}

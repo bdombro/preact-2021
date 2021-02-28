@@ -12,7 +12,7 @@ import { Paths } from '~/routes'
 
 import type { NavLinkProps, NavLinks } from '../types'
 
-export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolean, navLinks: NavLinks}) {
+export default function Navbar(p: { sidebarLeft?: boolean, navLinks: NavLinks, searchOptions?: SearchOption[]}) {
 	const isWide = useMedia('(min-width: 700px)')
 	return <NavbarDiv>
 		<div>
@@ -20,11 +20,11 @@ export default function Navbar({ sidebarLeft, navLinks }: { sidebarLeft?: boolea
 				<i.ReactLogo />
 				<div>Stacks!</div>
 			</div></div></LogoA>
-			{sidebarLeft && isWide && <SearchBar />}
+			{p.sidebarLeft && isWide && p.searchOptions && <SearchBar options={p.searchOptions} />}
 		</div>
 
 		<div>
-			{isWide && navLinks
+			{isWide && p.navLinks
 				.filter(nl => nl.hasAccess ? nl.hasAccess() : true)
 				.map(nl => 'isButton' in nl ? <NavButton {...nl} /> : <NavLink {...nl} />)}
 			<RightBurger />
@@ -79,10 +79,17 @@ const LogoA = styled.a`
 		margin: 0 6px 0 8px
 `
 
-function SearchBar() {
+export interface SearchOption {
+	name: string
+	value: string
+}
+function SearchBar(p: {options: SearchOption[]}) {
 	const [value, setValue] = useState('')
 	const [isFocused, setIsFocused] = useState(false)
-	const ref = useRef<HTMLInputElement>(null)
+	const inputRef = useRef<HTMLInputElement>(null)
+	const selectRef = useRef<HTMLSelectElement>(null)
+	const [option, setOption] = useState(p.options[0].value)
+	const onOptionChange = useCallback((e: any) => setOption(e.target.value), [])
 
 	const onBlur = useCallback(_onBlur, [])
 	const onClickClear = useCallback(_onClickClear, [])
@@ -90,6 +97,19 @@ function SearchBar() {
 
 	return <SearchBarDiv data-focused={isFocused}>
 		<form action='search' onSubmit={onSubmit}>
+			<div class='select-div'>
+				<select
+					aria-label="Record Type" 
+					name="type"
+					onFocus={() => setIsFocused(true)}
+					onBlur={onBlur}
+					ref={selectRef}
+					value={option}
+					onChange={onOptionChange}
+				>
+					{p.options.map(o => <option value={o.value}>{o.name}</option>)}
+				</select>
+			</div>
 			<div class='magglass'><i.Search size={20} horizontal /></div>
 			<input
 				name="query"
@@ -98,7 +118,7 @@ function SearchBar() {
 				placeholder="Search"
 				onFocus={() => setIsFocused(true)}
 				onBlur={onBlur}
-				ref={ref}
+				ref={inputRef}
 				aria-label="Search"
 			/>
 			<a
@@ -111,9 +131,13 @@ function SearchBar() {
 	</SearchBarDiv>
 
 	function _onBlur(e?: any) {
-		if (e?.relatedTarget?.hash === '#search-clear') setValue('')
-		setIsFocused(false)
-		ref.current.blur()
+		setTimeout(() => { // skip a clock cycle b/c body is momentarily active when clicking select
+			if (document.activeElement === inputRef.current || document.activeElement === selectRef.current) return
+			if (e?.relatedTarget?.hash === '#search-clear') setValue('')
+			setIsFocused(false)
+			inputRef.current.blur()
+			selectRef.current.blur()
+		})
 	}
 	// I don't think this is ever actually fired due to blur event preventing it,
 	// but just in case it was we handle it.
@@ -124,8 +148,10 @@ function SearchBar() {
 	}
 	function _onSubmit() { 
 		setValue('')
-		_onBlur()
-		nav((location.pathname.includes('admin') ? Paths.AdminUserList : Paths.TenantUserList) + '?search=' + value)
+		setIsFocused(false)
+		inputRef.current.blur()
+		selectRef.current.blur()
+		nav(option + '?search=' + value)
 	}
 }
 const SearchBarDiv = styled.div`
@@ -137,41 +163,53 @@ const SearchBarDiv = styled.div`
 		width: var(--searchbar-width)
 	:root[data-focused="true"]
 		--searchbar-width: 500px
+	:root>form
+		position: relative
+	:root>form>.select-div
+		display: none
+		position: absolute
+		left: -80px
+		top: 0
+		width: 80px
+		border-right: 1px solid var(--gray8)
+		background: var(--searchbar-background)
+		border-radius: 2px 0 0 2px
+	:root[data-focused="true"]>form>.select-div
+		display: initial
+	:root>form>.select-div>select
+		width: 80px
+		color: var(--black)
+		border: none
 	:root>form>input
+		color: var(--black)
 		width: 100%
 		line-height: 1rem
 		padding: .6em 1em .6em 3em
 		background: var(--searchbar-background)
-		color: var(--primary)
 		border-radius: 2px
 		border: none
 		outline: none
 		font-size: .85rem
-	.dark :root>form>input
-		color: white
-	:root>form>input::placeholder
-		color: var(--primary)
-		opacity: 1
-	.dark :root>form>input::placeholder
-		color: hsl(0,0%,80%)
-	:root[data-focused="true"] input
+	:root[data-focused="true"]>form>input
+		border-radius: 0 2px 2px 0
 		background: var(--white)
+	.dark :root[data-focused="true"]>form>input
+		background: var(--gray6)
+	:root>form>input::placeholder
+		color: var(--black)
+		opacity: 1
 	:root>form>.magglass
-		color: var(--primary)
+		color: var(--black)
 		position: absolute
-		left: 12px
+		left: 10px
 		top: 6px
-	.dark :root>form>.magglass
-		color: hsl(0,0%,80%)
 	:root>form>.clear
+		color: var(--black)
 		display: none
-		color: var(--primary)
 		position: absolute
 		right: 10px
 		top: 2px
 		font-size: 1.2em
-	.dark :root>form>.clear
-		color: hsl(0,0%,80%)
 	@media (max-width: 890px)
 		:root[data-focused="true"]
 			--searchbar-width: 270px

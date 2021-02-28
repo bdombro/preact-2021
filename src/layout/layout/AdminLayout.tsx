@@ -4,7 +4,7 @@ import { useLayoutEffect } from 'preact/hooks'
 import { ThemeCtx } from '~/App.context'
 import SidebarLayout from '~/layout/layout/SidebarLayout'
 import * as i from '~/lib/icons'
-import { routes } from '~/routes'
+import { Paths, routes } from '~/routes'
 
 import { applyTheme, defaultTheme } from '../theme'
 
@@ -28,6 +28,10 @@ export default function AdminLayout({ children }: { children: any }) {
 				routes.AdminStatsStack,
 				routes.AdminBlogStack,
 				routes.AdminUserStack,
+			]}
+			searchOptions={[
+				{ name: 'Users', value: Paths.AdminUserList },
+				{ name: 'Posts', value: Paths.AdminBlogPostList },
 			]}
 		>
 			{children}
