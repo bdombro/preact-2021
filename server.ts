@@ -8,11 +8,12 @@ import * as path from 'path'
 const
 	https = false
 	,logger = !!process.env.LOGGER
+	,address = process.env.ADDRESS || '0.0.0.0'
+	,port = process.env.PORT || 3000
 	,buildRoot = path.join(__dirname, './build')
 	,notFoundHtml = fs.readFileSync(path.join(buildRoot, '/index.html'))
 	,sslKey = fs.readFileSync('snowpack.key', 'utf8')
 	,sslCert = fs.readFileSync('snowpack.crt', 'utf8')
-	,port = process.env.PORT || 3000
 
 main()
 
@@ -30,7 +31,7 @@ async function main() {
 	fastify.register(staticPlugin, { root: buildRoot, maxAge: '30d' })
 	fastify.setNotFoundHandler((req, reply) => { reply.type('text/html').send(notFoundHtml) })
 
-	fastify.listen(port, (err, address) => {
+	fastify.listen(port, address, (err, address) => {
 		if (err) { fastify.log.error(err as any); process.exit(1) }
 		fastify.log.info(`Server listening on ${address}`)
 	})
