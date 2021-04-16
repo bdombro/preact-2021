@@ -5,9 +5,9 @@
   "private": true,
   "license": "ISC",
   "scripts": {
-    "start": "snowpack dev --secure",
+    "dev": "snowpack dev --secure",
     "build": "snowpack build && workbox generateSW && date > build/buildTime.txt",
-    "serve": "ts-node --project server.tsconfig.json --transpile-only server.ts",
+    "start": "ts-node --project server.tsconfig.json --transpile-only server.ts",
     "test": "web-test-runner \"src/**/*.test.tsx\"",
     "validate": "yarn lint && tsc",
     "lint": "eslint --cache --ext .ts,.tsx src server.ts"
