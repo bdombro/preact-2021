@@ -7,6 +7,7 @@ import * as path from 'path'
 
 const
 	https = false
+	,logger = !!process.env.LOGGER
 	,buildRoot = path.join(__dirname, './build')
 	,notFoundHtml = fs.readFileSync(path.join(buildRoot, '/index.html'))
 	,sslKey = fs.readFileSync('snowpack.key', 'utf8')
@@ -17,7 +18,7 @@ main()
 
 async function main() {
 	const fastify = Fastify({
-		logger: false,
+		logger,
 		...https ? {
 			http2: true,
 			https: { allowHTTP1: true, key: sslKey, cert: sslCert },
