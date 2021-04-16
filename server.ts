@@ -5,21 +5,23 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 
-const buildRoot = path.join(__dirname, './build')
-const notFoundHtml = fs.readFileSync(path.join(buildRoot, '/index.html'))
-
-const sslKey = fs.readFileSync('snowpack.key', 'utf8')
-const sslCert = fs.readFileSync('snowpack.crt', 'utf8')
-
-const port = process.env.PORT || 3000
+const
+	https = false
+	,buildRoot = path.join(__dirname, './build')
+	,notFoundHtml = fs.readFileSync(path.join(buildRoot, '/index.html'))
+	,sslKey = fs.readFileSync('snowpack.key', 'utf8')
+	,sslCert = fs.readFileSync('snowpack.crt', 'utf8')
+	,port = process.env.PORT || 3000
 
 main()
 
 async function main() {
 	const fastify = Fastify({
 		logger: false,
-		http2: true,
-		https: { allowHTTP1: true, key: sslKey, cert: sslCert }
+		...https ? {
+			http2: true,
+			https: { allowHTTP1: true, key: sslKey, cert: sslCert },
+		} : {}
 	})
 
 	fastify.register(compressPlugin)
