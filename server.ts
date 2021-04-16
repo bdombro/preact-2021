@@ -6,7 +6,8 @@ import * as path from 'path'
 
 
 const
-	https = false
+	isProd = process.env.NODE_ENV === 'production'
+	,https = !isProd // SSL is provided by the API Gateway in prod
 	,logger = !!process.env.LOGGER
 	,address = process.env.ADDRESS || '0.0.0.0'
 	,port = process.env.PORT || 3000

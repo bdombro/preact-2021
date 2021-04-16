@@ -48,3 +48,26 @@ Start a production optimized http2 + ssl server by:
 yarn build && yarn serve
 ```
 
+### Deploying
+
+This app is currently client-only, so is recommended to be deployed as a static website. Good options are Surge, Netlify, Vercel, Firebase Hosting, AWS S3, AWS Cloudfront.
+
+If you'd like to deploy as a full-stack, I am a strong proponent for KISS. IMO, companies spend wayyyy to much on DevOps. 
+
+My vendor comparison:
+
+1. Heroku - Low complexity, free for low-traffic, $$$$ at scale 
+2. AWS - Medium complexity, free for low-traffic, $ at scale. Config is high complexity, but can be simplified using frameworks like (Claudia)[https://github.com/claudiajs/claudia], (serverless-express)[https://github.com/vendia/serverless-express], or serverless.com. AWS is also the only provider of serverless SQL (Aurora).
+3. Google - Medium complexity, $ for low-traffic, $$ at scale. Easier config than AWS, but more SQL management. 
+4. Single Server (VPS) - Medium complexity, $ for low-traffic, not scalable
+5. Managed Kubernetes - Trades complexity and cost for flexibility. Should be avoided unless required.
+
+Advice: 
+1. If low-traffic and inexperienced, start with Heroku
+2. If low-traffic and willing to learn, AWS
+3. Otherwise, AWS or Google are both solid choices
+
+Refs:
+1. https://github.com/vendia/serverless-express/tree/mainline/examples/basic-starter-api-gateway-v2
+2. With RDS: https://gist.github.com/nathanmalishev/65b3f16c5acb0dc668453675b74298f3
+
