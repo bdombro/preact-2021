@@ -1,6 +1,7 @@
 import {h} from 'preact'
 
 import {MapPin} from '~/lib/icons'
+// TODO: Pagemeta?
 import {setPageMeta} from '~/lib/router'
 import styled from '~/lib/styled'
 

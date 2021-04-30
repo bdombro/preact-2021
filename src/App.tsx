@@ -1,20 +1,24 @@
 import { Fragment, h } from 'preact'
+import { Provider } from 'react-redux'
 
 import { CtxProviders } from './App.context'
 import {ErrorBoundary, UnhandledErrorNotification} from './layout/components/ErrorBoundaries'
 import Toast, { ToastFromContext } from './layout/components/Toast'
 import { RouterComponent as Router } from './lib/router'
 import { routesByPath } from './routes'
+import { store } from './store'
 
 export default function App() {
 	return (
 		<ErrorBoundary>
 			<StaleBrowserWarning />
-			<CtxProviders>
-				<UnhandledErrorNotification />
-				<Router routesByPath={routesByPath} />
-				<ToastFromContext />
-			</CtxProviders>
+			<Provider store={store}>
+				<CtxProviders>
+					<UnhandledErrorNotification />
+					<Router routesByPath={routesByPath} />
+					<ToastFromContext />
+				</CtxProviders>
+			</Provider>
 		</ErrorBoundary>
 	)
 

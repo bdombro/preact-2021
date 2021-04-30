@@ -27,17 +27,17 @@ module.exports = {
 		manifest: true,
 	},
 	packageOptions: {
-		/* ... */
 	},
 	devOptions: {
 		output: 'stream',
 		port: 3000,
 	},
 	buildOptions: {
-		/* ... */
 		sourcemap: !isProd,
 	},
 	alias: {
-		'~': './src'
+		'~': './src',
+		'react': 'preact/compat',
+		'react-dom': 'preact/compat',
 	}
 }

@@ -17,6 +17,14 @@ const MarketingLayout = lazy(() => import('~/layout/layout/MarketingLayout'))
 
 export const routes = Object.freeze({
 
+	Counter: RouteFactory({
+		title: 'Counter Demo',
+		Icon: i.Login,
+		path: '/counter',
+		Component: lazy(() => import('./pages/Counter')),
+		Layout: MarketingLayout,
+	}),
+
 
 	// Access Control Routes
 

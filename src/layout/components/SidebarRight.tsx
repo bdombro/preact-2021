@@ -1,4 +1,4 @@
-import { Fragment as F, FunctionalComponent, h } from 'preact'
+import { Fragment as F, h } from 'preact'
 
 import { SidebarRightCtx } from '~/App.context'
 import NavLink from '~/layout/components/SidebarNavLink'
