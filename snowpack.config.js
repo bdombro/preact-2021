@@ -11,7 +11,7 @@ module.exports = {
 	},
 	plugins: [
 		'@snowpack/plugin-typescript',
-		// '@prefresh/snowpack', // This is known to sometimes conflict with preact.context
+		'@prefresh/snowpack', // This is known to sometimes conflict with preact.context
 		// ['snowpack-plugin-hash',{ hashLength: 4,logLevel: 'error' }] // fails with Leaflet in public/lib folder
 	],
 	routes: [
