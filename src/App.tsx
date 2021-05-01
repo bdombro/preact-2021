@@ -1,6 +1,5 @@
 import { Fragment, h } from 'preact'
 
-import { CtxProviders } from './App.context'
 import {ErrorBoundary, UnhandledErrorNotification} from './layout/components/ErrorBoundaries'
 import Toast, { ToastFromContext } from './layout/components/Toast'
 import { RouterComponent as Router } from './lib/router'
@@ -10,11 +9,9 @@ export default function App() {
 	return (
 		<ErrorBoundary>
 			<StaleBrowserWarning />
-			<CtxProviders>
-				<UnhandledErrorNotification />
-				<Router routesByPath={routesByPath} />
-				<ToastFromContext />
-			</CtxProviders>
+			<UnhandledErrorNotification />
+			<Router routesByPath={routesByPath} />
+			<ToastFromContext />
 		</ErrorBoundary>
 	)
 

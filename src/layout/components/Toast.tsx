@@ -1,15 +1,15 @@
 import {ComponentChildren, h} from 'preact'
 import { useEffect, useLayoutEffect, useRef } from 'preact/hooks'
 
-import { ToastCtx } from '~/App.context'
 import * as i from '~/lib/icons'
 import styled from '~/lib/styled'
+import { ToastStore } from '~/stores'
 
 const timeouts = new Set<any>()
 
 export function ToastFromContext() {
-	const [ctx] = ToastCtx.use()
-	return <Toast {...ctx} />
+	const [Store] = ToastStore.use()
+	return <Toast {...Store} />
 }
 
 export interface ToastProps {

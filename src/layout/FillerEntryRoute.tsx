@@ -1,14 +1,14 @@
 import { h } from 'preact'
 
 import qs from '~/lib/queryStrings'
-import {PageMetaCtx, RouteType} from '~/lib/router'
+import {PageMetaStore, RouteType} from '~/lib/router'
 
 import PaddedPage from './components/PaddedPage'
 import Section from './components/Section'
 
 export default function FillerEntryFactory({ route }: { route: RouteType }) {
 	const {id} = qs.parse<Record<string,string>>()
-	PageMetaCtx.set({ title: id })
+	PageMetaStore.value = { title: id }
 	return <PaddedPage>
 		<Section header1={id} backButton={route.hasBack}>
 			<p>Nancy was a mighty fine person.</p>

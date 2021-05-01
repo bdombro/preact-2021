@@ -1,8 +1,6 @@
 import { Fragment as F, h } from 'preact'
 import { useCallback } from 'preact/hooks'
 
-import { AuthCtx, ToastCtx } from '~/App.context'
-import { Roles } from '~/App.context'
 import { Logo } from '~/layout/components/Logo'
 import { getEnumFromClassInstance } from '~/lib/enums.iso'
 import { BooleanField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
@@ -11,10 +9,12 @@ import { nav } from '~/lib/router'
 import styled from '~/lib/styled'
 import { assertAttrsWithin, assertValid, assertValidSet } from '~/lib/validation.iso'
 import { Paths } from '~/routes'
+import { AuthStore, ToastStore } from '~/stores'
+import { Roles } from '~/stores'
 
 export default function Login() {
 	const { from } = qs.parse()
-	const [auth] = AuthCtx.use()
+	const [auth] = AuthStore.use()
 	const Form = useForm()
 	const onSubmit = useCallback(_onSubmit, [])
 	
@@ -60,9 +60,9 @@ export default function Login() {
 
 	async function _onSubmit(formValues: FormValues) {
 		const values = new LoginProps(formValues)
-		if (values.asAdmin) AuthCtx.loginAsAdmin()
-		else AuthCtx.loginAsTenant()
-		ToastCtx.set({ message: 'Welcome to Stacks!', location: 'right' })
+		if (values.asAdmin) AuthStore.loginAsAdmin()
+		else AuthStore.loginAsTenant()
+		ToastStore.value = { message: 'Welcome to Stacks!', location: 'right' }
 	}
 }
 const LoginDiv = styled.div`

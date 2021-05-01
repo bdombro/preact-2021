@@ -1,14 +1,14 @@
 import { h } from 'preact'
 import { useLayoutEffect } from 'preact/hooks'
 
-import { AuthCtx } from '~/App.context'
 import { routes } from '~/routes'
+import { AuthStore } from '~/stores'
 
 import { applyTheme, defaultTheme } from '../theme'
 import HeaderLayout from './HeaderLayout'
 
 export default function MarketingLayout({ children }: { children: any }) {
-	const [auth] = AuthCtx.use()
+	const [auth] = AuthStore.use()
 	useLayoutEffect(() => applyTheme(defaultTheme))
 	const loginNavLink = { ...(auth.id ? routes.Dashboard : routes.Login), isButton: true }
 	return (

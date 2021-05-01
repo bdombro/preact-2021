@@ -18,7 +18,7 @@ import { useEffect, useErrorBoundary, useLayoutEffect, useRef, useState } from '
 
 import { applyTheme, defaultTheme } from '~/layout/theme'
 
-import { createStateContext } from './createStateContext'
+import StateStore from './StateStore'
 import styled from './styled'
 
 class ForbiddenError extends Error { type = 'Forbidden' }
@@ -51,19 +51,15 @@ function RouterComponent(props: RouterProps) {
 	if (error) {
 		if (error instanceof ForbiddenError) {
 			const r = props.routesByPath['/forbidden'] || props.routesByPath['/notfound']
-			return <CtxProviders><BlankLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></BlankLayout></CtxProviders>
+			return <BlankLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></BlankLayout>
 		}
 		if (error instanceof NotFoundError) {
 			const r = props.routesByPath['/notfound']
-			return <CtxProviders><BlankLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></BlankLayout></CtxProviders>
+			return <BlankLayout><RouteWrapper><r.Component route={r} /></RouteWrapper></BlankLayout>
 		}
 		throw error
 	}
-	return (
-		<CtxProviders>
-			{isLayoutReady ? <Layout><RouterSwitch {...props} /></Layout> : <F />}
-		</CtxProviders>
-	)
+	return isLayoutReady ? <Layout><RouterSwitch {...props} /></Layout> : <F />
 
 	function watchLocation() {
 		onLocationChange()
@@ -95,7 +91,7 @@ RouterComponent.isFirstRender = true
  */
 const stacks = new Map<string, any>()
 function RouterSwitch({ routesByPath }: RouterProps) {
-	const [_location] = LocationCtx.use()
+	const [_location] = LocationStore.use()
 	const r = routesByPath[_location.pathname] || routesByPath['/notfound']
 	setPageMeta(r)
 	let Stack = RouteWrapper
@@ -134,7 +130,7 @@ let RouteHistory: Record<string, number> = localStorage.getItem('RouteHistory') 
 setInterval(function _saveRouteHistory() { localStorage.setItem('RouteHistory', JSON.stringify(RouteHistory)) }, 2000)
 function RouteHistoryReset() { localStorage.removeItem('RouteHistory'); RouteHistory = {} }
 function RouteWrapper({ children }: any) {
-	const [_location] = LocationCtx.use()
+	const [_location] = LocationStore.use()
 	useEffect(handleEvents, [])
 	useLayoutEffect(function hide(){ ref.current.style.visibility = 'hidden' }, [_location])
 	useEffect(handleLocationChange, [_location])
@@ -187,7 +183,7 @@ function StackFactory(basePath: string) {
 	}
 
 	return function StackHandler({ children }: any) {
-		const [_location] = LocationCtx.use()
+		const [_location] = LocationStore.use()
 		useLayoutEffect(function hide(){ ref.current.style.visibility = 'hidden' }, [_location])
 		useEffect(handleStackEvents, [])
 		useEffect(handleNavChange, [_location])
@@ -426,32 +422,22 @@ const setPageMeta = (function createSetPageMeta() {
 
 
 /**
- * LocationCtx.use: A hook to watch location
- * Inspired by https://github.com/molefrog/wouter's LocationCtx.use hook
+ * LocationStore.use: A hook to watch location
+ * Inspired by https://github.com/molefrog/wouter's LocationStore.use hook
  */
 interface LocationType { pathname: string, search: string }
-const LocationCtx = createStateContext({ pathname: location.pathname, search: location.search }, {useHookIsReadOnly: true})
-navListener(() => LocationCtx.set({ pathname: location.pathname, search: location.search }))
+const LocationStore = new StateStore({ pathname: location.pathname, search: location.search })
+navListener(() => LocationStore.setValue({ pathname: location.pathname, search: location.search}))
 
 
-const PageMetaCtx = createStateContext<SetPageMetaProps>({ title: '' })
-PageMetaCtx.subscribe(setPageMeta)
-
-export function CtxProviders({ children }: { children: ComponentChildren }) {
-	return (
-		<LocationCtx.Provider>
-			<PageMetaCtx.Provider>
-				{children}
-			</PageMetaCtx.Provider>
-		</LocationCtx.Provider>
-	)
-}
+const PageMetaStore = new StateStore<SetPageMetaProps>({ title: '' })
+PageMetaStore.subscribe(setPageMeta)
 
 /**
  * interceptNavEvents: Intercept changes in navigation to dispatch
  * events and prevent default
  */
-(function interceptNavEvents() {
+;(function interceptNavEvents() {
 	document.body.addEventListener('click', function linkIntercepter(e: any) {
 		const ln = findLinkTagInParents(e.target) // aka linkNode
 
@@ -510,11 +496,11 @@ export {
 	BlankLayout,
 	Content,
 	ForbiddenError,
-	LocationCtx,
+	LocationStore,
 	nav,
 	navListener,
 	NotFoundError,
-	PageMetaCtx,
+	PageMetaStore,
 	PassThrough,
 	Redirect,
 	RouteFactory,

@@ -1,8 +1,8 @@
 import { Fragment, h } from 'preact'
 
-import { ToastCtx } from '~/App.context'
 import type { RouteType } from '~/lib/router'
 import styled from '~/lib/styled'
+import { ToastStore } from '~/stores'
 
 import CmsTable from './components/CmsTable'
 import PaddedPage from './components/PaddedPage'
@@ -35,7 +35,7 @@ export default function FillerListFactory({ route }: { route: RouteType }) {
 					{ title: 'Administrator', count: 16 },
 				]}
 				bulkOptions={[
-					{ title: 'Delete', cb(selection) { ToastCtx.set({ message: `Deleted ${selection.length} items`, icon: 'success', location: 'right' }) } }
+					{ title: 'Delete', cb(selection) { ToastStore.value = { message: `Deleted ${selection.length} items`, icon: 'success', location: 'right' } } }
 				]}
 				pages={4}
 				total={16}

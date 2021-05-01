@@ -1,14 +1,14 @@
 import { Fragment as F, FunctionalComponent, h } from 'preact'
 
-import { SidebarRightCtx } from '~/App.context'
 import NavLink from '~/layout/components/SidebarNavLink'
 import styled from '~/lib/styled'
+import { SidebarRightStore } from '~/stores'
 
 import type { NavLinks } from '../types'
 import { Logo } from './Logo'
 
 export default function SidebarRight({ navLinks }: { navLinks: NavLinks }) {
-	const [isActive] = SidebarRightCtx.use()
+	const [isActive] = SidebarRightStore.use()
 	return isActive ? (
 		<SidebarDiv>
 			<Logo size={2} class='logo' />

@@ -1,9 +1,9 @@
 import { ComponentChildren, h } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 
-import { ThemeCtx } from '~/App.context'
 import {useMedia} from '~/lib/hooks'
 import styled from '~/lib/styled'
+import { ThemeStore } from '~/stores'
 
 import BottomNav from '../components/BottomNav'
 import Navbar, { SearchOption } from '../components/Navbar'
@@ -24,7 +24,7 @@ export default function SidebarLayout(p: {
 	const ref = useRef<any>(null)
 	useEffect(listenForThemeToggle, [])
 	return (
-		<SidebarLayoutDiv ref={ref} class={ThemeCtx.get() === 'dark' ? 'dark' : ''}>
+		<SidebarLayoutDiv ref={ref} class={ThemeStore.value === 'dark' ? 'dark' : ''}>
 			{isWide && <Navbar sidebarLeft navLinks={p.topLinks} searchOptions={p.searchOptions} />}
 			{isWide && <Sidebar navLinks={p.leftLinks} />}
 			<SidebarRight navLinks={p.rightLinks} />
@@ -35,9 +35,9 @@ export default function SidebarLayout(p: {
 		</SidebarLayoutDiv>
 	)
 
-	// Use passive listeners instead of ThemeCtx.use, to avoid unnecessary re-renders
+	// Use passive listeners instead of ThemeStore.use, to avoid unnecessary re-renders
 	function listenForThemeToggle() {
-		return ThemeCtx.subscribe(function _toggle() {
+		return ThemeStore.subscribe(function _toggle() {
 			const cl = ref.current.base.classList
 			if (cl.contains('dark')) cl.remove('dark')
 			else cl.add('dark')

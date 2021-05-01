@@ -8,7 +8,7 @@ import * as i from '~/lib/icons'
 import lazy from '~/lib/lazy'
 import { nav, PassThrough, Redirect, RouteFactory } from '~/lib/router'
 
-import { AuthCtx } from './App.context'
+import { AuthStore } from './stores'
 
 const LoginLayout = lazy(() => import('~/layout/layout/LoginLayout'))
 const AdminLayout = lazy(() => import('~/layout/layout/AdminLayout'))
@@ -90,10 +90,10 @@ export const routes = Object.freeze({
 		Icon: i.Counter,
 		path: '/dashboard',
 		Component: () => {
-			const [auth] = AuthCtx.use()
-			if (auth.roles?.includes(AuthCtx.roles.admin))
+			const [auth] = AuthStore.use()
+			if (auth.roles?.includes(AuthStore.roles.admin))
 				nav(Paths.AdminRoot, { replace: true })
-			else if (auth.roles?.includes(AuthCtx.roles.tenant))
+			else if (auth.roles?.includes(AuthStore.roles.tenant))
 				nav(Paths.TenantRoot, { replace: true })
 			else
 				nav(Paths.Login)
@@ -393,5 +393,5 @@ export const routesByPath = Object.fromEntries(Object.values(routes).map(r => [r
 export const Paths: Record<keyof typeof routes, string> = Object.fromEntries(Object.entries(routes).map(([name, r]) => [name, r.path]))
 
 
-function isAdmin() { return AuthCtx.get().roles.includes(AuthCtx.roles.admin) }
-function isTenant() { return AuthCtx.get().roles.includes(AuthCtx.roles.tenant)}
+function isAdmin() { return AuthStore.value.roles.includes(AuthStore.roles.admin) }
+function isTenant() { return AuthStore.value.roles.includes(AuthStore.roles.tenant)}

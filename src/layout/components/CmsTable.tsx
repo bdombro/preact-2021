@@ -1,15 +1,15 @@
 import { ComponentChildren, Fragment, h } from 'preact'
 import { useCallback, useLayoutEffect, useState } from 'preact/hooks'
 
-import { ToastCtx } from '~/App.context'
 import OpenMap, { MapMarker } from '~/layout/components/Map'
 import {Checkbox} from '~/lib/forms'
 import { useMedia, UseSet, useSet } from '~/lib/hooks'
 import * as i from '~/lib/icons'
 import qs from '~/lib/queryStrings'
-import { LocationCtx, nav } from '~/lib/router'
+import { LocationStore, nav } from '~/lib/router'
 import styled from '~/lib/styled'
 import { routesByPath } from '~/routes'
+import { ToastStore } from '~/stores'
 
 interface CmsTableProps {
 	cols: { title: string, sortable?: boolean, sortDefault?: 'asc' | 'desc' }[]
@@ -22,7 +22,7 @@ interface CmsTableProps {
 }
 type CmsRow = ComponentChildren[]
 export default function CmsTable(p: CmsTableProps) {
-	const [_location] = LocationCtx.use()
+	const [_location] = LocationStore.use()
 	const checked = useSet<CmsRow>()
 	useLayoutEffect(() => checked.reset(), [_location])
 	const q = qs.parse()
@@ -102,7 +102,7 @@ function SearchForm() {
 	function _onSubmit(e: any) {
 		const next = new FormData(e.target).get('search')
 		if (next === (q.search || ''))
-			ToastCtx.set({ message: 'Search query hasn\'t changed', icon: 'error', location: 'bottom' })
+			ToastStore.value = { message: 'Search query hasn\'t changed', icon: 'error', location: 'bottom' }
 		else
 			nav(qs.create({ search: next ? next : undefined, page: undefined }, { upsert: true }), {replace: true})
 	}
@@ -201,7 +201,7 @@ function PageButton(p: Pick<CmsTableProps, 'pages'> & { title: string, page: num
 	function _onClick(e: any) {
 		if (p.pageTo === p.page) {
 			e.preventDefault()
-			ToastCtx.set({ message: `You're already on the ${p.pageTo === 1 ? 'first' : 'last'} page`, icon: 'error', location: 'bottom' })
+			ToastStore.value = { message: `You're already on the ${p.pageTo === 1 ? 'first' : 'last'} page`, icon: 'error', location: 'bottom' }
 		}
 	}
 }
@@ -219,8 +219,8 @@ function BulkActionsForm(p: Pick<CmsTableProps, 'bulkOptions'> & { checked: UseS
 	</BulkActionsFormDiv>
 
 	function _onClick() {
-		if (action === '-1') return ToastCtx.set({ message: 'No action selected', icon: 'error', location: 'bottom' })
-		if (!p.checked.size) return ToastCtx.set({ message: 'No rows selected', icon: 'error', location: 'bottom' })
+		if (action === '-1') return ToastStore.setValue({ message: 'No action selected', icon: 'error', location: 'bottom' })
+		if (!p.checked.size) return ToastStore.setValue({ message: 'No rows selected', icon: 'error', location: 'bottom' })
 		p.bulkOptions?.find(o => o.title === action)!.cb([...p.checked.current])
 		p.checked.reset()
 	}

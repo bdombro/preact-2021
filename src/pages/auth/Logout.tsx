@@ -1,12 +1,12 @@
 import { h } from 'preact'
 import { useEffect } from 'preact/hooks'
 
-import { AuthCtx } from '~/App.context'
+import { AuthStore } from '~/stores'
 
 
 export default function Logout() {
 	useEffect(() => {
-		AuthCtx.logout()
+		AuthStore.logout()
 	}, [])
 	return <div/>
 }

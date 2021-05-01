@@ -1,16 +1,16 @@
 import {h} from 'preact'
 
-import { AuthCtx, Roles } from '~/App.context'
 import PaddedPage from '~/layout/components/PaddedPage'
 import Section from '~/layout/components/Section'
 import styled from '~/lib/styled'
 import { Paths } from '~/routes'
+import { AuthStore, Roles } from '~/stores'
 
 // Further copy the styles of https://account.zenmate.com/en_US/account, especially the form inputs.
 
 
 export default function Account() {
-	const [auth] = AuthCtx.use()
+	const [auth] = AuthStore.use()
 	return <PaddedPage>
 		<Section header1="Account Settings">
 			user form here
