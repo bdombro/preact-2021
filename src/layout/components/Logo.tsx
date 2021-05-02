@@ -1,7 +1,7 @@
 import {h} from 'preact'
 import { useState } from 'preact/hooks'
 
-import styled from '~/lib/styled'
+import styled from '#src/lib/styled'
 
 import { currentTheme } from '../theme'
 

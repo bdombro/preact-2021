@@ -1,16 +1,16 @@
 import { Fragment as F, h } from 'preact'
 import { useCallback } from 'preact/hooks'
 
-import { Logo } from '~/layout/components/Logo'
-import { getEnumFromClassInstance } from '~/lib/enums.iso'
-import { BooleanField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
-import qs from '~/lib/queryStrings'
-import { nav } from '~/lib/router'
-import styled from '~/lib/styled'
-import { assertAttrsWithin, assertValid, assertValidSet } from '~/lib/validation.iso'
-import { Paths } from '~/routes'
-import { AuthStore, ToastStore } from '~/stores'
-import { Roles } from '~/stores'
+import { Logo } from '#src/layout/components/Logo'
+import { getEnumFromClassInstance } from '#src/lib/enums.iso'
+import { BooleanField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '#src/lib/forms'
+import qs from '#src/lib/queryStrings'
+import { nav } from '#src/lib/router'
+import styled from '#src/lib/styled'
+import { assertAttrsWithin, assertValid, assertValidSet } from '#src/lib/validation.iso'
+import { Paths } from '#src/routes'
+import { AuthStore, ToastStore } from '#src/stores'
+import { Roles } from '#src/stores'
 
 export default function Login() {
 	const { from } = qs.parse()

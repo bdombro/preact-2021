@@ -1,6 +1,6 @@
 import { Fragment as F, h } from 'preact'
 
-import { Paths } from '~/routes'
+import { Paths } from '#src/routes'
 
 export default function ForgotPassword() {
 	const search = new URLSearchParams(location.search)

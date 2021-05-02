@@ -1,7 +1,7 @@
 import {h} from 'preact'
 
-import {Auth} from '~/lib/icons'
-import styled from '~/lib/styled'
+import {Auth} from '#src/lib/icons'
+import styled from '#src/lib/styled'
 
 
 export default function Forbidden() {

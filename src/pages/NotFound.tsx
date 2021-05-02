@@ -1,8 +1,8 @@
 import {h} from 'preact'
 
-import {MapPin} from '~/lib/icons'
-import {setPageMeta} from '~/lib/router'
-import styled from '~/lib/styled'
+import {MapPin} from '#src/lib/icons'
+import {setPageMeta} from '#src/lib/router'
+import styled from '#src/lib/styled'
 
 export default function NotFound() {
 	return <NotFoundDiv>

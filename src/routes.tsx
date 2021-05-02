@@ -1,19 +1,19 @@
 import {h} from 'preact'
 
-import FillerCreateRoute from '~/layout/FillerCreateRoute'
-import FillerEntryRoute from '~/layout/FillerEntryRoute'
-import FillerListRoute from '~/layout/FillerListRoute'
-import FillerPageRoute from '~/layout/FillerPageRoute'
-import * as i from '~/lib/icons'
-import lazy from '~/lib/lazy'
-import { nav, PassThrough, Redirect, RouteFactory } from '~/lib/router'
+import FillerCreateRoute from '#src/layout/FillerCreateRoute'
+import FillerEntryRoute from '#src/layout/FillerEntryRoute'
+import FillerListRoute from '#src/layout/FillerListRoute'
+import FillerPageRoute from '#src/layout/FillerPageRoute'
+import * as i from '#src/lib/icons'
+import lazy from '#src/lib/lazy'
+import { nav, PassThrough, Redirect, RouteFactory } from '#src/lib/router'
 
 import { AuthStore } from './stores'
 
-const LoginLayout = lazy(() => import('~/layout/layout/LoginLayout'))
-const AdminLayout = lazy(() => import('~/layout/layout/AdminLayout'))
-const TenantLayout = lazy(() => import('~/layout/layout/TenantLayout'))
-const MarketingLayout = lazy(() => import('~/layout/layout/MarketingLayout'))
+const LoginLayout = lazy(() => import('#src/layout/layout/LoginLayout'))
+const AdminLayout = lazy(() => import('#src/layout/layout/AdminLayout'))
+const TenantLayout = lazy(() => import('#src/layout/layout/TenantLayout'))
+const MarketingLayout = lazy(() => import('#src/layout/layout/MarketingLayout'))
 
 export const routes = Object.freeze({
 
@@ -50,7 +50,7 @@ export const routes = Object.freeze({
 	Forbidden: RouteFactory({
 		title: 'Forbidden',
 		path: '/forbidden',
-		Component: lazy(() => import('~/pages/auth/Forbidden')),
+		Component: lazy(() => import('#src/pages/auth/Forbidden')),
 	}),
 
 
@@ -383,7 +383,7 @@ export const routes = Object.freeze({
 	NotFound: RouteFactory({
 		title: '404 Not Found',
 		path: '/notfound',
-		Component: lazy(() => import('~/pages/NotFound')),
+		Component: lazy(() => import('#src/pages/NotFound')),
 	}),
 } as const)
 

@@ -1,10 +1,10 @@
 import {h} from 'preact'
 
-import PaddedPage from '~/layout/components/PaddedPage'
-import Section from '~/layout/components/Section'
-import styled from '~/lib/styled'
-import { Paths } from '~/routes'
-import { AuthStore, Roles } from '~/stores'
+import PaddedPage from '#src/layout/components/PaddedPage'
+import Section from '#src/layout/components/Section'
+import styled from '#src/lib/styled'
+import { Paths } from '#src/routes'
+import { AuthStore, Roles } from '#src/stores'
 
 // Further copy the styles of https://account.zenmate.com/en_US/account, especially the form inputs.
 

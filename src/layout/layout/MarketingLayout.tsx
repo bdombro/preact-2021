@@ -1,8 +1,8 @@
 import { h } from 'preact'
 import { useLayoutEffect } from 'preact/hooks'
 
-import { routes } from '~/routes'
-import { AuthStore } from '~/stores'
+import { routes } from '#src/routes'
+import { AuthStore } from '#src/stores'
 
 import { applyTheme, defaultTheme } from '../theme'
 import HeaderLayout from './HeaderLayout'

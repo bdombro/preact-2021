@@ -1,9 +1,9 @@
 import { h } from 'preact'
 
-import NavLink from '~/layout/components/SidebarNavLink'
-import * as i from '~/lib/icons'
-import styled from '~/lib/styled'
-import { AuthStore, Roles, SidebarLeftStore } from '~/stores'
+import NavLink from '#src/layout/components/SidebarNavLink'
+import * as i from '#src/lib/icons'
+import styled from '#src/lib/styled'
+import { AuthStore, Roles, SidebarLeftStore } from '#src/stores'
 
 import type { NavLinks } from '../types'
 

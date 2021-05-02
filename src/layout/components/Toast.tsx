@@ -1,9 +1,9 @@
 import {ComponentChildren, h} from 'preact'
 import { useEffect, useLayoutEffect, useRef } from 'preact/hooks'
 
-import * as i from '~/lib/icons'
-import styled from '~/lib/styled'
-import { ToastStore } from '~/stores'
+import * as i from '#src/lib/icons'
+import styled from '#src/lib/styled'
+import { ToastStore } from '#src/stores'
 
 const timeouts = new Set<any>()
 

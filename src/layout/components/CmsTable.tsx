@@ -1,15 +1,15 @@
 import { ComponentChildren, Fragment, h } from 'preact'
 import { useCallback, useLayoutEffect, useState } from 'preact/hooks'
 
-import OpenMap, { MapMarker } from '~/layout/components/Map'
-import {Checkbox} from '~/lib/forms'
-import { useMedia, UseSet, useSet } from '~/lib/hooks'
-import * as i from '~/lib/icons'
-import qs from '~/lib/queryStrings'
-import { LocationStore, nav } from '~/lib/router'
-import styled from '~/lib/styled'
-import { routesByPath } from '~/routes'
-import { ToastStore } from '~/stores'
+import OpenMap, { MapMarker } from '#src/layout/components/Map'
+import {Checkbox} from '#src/lib/forms'
+import { useMedia, UseSet, useSet } from '#src/lib/hooks'
+import * as i from '#src/lib/icons'
+import qs from '#src/lib/queryStrings'
+import { LocationStore, nav } from '#src/lib/router'
+import styled from '#src/lib/styled'
+import { routesByPath } from '#src/routes'
+import { ToastStore } from '#src/stores'
 
 interface CmsTableProps {
 	cols: { title: string, sortable?: boolean, sortDefault?: 'asc' | 'desc' }[]

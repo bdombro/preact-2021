@@ -1,8 +1,8 @@
 import { FunctionalComponent, h } from 'preact'
 
-import * as i from '~/lib/icons'
-import {LocationStore} from '~/lib/router'
-import styled from '~/lib/styled'
+import * as i from '#src/lib/icons'
+import {LocationStore} from '#src/lib/router'
+import styled from '#src/lib/styled'
 
 interface NavLinkProps { path: string, title: string, Icon?: FunctionalComponent }
 

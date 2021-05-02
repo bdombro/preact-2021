@@ -1,11 +1,11 @@
 import { Fragment as F, h } from 'preact'
 import { useCallback } from 'preact/hooks'
 
-import { getEnumFromClassInstance } from '~/lib/enums.iso'
-import { ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '~/lib/forms'
-import { nav, RouteType } from '~/lib/router'
-import { assertAttrsWithin, assertValid, assertValidSet } from '~/lib/validation.iso'
-import { ToastStore } from '~/stores'
+import { getEnumFromClassInstance } from '#src/lib/enums.iso'
+import { ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '#src/lib/forms'
+import { nav, RouteType } from '#src/lib/router'
+import { assertAttrsWithin, assertValid, assertValidSet } from '#src/lib/validation.iso'
+import { ToastStore } from '#src/stores'
 
 import BackButton from './components/BackButton'
 import PaddedPage from './components/PaddedPage'
