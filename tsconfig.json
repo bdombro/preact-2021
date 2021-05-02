@@ -11,6 +11,8 @@
     "paths": {
       // If you configured any Snowpack aliases, add them here.
       "#src/*": ["src/*"],
+			"#lib/*": ["src/lib/*"],
+			"#lay/*": ["src/layout/*"],
       // Add this line to get types for streaming imports (packageOptions.source="remote"):
       "*": [".snowpack/types/*"]
       // More info: https://www.snowpack.dev/guides/streaming-imports

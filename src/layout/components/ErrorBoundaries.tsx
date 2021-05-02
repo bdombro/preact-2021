@@ -1,7 +1,7 @@
 import { ComponentChildren, Fragment as F, h } from 'preact'
 import { useEffect, useErrorBoundary, useState } from 'preact/hooks'
 
-import styled from '#src/lib/styled'
+import styled from '#lib/styled'
 
 import Toast from './Toast'
 

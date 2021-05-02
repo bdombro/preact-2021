@@ -4,10 +4,10 @@ import EmptyPath from 'mdi-paths-split/CheckboxBlankOutline'
 import MarkedPath from 'mdi-paths-split/CheckboxMarked'
 import {ComponentChildren, Fragment as F,FunctionalComponent,h} from 'preact'
 
-import { useCallback, useState, useUpdateEffect } from '#src/lib/hooks'
-import { IconSvg } from '#src/lib/icons'
-import styled from '#src/lib/styled'
-import { ValidationErrorSet } from '#src/lib/validation.iso'
+import { useCallback, useState, useUpdateEffect } from '#lib/hooks'
+import { IconSvg } from '#lib/icons'
+import styled from '#lib/styled'
+import { ValidationErrorSet } from '#lib/validation.iso'
 
 import { useMountedState } from './hooks'
 

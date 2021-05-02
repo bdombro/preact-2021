@@ -1,9 +1,9 @@
 import { FunctionalComponent, h } from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
-import * as i from '#src/lib/icons'
-import {LocationStore} from '#src/lib/router'
-import styled from '#src/lib/styled'
+import * as i from '#lib/icons'
+import {LocationStore} from '#lib/router'
+import styled from '#lib/styled'
 import { SidebarRightStore } from '#src/stores'
 
 import type { NavLinkProps, NavLinks } from '../types'

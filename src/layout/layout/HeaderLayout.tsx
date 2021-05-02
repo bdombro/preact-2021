@@ -1,6 +1,6 @@
 import { ComponentChildren, h } from 'preact'
 
-import styled from '#src/lib/styled'
+import styled from '#lib/styled'
 
 import Navbar from '../components/Navbar'
 import RoundedContent from '../components/RoundedContent'

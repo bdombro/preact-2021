@@ -1,8 +1,8 @@
 import { h } from 'preact'
 import { useLayoutEffect } from 'preact/hooks'
 
-import SidebarLayout from '#src/layout/layout/SidebarLayout'
-import * as i from '#src/lib/icons'
+import SidebarLayout from '#lay/layout/SidebarLayout'
+import * as i from '#lib/icons'
 import { Paths, routes } from '#src/routes'
 import { ThemeStore } from '#src/stores'
 

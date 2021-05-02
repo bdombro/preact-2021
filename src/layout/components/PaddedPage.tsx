@@ -1,4 +1,4 @@
-import styled from '#src/lib/styled'
+import styled from '#lib/styled'
 
 export default styled.div`
 	:root

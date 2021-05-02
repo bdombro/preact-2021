@@ -1,7 +1,7 @@
 import { Fragment, h } from 'preact'
 
-import type { RouteType } from '#src/lib/router'
-import styled from '#src/lib/styled'
+import type { RouteType } from '#lib/router'
+import styled from '#lib/styled'
 import { ToastStore } from '#src/stores'
 
 import CmsTable from './components/CmsTable'

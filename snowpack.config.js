@@ -38,6 +38,8 @@ module.exports = {
 		sourcemap: !isProd,
 	},
 	alias: {
-		'#src': './src'
+		'#src': './src',
+		'#lib': './src/lib',
+		'#lay': './src/layout',
 	}
 }

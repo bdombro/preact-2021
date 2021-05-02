@@ -1,19 +1,19 @@
 import {h} from 'preact'
 
-import FillerCreateRoute from '#src/layout/FillerCreateRoute'
-import FillerEntryRoute from '#src/layout/FillerEntryRoute'
-import FillerListRoute from '#src/layout/FillerListRoute'
-import FillerPageRoute from '#src/layout/FillerPageRoute'
-import * as i from '#src/lib/icons'
-import lazy from '#src/lib/lazy'
-import { nav, PassThrough, Redirect, RouteFactory } from '#src/lib/router'
+import FillerCreateRoute from '#lay/FillerCreateRoute'
+import FillerEntryRoute from '#lay/FillerEntryRoute'
+import FillerListRoute from '#lay/FillerListRoute'
+import FillerPageRoute from '#lay/FillerPageRoute'
+import * as i from '#lib/icons'
+import lazy from '#lib/lazy'
+import { nav, PassThrough, Redirect, RouteFactory } from '#lib/router'
 
 import { AuthStore } from './stores'
 
-const LoginLayout = lazy(() => import('#src/layout/layout/LoginLayout'))
-const AdminLayout = lazy(() => import('#src/layout/layout/AdminLayout'))
-const TenantLayout = lazy(() => import('#src/layout/layout/TenantLayout'))
-const MarketingLayout = lazy(() => import('#src/layout/layout/MarketingLayout'))
+const LoginLayout = lazy(() => import('#lay/layout/LoginLayout'))
+const AdminLayout = lazy(() => import('#lay/layout/AdminLayout'))
+const TenantLayout = lazy(() => import('#lay/layout/TenantLayout'))
+const MarketingLayout = lazy(() => import('#lay/layout/MarketingLayout'))
 
 export const routes = Object.freeze({
 

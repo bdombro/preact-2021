@@ -1,8 +1,8 @@
 import { ComponentChildren, h } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 
-import {useMedia} from '#src/lib/hooks'
-import styled from '#src/lib/styled'
+import {useMedia} from '#lib/hooks'
+import styled from '#lib/styled'
 import { ThemeStore } from '#src/stores'
 
 import BottomNav from '../components/BottomNav'

@@ -1,12 +1,12 @@
-import '#src/lib/forms'
+import '#lib/forms'
 
 import { h } from 'preact'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
-import {useMedia} from '#src/lib/hooks'
-import * as i from '#src/lib/icons'
-import {LocationStore, nav} from '#src/lib/router'
-import styled from '#src/lib/styled'
+import {useMedia} from '#lib/hooks'
+import * as i from '#lib/icons'
+import {LocationStore, nav} from '#lib/router'
+import styled from '#lib/styled'
 import { Paths } from '#src/routes'
 import { SidebarRightStore } from '#src/stores'
 

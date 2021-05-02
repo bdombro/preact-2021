@@ -1,8 +1,8 @@
 import {h} from 'preact'
 
-import PaddedPage from '#src/layout/components/PaddedPage'
-import Section from '#src/layout/components/Section'
-import styled from '#src/lib/styled'
+import PaddedPage from '#lay/components/PaddedPage'
+import Section from '#lay/components/Section'
+import styled from '#lib/styled'
 import { Paths } from '#src/routes'
 import { AuthStore, Roles } from '#src/stores'
 
