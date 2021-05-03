@@ -6,23 +6,20 @@
   "license": "ISC",
   "scripts": {
     "dev": "snowpack dev --secure",
-    "build": "snowpack build && workbox generateSW && date > build/buildTime.txt",
+    "//build:hint": "must mv lib out of public to avoid adding hashes to the filenames",
+    "build": "mv public/lib . && NODE_ENV=production snowpack build && cp -r lib build && mv lib public && workbox generateSW && date > build/buildTime.txt",
     "start": "ts-node --project server.tsconfig.json --transpile-only server.ts",
     "test": "web-test-runner \"src/**/*.test.tsx\"",
     "validate": "yarn lint && tsc",
-    "lint": "eslint --cache --ext .ts,.tsx src server.ts"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint"
-    }
+    "lint": "eslint --cache --ext .ts,.tsx src server.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "fastify": "^3.10.1",
     "fastify-caching": "^6.0.1",
     "fastify-compress": "^3.4.1",
     "fastify-static": "^3.4.0",
-		"ts-node": "^9.1.1"
+    "ts-node": "^9.1.1"
   },
   "devDependencies": {
     "@prefresh/snowpack": "^3.1.0",
@@ -36,11 +33,11 @@
     "chai": "^4.2.0",
     "eslint": "^7.18.0",
     "eslint-plugin-simple-import-sort": "^6.0.1",
-    "husky": "^4.3.8",
+    "husky": "^6.0.0",
     "mdi-paths-split": "^5.9.55",
     "preact": "^10.5.12",
     "snowpack": "^3.0.11",
-    "snowpack-plugin-hash": "^0.14.2",
+    "snowpack-plugin-hash": "^0.16.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.0.3",
     "workbox-cli": "^6.0.2"
