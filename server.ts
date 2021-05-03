@@ -1,5 +1,4 @@
 import Fastify from 'fastify'
-import compressPlugin from 'fastify-compress'
 import staticPlugin from 'fastify-static'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -26,8 +25,6 @@ async function main() {
 			https: { allowHTTP1: true, key: sslKey, cert: sslCert },
 		} : {}
 	})
-
-	fastify.register(compressPlugin)
 
 	fastify.register(staticPlugin, { root: buildRoot, maxAge: '30d' })
 	fastify.setNotFoundHandler((req, reply) => { reply.type('text/html').send(notFoundHtml) })
