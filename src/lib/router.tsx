@@ -74,17 +74,11 @@ function RouterComponent(props: RouterProps) {
 				Next = match.Layout
 			if (Layout !== Next)
 				setLayout(() => Next)
-
-			// Reset the errors if location changes, skipping the initial site load
-			if (!RouterComponent.isFirstRender) resetError()
-			else {
-				setIsLayoutReady(true)
-				RouterComponent.isFirstRender = false
-			}
+			
+			setIsLayoutReady(true)
 		}
 	}
 }
-RouterComponent.isFirstRender = true
 
 /**
  * RouterSwitch: Switches routes based on current url and also checks access control
@@ -379,7 +373,7 @@ const setPageMeta = (function createSetPageMeta() {
 		orig: string
 		set: (val: string) => void
 		constructor(getter: () => Element) {
-			this.get = () => getter().getAttribute('content')!
+			this.get = () => getter().getAttribute('content') || ''
 			this.set = (v: string) => getter().setAttribute('content', v)
 			this.orig = this.get()
 		}
@@ -389,7 +383,7 @@ const setPageMeta = (function createSetPageMeta() {
 		}
 	}
 	const getLink = () => find('link[rel="canonical"]')! as any
-	const siteName = byProp('og:site_name').getAttribute('content')!
+	const siteName = byProp('og:site_name').getAttribute('content') || ''
 	const author = new MetaClass(() => byName('author'))
 	const ogTitle = new MetaClass(() => byProp('og:title'))
 	const locale = new MetaClass(() => byProp('og:locale'))
@@ -398,9 +392,15 @@ const setPageMeta = (function createSetPageMeta() {
 	const ogUrl = new MetaClass(() => byProp('og:url'))
 	const ogSiteName = new MetaClass(() => byProp('og:site_name'))
 	const ogImage = new MetaClass(() => byProp('og:image'))
+	
 	function byName(name: string) { return find(`meta[name="${name}"]`) }
 	function byProp(prop: string) { return find(`meta[property="${prop}"]`) }
-	function find(selector: string) { return document.head.querySelector(selector)! }
+	function find(selector: string) { 
+		return (
+			document.head.querySelector(selector)
+			|| {getAttribute: (n:string) => '', setAttribute: (n:string,v:string) => null} as unknown as Element
+		)
+	}
 
 	return function setPageMeta(p: SetPageMetaProps) {
 		const title = p.title ? `${p.title} - ${siteName}` : siteName

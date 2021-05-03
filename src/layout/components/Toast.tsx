@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useRef } from 'preact/hooks'
 
 import * as i from '#lib/icons'
 import styled from '#lib/styled'
+import { useMedia } from '#src/lib/hooks'
 import { ToastStore } from '#src/stores'
 
 const timeouts = new Set<any>()
@@ -21,6 +22,7 @@ export interface ToastProps {
 }
 export default function Toast(p: ToastProps) {
 	const ref = useRef<any>(null)
+	const isWide = useMedia('(min-width: 700px)')
 
 	let Icon = p.icon!
 	if (Icon === 'success') Icon = i.Success
@@ -29,6 +31,8 @@ export default function Toast(p: ToastProps) {
 	
 	useLayoutEffect(reset, [p])
 	useEffect(init, [p])
+
+	
 
 	return <ToastOuter class={`${p.location} _hidden ${typeof p.icon === 'string' ? p.icon : ''}`} ref={ref}>
 		<div>
@@ -76,32 +80,35 @@ const ToastOuter = styled.div`
 		position:absolute
 		z-index:100
 	:root.animatedIn
-		transition: right .06s linear
+		transition: right.06s linear
 	:root.animatedOut
 		transition: bottom .3s linear, right .2s linear, opacity .4s linear
 	:root.bottom
-		bottom: 10px
+		bottom:10px
 		left:0
 		width:100%
 		text-align:center
 	:root.bottom._hidden
 		bottom: -100px
 	:root.right
-		top: 60px
+		top:60px
 		right:10px
 		border-radius: 6px
+	@media (max-width: 700px)
+		:root.right
+			top:10px
 	:root.right._hidden
-		right: -330px
+		right:-330px
 	:root.center
-		top: 150px
+		top:150px
 		left:0
 		width:100%
 		text-align:center
 	:root.center._hidden
-		opacity: 0
+		opacity:0
 	:root>div
-		max-width: 330px
-		padding: 15px 20px
+		max-width:330px
+		padding:15px 20px
 		background:var(--primary)
 		display:inline-block
 		color:#fff

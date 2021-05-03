@@ -4,7 +4,7 @@ import EmptyPath from 'mdi-paths-split/CheckboxBlankOutline'
 import MarkedPath from 'mdi-paths-split/CheckboxMarked'
 import {ComponentChildren, Fragment as F,FunctionalComponent,h} from 'preact'
 
-import { useCallback, useState, useUpdateEffect } from '#lib/hooks'
+import { useCallback, useEffect, useInterval, useRef, useState, useUpdateEffect } from '#lib/hooks'
 import { IconSvg } from '#lib/icons'
 import styled from '#lib/styled'
 import { ValidationErrorSet } from '#lib/validation.iso'
@@ -16,26 +16,36 @@ import { useMountedState } from './hooks'
  * Note: Makes assumptions about server-side error handling
  */
 export function useForm(): UseFormReturn {
-	// Idea 1: Would be nice if we captured initial values and had an action to reset the form to initial values
-	// Could be done by gettng the values of form and saving them to state
 
 	const [state, setState] = useState(formDefaultState)
 	const FormComponentMemoized = useCallback(FormComponent, [])
+
+	const formRef = useRef<HTMLFormElement>(null)
+	let initialValues: FormJson = {}
 
 	return {
 		Component: FormComponentMemoized,
 		state,
 		resetState: () => setState(formDefaultState),
+		resetStateAndValues: () => {resetValues(); setState(formDefaultState)}
 	}
 
-	function FormComponent({ children, onSubmit, ...formProps }: UseFormComponentProps) {
+	function FormComponent({ children, onSubmit, onSubmitJson, ...formProps }: UseFormComponentProps) {
 		const isMounted = useMountedState()
-		return <Form onSubmit={onSubmitStateWrapper} {...formProps}>{children}</Form>
+		
+		const onSubmitP = onSubmit && (async (e: FormEvent) => onSubmit(e))
+		const onSubmitJsonP = onSubmitJson && (async (data: FormJson) => onSubmitJson(data))
 
-		async function onSubmitStateWrapper(formValues: FormValues) {
+		useEffect(() => {initialValues = formToJson(formRef.current)}, [])
+
+		return <Form onSubmit={onSubmitStateWrapper} {...formProps} forwardRef={formRef}>{children}</Form>
+
+		async function onSubmitStateWrapper(formEvent: FormEvent) {
 			setState(last => ({ ...last, submitting: true }))
 			try {
-				await onSubmit(formValues)
+				// TODO : Promisify onSubmits
+				if (onSubmitP) await onSubmitP(formEvent)
+				if (onSubmitJsonP) await onSubmitJsonP(formToJson(formEvent.target))
 				if (isMounted()) setState(last => ({ ...last, submitting: false, submitted: true, accepted: true, errors: {} }))
 			} catch (error) {
 				if (error instanceof ValidationErrorSet)
@@ -48,6 +58,15 @@ export function useForm(): UseFormReturn {
 					}))
 				else
 					setState(last => ({ ...last, submitting: false, submitted: true, errors: { form: error.message } }))
+			}
+		}
+	}
+
+	function resetValues() {
+		for (const e of formRef.current.elements as unknown as HTMLInputElement[]) {
+			if (e.type !== 'submit') {
+				if (e.type === 'checkbox') e.checked = initialValues[e.name] as boolean
+				else e.value = initialValues[e.name] as any
 			}
 		}
 	}
@@ -70,31 +89,41 @@ interface UseFormReturn {
   Component: FunctionalComponent<UseFormComponentProps>
   state: UseFormState
   resetState: () => void
+	resetStateAndValues: () => void
 }
 
 
 /**
  * A form with essential elements
  */
-export type FormValues = Record<string, string | string[] | number | number[] | boolean | boolean[]>
+interface FormEvent {
+	preventDefault(): null
+	target: HTMLFormElement
+}
+export type FormJson = Record<string, string | string[] | number | number[] | boolean | boolean[]>
 interface FormProps extends Omit<h.JSX.HTMLAttributes<HTMLFormElement>, 'onSubmit'> {
-  onSubmit: (formValues: FormValues) => Promise<any>
+  onSubmit?: (formEvent: FormEvent) => any
+  onSubmitJson?: (formValues: FormJson) => any
+	useFormDataApi?: boolean
+	reset?: () => void
+	forwardRef?: Ref<HTMLFormElement>
   children: ComponentChildren
 }
-export function Form({ onSubmit, children, class: className, ...formProps }: FormProps) {
+export function Form({ onSubmit, onSubmitJson, reset, children, class: className, ...formProps }: FormProps) {
 	return (
-		<FormDiv class={`form ${className}`} onSubmit={onSubmitInner} {...formProps}>
+		<FormForm class={`form ${className}`} onSubmit={onSubmitInner as any} {...formProps}>
 			{children}
-		</FormDiv>
+		</FormForm>
 	)
 
-	function onSubmitInner(formEvent: any) {
+	function onSubmitInner(formEvent: FormEvent) {
 		formEvent.preventDefault()
-		const formValues = formToValues(formEvent.target)
-		onSubmit(formValues)
+		// @ts-ignore: ignore onSubmit Binding this
+		if (onSubmit) onSubmit(formEvent)
+		if (onSubmitJson) onSubmitJson(formToJson(formEvent.target))
 	}
 }
-const FormDiv = styled.form`
+const FormForm = styled.form`
   :root .form-error
     color: var(--danger)
 `
@@ -102,16 +131,20 @@ const FormDiv = styled.form`
 /**
  * A text input with label and error handling
  */
-interface TextProps extends h.JSX.HTMLAttributes<HTMLInputElement> {
-  name: string;
-  labelText: string;
-  error?: string;
+type Ref<T> = { current: T }
+interface TextProps {
+  name: string
+  labelText: string
+  error?: string
+	disabled?: boolean
+	divProps?: h.JSX.HTMLAttributes<HTMLDivElement> & {forwardRef?: Ref<HTMLDivElement>}
+	inputProps: h.JSX.HTMLAttributes<HTMLInputElement> & {forwardRef?: Ref<HTMLInputElement>}
 }
-export function TextField({ name, labelText, error, type = 'text', class: className, ...inputProps }: TextProps) {
+export function TextField({ name, labelText, error, disabled, inputProps, divProps }: TextProps) {
 	return (
-		<TextFieldDiv class={className} data-error={!!error}>
+		<TextFieldDiv data-error={!!error} {...divProps}>
 			<label>{labelText}</label>
-			<input type={type} aria-label={labelText} name={name} {...inputProps} />
+			<input aria-label={labelText} name={name} {...inputProps} disabled={disabled}/>
 			<div class="error">{error}</div>
 		</TextFieldDiv>
 	)
@@ -122,12 +155,13 @@ const TextFieldDiv = styled.div`
 		position: relative
 		margin-bottom: 1.4rem
 	:root>label
-		padding: 1px
+		padding: 1px 3px
 		background: var(--white)
+		background: var(--input-background-color)
 		color: var(--gray8)
 		position: absolute
-		top: -7px
-		left: 5px
+		top: -9px
+		left: 8px
 		font-size: .7rem
   :root>input
     display: block
@@ -160,18 +194,35 @@ interface BooleanFieldProps {
   labelText: ComponentChildren
 	checkedLabelText?: ComponentChildren
   error?: string
-	divProps?: h.JSX.HTMLAttributes<HTMLDivElement>
+	divProps?: h.JSX.HTMLAttributes<HTMLDivElement> & {forwardRef?: Ref<HTMLDivElement>}
 	inputProps: CheckboxProps['inputProps']
 	type?: 'checkbox' | 'switch'
 }
 export function BooleanField(p: BooleanFieldProps) {
 	const [checked, setChecked] = useState(p.inputProps?.checked)
 	const toggleBox = useCallback(function _toggleBox() { setChecked(curr => !curr) }, [])
+	const ref = useRef<HTMLInputElement>(null)
+
+	// Keep the state in sync with dom
+	useInterval(() => {
+		if (ref.current && ref.current.checked !== checked)
+			setChecked(ref.current.checked)
+	}, 500)
+
 	const Input = p.type === 'switch' ? Switch : Checkbox
 	return (
-		<BooleanFieldDiv data-error={!!p.error} class={p.type} {...p.divProps} >
+		<BooleanFieldDiv data-error={!!p.error} class={p.type} {...p.divProps}>
 			<div>
-				<Input inputProps={{ ...p.inputProps, onClick: toggleBox, checked: checked }} hasError={!!p.error} />
+				<Input 
+					inputProps={{
+						...p.inputProps, 
+						onClick: toggleBox, 
+						checked: checked, 
+						value: 'true', 
+						forwardRef: p.inputProps.forwardRef || ref 
+					}} 
+					hasError={!!p.error} 
+				/>
 				<div class='label' onClick={toggleBox}>
 					{checked ? (p.checkedLabelText || p.labelText) : p.labelText}
 				</div>
@@ -202,8 +253,12 @@ const BooleanFieldDiv = styled.div`
  * Checkbox: A fancy wrapper for HTML Checkboxes, bc they are not style-able :-(
  */
 interface CheckboxProps {
-	divProps?: h.JSX.HTMLAttributes<HTMLDivElement>
-	inputProps: Omit<h.JSX.HTMLAttributes<HTMLInputElement>, 'name'> & { name: string, 'aria-label': string }
+	divProps?: h.JSX.HTMLAttributes<HTMLDivElement> & {forwardRef?: Ref<HTMLInputElement>}
+	inputProps: Omit<h.JSX.HTMLAttributes<HTMLInputElement>, 'name'> & {
+		name: string
+		'aria-label': string
+		forwardRef?: Ref<HTMLInputElement>
+	}
 	hasError?: boolean
 }
 export function Checkbox({ divProps = {}, inputProps, hasError }: CheckboxProps) {
@@ -211,10 +266,10 @@ export function Checkbox({ divProps = {}, inputProps, hasError }: CheckboxProps)
 	useUpdateEffect(function _pullDown() { setChecked(inputProps.checked || false) }, [inputProps.checked])
 	const onClick = useCallback(_onClick, [])
 	return (
-		<CheckboxDiv {...divProps} data-checked={checked} data-error={hasError}>
+		<CheckboxDiv {...divProps} ref={divProps.forwardRef} data-checked={checked} data-error={hasError}>
 			<IconSvg fill="var(--gray6)" class="marked" path={MarkedPath} />
 			<IconSvg fill="var(--gray4)" class="empty" path={EmptyPath} />
-			<input type="checkbox" {...inputProps} checked={checked} onClick={onClick} />
+			<input type="checkbox" {...inputProps} ref={inputProps.forwardRef} checked={checked} onClick={onClick} />
 		</CheckboxDiv>
 	)
 	function _onClick(e: any) {
@@ -255,12 +310,12 @@ export function Switch({ divProps = {}, inputProps, hasError }: CheckboxProps) {
 	useUpdateEffect(function _pullDown() { setChecked(inputProps.checked || false) }, [inputProps.checked])
 	const onClick = useCallback(_onClick, [])
 	return (
-		<SwitchDiv {...divProps} data-checked={checked} data-error={hasError}>
+		<SwitchDiv {...divProps} ref={divProps.forwardRef} data-checked={checked} data-error={hasError}>
 			<div class='switch-button'>
 				<div class='track' onClick={onClick} />
 				<div class='circle' onClick={onClick} />
 			</div>
-			<input type="checkbox" {...inputProps} checked={checked} onClick={onClick} />
+			<input type="checkbox" {...inputProps} ref={inputProps.forwardRef} checked={checked} onClick={onClick} />
 		</SwitchDiv>
 	)
 	function _onClick(e: any) {
@@ -306,29 +361,29 @@ const SwitchDiv = styled.div`
     border: 1px solid var(--danger)
 `
 
-export function ErrorMessage({ children, class: className = '', ...buttonProps }: h.JSX.HTMLAttributes<HTMLDivElement>) {
+export function ErrorMessage({ children, class: className = '', forwardRef, ...buttonProps }: h.JSX.HTMLAttributes<HTMLDivElement> & {forwardRef?: Ref<HTMLDivElement>}) {
 	return children ? (
-		<div class={`form-error-message ${className}`} {...buttonProps}>{children}</div>
+		<div class={`form-error-message ${className}`} {...buttonProps} ref={forwardRef}>{children}</div>
 	) : <F></F>
 }
 
-export function SubmitButton({ children, class: className = '', ...buttonProps }: h.JSX.HTMLAttributes<HTMLButtonElement>) {
+export function SubmitButton({ children, class: className = '', forwardRef, ...buttonProps }: h.JSX.HTMLAttributes<HTMLButtonElement> & {forwardRef?: Ref<HTMLButtonElement>}) {
 	return (
-		<button style={{marginBottom:'.3rem'}} class={`form-submit-button ${className}`} {...buttonProps} type="submit">{children}</button>
+		<button style={{marginBottom:'.3rem'}} class={`form-submit-button ${className}`} {...buttonProps} ref={forwardRef} type="submit">{children}</button>
 	)
 }
 
 /**
  * Extracts form values from a <form> ref, such as e.target from form.onSubmit
+ * Is more friendly than the FormData api, but isn't compatible with 
+ * multipart/form-data encoding -- which is required if there are file inputs.
+ * For example, FormData handles checkboxes weirdly
  */
-// TODO: Consider using js FormData
-export function formToValues(formElement: any) {
-	const reqBody: Record<string, any> = {}
-	Object.keys(formElement.elements).forEach(key => {
-		const field = formElement.elements[key]
-		if (field.type !== 'submit') {
-			reqBody[field.name] = field.type === 'checkbox' ? field.checked : field.value
-		}
-	})
+export function formToJson(formElement: HTMLFormElement): FormJson {
+	const reqBody: FormJson = {}
+	for (const e of formElement.elements as unknown as HTMLInputElement[]) {
+		if (e.type !== 'submit')
+			reqBody[e.name] = e.type === 'checkbox' ? e.checked : e.value
+	}
 	return reqBody
 }

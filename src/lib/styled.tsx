@@ -25,7 +25,7 @@ export default function styled(strings: TemplateStringsArray, ...placeHolders: s
 	if (pcssFlag) css = processPcss(css)
 	const style = document.createElement('style')
 	style.type = 'text/css'
-	style.innerText = css
+	style.innerHTML = css
 	document.head.appendChild(style)
 	return root
 }
@@ -34,82 +34,84 @@ export default function styled(strings: TemplateStringsArray, ...placeHolders: s
  * Factories to quickly create elements with css styles
  * @param css - css to be transpiled and injected. :root is replaced by a unique class
  */
+type Ref<T> = { current: T }
+type Props<T extends HTMLElement> = h.JSX.HTMLAttributes<T> & {forwardRef?: Ref<T>}
 styled.a = function a(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLAnchorElement>) {
-		return <a {...p} class={combineClasses(root,p.class,p.className)} />
+	return function C(p: Props<HTMLAnchorElement>) {
+		return <a {...p} ref={p.forwardRef} class={combineClasses(root,p.class,p.className)} />
 	}
 }
 styled.button = function button(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLButtonElement>) {
-		return <button {...p} class={combineClasses(root,p.class,p.className)} />
+	return function C(p: Props<HTMLButtonElement>) {
+		return <button {...p} ref={p.forwardRef} class={combineClasses(root,p.class,p.className)} />
 	}
 }
 styled.div = function div(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLDivElement>) {
-		return <div {...p} class={combineClasses(root,p.class,p.className)} />
+	return function C(p: Props<HTMLDivElement>) {
+		return <div {...p} ref={p.forwardRef} class={combineClasses(root,p.class,p.className)} />
 	}
 }
 styled.img = function img(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLImageElement>) {
-		return <img {...p} class={combineClasses(root,p.class,p.className)} />
+	return function C(p: Props<HTMLImageElement>) {
+		return <img {...p} ref={p.forwardRef} class={combineClasses(root,p.class,p.className)} />
 	}
 }
 styled.form = function div(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLFormElement>) {
-		return <form {...p} class={combineClasses(root,p.class,p.className)} />
+	return function C(p: Props<HTMLFormElement>) {
+		return <form {...p} ref={p.forwardRef} class={combineClasses(root,p.class,p.className)} />
 	}
 }
 styled.input = function input(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLInputElement>) {
-		return <input {...p} class={combineClasses(root,p.class,p.className)} />
+	return function C(p: Props<HTMLInputElement>) {
+		return <input {...p} ref={p.forwardRef} class={combineClasses(root,p.class,p.className)} />
 	}
 }
 styled.label = function label(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLLabelElement>) {
-		return <label {...p} class={combineClasses(root,p.class,p.className)} />
+	return function C(p: Props<HTMLLabelElement>) {
+		return <label {...p} ref={p.forwardRef} class={combineClasses(root,p.class,p.className)} />
 	}
 }
 styled.nav = function nav(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLElement>) {
-		return <nav {...p} class={combineClasses(root,p.class,p.className)} />
+	return function C(p: Props<HTMLElement>) {
+		return <nav {...p} ref={p.forwardRef} class={combineClasses(root,p.class,p.className)} />
 	}
 }
 styled.span = function span(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLSpanElement>) {
-		return <span {...p} class={combineClasses(root, p.class, p.className)} />
+	return function C(p: Props<HTMLSpanElement>) {
+		return <span {...p} ref={p.forwardRef} class={combineClasses(root, p.class, p.className)} />
 	}
 }
 styled.table = function table(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLTableElement>) {
-		return <table {...p} class={combineClasses(root, p.class, p.className)} />
+	return function C(p: Props<HTMLTableElement>) {
+		return <table {...p} ref={p.forwardRef} class={combineClasses(root, p.class, p.className)} />
 	}
 }
 styled.td = function td(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLTableDataCellElement>) {
-		return <td {...p} class={combineClasses(root, p.class, p.className)} />
+	return function C(p: Props<HTMLTableDataCellElement>) {
+		return <td {...p} ref={p.forwardRef} class={combineClasses(root, p.class, p.className)} />
 	}
 }
 styled.tr = function tr(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLTableRowElement>) {
-		return <tr {...p} class={combineClasses(root, p.class, p.className)} />
+	return function C(p: Props<HTMLTableRowElement>) {
+		return <tr {...p} ref={p.forwardRef} class={combineClasses(root, p.class, p.className)} />
 	}
 }
 styled.textarea = function textarea(strings: TemplateStringsArray, ...placeHolders: string[]) {
 	const root = styled`${assembleTemplateString(strings, placeHolders)}`
-	return function C(p: h.JSX.HTMLAttributes<HTMLTextAreaElement>) {
-		return <textarea {...p} class={combineClasses(root,p.class,p.className)} />
+	return function C(p: Props<HTMLTextAreaElement>) {
+		return <textarea {...p} ref={p.forwardRef} class={combineClasses(root,p.class,p.className)} />
 	}
 }
 

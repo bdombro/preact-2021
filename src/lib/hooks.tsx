@@ -24,6 +24,19 @@ export function useFirstMountState(): boolean {
 export const useForceUpdate = useUpdate
 
 /**
+ * useInterval: Call callback cb every ms milliseconds after mount
+ * @param cb - callback to call after timeout
+ * @param ms - milliseconds to wait before calling cb after mount
+ * @param cancelOnDismount - whether to cancel on dismount
+ */
+export function useInterval(cb: () => any, ms = 0, cancelOnDismount = true) {
+	useEffect(() => {
+		const interval = setInterval(cb, ms)
+		return () => { if(cancelOnDismount) clearInterval(interval) }
+	}, [])
+}
+
+/**
  * useMountedState: returns a fcn that returns true if component is mounted.
  * from react-use
  */

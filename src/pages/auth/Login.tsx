@@ -3,7 +3,7 @@ import { useCallback } from 'preact/hooks'
 
 import { Logo } from '#lay/components/Logo'
 import { getEnumFromClassInstance } from '#lib/enums.iso'
-import { BooleanField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '#lib/forms'
+import { BooleanField, ErrorMessage, FormJson, SubmitButton, TextField, useForm } from '#lib/forms'
 import qs from '#lib/queryStrings'
 import { nav } from '#lib/router'
 import styled from '#lib/styled'
@@ -24,28 +24,36 @@ export default function Login() {
 
 	return <LoginDiv>
 		<Logo size={4} style={{margin: '0 -10px 10px', textAlign: 'center', display: 'block'}} />
-		<Form.Component onSubmit={onSubmit}>
+		<Form.Component onSubmitJson={onSubmit}>
 			<TextField
 				name={LoginPropsEnum.email}
 				labelText="Email"
-				type="text"
-				placeholder={LoginPropsPlaceholder.email}
-				value={LoginPropsPlaceholder.email}
+				inputProps={{
+					type: 'text',
+					placeholder: LoginPropsPlaceholder.email,
+					value: LoginPropsPlaceholder.email,
+					autoFocus: true,
+				}}
 				disabled={submitting}
 				error={errors[LoginPropsEnum.email]?.note}
-				autoFocus
 			/>
 			<TextField
 				name={LoginPropsEnum.password}
 				labelText="Password"
-				type="password"
-				placeholder="********"
-				value={LoginPropsPlaceholder.password}
+				inputProps={{
+					type: 'password',
+					placeholder: '********',
+					value: LoginPropsPlaceholder.password,
+				}}
 				disabled={submitting}
 				error={errors[LoginPropsEnum.password]?.note}
 			/>
 			<BooleanField
-				inputProps={{ name: LoginPropsEnum.asAdmin, disabled: submitting, 'aria-label': 'Sign-in as tenant?' }}
+				inputProps={{
+					name: LoginPropsEnum.asAdmin, 
+					disabled: submitting, 
+					'aria-label': 'Sign-in as tenant?' 
+				}}
 				labelText='Tenant Mode'
 				checkedLabelText='Admin Mode'
 				error={errors[LoginPropsEnum.asAdmin]?.note}
@@ -58,7 +66,7 @@ export default function Login() {
 		<a href={`${Paths.ForgotPassword}${location.search}#replace`}>Forgot your password?</a>
 	</LoginDiv>
 
-	async function _onSubmit(formValues: FormValues) {
+	async function _onSubmit(formValues: FormJson) {
 		const values = new LoginProps(formValues)
 		if (values.asAdmin) AuthStore.loginAsAdmin()
 		else AuthStore.loginAsTenant()
@@ -77,18 +85,10 @@ const LoginDiv = styled.div`
 			margin-top: 20px
 `
 
-const userPlaceholder = {
-	email: 'admin@example.com',
-	roles: [Roles.admin],
-	password: 'Password8',
-	givenName: 'Sally',
-	surname: 'Fields',
-} as const
-
 export class LoginProps {
 	email = ''
 	password = ''
-	asAdmin = ''
+	asAdmin = false
 	constructor(props: any) {
 		assertAttrsWithin(props, this)
 		assertValidSet<LoginProps>(props, {
@@ -100,8 +100,8 @@ export class LoginProps {
 	}
 }
 export const LoginPropsPlaceholder = new LoginProps({
-	email: userPlaceholder.email,
-	password: userPlaceholder.password,
+	email: 'admin@example.com',
+	password: 'Password8',
 	asAdmin: false,
 })
 export const LoginPropsEnum = getEnumFromClassInstance(LoginPropsPlaceholder)

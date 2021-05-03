@@ -1,7 +1,6 @@
 import {h} from 'preact'
 
 import {MapPin} from '#lib/icons'
-import {setPageMeta} from '#lib/router' // TODO: Use page meta?
 import styled from '#lib/styled'
 
 export default function NotFound() {

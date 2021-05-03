@@ -50,7 +50,7 @@ export const routes = Object.freeze({
 	Forbidden: RouteFactory({
 		title: 'Forbidden',
 		path: '/forbidden',
-		Component: lazy(() => import('#src/pages/auth/Forbidden')),
+		Component: lazy(() => import('./pages/auth/Forbidden')),
 	}),
 
 
@@ -383,7 +383,7 @@ export const routes = Object.freeze({
 	NotFound: RouteFactory({
 		title: '404 Not Found',
 		path: '/notfound',
-		Component: lazy(() => import('#src/pages/NotFound')),
+		Component: lazy(() => import('./pages/NotFound')),
 	}),
 } as const)
 

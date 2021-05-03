@@ -2,7 +2,7 @@ import { Fragment as F, h } from 'preact'
 import { useCallback } from 'preact/hooks'
 
 import { getEnumFromClassInstance } from '#lib/enums.iso'
-import { ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '#lib/forms'
+import { ErrorMessage, FormJson, SubmitButton, TextField, useForm } from '#lib/forms'
 import { nav, RouteType } from '#lib/router'
 import { assertAttrsWithin, assertValid, assertValidSet } from '#lib/validation.iso'
 import { ToastStore } from '#src/stores'
@@ -21,14 +21,16 @@ export default function FillerCreateFactory({ route }: { route: RouteType }) {
 
 	return <PaddedPage>
 		<Section header1={route.title} fullHeight backButton>
-			<Form.Component onSubmit={onSubmit}>
+			<Form.Component onSubmitJson={onSubmit}>
 				<TextField
 					name={CreatePropsEnum.title}
 					labelText="Title"
-					type="text"
+					inputProps={{
+						type: 'text',
+						autoFocus: true,
+					}}
 					disabled={submitting}
 					error={errors[CreatePropsEnum.title]?.note}
-					autoFocus
 				/>
 				<SubmitButton>Submit</SubmitButton>
 				<ErrorMessage>{errors.form?.note}</ErrorMessage>
@@ -36,7 +38,7 @@ export default function FillerCreateFactory({ route }: { route: RouteType }) {
 		</Section>
 	</PaddedPage>
 
-	async function _onSubmit(formValues: FormValues) {
+	async function _onSubmit(formValues: FormJson) {
 		const values = new CreateProps(formValues)
 		ToastStore.value = {message: 'Record created!', icon: 'success', duration: 3e3, location: 'right'}
 		window.dispatchEvent(new Event('#stack-pop'))

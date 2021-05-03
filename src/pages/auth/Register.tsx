@@ -3,7 +3,7 @@ import { useCallback } from 'preact/hooks'
 
 import { Logo } from '#lay/components/Logo'
 import { getEnumFromClassInstance } from '#lib/enums.iso'
-import { BooleanField, ErrorMessage, FormValues, SubmitButton, TextField, useForm } from '#lib/forms'
+import { BooleanField, ErrorMessage, FormJson, SubmitButton, TextField, useForm } from '#lib/forms'
 import qs from '#lib/queryStrings'
 import { nav } from '#lib/router'
 import styled from '#lib/styled'
@@ -24,41 +24,49 @@ export default function Register() {
 
 	return <RegisterDiv>
 		<Logo size={4} style={{ margin: '0 -10px 10px', textAlign: 'center', display: 'block' }} />
-		<Form.Component onSubmit={onSubmit}>
+		<Form.Component onSubmitJson={onSubmit}>
 			<TextField
 				name={RegisterPropsEnum.givenName}
 				labelText="First Name"
-				type="text"
-				placeholder={RegisterPropsPlaceholder.givenName}
-				value={RegisterPropsPlaceholder.givenName}
+				inputProps={{
+					type: 'text',
+					placeholder: RegisterPropsPlaceholder.givenName,
+					value: RegisterPropsPlaceholder.givenName,
+					autoFocus: true,
+				}}
 				disabled={submitting}
 				error={errors[RegisterPropsEnum.givenName]?.note}
-				autoFocus
 			/>
 			<TextField
 				name={RegisterPropsEnum.surname}
 				labelText="Last Name"
-				type="text"
-				placeholder={RegisterPropsPlaceholder.surname}
-				value={RegisterPropsPlaceholder.surname}
+				inputProps={{
+					type: 'text',
+					placeholder: RegisterPropsPlaceholder.surname,
+					value: RegisterPropsPlaceholder.surname,
+				}}
 				disabled={submitting}
 				error={errors[RegisterPropsEnum.surname]?.note}
 			/>
 			<TextField
 				name={RegisterPropsEnum.email}
 				labelText="Email"
-				type="text"
-				placeholder={RegisterPropsPlaceholder.email}
-				value={RegisterPropsPlaceholder.email}
+				inputProps={{
+					type: 'text',
+					placeholder: RegisterPropsPlaceholder.email,
+					value: RegisterPropsPlaceholder.email,
+				}}
 				disabled={submitting}
 				error={errors[RegisterPropsEnum.email]?.note}
 			/>
 			<TextField
 				name={RegisterPropsEnum.password}
 				labelText="Password"
-				type="password"
-				placeholder="********"
-				value={RegisterPropsPlaceholder.password}
+				inputProps={{
+					type: 'password',
+					placeholder: '********',
+					value: RegisterPropsPlaceholder.password,
+				}}
 				disabled={submitting}
 				error={errors[RegisterPropsEnum.password]?.note}
 			/>
@@ -81,7 +89,7 @@ export default function Register() {
 		<a href={`${Paths.ForgotPassword}${location.search}#replace`}>Forgot your password?</a>
 	</RegisterDiv>
 
-	async function _onSubmit(formValues: FormValues) {
+	async function _onSubmit(formValues: FormJson) {
 		const values = new RegisterProps(formValues)
 		if (values.asAdmin) AuthStore.loginAsAdmin()
 		else AuthStore.loginAsTenant()

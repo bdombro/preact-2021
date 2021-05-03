@@ -4,7 +4,6 @@ import { useLayoutEffect } from 'preact/hooks'
 import SidebarLayout from '#lay/layout/SidebarLayout'
 import * as i from '#lib/icons'
 import { Paths, routes } from '#src/routes'
-import { ThemeStore } from '#src/stores'
 
 import { applyTheme, defaultTheme } from '../theme'
 

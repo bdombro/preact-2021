@@ -10,7 +10,13 @@ module.exports = {
 		src: {url: '/dist'},
 	},
 	plugins: [
-		'@snowpack/plugin-typescript',
+		[
+			'@snowpack/plugin-typescript',
+			{
+				/* Yarn PnP workaround: see https://www.npmjs.com/package/@snowpack/plugin-typescript */
+				...(process.versions.pnp ? { tsc: 'yarn pnpify tsc' } : {}),
+			},
+		],
 		'@prefresh/snowpack', // This is known to sometimes conflict with preact.context
 		['snowpack-plugin-hash',{ hashLength: 4,logLevel: 'error' }], // fails when Leaflet is in public/lib folder
 	],
