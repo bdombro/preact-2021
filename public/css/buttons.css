@@ -29,6 +29,15 @@ a.button { /* try to match button */
     line-height: 2rem;
   }
 }
+
+
+button.large, a.button.large {
+	font-size: 1.2rem;
+	padding: .7rem .8rem;
+	height: auto;
+	border: none;
+}
+
 button:hover, a.button:hover {
   background: var(--gray3);
 }

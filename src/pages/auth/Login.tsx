@@ -59,11 +59,13 @@ export default function Login() {
 				error={errors[LoginPropsEnum.asAdmin]?.note}
 				type="switch"
 			/>
-			<SubmitButton>Login</SubmitButton>
+			<SubmitButton class="large">Login</SubmitButton>
 			<ErrorMessage>{errors.form?.note}</ErrorMessage>
 		</Form.Component>
-		<a href={`${Paths.Register}${location.search}#replace`}>Need an account?</a><br />
-		<a href={`${Paths.ForgotPassword}${location.search}#replace`}>Forgot your password?</a>
+		<div>
+			<a href={`${Paths.Register}${location.search}#replace`}>Need an account?</a><br />
+			<a href={`${Paths.ForgotPassword}${location.search}#replace`}>Forgot your password?</a>
+		</div>
 	</LoginDiv>
 
 	async function _onSubmit(formValues: FormJson) {

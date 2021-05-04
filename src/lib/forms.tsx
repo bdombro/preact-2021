@@ -156,8 +156,8 @@ const TextFieldDiv = styled.div`
 		margin-bottom: 1.4rem
 	:root>label
 		padding: 1px 3px
+		border-radius: 2px
 		background: var(--white)
-		background: var(--input-background-color)
 		color: var(--gray8)
 		position: absolute
 		top: -9px
@@ -266,7 +266,7 @@ export function Checkbox({ divProps = {}, inputProps, hasError }: CheckboxProps)
 	useUpdateEffect(function _pullDown() { setChecked(inputProps.checked || false) }, [inputProps.checked])
 	const onClick = useCallback(_onClick, [])
 	return (
-		<CheckboxDiv {...divProps} ref={divProps.forwardRef} data-checked={checked} data-error={hasError}>
+		<CheckboxDiv {...divProps} class={divProps.class + ' checkbox'} ref={divProps.forwardRef} data-checked={checked} data-error={hasError}>
 			<IconSvg fill="var(--gray6)" class="marked" path={MarkedPath} />
 			<IconSvg fill="var(--gray4)" class="empty" path={EmptyPath} />
 			<input type="checkbox" {...inputProps} ref={inputProps.forwardRef} checked={checked} onClick={onClick} />
@@ -310,7 +310,7 @@ export function Switch({ divProps = {}, inputProps, hasError }: CheckboxProps) {
 	useUpdateEffect(function _pullDown() { setChecked(inputProps.checked || false) }, [inputProps.checked])
 	const onClick = useCallback(_onClick, [])
 	return (
-		<SwitchDiv {...divProps} ref={divProps.forwardRef} data-checked={checked} data-error={hasError}>
+		<SwitchDiv {...divProps} class={divProps + ' switch'} ref={divProps.forwardRef} data-checked={checked} data-error={hasError}>
 			<div class='switch-button'>
 				<div class='track' onClick={onClick} />
 				<div class='circle' onClick={onClick} />

@@ -19,7 +19,6 @@ input, select {
   outline: none;
   margin-right: .2rem;
   background: var(--white);
-	background: var(--input-background-color);
   height: var(--button-height);
 }
 input[type=checkbox] {

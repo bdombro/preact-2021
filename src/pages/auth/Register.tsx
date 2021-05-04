@@ -82,7 +82,7 @@ export default function Register() {
 				error={errors[RegisterPropsEnum.asAdmin]?.note}
 				type="switch"
 			/>
-			<SubmitButton>Register</SubmitButton>
+			<SubmitButton class="large">Register</SubmitButton>
 			<ErrorMessage>{errors.form?.note}</ErrorMessage>
 		</Form.Component>
 		<a href={`${Paths.Login}${location.search}#replace`}>Have an account?</a><br />
