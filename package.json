@@ -10,7 +10,7 @@
     "build": "mv public/lib . && NODE_ENV=production snowpack build && cp -r lib build && mv lib public && workbox generateSW && date > build/buildTime.txt",
     "start": "ts-node --project server.tsconfig.json --transpile-only server.ts",
     "test": "web-test-runner \"src/**/*.test.tsx\"",
-    "validate": "yarn lint && tsc",
+    "validate": "npm run lint && tsc",
     "lint": "eslint --cache --ext .ts,.tsx src server.ts",
     "prepare": "husky install"
   },
