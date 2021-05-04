@@ -1,4 +1,5 @@
 import 'preact/devtools'
+import './lib/polyfills'
 
 import { h, render } from 'preact'
 

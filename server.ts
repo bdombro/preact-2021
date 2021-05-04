@@ -1,3 +1,5 @@
+import './lib/polyfills'
+
 import Fastify from 'fastify'
 import staticPlugin from 'fastify-static'
 import * as fs from 'fs'

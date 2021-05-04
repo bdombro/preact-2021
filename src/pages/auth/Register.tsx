@@ -2,12 +2,11 @@ import { h } from 'preact'
 import { useCallback } from 'preact/hooks'
 
 import { Logo } from '#lay/components/Logo'
-import { getEnumFromClassInstance } from '#lib/enums.iso'
 import { BooleanField, ErrorMessage, FormJson, SubmitButton, TextField, useForm } from '#lib/forms'
 import qs from '#lib/queryStrings'
 import { nav } from '#lib/router'
 import styled from '#lib/styled'
-import { assertAttrsWithin, assertValid, assertValidSet } from '#lib/validation.iso'
+import { assertAttrsWithin, assertValid, assertValidSet } from '#src/lib/validation'
 import { Paths } from '#src/routes'
 import { AuthStore, ToastStore } from '#src/stores'
 import { Roles } from '#src/stores'
@@ -142,4 +141,4 @@ export const RegisterPropsPlaceholder = new RegisterProps({
 	acceptedTerms: true,
 	asAdmin: false,
 })
-export const RegisterPropsEnum = getEnumFromClassInstance(RegisterPropsPlaceholder)
+export const RegisterPropsEnum = Enum.getEnumFromClassInstance(RegisterPropsPlaceholder)

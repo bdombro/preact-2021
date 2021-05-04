@@ -1,5 +1,3 @@
-import { difference } from './arrays.iso'
-
 export class ForbiddenError extends Error {
 	type = 'ForbiddenError'
 	note = 'You lack permission to this endpoint'
@@ -216,7 +214,7 @@ export function assertValidSet<T>(obj: T, attrAssertions: ValidationErrorType<T>
 }
 
 export function assertAttrsWithin(given: Record<string, any>, expected: Record<string, any>,) {
-	const randos = difference(Object.keys(given), Object.keys(expected))
+	const randos = Array.difference(Object.keys(given), Object.keys(expected))
 	if (randos.length) throw new ValidationErrorSet(
 		given,
 		Object.fromEntries(randos.map(k => [k, new ValueError(k, `${k} field is unexpected`)]))

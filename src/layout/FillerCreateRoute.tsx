@@ -1,10 +1,9 @@
 import { Fragment as F, h } from 'preact'
 import { useCallback } from 'preact/hooks'
 
-import { getEnumFromClassInstance } from '#lib/enums.iso'
 import { ErrorMessage, FormJson, SubmitButton, TextField, useForm } from '#lib/forms'
 import { nav, RouteType } from '#lib/router'
-import { assertAttrsWithin, assertValid, assertValidSet } from '#lib/validation.iso'
+import { assertAttrsWithin, assertValid, assertValidSet } from '#src/lib/validation'
 import { ToastStore } from '#src/stores'
 
 import BackButton from './components/BackButton'
@@ -63,4 +62,4 @@ export class CreateProps {
 export const CreatePropsPlaceholder = new CreateProps({
 	title: recordPlaceholder.title,
 })
-export const CreatePropsEnum = getEnumFromClassInstance(CreatePropsPlaceholder)
+export const CreatePropsEnum = Enum.getEnumFromClassInstance(CreatePropsPlaceholder)

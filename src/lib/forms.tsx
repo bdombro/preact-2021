@@ -7,7 +7,7 @@ import {ComponentChildren, Fragment as F,FunctionalComponent,h} from 'preact'
 import { useCallback, useEffect, useInterval, useRef, useState, useUpdateEffect } from '#lib/hooks'
 import { IconSvg } from '#lib/icons'
 import styled from '#lib/styled'
-import { ValidationErrorSet } from '#lib/validation.iso'
+import { ValidationErrorSet } from '#src/lib/validation'
 
 import { useMountedState } from './hooks'
 
